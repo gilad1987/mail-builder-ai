@@ -11,6 +11,7 @@ import {
   Globe,
 } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
+import { LayoutSection } from './LayoutSection'
 
 const blocks = [
   { name: 'Image', icon: Image, colorClass: 'block-card__icon--blue', type: 'image' },
@@ -56,6 +57,8 @@ export const BlockSelectPanel = observer(() => {
           </div>
         ))}
       </div>
+
+      <LayoutSection />
 
       <div className="sidebar__footer">
         <p>Drag blocks onto the canvas rows to add them.</p>
