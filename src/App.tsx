@@ -8,6 +8,7 @@ import { Canvas } from './components/Canvas'
 import { IconSidebar } from './components/IconSidebar'
 import { GlobalStylesPanel } from './components/GlobalStylesPanel'
 import { LayersPanel } from './components/LayersPanel'
+import { AssetsPanel } from './components/AssetsPanel'
 import './styles/main.scss'
 
 const App = observer(() => {
@@ -23,6 +24,9 @@ const App = observer(() => {
     }
     if (activePanel === 'layers') {
       return <LayersPanel />
+    }
+    if (activePanel === 'assets') {
+      return <AssetsPanel onClose={() => setActivePanel(null)} />
     }
     if (activePanel === 'elements') {
       return editorStore.hasSelectedBlock ? <Sidebar /> : <BlockSelectPanel />
