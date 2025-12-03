@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { ChevronDown } from 'lucide-react'
@@ -49,6 +48,11 @@ const Container = styled.div`
       outline: none;
       border-color: var(--accent);
     }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   .chevron {
@@ -61,38 +65,61 @@ const Container = styled.div`
 
 interface SimpleDropdownFieldProps {
   label: string
-  value: string
+  styleProperty: string
   options?: string[]
+  defaultValue?: string
   responsive?: boolean
-  onChange?: (value: string) => void
 }
 
 export const SimpleDropdownField = observer(
   ({
     label,
-    value,
+    styleProperty,
     options = ['Default'],
+    defaultValue = 'Default',
     responsive = true,
-    onChange,
   }: SimpleDropdownFieldProps) => {
-    const [selected, setSelected] = useState(value)
+    const element = editorStore.selectedElement
+    const device = editorStore.activeDevice
 
-    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setSelected(e.target.value)
-      onChange?.(e.target.value)
+    // Get value from model
+    const getValue = (): string => {
+      if (!element) return defaultValue
+      const style = element._style[device]
+      const value = style[styleProperty] ?? element._style.desktop[styleProperty] ?? defaultValue
+      return typeof value === 'string' ? value : defaultValue
     }
+
+    // Update value in model
+    const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      if (!element) return
+      const value = e.target.value
+      // If 'Default' or 'None', remove the property
+      if (value === 'Default' || value === 'None') {
+        element.update(styleProperty, undefined)
+      } else {
+        element.update(styleProperty, value.toLowerCase())
+      }
+    }
+
+    const currentValue = getValue()
 
     return (
       <Container>
         <div className="header">
           <div className="label">
             {label}
-            <ResponsiveIcon device={editorStore.activeDevice} responsive={responsive} />
+            <ResponsiveIcon device={device} responsive={responsive} />
           </div>
           <div className="select-wrapper">
-            <select className="select" value={selected} onChange={handleChange}>
+            <select
+              className="select"
+              value={currentValue}
+              onChange={handleChange}
+              disabled={!element}
+            >
               {options.map(opt => (
-                <option key={opt} value={opt}>
+                <option key={opt} value={opt.toLowerCase()}>
                   {opt}
                 </option>
               ))}

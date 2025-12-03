@@ -9,26 +9,64 @@ interface SpacingControlProps {
   unit?: string
 }
 
+type Side = 'top' | 'right' | 'bottom' | 'left'
+
+const sideMap: Record<Side, { icon: React.FC<{ size?: number }>; capitalize: string }> = {
+  top: { icon: MoveUp, capitalize: 'Top' },
+  right: { icon: MoveRight, capitalize: 'Right' },
+  bottom: { icon: MoveDown, capitalize: 'Bottom' },
+  left: { icon: MoveLeft, capitalize: 'Left' },
+}
+
 export const SpacingControl = observer(({ label, unit = 'px' }: SpacingControlProps) => {
   const [mergedMode, setMergedMode] = useState(true)
-  const [allValue, setAllValue] = useState(0)
-  const [values, setValues] = useState({ top: 0, right: 0, bottom: 0, left: 0 })
+  const element = editorStore.selectedElement
+  const device = editorStore.activeDevice
+  const property = label.toLowerCase() // 'margin' or 'padding'
 
+  // Get value for a specific side from the model
+  const getSideValue = (side: Side): number => {
+    if (!element) return 0
+    const sizeKey = `${property}${sideMap[side].capitalize}-size`
+    const style = element._style[device]
+    const value = style[sizeKey] ?? element._style.desktop[sizeKey] ?? 0
+    return typeof value === 'number' ? value : 0
+  }
+
+  // Get computed "all" value (average or common value)
+  const getAllValue = (): number => {
+    const values = (['top', 'right', 'bottom', 'left'] as Side[]).map(getSideValue)
+    // If all values are the same, return that value
+    if (values.every(v => v === values[0])) return values[0]
+    // Otherwise return the average
+    return Math.round(values.reduce((a, b) => a + b, 0) / 4)
+  }
+
+  // Update all sides at once
   const handleAllChange = (value: number) => {
-    setAllValue(value)
-    setValues({ top: value, right: value, bottom: value, left: value })
+    if (!element) return
+    const sides: Side[] = ['top', 'right', 'bottom', 'left']
+    sides.forEach(side => {
+      element.update(`${property}${sideMap[side].capitalize}-size`, value)
+      element.update(`${property}${sideMap[side].capitalize}-unit`, unit)
+    })
   }
 
-  const handleSideChange = (side: keyof typeof values, value: number) => {
-    setValues(prev => ({ ...prev, [side]: value }))
+  // Update a specific side
+  const handleSideChange = (side: Side, value: number) => {
+    if (!element) return
+    element.update(`${property}${sideMap[side].capitalize}-size`, value)
+    element.update(`${property}${sideMap[side].capitalize}-unit`, unit)
   }
+
+  const allValue = getAllValue()
 
   return (
     <div className="style-field spacing-control">
       <div className="style-field__header">
         <div className="style-field__label">
           {label}
-          <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+          <ResponsiveIcon device={device} responsive={true} />
         </div>
         <div className="style-field__actions">
           <span className="style-field__link" onClick={() => setMergedMode(!mergedMode)}>
@@ -53,6 +91,7 @@ export const SpacingControl = observer(({ label, unit = 'px' }: SpacingControlPr
             value={allValue}
             onChange={e => handleAllChange(Number(e.target.value))}
             className="spacing-control__slider"
+            disabled={!element}
           />
           <div className="spacing-control__input-group">
             <input
@@ -61,40 +100,24 @@ export const SpacingControl = observer(({ label, unit = 'px' }: SpacingControlPr
               value={allValue}
               onChange={e => handleAllChange(Number(e.target.value))}
               className="spacing-control__input"
+              disabled={!element}
             />
             <span className="spacing-control__unit">{unit}</span>
           </div>
         </div>
       ) : (
         <div className="spacing-control__sides">
-          <SideRow
-            side="top"
-            icon={MoveUp}
-            value={values.top}
-            unit={unit}
-            onChange={handleSideChange}
-          />
-          <SideRow
-            side="right"
-            icon={MoveRight}
-            value={values.right}
-            unit={unit}
-            onChange={handleSideChange}
-          />
-          <SideRow
-            side="bottom"
-            icon={MoveDown}
-            value={values.bottom}
-            unit={unit}
-            onChange={handleSideChange}
-          />
-          <SideRow
-            side="left"
-            icon={MoveLeft}
-            value={values.left}
-            unit={unit}
-            onChange={handleSideChange}
-          />
+          {(['top', 'right', 'bottom', 'left'] as Side[]).map(side => (
+            <SideRow
+              key={side}
+              side={side}
+              icon={sideMap[side].icon}
+              value={getSideValue(side)}
+              unit={unit}
+              onChange={handleSideChange}
+              disabled={!element}
+            />
+          ))}
         </div>
       )}
     </div>
@@ -102,14 +125,15 @@ export const SpacingControl = observer(({ label, unit = 'px' }: SpacingControlPr
 })
 
 interface SideRowProps {
-  side: 'top' | 'right' | 'bottom' | 'left'
+  side: Side
   icon: React.FC<{ size?: number }>
   value: number
   unit: string
-  onChange: (side: 'top' | 'right' | 'bottom' | 'left', value: number) => void
+  onChange: (side: Side, value: number) => void
+  disabled?: boolean
 }
 
-const SideRow = ({ side, icon: Icon, value, unit, onChange }: SideRowProps) => (
+const SideRow = ({ side, icon: Icon, value, unit, onChange, disabled }: SideRowProps) => (
   <div className="spacing-control__side-row">
     <span className="spacing-control__side-icon">
       <Icon size={14} />
@@ -121,6 +145,7 @@ const SideRow = ({ side, icon: Icon, value, unit, onChange }: SideRowProps) => (
       value={value}
       onChange={e => onChange(side, Number(e.target.value))}
       className="spacing-control__slider"
+      disabled={disabled}
     />
     <div className="spacing-control__input-group">
       <input
@@ -129,6 +154,7 @@ const SideRow = ({ side, icon: Icon, value, unit, onChange }: SideRowProps) => (
         value={value}
         onChange={e => onChange(side, Number(e.target.value))}
         className="spacing-control__input"
+        disabled={disabled}
       />
       <span className="spacing-control__unit">{unit}</span>
     </div>

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { AlignCenter, AlignLeft, AlignRight } from 'lucide-react'
@@ -29,6 +28,11 @@ const Container = styled.div`
     border: 1px solid var(--input-border);
     border-radius: ${tokens.borderRadius.md};
     overflow: hidden;
+
+    &.is-disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
   }
 
   .align-btn {
@@ -63,45 +67,65 @@ const Container = styled.div`
 type AlignValue = 'left' | 'center' | 'right'
 
 interface HorizontalAlignControlProps {
-  selectedAlign?: AlignValue
-  onChange?: (value: AlignValue) => void
+  styleProperty?: string
+  defaultValue?: AlignValue
+  responsive?: boolean
 }
 
 export const HorizontalAlignControl = observer(
-  ({ selectedAlign = 'left', onChange }: HorizontalAlignControlProps) => {
-    const [align, setAlign] = useState<AlignValue>(selectedAlign)
+  ({
+    styleProperty = 'textAlign',
+    defaultValue = 'left',
+    responsive = true,
+  }: HorizontalAlignControlProps) => {
+    const element = editorStore.selectedElement
+    const device = editorStore.activeDevice
 
-    const handleClick = (value: AlignValue) => {
-      setAlign(value)
-      onChange?.(value)
+    // Get value from model
+    const getValue = (): AlignValue => {
+      if (!element) return defaultValue
+      const style = element._style[device]
+      const value = style[styleProperty] ?? element._style.desktop[styleProperty] ?? defaultValue
+      return (value as AlignValue) || defaultValue
     }
+
+    // Update value in model
+    const handleClick = (value: AlignValue) => {
+      if (!element) return
+      element.update(styleProperty, value)
+    }
+
+    const currentAlign = getValue()
 
     return (
       <Container>
         <div className="header">
           <div className="label">
             Horizontal align
-            <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+            <ResponsiveIcon device={device} responsive={responsive} />
           </div>
-          <div className="button-group">
+          <div className={`button-group ${!element ? 'is-disabled' : ''}`}>
             <button
-              className={`align-btn ${align === 'left' ? 'is-active' : ''}`}
+              className={`align-btn ${currentAlign === 'left' ? 'is-active' : ''}`}
               onClick={() => handleClick('left')}
               aria-label="Align left"
+              disabled={!element}
             >
               <AlignLeft size={16} />
             </button>
             <button
-              className={`align-btn ${align === 'center' ? 'is-active' : ''}`}
+              className={`align-btn ${currentAlign === 'center' ? 'is-active' : ''}`}
               onClick={() => handleClick('center')}
               aria-label="Align center"
+              disabled={!element}
             >
               <AlignCenter size={16} />
             </button>
             <button
-              className={`align-btn ${align === 'right' ? 'is-active' : ''}`}
+              className={`align-btn ${currentAlign === 'right' ? 'is-active' : ''}`}
               onClick={() => handleClick('right')}
               aria-label="Align right"
+              disabled={!element}
             >
               <AlignRight size={16} />
             </button>

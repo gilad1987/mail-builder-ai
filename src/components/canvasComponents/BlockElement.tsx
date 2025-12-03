@@ -98,15 +98,49 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
   // Handle InnerSection (nested columns)
   if (block instanceof InnerSection) {
     return (
-      <Container className={isSelected ? 'is-selected' : ''} onClick={handleClick}>
+      <Container
+        className={isSelected ? 'is-selected' : ''}
+        style={block.style}
+        onClick={handleClick}
+      >
         <TypeBadge type="section" />
         <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
         <div style={{ display: 'flex', gap: '8px' }}>
-          {block.children.map(col => (
-            <div key={col.key} style={{ flex: 1, padding: '8px', background: '#f5f5f5' }}>
-              Column ({col.width}%)
+          {block.children.length === 0 ? (
+            <div
+              style={{
+                flex: 1,
+                padding: '16px',
+                background: '#f5f5f5',
+                textAlign: 'center',
+                color: '#999',
+              }}
+            >
+              Empty Inner Section
             </div>
-          ))}
+          ) : (
+            block.children.map(col => (
+              <div
+                key={col.key}
+                style={{
+                  flex: `0 0 ${col.width}%`,
+                  padding: '8px',
+                  background: '#f9f9f9',
+                  border: '1px dashed #ddd',
+                  borderRadius: '4px',
+                  minHeight: '40px',
+                }}
+              >
+                {col.children.length === 0 ? (
+                  <span style={{ color: '#999', fontSize: '12px' }}>Column ({col.width}%)</span>
+                ) : (
+                  col.children.map(child => (
+                    <BlockElement key={child.key} block={child} columnId={col.id} />
+                  ))
+                )}
+              </div>
+            ))
+          )}
         </div>
       </Container>
     )
