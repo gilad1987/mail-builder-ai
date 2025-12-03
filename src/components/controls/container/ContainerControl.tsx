@@ -7,6 +7,8 @@ import { ContainerLayoutSection } from './ContainerLayoutSection'
 import { ContainerItemsSection } from './ContainerItemsSection'
 
 const Container = styled.div`
+  background: var(--bg-primary);
+
   .section-header {
     display: flex;
     align-items: center;
@@ -15,14 +17,14 @@ const Container = styled.div`
     cursor: pointer;
     user-select: none;
     &:hover {
-      background: ${tokens.colors.gray[50]};
+      background: var(--bg-secondary);
     }
   }
 
   .section-title {
     font-size: ${tokens.fontSize.sm};
     font-weight: ${tokens.fontWeight.semibold};
-    color: ${tokens.colors.gray[800]};
+    color: var(--text-primary);
   }
 
   .section-content {
@@ -37,9 +39,9 @@ export const ContainerControl = observer(() => {
     <Container>
       <div className="section-header" onClick={() => setIsExpanded(!isExpanded)}>
         {isExpanded ? (
-          <ChevronDown size={16} color={tokens.colors.gray[500]} />
+          <ChevronDown size={16} color={tokens.colors.gray[400]} />
         ) : (
-          <ChevronRight size={16} color={tokens.colors.gray[500]} />
+          <ChevronRight size={16} color={tokens.colors.gray[400]} />
         )}
         <span className="section-title">Container</span>
       </div>

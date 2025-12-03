@@ -12,14 +12,14 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: ${tokens.spacing[2]} 0;
-    border-bottom: 1px solid ${tokens.colors.gray[100]};
+    border-bottom: 1px solid var(--border-color);
   }
   .field-label {
     display: flex;
     align-items: center;
     gap: ${tokens.spacing[1]};
     font-size: ${tokens.fontSize.sm};
-    color: ${tokens.colors.gray[700]};
+    color: var(--text-primary);
   }
   .dropdown-wrapper {
     position: relative;
@@ -28,20 +28,20 @@ const Container = styled.div`
   .dropdown {
     width: 100%;
     appearance: none;
-    background: ${tokens.colors.gray[50]};
-    border: 1px solid ${tokens.colors.gray[300]};
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: ${tokens.borderRadius.sm};
     padding: ${tokens.spacing[1]} ${tokens.spacing[2]};
     padding-right: ${tokens.spacing[5]};
     font-size: ${tokens.fontSize.xs};
-    color: ${tokens.colors.gray[700]};
+    color: var(--input-text);
     cursor: pointer;
     &:hover {
-      border-color: ${tokens.colors.gray[400]};
+      border-color: var(--text-secondary);
     }
     &:focus {
       outline: none;
-      border-color: ${tokens.colors.blue[500]};
+      border-color: var(--accent);
     }
   }
   .dropdown-icon {
@@ -50,11 +50,11 @@ const Container = styled.div`
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
-    color: ${tokens.colors.gray[400]};
+    color: var(--text-secondary);
   }
   .slider-field {
     padding: ${tokens.spacing[3]} 0;
-    border-bottom: 1px solid ${tokens.colors.gray[100]};
+    border-bottom: 1px solid var(--border-color);
   }
   .slider-header {
     display: flex;
@@ -70,7 +70,7 @@ const Container = styled.div`
   .slider {
     flex: 1;
     height: 4px;
-    background: ${tokens.colors.gray[200]};
+    background: var(--input-border);
     border-radius: 4px;
     cursor: pointer;
     -webkit-appearance: none;
@@ -79,7 +79,7 @@ const Container = styled.div`
       -webkit-appearance: none;
       width: 14px;
       height: 14px;
-      background: ${tokens.colors.blue[500]};
+      background: var(--accent);
       border-radius: 50%;
       cursor: pointer;
     }
@@ -89,23 +89,23 @@ const Container = styled.div`
     padding: ${tokens.spacing[1]};
     text-align: center;
     font-size: ${tokens.fontSize.xs};
-    background: ${tokens.colors.gray[50]};
-    border: 1px solid ${tokens.colors.gray[300]};
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: ${tokens.borderRadius.sm};
-    color: ${tokens.colors.gray[700]};
+    color: var(--input-text);
   }
   .unit-selector {
     font-size: ${tokens.fontSize.xs};
-    color: ${tokens.colors.gray[500]};
+    color: var(--text-secondary);
     cursor: pointer;
     &:hover {
-      color: ${tokens.colors.gray[700]};
+      color: var(--text-primary);
     }
   }
   .hint-text {
     font-size: ${tokens.fontSize.xs};
     font-style: italic;
-    color: ${tokens.colors.gray[500]};
+    color: var(--text-secondary);
     padding: ${tokens.spacing[2]} 0;
   }
 `

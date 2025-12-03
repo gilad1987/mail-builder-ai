@@ -7,7 +7,7 @@ import { ResponsiveIcon } from './ResponsiveIcon'
 
 const Container = styled.div`
   padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
-  border-bottom: 1px solid ${tokens.colors.gray[100]};
+  border-bottom: 1px solid var(--border-color);
 
   .header {
     display: flex;
@@ -21,7 +21,7 @@ const Container = styled.div`
     align-items: center;
     font-size: ${tokens.fontSize.sm};
     font-weight: ${tokens.fontWeight.medium};
-    color: ${tokens.colors.gray[700]};
+    color: var(--text-primary);
   }
 
   .slider-row {
@@ -33,7 +33,7 @@ const Container = styled.div`
   .slider {
     flex: 1;
     height: 4px;
-    background: ${tokens.colors.gray[200]};
+    background: var(--input-border);
     border-radius: 4px;
     cursor: pointer;
     -webkit-appearance: none;
@@ -44,7 +44,7 @@ const Container = styled.div`
       -webkit-appearance: none;
       width: 12px;
       height: 12px;
-      background: ${tokens.colors.blue[500]};
+      background: var(--accent);
       border-radius: 50%;
       cursor: pointer;
     }
@@ -61,14 +61,15 @@ const Container = styled.div`
     padding: ${tokens.spacing[1]};
     text-align: center;
     font-size: ${tokens.fontSize.xs};
-    background-color: ${tokens.colors.gray[50]};
-    border: 1px solid ${tokens.colors.gray[300]};
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: ${tokens.borderRadius.md};
+    color: var(--input-text);
   }
 
   .unit {
     font-size: ${tokens.fontSize.xs};
-    color: ${tokens.colors.gray[500]};
+    color: var(--text-secondary);
     min-width: 20px;
   }
 `

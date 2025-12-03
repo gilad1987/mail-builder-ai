@@ -15,11 +15,13 @@ export interface Row {
 }
 
 export type TabType = 'Content' | 'Style' | 'Container'
+export type ThemeType = 'light' | 'dark'
 
 class EditorStore {
   selectedBlockId: string | null = 'row1-1'
   activeDevice: DeviceType = 'desktop'
   activeTab: TabType = 'Style'
+  theme: ThemeType = 'dark'
 
   rows: Row[] = [
     {
@@ -61,6 +63,16 @@ class EditorStore {
 
   setActiveTab(tab: TabType) {
     this.activeTab = tab
+  }
+
+  toggleTheme() {
+    this.theme = this.theme === 'dark' ? 'light' : 'dark'
+    document.documentElement.setAttribute('data-theme', this.theme)
+  }
+
+  setTheme(theme: ThemeType) {
+    this.theme = theme
+    document.documentElement.setAttribute('data-theme', this.theme)
   }
 
   addBlockToRow(targetRowId: string, targetIndex: number, blockType: string) {

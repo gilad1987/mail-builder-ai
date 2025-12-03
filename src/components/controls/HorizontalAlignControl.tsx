@@ -8,7 +8,7 @@ import { ResponsiveIcon } from './ResponsiveIcon'
 
 const Container = styled.div`
   padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
-  border-bottom: 1px solid ${tokens.colors.gray[100]};
+  border-bottom: 1px solid var(--border-color);
 
   .header {
     display: flex;
@@ -21,12 +21,12 @@ const Container = styled.div`
     align-items: center;
     font-size: ${tokens.fontSize.sm};
     font-weight: ${tokens.fontWeight.medium};
-    color: ${tokens.colors.gray[700]};
+    color: var(--text-primary);
   }
 
   .button-group {
     display: flex;
-    border: 1px solid ${tokens.colors.gray[300]};
+    border: 1px solid var(--input-border);
     border-radius: ${tokens.borderRadius.md};
     overflow: hidden;
   }
@@ -36,10 +36,10 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     padding: ${tokens.spacing[1]} ${tokens.spacing[2]};
-    color: ${tokens.colors.gray[500]};
-    background: white;
+    color: var(--text-secondary);
+    background: var(--input-bg);
     border: none;
-    border-right: 1px solid ${tokens.colors.gray[300]};
+    border-right: 1px solid var(--input-border);
     border-radius: 0;
     cursor: pointer;
     transition: all ${tokens.transition.fast};
@@ -49,13 +49,13 @@ const Container = styled.div`
     }
 
     &:hover {
-      background: ${tokens.colors.gray[100]};
-      color: ${tokens.colors.blue[500]};
+      background: var(--bg-elevated);
+      color: var(--accent);
     }
 
     &.is-active {
-      background: ${tokens.colors.gray[100]};
-      color: ${tokens.colors.blue[500]};
+      background: var(--bg-elevated);
+      color: var(--accent);
     }
   }
 `

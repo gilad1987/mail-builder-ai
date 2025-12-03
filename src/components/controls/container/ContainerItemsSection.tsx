@@ -27,13 +27,13 @@ import { ResponsiveIcon } from '../ResponsiveIcon'
 
 const Container = styled.div`
   padding-top: ${tokens.spacing[3]};
-  border-top: 1px solid ${tokens.colors.gray[200]};
+  border-top: 1px solid var(--border-color);
   margin-top: ${tokens.spacing[2]};
 
   .items-title {
     font-size: ${tokens.fontSize.sm};
     font-weight: ${tokens.fontWeight.semibold};
-    color: ${tokens.colors.gray[800]};
+    color: var(--text-primary);
     margin-bottom: ${tokens.spacing[3]};
   }
   .field {
@@ -41,18 +41,18 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: ${tokens.spacing[2]} 0;
-    border-bottom: 1px solid ${tokens.colors.gray[100]};
+    border-bottom: 1px solid var(--border-color);
   }
   .field-label {
     display: flex;
     align-items: center;
     gap: ${tokens.spacing[1]};
     font-size: ${tokens.fontSize.sm};
-    color: ${tokens.colors.gray[700]};
+    color: var(--text-primary);
   }
   .button-group {
     display: flex;
-    border: 1px solid ${tokens.colors.gray[300]};
+    border: 1px solid var(--input-border);
     border-radius: ${tokens.borderRadius.md};
     overflow: hidden;
   }
@@ -62,22 +62,22 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     padding: ${tokens.spacing[1]};
-    background: white;
+    background: var(--input-bg);
     border: none;
-    border-right: 1px solid ${tokens.colors.gray[300]};
-    color: ${tokens.colors.gray[500]};
+    border-right: 1px solid var(--input-border);
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all ${tokens.transition.fast};
     &:last-child {
       border-right: none;
     }
     &:hover {
-      background: ${tokens.colors.gray[100]};
-      color: ${tokens.colors.blue[500]};
+      background: var(--bg-elevated);
+      color: var(--text-primary);
     }
     &.is-active {
-      background: ${tokens.colors.gray[100]};
-      color: ${tokens.colors.blue[500]};
+      background: var(--bg-elevated);
+      color: var(--accent);
     }
   }
   .gaps-field {
@@ -107,14 +107,14 @@ const Container = styled.div`
     padding: ${tokens.spacing[1]};
     text-align: center;
     font-size: ${tokens.fontSize.xs};
-    background: ${tokens.colors.gray[50]};
-    border: 1px solid ${tokens.colors.gray[300]};
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: ${tokens.borderRadius.sm};
-    color: ${tokens.colors.gray[700]};
+    color: var(--input-text);
   }
   .gap-label {
     font-size: ${tokens.fontSize.xs};
-    color: ${tokens.colors.gray[500]};
+    color: var(--text-secondary);
     text-align: center;
   }
   .link-btn {
@@ -122,26 +122,26 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     padding: ${tokens.spacing[1]};
-    background: ${tokens.colors.gray[100]};
+    background: var(--bg-elevated);
     border: none;
     border-radius: ${tokens.borderRadius.sm};
-    color: ${tokens.colors.gray[500]};
+    color: var(--text-secondary);
     cursor: pointer;
     &:hover {
-      color: ${tokens.colors.gray[700]};
+      color: var(--text-primary);
     }
     &.is-linked {
-      color: ${tokens.colors.blue[500]};
+      color: var(--accent);
     }
   }
   .unit-selector {
     font-size: ${tokens.fontSize.xs};
-    color: ${tokens.colors.gray[500]};
+    color: var(--text-secondary);
   }
   .wrap-hint {
     font-size: ${tokens.fontSize.xs};
     font-style: italic;
-    color: ${tokens.colors.gray[500]};
+    color: var(--text-secondary);
     padding-top: ${tokens.spacing[2]};
   }
 `

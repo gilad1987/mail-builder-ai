@@ -1,5 +1,15 @@
 import { observer } from 'mobx-react-lite'
-import { ChevronLeft, Monitor, Tablet, Smartphone, RotateCcw, Download, Save } from 'lucide-react'
+import {
+  ChevronLeft,
+  Monitor,
+  Tablet,
+  Smartphone,
+  RotateCcw,
+  Download,
+  Save,
+  Sun,
+  Moon,
+} from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 
 type DeviceType = 'desktop' | 'tablet' | 'mobile'
@@ -35,6 +45,13 @@ export const TopBar = observer(() => {
       </div>
 
       <div className="header-bar__right">
+        <button
+          className="btn-ghost"
+          title={editorStore.theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          onClick={() => editorStore.toggleTheme()}
+        >
+          {editorStore.theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
         <button className="btn-ghost" title="Undo">
           <RotateCcw size={18} />
         </button>

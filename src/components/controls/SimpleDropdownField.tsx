@@ -8,7 +8,7 @@ import { ResponsiveIcon } from './ResponsiveIcon'
 
 const Container = styled.div`
   padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
-  border-bottom: 1px solid ${tokens.colors.gray[100]};
+  border-bottom: 1px solid var(--border-color);
 
   .header {
     display: flex;
@@ -21,7 +21,7 @@ const Container = styled.div`
     align-items: center;
     font-size: ${tokens.fontSize.sm};
     font-weight: ${tokens.fontWeight.medium};
-    color: ${tokens.colors.gray[700]};
+    color: var(--text-primary);
   }
 
   .select-wrapper {
@@ -32,22 +32,22 @@ const Container = styled.div`
 
   .select {
     appearance: none;
-    background-color: ${tokens.colors.gray[50]};
-    border: 1px solid ${tokens.colors.gray[300]};
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
     border-radius: ${tokens.borderRadius.md};
     padding: ${tokens.spacing[1]} ${tokens.spacing[6]} ${tokens.spacing[1]} ${tokens.spacing[2]};
     font-size: ${tokens.fontSize.xs};
-    color: ${tokens.colors.gray[700]};
+    color: var(--input-text);
     cursor: pointer;
     min-width: 100px;
 
     &:hover {
-      border-color: ${tokens.colors.gray[400]};
+      border-color: var(--text-secondary);
     }
 
     &:focus {
       outline: none;
-      border-color: ${tokens.colors.blue[500]};
+      border-color: var(--accent);
     }
   }
 
@@ -55,7 +55,7 @@ const Container = styled.div`
     position: absolute;
     right: ${tokens.spacing[1]};
     pointer-events: none;
-    color: ${tokens.colors.gray[400]};
+    color: var(--text-secondary);
   }
 `
 
