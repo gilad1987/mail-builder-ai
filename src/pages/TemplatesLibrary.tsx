@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Eye, Pencil, Copy, Trash2, Plus, Mail, Sparkles, Send } from 'lucide-react'
+import { emailTemplates, type EmailTemplateItem } from '../assets/email-templates'
+import { editorStore } from '../stores/EditorStore'
+import type { TemplateJSON } from '../models/Template'
 
 interface TemplateItem {
   id: string
@@ -9,12 +12,6 @@ interface TemplateItem {
   thumbnail?: string
   isExample?: boolean
 }
-
-const exampleTemplates: TemplateItem[] = [
-  { id: 'example-1', name: 'Welcome Email', savedAt: null, isExample: true },
-  { id: 'example-2', name: 'Newsletter', savedAt: null, isExample: true },
-  { id: 'example-3', name: 'Promotion', savedAt: null, isExample: true },
-]
 
 const Container = styled.div`
   min-height: 100vh;
@@ -197,6 +194,63 @@ const Container = styled.div`
       &:nth-child(3) {
         width: 60px;
       }
+    }
+  }
+
+  .template-preview-styled {
+    aspect-ratio: 4/5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    padding: 20px;
+
+    .preview-header {
+      width: 80%;
+      height: 24px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .preview-body {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    .preview-line-styled {
+      height: 6px;
+      border-radius: 3px;
+      opacity: 0.6;
+
+      &:nth-child(1) {
+        width: 70%;
+      }
+      &:nth-child(2) {
+        width: 90%;
+      }
+      &:nth-child(3) {
+        width: 50%;
+      }
+      &:nth-child(4) {
+        width: 80%;
+        margin-top: auto;
+      }
+    }
+
+    .preview-btn {
+      width: 60%;
+      height: 24px;
+      border-radius: 12px;
+      margin-top: 12px;
     }
   }
 
@@ -566,6 +620,11 @@ export const TemplatesLibrary = () => {
     navigate('/builder')
   }
 
+  const handleOpenExampleTemplate = (template: EmailTemplateItem) => {
+    editorStore.loadTemplate(template.template as TemplateJSON)
+    navigate('/builder')
+  }
+
   return (
     <Container>
       <header className="header">
@@ -634,27 +693,54 @@ export const TemplatesLibrary = () => {
               </div>
               <div className="create-card-label" />
             </div>
-            {exampleTemplates.map(template => (
+            {emailTemplates.map(template => (
               <div key={template.id}>
-                <div className="template-card" onClick={() => handleOpenTemplate(template.id)}>
-                  <div className="template-preview">
+                <div className="template-card" onClick={() => handleOpenExampleTemplate(template)}>
+                  <div
+                    className="template-preview-styled"
+                    style={{ background: template.previewColors.secondary }}
+                  >
                     <span className="example-badge">Template</span>
-                    <div className="preview-placeholder">
-                      <div className="preview-icon">
-                        <Mail size={20} />
-                      </div>
-                      <div className="preview-lines">
-                        <div className="preview-line" />
-                        <div className="preview-line" />
-                        <div className="preview-line" />
-                      </div>
+                    <div
+                      className="preview-header"
+                      style={{ background: template.previewColors.primary }}
+                    />
+                    <div
+                      className="preview-body"
+                      style={{
+                        background:
+                          template.previewColors.secondary === '#ffffff'
+                            ? '#f5f5f5'
+                            : 'rgba(255,255,255,0.05)',
+                      }}
+                    >
+                      <div
+                        className="preview-line-styled"
+                        style={{ background: template.previewColors.primary }}
+                      />
+                      <div
+                        className="preview-line-styled"
+                        style={{ background: template.previewColors.primary }}
+                      />
+                      <div
+                        className="preview-line-styled"
+                        style={{ background: template.previewColors.primary }}
+                      />
+                      <div
+                        className="preview-line-styled"
+                        style={{ background: template.previewColors.primary }}
+                      />
                     </div>
+                    <div
+                      className="preview-btn"
+                      style={{ background: template.previewColors.accent }}
+                    />
                   </div>
                 </div>
                 <div className="template-info">
                   <div className="template-meta">
                     <div className="template-name">{template.name}</div>
-                    <div className="template-date">{formatDate(template.savedAt)}</div>
+                    <div className="template-date">{template.description}</div>
                   </div>
                 </div>
               </div>

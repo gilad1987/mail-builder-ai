@@ -11,6 +11,7 @@ import {
   setActiveDeviceGetter,
   type StyleValue,
   Template,
+  type TemplateJSON,
   type WidgetType,
 } from '../models'
 
@@ -37,6 +38,13 @@ class EditorStore {
     })
 
     setActiveDeviceGetter(() => this.activeDevice)
+  }
+
+  // Load a template from JSON
+  loadTemplate(json: TemplateJSON) {
+    this.template = new Template(json)
+    this.selectedElementId = null
+    this.hoveredElementId = null
   }
 
   // Check if canvas is empty
