@@ -579,10 +579,14 @@ export const TemplatesLibrary = () => {
 
       <div className="content">
         <div className="hero">
-          <h1 className="hero-title">Create beautiful emails</h1>
+          {/*<h1 className="hero-title">Create beautiful emails</h1>*/}
+          <h1 className="hero-title">Design emails effortlessly</h1>
+          {/*<p className="hero-subtitle">*/}
+          {/*  Start with a template or create from scratch. Design responsive emails that look great*/}
+          {/*  everywhere.*/}
+          {/*</p>*/}
           <p className="hero-subtitle">
-            Start with a template or create from scratch. Design responsive emails that look great
-            everywhere.
+            Focus on your message. We'll make it beautiful. No code, no complexity — just results.
           </p>
         </div>
 
