@@ -1,73 +1,153 @@
-# React + TypeScript + Vite
+# Mail Builder 2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, drag-and-drop email template editor built with React 19, TypeScript, and MobX. Create beautiful, responsive email templates with an intuitive visual interface.
 
-Currently, two official plugins are available:
+![Mail Builder](https://img.shields.io/badge/React-19-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue) ![Vite](https://img.shields.io/badge/Vite-7-purple) ![MobX](https://img.shields.io/badge/MobX-6-orange)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+### Editor
+- **Drag & Drop Interface** - Drag blocks and layouts onto the canvas
+- **Multi-Column Layouts** - 10+ pre-built column configurations (1-5 columns with various ratios)
+- **Responsive Preview** - Desktop, Tablet (iPad), and Mobile (iPhone) viewport modes
+- **Dark/Light Theme** - Toggle between themes with custom scrollbar styling
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Panels
+- **Elements Panel** - Drag blocks: Image, Spacer, Headline, Paragraph, Button, Column, Blog Post, Inner Section, Form
+- **Layers Panel** - Dynamic tree view of document structure (Body → Rows → Columns → Blocks)
+- **Global Styles Panel** - Configure colors, typography for Body, Heading, Subheading, Buttons, Links
+- **Assets Panel** - Image library with search, upload, and drag-to-canvas functionality
 
-## Expanding the ESLint configuration
+### Style Controls
+- **Container Controls** - Flexbox/Grid layout, width, min-height, direction, justify, align, gaps, wrap
+- **Spacing Controls** - Margin and padding with merged/individual side modes
+- **Border Controls** - Radius (all/individual corners), side borders, style, width, color
+- **Dimension Controls** - Width, height with unit selection (px, %, vw, em)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Quick Start
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+# Install dependencies
+pnpm install
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Start development server
+pnpm dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Build for production
+pnpm build
+
+# Preview production build
+pnpm preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠 Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Category | Technology |
+|----------|------------|
+| Framework | React 19 |
+| Language | TypeScript 5.9 |
+| Build Tool | Vite 7 |
+| State Management | MobX + mobx-react-lite |
+| Styling | SCSS + styled-components + Tailwind CSS |
+| Icons | Lucide React |
+| Code Quality | ESLint + Prettier + Husky |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Project Structure
+
 ```
+src/
+├── components/
+│   ├── assets/           # Assets panel components
+│   ├── canvasComponents/ # Canvas blocks and rows
+│   ├── controls/         # Style control components
+│   │   ├── border/       # Border controls
+│   │   └── container/    # Container/flexbox controls
+│   ├── globalStyles/     # Global styles panel sections
+│   ├── layers/           # Layers tree components
+│   └── sidebarTabs/      # Content, Style, Container tabs
+├── stores/
+│   └── EditorStore.ts    # MobX store for editor state
+├── styles/
+│   ├── _variables.scss   # Design tokens (colors, spacing)
+│   ├── _mixins.scss      # SCSS mixins
+│   ├── main.scss         # Global styles
+│   └── tokens.ts         # TypeScript design tokens
+└── App.tsx               # Main application component
+```
+
+## 🎨 Architecture Principles
+
+### Code Organization
+- **Max 100 lines per file** - Keep files focused and maintainable
+- **Self-contained components** - Each component manages its own logic
+- **Minimal prop drilling** - Use MobX stores for state management
+
+### Styling Rules
+- **Single Container Pattern** - One styled-component per component
+- **Nested classNames** - Use className with nested CSS selectors
+- **CSS Variables** - Theme support via `var(--bg-primary)`, `var(--text-primary)`, etc.
+
+### Component Pattern
+```tsx
+const Container = styled.div`
+  .header { /* styles */ }
+  .content { /* styles */ }
+`
+
+export const MyComponent = observer(() => (
+  <Container>
+    <div className="header">...</div>
+    <div className="content">...</div>
+  </Container>
+))
+```
+
+## 🎯 Key Components
+
+| Component | Description |
+|-----------|-------------|
+| `TopBar` | Device viewport switcher, theme toggle, save/export buttons |
+| `IconSidebar` | Left icon panel for switching between panels |
+| `BlockSelectPanel` | Draggable block elements and layout options |
+| `Sidebar` | Style editing tabs (Content, Style, Container) |
+| `Canvas` | Main editing area with responsive device frames |
+| `LayersPanel` | Document structure tree view |
+| `GlobalStylesPanel` | Global color and typography settings |
+| `AssetsPanel` | Image asset library |
+
+## 📜 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build for production |
+| `pnpm preview` | Preview production build |
+| `pnpm lint` | Run ESLint |
+| `pnpm lint:fix` | Fix ESLint issues |
+| `pnpm format` | Format with Prettier |
+
+## 🎨 Theming
+
+The app supports light and dark themes via CSS custom properties:
+
+```scss
+:root {
+  --bg-primary: #1f2124;      // Main background
+  --bg-secondary: #0c0d0e;    // Darker elements
+  --text-primary: #d1d5db;    // Primary text
+  --accent: #60a5fa;          // Accent color
+  --input-bg: #0c0d0e;        // Input backgrounds
+  --input-border: #374151;    // Input borders
+}
+
+:root[data-theme='light'] {
+  --bg-primary: #f9fafb;
+  --bg-secondary: white;
+  --text-primary: #1f2937;
+  // ...
+}
+```
+
+## 📄 License
+
+MIT
