@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { editorStore } from '../../stores/EditorStore'
 import {
   ResponsiveIcon,
-  MarginPaddingControl,
+  SpacingControl,
   DimensionInput,
   HorizontalAlignControl,
   SliderField,
@@ -16,8 +16,8 @@ export const StyleTab = observer(() => (
     <div className="style-section__header">
       <h3 className="style-section__title">Paragraph</h3>
     </div>
-    <MarginPaddingControl label="Margin" />
-    <MarginPaddingControl label="Padding" />
+    <SpacingControl label="Margin" />
+    <SpacingControl label="Padding" />
     <div className="style-field">
       <p className="style-field__label">
         Dimensions

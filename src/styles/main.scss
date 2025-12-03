@@ -453,7 +453,7 @@ select {
 .btn-toggle {
   padding: $spacing-1;
   color: $gray-500;
-  border: 1px solid $gray-300;
+  border: none;
   border-radius: $border-radius-sm;
   background-color: white;
   transition: all $transition-fast;
@@ -1203,6 +1203,80 @@ select {
     &:hover {
       border-color: $gray-400;
     }
+  }
+}
+
+// =================================================================
+// SPACING CONTROL (Margin/Padding)
+// =================================================================
+
+.spacing-control {
+  &__merged {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    margin-top: $spacing-2;
+  }
+
+  &__slider {
+    flex: 1;
+    height: 4px;
+    background: $gray-200;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      background: $blue-500;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+
+  &__input-group {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+  }
+
+  &__input {
+    width: 50px;
+    padding: $spacing-1;
+    text-align: center;
+    font-size: $font-size-xs;
+    background-color: $gray-50;
+    border: 1px solid $gray-300;
+    border-radius: $border-radius-md;
+  }
+
+  &__unit {
+    font-size: $font-size-xs;
+    color: $gray-500;
+    min-width: 20px;
+  }
+
+  &__sides {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    margin-top: $spacing-2;
+  }
+
+  &__side-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__side-icon {
+    @include flex-center;
+    width: 20px;
+    color: $gray-500;
   }
 }
 
