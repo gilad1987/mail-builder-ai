@@ -8,8 +8,7 @@ import {
   SliderField,
   SimpleDropdownField,
   ColorControl,
-  BorderRadiusControl,
-  IndividualBordersControl,
+  BorderController,
 } from '../controls'
 
 export const StyleTab = observer(() => (
@@ -40,7 +39,6 @@ export const StyleTab = observer(() => (
     <SimpleDropdownField label="Font family" value="Arial" />
     <ColorControl label="Text color" colorValue="#000000" responsive={false} />
     <ColorControl label="Background color" colorValue="#FFFFFF" responsive={false} />
-    <BorderRadiusControl value={0} />
-    <IndividualBordersControl selectedSide="all" />
+    <BorderController />
   </div>
 ))
