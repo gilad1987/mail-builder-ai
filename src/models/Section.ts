@@ -13,6 +13,7 @@ export class Section extends Box {
     this.name = 'Section'
     this.type = 'Section' as WidgetType
     this._style.desktop = {
+      flex: 1,
       width: '100%',
       'maxWidth-size': 650,
       'maxWidth-unit': 'px',

@@ -18,6 +18,7 @@ export class Column extends Box {
     this.type = 'Column' as WidgetType
     this.width = json.width || 100
     this._style.desktop = {
+      flex: 1,
       'padding-size': 10,
       'padding-unit': 'px',
     }

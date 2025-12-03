@@ -100,12 +100,12 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
     return (
       <Container
         className={isSelected ? 'is-selected' : ''}
-        style={block.style}
+        style={{ ...block.style, flex: 1, width: '100%' }}
         onClick={handleClick}
       >
         <TypeBadge type="section" />
         <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
           {block.children.length === 0 ? (
             <div
               style={{
@@ -123,12 +123,15 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
               <div
                 key={col.key}
                 style={{
-                  flex: `0 0 ${col.width}%`,
+                  ...col.style,
+                  flex: col.width === 100 ? 1 : `0 0 ${col.width}%`,
+                  width: `${col.width}%`,
                   padding: '8px',
                   background: '#f9f9f9',
                   border: '1px dashed #ddd',
                   borderRadius: '4px',
                   minHeight: '40px',
+                  boxSizing: 'border-box',
                 }}
               >
                 {col.children.length === 0 ? (

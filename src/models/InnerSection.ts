@@ -13,6 +13,8 @@ export class InnerSection extends Box {
     this.name = 'InnerSection'
     this.type = 'InnerSection' as WidgetType
     this._style.desktop = {
+      flex: 1,
+      width: '100%',
       'padding-size': 0,
       'padding-unit': 'px',
     }
