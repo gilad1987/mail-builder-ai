@@ -1,19 +1,8 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { editorStore } from '../../stores/EditorStore'
+import { editorStore, type Row } from '../../stores/EditorStore'
 import { BlockCard } from './BlockCard'
-
-interface Block {
-  id: string
-  type: string
-  content: string
-  showImage: boolean
-}
-
-interface Row {
-  id: string
-  blocks: Block[]
-}
+import { ColumnContainer } from './ColumnContainer'
 
 interface ContentRowProps {
   row: Row
@@ -36,6 +25,9 @@ export const ContentRow = observer(({ row }: ContentRowProps) => {
       const fromRowId = e.dataTransfer.getData('fromRowId')
       const fromIndex = parseInt(e.dataTransfer.getData('fromIndex'), 10)
       editorStore.moveBlock(fromRowId, fromIndex, row.id, row.blocks.length)
+    } else if (type === 'LAYOUT') {
+      const columns = JSON.parse(e.dataTransfer.getData('layoutColumns'))
+      editorStore.addColumnLayout(row.id, columns)
     }
   }
 
@@ -62,6 +54,7 @@ export const ContentRow = observer(({ row }: ContentRowProps) => {
   }
 
   const rowClassName = `row ${isSelectedRow ? 'row--selected' : ''} ${isDragOver ? 'row--dragover' : ''}`
+  const hasColumns = row.columns && row.columns.length > 0
 
   return (
     <div
@@ -78,9 +71,11 @@ export const ContentRow = observer(({ row }: ContentRowProps) => {
         <span>{row.id}</span>
       </div>
 
-      {row.blocks.length === 0 ? (
+      {hasColumns ? (
+        <ColumnContainer rowId={row.id} columns={row.columns!} />
+      ) : row.blocks.length === 0 ? (
         <div className="row__empty">
-          <p>Drop elements here</p>
+          <p>Drop elements or layout here</p>
         </div>
       ) : (
         <div className="row__blocks">

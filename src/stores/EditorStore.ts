@@ -9,9 +9,16 @@ export interface Block {
   showImage: boolean
 }
 
+export interface Column {
+  id: string
+  width: number
+  blocks: Block[]
+}
+
 export interface Row {
   id: string
   blocks: Block[]
+  columns?: Column[]
 }
 
 export type TabType = 'Content' | 'Style' | 'Container'
@@ -111,6 +118,37 @@ class EditorStore {
   addRow() {
     const newRowId = `row${this.rows.length + 1}-${Date.now()}`
     this.rows.push({ id: newRowId, blocks: [] })
+  }
+
+  addColumnLayout(targetRowId: string, columnWidths: number[]) {
+    const rowIndex = this.rows.findIndex(r => r.id === targetRowId)
+    if (rowIndex === -1) return
+
+    const columns: Column[] = columnWidths.map((width, i) => ({
+      id: `${targetRowId}-col-${i}-${Date.now()}`,
+      width,
+      blocks: [],
+    }))
+
+    this.rows[rowIndex].columns = columns
+    this.rows[rowIndex].blocks = []
+  }
+
+  addBlockToColumn(rowId: string, columnId: string, blockType: string) {
+    const row = this.rows.find(r => r.id === rowId)
+    if (!row?.columns) return
+
+    const column = row.columns.find(c => c.id === columnId)
+    if (!column) return
+
+    const newBlock: Block = {
+      id: `${columnId}-${Date.now()}`,
+      type: blockType,
+      content: `New ${blockType}`,
+      showImage: blockType === 'Image',
+    }
+    column.blocks.push(newBlock)
+    this.selectedBlockId = newBlock.id
   }
 
   get deviceLabels() {
