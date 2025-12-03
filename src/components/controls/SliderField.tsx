@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { tokens } from '../../styles/tokens'
@@ -76,6 +75,7 @@ const Container = styled.div`
 
 interface SliderFieldProps {
   label: string
+  styleProperty: string
   defaultValue?: number
   min?: number
   max?: number
@@ -86,13 +86,31 @@ interface SliderFieldProps {
 export const SliderField = observer(
   ({
     label,
+    styleProperty,
     defaultValue = 0,
     min = 0,
     max = 64,
     unit = 'px',
     responsive = true,
   }: SliderFieldProps) => {
-    const [value, setValue] = useState(defaultValue)
+    const element = editorStore.selectedElement
+
+    // Get value from element's style for current device
+    const getValue = (): number => {
+      if (!element) return defaultValue
+      const sizeKey = `${styleProperty}-size`
+      const style = element._style[editorStore.activeDevice]
+      const value = style[sizeKey] ?? element._style.desktop[sizeKey] ?? defaultValue
+      return typeof value === 'number' ? value : defaultValue
+    }
+
+    const handleChange = (newValue: number) => {
+      if (!element) return
+      element.update(`${styleProperty}-size`, newValue)
+      element.update(`${styleProperty}-unit`, unit)
+    }
+
+    const value = getValue()
 
     return (
       <Container>
@@ -108,7 +126,7 @@ export const SliderField = observer(
             min={min}
             max={max}
             value={value}
-            onChange={e => setValue(Number(e.target.value))}
+            onChange={e => handleChange(Number(e.target.value))}
             className="slider"
           />
           <div className="input-group">
@@ -117,7 +135,7 @@ export const SliderField = observer(
               min={min}
               max={max}
               value={value}
-              onChange={e => setValue(Number(e.target.value))}
+              onChange={e => handleChange(Number(e.target.value))}
               className="input"
             />
             <span className="unit">{unit}</span>

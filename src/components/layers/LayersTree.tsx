@@ -1,10 +1,21 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { ChevronDown, ChevronRight, LayoutGrid, Rows3, Square } from 'lucide-react'
+import {
+  ChevronDown,
+  ChevronRight,
+  Columns,
+  Heading1,
+  Image,
+  LayoutGrid,
+  MousePointer,
+  Rows3,
+  Square,
+  Type,
+} from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 import { editorStore } from '../../stores/EditorStore'
-import { TreeItem } from './TreeItem'
+import { Box, Section, Column, Block } from '../../models'
 
 const Container = styled.div`
   .tree-item {
@@ -45,6 +56,16 @@ const Container = styled.div`
   }
 `
 
+const getBlockIcon = (type: string) => {
+  const icons: Record<string, React.FC<{ size?: number; className?: string }>> = {
+    Image: Image,
+    Headline: Heading1,
+    Paragraph: Type,
+    Button: MousePointer,
+  }
+  return icons[type] || Type
+}
+
 export const LayersTree = observer(() => {
   const [expanded, setExpanded] = useState<Set<string>>(new Set(['body']))
 
@@ -52,63 +73,108 @@ export const LayersTree = observer(() => {
     e.stopPropagation()
     setExpanded(prev => {
       const next = new Set(prev)
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      next.has(id) ? next.delete(id) : next.add(id)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
       return next
     })
+  }
+
+  const renderElement = (element: Box, depth: number) => {
+    const isExpanded = expanded.has(element.id)
+    const isSelected = editorStore.selectedElementId === element.id
+    const hasChildren = element.children.length > 0
+
+    if (element instanceof Section) {
+      return (
+        <div key={element.key}>
+          <div
+            className={`tree-item ${isSelected ? 'is-selected' : ''}`}
+            style={{ paddingLeft: `${depth * 16 + 8}px` }}
+            onClick={() => editorStore.setSelectedElement(element.id)}
+          >
+            <span className="tree-toggle" onClick={e => toggle(element.id, e)}>
+              {hasChildren && (isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
+            </span>
+            <Rows3 size={16} className="tree-icon" />
+            <span className="tree-label">Section</span>
+          </div>
+          {isExpanded && element.children.map(child => renderElement(child, depth + 1))}
+        </div>
+      )
+    }
+
+    if (element instanceof Column) {
+      return (
+        <div key={element.key}>
+          <div
+            className={`tree-item ${isSelected ? 'is-selected' : ''}`}
+            style={{ paddingLeft: `${depth * 16 + 8}px` }}
+            onClick={() => editorStore.setSelectedElement(element.id)}
+          >
+            <span className="tree-toggle" onClick={e => toggle(element.id, e)}>
+              {hasChildren && (isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
+            </span>
+            <Columns size={16} className="tree-icon" />
+            <span className="tree-label">Column ({element.width}%)</span>
+          </div>
+          {isExpanded && element.children.map(child => renderElement(child, depth + 1))}
+        </div>
+      )
+    }
+
+    if (element instanceof Block) {
+      const Icon = getBlockIcon(element.type)
+      return (
+        <div
+          key={element.key}
+          className={`tree-item ${isSelected ? 'is-selected' : ''}`}
+          style={{ paddingLeft: `${depth * 16 + 8}px` }}
+          onClick={() => editorStore.setSelectedElement(element.id)}
+        >
+          <span className="tree-toggle" />
+          <Icon size={16} className="tree-icon" />
+          <span className="tree-label">{element.type}</span>
+        </div>
+      )
+    }
+
+    return null
   }
 
   return (
     <Container>
       <div
-        className={`tree-item ${!editorStore.selectedBlockId ? 'is-selected' : ''}`}
+        className={`tree-item ${!editorStore.selectedElementId ? 'is-selected' : ''}`}
         style={{ paddingLeft: '8px' }}
-        onClick={() => editorStore.setSelectedBlock(null)}
+        onClick={() => editorStore.setSelectedElement(null)}
       >
         <span className="tree-toggle" onClick={e => toggle('body', e)}>
           {expanded.has('body') ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
         </span>
-        <Square size={16} className="tree-icon" />
-        <span className="tree-label">Body</span>
+        <LayoutGrid size={16} className="tree-icon" />
+        <span className="tree-label">Template</span>
       </div>
 
+      {expanded.has('body') && (
+        <div
+          className="tree-item"
+          style={{ paddingLeft: '24px' }}
+          onClick={() => editorStore.setSelectedElement(null)}
+        >
+          <span className="tree-toggle" onClick={e => toggle('template', e)}>
+            {expanded.has('template') ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+          </span>
+          <Square size={16} className="tree-icon" />
+          <span className="tree-label">Body</span>
+        </div>
+      )}
+
       {expanded.has('body') &&
-        editorStore.rows.map(row => {
-          const hasColumns = row.columns && row.columns.length > 0
-          const hasChildren = hasColumns || row.blocks.length > 0
-          const isRowExpanded = expanded.has(row.id)
-
-          return (
-            <div key={row.id}>
-              <div
-                className="tree-item"
-                style={{ paddingLeft: '24px' }}
-                onClick={() => editorStore.setSelectedBlock(row.id)}
-              >
-                <span className="tree-toggle" onClick={e => toggle(row.id, e)}>
-                  {hasChildren &&
-                    (isRowExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
-                </span>
-                {hasColumns ? (
-                  <LayoutGrid size={16} className="tree-icon" />
-                ) : (
-                  <Rows3 size={16} className="tree-icon" />
-                )}
-                <span className="tree-label">{hasColumns ? 'Row (Columns)' : 'Row'}</span>
-              </div>
-
-              {isRowExpanded &&
-                hasColumns &&
-                row.columns!.map(col => (
-                  <TreeItem key={col.id} column={col} expanded={expanded} onToggle={toggle} />
-                ))}
-
-              {isRowExpanded &&
-                !hasColumns &&
-                row.blocks.map(block => <TreeItem key={block.id} block={block} depth={2} />)}
-            </div>
-          )
-        })}
+        expanded.has('template') &&
+        editorStore.sections.map(section => renderElement(section, 2))}
     </Container>
   )
 })

@@ -1,0 +1,156 @@
+import { observer } from 'mobx-react-lite'
+import styled from 'styled-components'
+import { Column } from '../../models'
+import { editorStore } from '../../stores/EditorStore'
+import { tokens } from '../../styles/tokens'
+import { Droppable, useDndState } from '../dnd'
+import { ColumnActions, TypeBadge, AddColumnButton } from '../WidgetActions'
+import { BlockElement } from './BlockElement'
+
+interface ColumnBoxProps {
+  column: Column
+  sectionId: string
+  isLast?: boolean
+}
+
+const Container = styled.div`
+  position: relative;
+  min-height: 80px;
+  background: #ffffff;
+  border: 2px dashed ${tokens.colors.gray[300]};
+  border-radius: ${tokens.borderRadius.md};
+  padding: ${tokens.spacing[3]};
+  transition: all ${tokens.transition.fast};
+
+  &:hover {
+    border-color: #1e88e5;
+    border-style: solid;
+
+    .column-actions,
+    .type-badge,
+    .add-column-btn {
+      opacity: 1;
+    }
+  }
+
+  &.is-selected {
+    border-color: #1e88e5;
+    border-style: solid;
+    box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
+
+    .column-actions,
+    .type-badge {
+      opacity: 1;
+    }
+  }
+
+  &.is-over {
+    background: rgba(30, 136, 229, 0.05);
+    border-color: #1e88e5;
+  }
+
+  .column-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 60px;
+    color: ${tokens.colors.gray[400]};
+    font-size: ${tokens.fontSize.xs};
+    border: 2px dashed transparent;
+    border-radius: ${tokens.borderRadius.sm};
+    transition: all ${tokens.transition.fast};
+  }
+
+  .column-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: ${tokens.spacing[2]};
+    padding-top: 2rem;
+  }
+
+  .drop-placeholder {
+    height: 40px;
+    border: 2px dashed #1e88e5;
+    border-radius: ${tokens.borderRadius.sm};
+    background: rgba(30, 136, 229, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1e88e5;
+    font-size: ${tokens.fontSize.xs};
+    margin: ${tokens.spacing[1]} 0;
+  }
+`
+
+export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps) => {
+  const isSelected = editorStore.selectedElementId === column.id
+  const { overId, activeData } = useDndState()
+  const isOver = overId === `column-${column.id}`
+  const showPlaceholder = isOver && activeData?.source === 'sidebar'
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    editorStore.setSelectedElement(column.id)
+  }
+
+  const handleCopy = () => {
+    editorStore.copyElement(column.id)
+  }
+
+  const handleDelete = () => {
+    editorStore.removeElement(column.id)
+  }
+
+  const handleAddColumn = () => {
+    // Add a new column after this one
+    const section = editorStore.findElementById(sectionId)
+    if (section) {
+      editorStore.addColumnToSection(sectionId, 50)
+    }
+  }
+
+  const classNames = [isSelected ? 'is-selected' : '', isOver ? 'is-over' : '']
+    .filter(Boolean)
+    .join(' ')
+
+  return (
+    <Droppable
+      id={`column-${column.id}`}
+      data={{ accepts: 'block', columnId: column.id, sectionId }}
+    >
+      <Container
+        className={classNames}
+        style={{
+          ...column.style,
+          flex: `0 0 calc(${column.width}% - 8px)`,
+          width: `calc(${column.width}% - 8px)`,
+        }}
+        onClick={handleClick}
+      >
+        <TypeBadge type="column" />
+        <ColumnActions onCopy={handleCopy} onDelete={handleDelete} />
+        {!isLast && <AddColumnButton onClick={handleAddColumn} />}
+
+        {column.children.length === 0 ? (
+          <div
+            className="column-empty"
+            style={{
+              borderColor: isOver ? '#1e88e5' : 'transparent',
+              background: isOver ? 'rgba(30, 136, 229, 0.1)' : 'transparent',
+            }}
+          >
+            {isOver ? 'Drop here' : 'Drop elements here'}
+          </div>
+        ) : (
+          <div className="column-blocks">
+            {showPlaceholder && <div className="drop-placeholder">Drop here</div>}
+            {column.children.map(child => (
+              <BlockElement key={child.key} block={child} columnId={column.id} />
+            ))}
+          </div>
+        )}
+      </Container>
+    </Droppable>
+  )
+})

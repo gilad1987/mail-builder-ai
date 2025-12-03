@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { tokens } from '../styles/tokens'
+import { Draggable } from './dnd'
 
 const layoutOptions = [
   { name: '1 Column', columns: [100] },
@@ -87,12 +88,6 @@ const Container = styled.div`
 export const LayoutSection = () => {
   const [expanded, setExpanded] = useState(true)
 
-  const handleDragStart = (e: React.DragEvent, columns: number[]) => {
-    e.dataTransfer.setData('application/react-dnd-type', 'LAYOUT')
-    e.dataTransfer.setData('layoutColumns', JSON.stringify(columns))
-    e.dataTransfer.effectAllowed = 'copy'
-  }
-
   return (
     <Container>
       <div className="header" onClick={() => setExpanded(!expanded)}>
@@ -106,19 +101,25 @@ export const LayoutSection = () => {
       {expanded && (
         <div className="grid">
           {layoutOptions.map((layout, i) => (
-            <div
+            <Draggable
               key={i}
-              className="option"
-              draggable
-              onDragStart={e => handleDragStart(e, layout.columns)}
+              id={`sidebar-layout-${i}`}
+              data={{
+                source: 'sidebar',
+                type: 'layout',
+                columns: layout.columns,
+                name: layout.name,
+              }}
             >
-              <div className="preview">
-                {layout.columns.map((w, j) => (
-                  <div key={j} className="column" style={{ flex: w }} />
-                ))}
+              <div className="option">
+                <div className="preview">
+                  {layout.columns.map((w, j) => (
+                    <div key={j} className="column" style={{ flex: w }} />
+                  ))}
+                </div>
+                <div className="name">{layout.name}</div>
               </div>
-              <div className="name">{layout.name}</div>
-            </div>
+            </Draggable>
           ))}
         </div>
       )}

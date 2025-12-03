@@ -1,0 +1,47 @@
+import styled from 'styled-components'
+import { Plus } from 'lucide-react'
+import { tokens } from '../../styles/tokens'
+
+interface AddColumnButtonProps {
+  onClick: () => void
+}
+
+const Button = styled.button`
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 50%;
+  color: #757575;
+  cursor: pointer;
+  z-index: 60;
+  opacity: 0;
+  transition: all ${tokens.transition.fast};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: ${tokens.colors.blue[500]};
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+  }
+`
+
+export const AddColumnButton = ({ onClick }: AddColumnButtonProps) => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    onClick()
+  }
+
+  return (
+    <Button className="add-column-btn" onClick={handleClick} title="Add Column">
+      <Plus size={16} />
+    </Button>
+  )
+}

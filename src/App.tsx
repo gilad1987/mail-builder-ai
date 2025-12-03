@@ -10,6 +10,7 @@ import { GlobalStylesPanel } from './components/GlobalStylesPanel'
 import { LayersPanel } from './components/LayersPanel'
 import { AssetsPanel } from './components/AssetsPanel'
 import { AIAssistantPanel } from './components/aiAssistant'
+import { DndProvider } from './components/dnd'
 import './styles/main.scss'
 
 const App = observer(() => {
@@ -39,14 +40,16 @@ const App = observer(() => {
   }
 
   return (
-    <div className="app-layout">
-      <TopBar />
-      <div className="main-content">
-        <IconSidebar activePanel={activePanel} onPanelChange={setActivePanel} />
-        {renderPanel()}
-        <Canvas />
+    <DndProvider>
+      <div className="app-layout">
+        <TopBar />
+        <div className="main-content">
+          <IconSidebar activePanel={activePanel} onPanelChange={setActivePanel} />
+          {renderPanel()}
+          <Canvas />
+        </div>
       </div>
-    </div>
+    </DndProvider>
   )
 })
 

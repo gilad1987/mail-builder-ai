@@ -31,9 +31,21 @@ export const StyleTab = observer(() => (
       </div>
     </div>
     <HorizontalAlignControl selectedAlign="left" />
-    <SliderField label="Letter Spacing" defaultValue={0} max={10} unit="px" />
-    <SliderField label="Font size" defaultValue={16} max={72} unit="px" />
-    <SliderField label="Line height" defaultValue={16} max={72} unit="px" />
+    <SliderField
+      label="Letter Spacing"
+      styleProperty="letterSpacing"
+      defaultValue={0}
+      max={10}
+      unit="px"
+    />
+    <SliderField label="Font size" styleProperty="fontSize" defaultValue={16} max={72} unit="px" />
+    <SliderField
+      label="Line height"
+      styleProperty="lineHeight"
+      defaultValue={16}
+      max={72}
+      unit="px"
+    />
     <SimpleDropdownField
       label="Text Decoration"
       value="Default"

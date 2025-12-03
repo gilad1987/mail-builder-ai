@@ -130,7 +130,7 @@ export const AIAssistantPanel = observer(({ onClose }: AIAssistantPanelProps) =>
       const pageName = extractPageName(input) || 'New Page'
       action = { type: 'create_page', description: `Create new "${pageName}" project page` }
       content = `Your page named "${pageName}" has been created with a clean layout, including a header, centered welcome message, and footer. Let me know if you want to add or modify anything on this page.`
-      editorStore.addRow()
+      editorStore.addSection()
     } else if (lowerInput.includes('button')) {
       action = { type: 'add_block', description: 'Add Button block to canvas' }
       content =

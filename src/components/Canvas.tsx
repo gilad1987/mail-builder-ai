@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { Plus } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
-import { ContentRow } from './canvasComponents'
+import { SectionRow } from './canvasComponents'
 
 export const Canvas = observer(() => {
   const viewportClassName = `viewport viewport--${editorStore.activeDevice}`
@@ -10,14 +10,14 @@ export const Canvas = observer(() => {
   const content = (
     <>
       <div className="viewport__content">
-        {editorStore.rows.map(row => (
-          <ContentRow key={row.id} row={row} />
+        {editorStore.sections.map(section => (
+          <SectionRow key={section.key} section={section} />
         ))}
       </div>
 
-      <button className="add-row-btn" onClick={() => editorStore.addRow()}>
+      <button className="add-row-btn" onClick={() => editorStore.addSection()}>
         <span>
-          <Plus size={16} /> Add new Row
+          <Plus size={16} /> Add new Section
         </span>
       </button>
     </>
