@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { Image, Layers, Palette, Plus } from 'lucide-react'
+import { Image, Layers, Palette, Plus, Sparkles } from 'lucide-react'
 import { tokens } from '../styles/tokens'
 
 interface IconSidebarProps {
@@ -39,6 +39,29 @@ const Container = styled.div`
       color: white;
     }
   }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .ai-btn {
+    background: linear-gradient(135deg, ${tokens.colors.purple[600]}, ${tokens.colors.indigo[500]});
+    color: white;
+
+    &:hover {
+      background: linear-gradient(
+        135deg,
+        ${tokens.colors.purple[700]},
+        ${tokens.colors.indigo[500]}
+      );
+    }
+
+    &.is-active {
+      box-shadow:
+        0 0 0 2px var(--bg-secondary),
+        0 0 0 4px ${tokens.colors.purple[500]};
+    }
+  }
 `
 
 export const IconSidebar = observer(({ activePanel, onPanelChange }: IconSidebarProps) => {
@@ -48,6 +71,8 @@ export const IconSidebar = observer(({ activePanel, onPanelChange }: IconSidebar
     { id: 'styles', icon: Palette, label: 'Global Styles' },
     { id: 'assets', icon: Image, label: 'Assets' },
   ]
+
+  const aiIcon = { id: 'ai', icon: Sparkles, label: 'AI Assistant' }
 
   return (
     <Container>
@@ -61,6 +86,14 @@ export const IconSidebar = observer(({ activePanel, onPanelChange }: IconSidebar
           <Icon size={20} />
         </button>
       ))}
+      {/*<div className="spacer" />*/}
+      <button
+        className={`icon-btn ai-btn ${activePanel === aiIcon.id ? 'is-active' : ''}`}
+        onClick={() => onPanelChange(activePanel === aiIcon.id ? null : aiIcon.id)}
+        title={aiIcon.label}
+      >
+        <aiIcon.icon size={20} />
+      </button>
     </Container>
   )
 })

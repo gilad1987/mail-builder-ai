@@ -9,6 +9,7 @@ import { IconSidebar } from './components/IconSidebar'
 import { GlobalStylesPanel } from './components/GlobalStylesPanel'
 import { LayersPanel } from './components/LayersPanel'
 import { AssetsPanel } from './components/AssetsPanel'
+import { AIAssistantPanel } from './components/aiAssistant'
 import './styles/main.scss'
 
 const App = observer(() => {
@@ -27,6 +28,9 @@ const App = observer(() => {
     }
     if (activePanel === 'assets') {
       return <AssetsPanel onClose={() => setActivePanel(null)} />
+    }
+    if (activePanel === 'ai') {
+      return <AIAssistantPanel onClose={() => setActivePanel(null)} />
     }
     if (activePanel === 'elements') {
       return editorStore.hasSelectedBlock ? <Sidebar /> : <BlockSelectPanel />
