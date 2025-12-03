@@ -88,7 +88,9 @@
   font-size: $font-size-sm;
   color: $gray-800;
   background-color: white;
-  transition: border-color $transition-fast, box-shadow $transition-fast;
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast;
 
   &:focus {
     border-color: $blue-500;
@@ -118,4 +120,3 @@
     @content;
   }
 }
-

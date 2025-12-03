@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import {
-  RadiusSingleIcon,
-  RadiusMultipleIcon,
-  CornerTopLeftIcon,
-  CornerTopRightIcon,
   CornerBottomLeftIcon,
   CornerBottomRightIcon,
+  CornerTopLeftIcon,
+  CornerTopRightIcon,
+  RadiusMultipleIcon,
+  RadiusSingleIcon,
 } from './BorderIcons'
 
 export const BorderRadiusSection = () => {

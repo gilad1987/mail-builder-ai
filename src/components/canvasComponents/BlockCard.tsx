@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { Edit, Move, Image } from 'lucide-react'
+import { Edit, Image, Move } from 'lucide-react'
 import { editorStore } from '../../stores/EditorStore'
 
 interface Block {

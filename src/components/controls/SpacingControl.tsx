@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { Plus, Minus, MoveUp, MoveDown, MoveLeft, MoveRight } from 'lucide-react'
+import { Minus, MoveDown, MoveLeft, MoveRight, MoveUp, Plus } from 'lucide-react'
 import { editorStore } from '../../stores/EditorStore'
 import { ResponsiveIcon } from './ResponsiveIcon'
 

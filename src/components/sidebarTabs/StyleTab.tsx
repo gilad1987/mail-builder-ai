@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import { editorStore } from '../../stores/EditorStore'
 import {
-  ResponsiveIcon,
-  SpacingControl,
+  BorderController,
+  ColorControl,
   DimensionInput,
   HorizontalAlignControl,
-  SliderField,
+  ResponsiveIcon,
   SimpleDropdownField,
-  ColorControl,
-  BorderController,
+  SliderField,
+  SpacingControl,
 } from '../controls'
 
 export const StyleTab = observer(() => (

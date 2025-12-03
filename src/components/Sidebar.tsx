@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { ChevronLeft, Settings } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 import { ResponsiveIcon } from './controls'
-import { ContentTab, StyleTab, ContainerTab } from './sidebarTabs'
+import { ContainerTab, ContentTab, StyleTab } from './sidebarTabs'
 
 export const Sidebar = observer(() => {
   const blockType = editorStore.selectedBlockId ? 'ParagraphBlock' : 'Add Elements'

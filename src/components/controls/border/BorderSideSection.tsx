@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import {
-  BorderTopIcon,
-  BorderRightIcon,
+  BorderAllIcon,
   BorderBottomIcon,
   BorderLeftIcon,
-  BorderAllIcon,
+  BorderRightIcon,
+  BorderTopIcon,
+  StyleDashedIcon,
   StyleNoneIcon,
   StyleSolidIcon,
-  StyleDashedIcon,
 } from './BorderIcons'
 
 type BorderSide = 'all' | 'top' | 'right' | 'bottom' | 'left'

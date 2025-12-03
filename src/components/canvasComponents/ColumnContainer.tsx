@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { editorStore, type Column } from '../../stores/EditorStore'
+import { type Column, editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
 
 interface ColumnContainerProps {

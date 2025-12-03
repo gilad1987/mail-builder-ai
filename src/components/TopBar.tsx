@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import {
   ChevronLeft,
-  Monitor,
-  Tablet,
-  Smartphone,
-  RotateCcw,
   Download,
-  Save,
-  Sun,
+  Monitor,
   Moon,
+  RotateCcw,
+  Save,
+  Smartphone,
+  Sun,
+  Tablet,
 } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 

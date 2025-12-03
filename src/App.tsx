@@ -1,24 +1,41 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { editorStore } from './stores/EditorStore'
 import { TopBar } from './components/TopBar'
 import { BlockSelectPanel } from './components/BlockSelectPanel'
 import { Sidebar } from './components/Sidebar'
 import { Canvas } from './components/Canvas'
+import { IconSidebar } from './components/IconSidebar'
+import { GlobalStylesPanel } from './components/GlobalStylesPanel'
+import { LayersPanel } from './components/LayersPanel'
 import './styles/main.scss'
 
 const App = observer(() => {
+  const [activePanel, setActivePanel] = useState<string | null>('elements')
+
   useEffect(() => {
-    // Initialize theme on app load
     document.documentElement.setAttribute('data-theme', editorStore.theme)
   }, [])
+
+  const renderPanel = () => {
+    if (activePanel === 'styles') {
+      return <GlobalStylesPanel onClose={() => setActivePanel(null)} />
+    }
+    if (activePanel === 'layers') {
+      return <LayersPanel />
+    }
+    if (activePanel === 'elements') {
+      return editorStore.hasSelectedBlock ? <Sidebar /> : <BlockSelectPanel />
+    }
+    return null
+  }
 
   return (
     <div className="app-layout">
       <TopBar />
-
       <div className="main-content">
-        {editorStore.hasSelectedBlock ? <Sidebar /> : <BlockSelectPanel />}
+        <IconSidebar activePanel={activePanel} onPanelChange={setActivePanel} />
+        {renderPanel()}
         <Canvas />
       </div>
     </div>

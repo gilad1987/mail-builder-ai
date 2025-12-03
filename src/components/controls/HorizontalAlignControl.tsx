@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { AlignLeft, AlignCenter, AlignRight } from 'lucide-react'
+import { AlignCenter, AlignLeft, AlignRight } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 import { editorStore } from '../../stores/EditorStore'
 import { ResponsiveIcon } from './ResponsiveIcon'

@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import {
-  Image,
-  Minus,
-  Menu,
   AlignLeft,
   Anchor,
-  Layout,
-  MessageSquare,
-  Square,
   Globe,
+  Image,
+  Layout,
+  Menu,
+  MessageSquare,
+  Minus,
+  Square,
 } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 import { LayoutSection } from './LayoutSection'

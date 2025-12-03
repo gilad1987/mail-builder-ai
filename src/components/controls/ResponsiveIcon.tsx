@@ -1,4 +1,4 @@
-import { Monitor, Tablet, Smartphone } from 'lucide-react'
+import { Monitor, Smartphone, Tablet } from 'lucide-react'
 
 type DeviceType = 'desktop' | 'tablet' | 'mobile'
 

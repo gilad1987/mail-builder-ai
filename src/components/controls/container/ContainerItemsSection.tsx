@@ -2,24 +2,24 @@ import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import {
-  ArrowRight,
-  ArrowDown,
-  ArrowLeft,
-  ArrowUp,
-  AlignHorizontalJustifyStart,
-  AlignHorizontalJustifyCenter,
-  AlignHorizontalJustifyEnd,
-  AlignHorizontalSpaceBetween,
-  AlignHorizontalSpaceAround,
-  AlignHorizontalDistributeCenter,
-  AlignStartVertical,
   AlignCenterVertical,
   AlignEndVertical,
-  StretchHorizontal,
+  AlignHorizontalDistributeCenter,
+  AlignHorizontalJustifyCenter,
+  AlignHorizontalJustifyEnd,
+  AlignHorizontalJustifyStart,
+  AlignHorizontalSpaceAround,
+  AlignHorizontalSpaceBetween,
+  AlignStartVertical,
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUp,
   Link2,
   Link2Off,
-  WrapText,
   MoveHorizontal,
+  StretchHorizontal,
+  WrapText,
 } from 'lucide-react'
 import { tokens } from '../../../styles/tokens'
 import { editorStore } from '../../../stores/EditorStore'
