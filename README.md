@@ -11,12 +11,14 @@ A modern, drag-and-drop email template editor built with React 19, TypeScript, a
 - **Multi-Column Layouts** - 10+ pre-built column configurations (1-5 columns with various ratios)
 - **Responsive Preview** - Desktop, Tablet (iPad), and Mobile (iPhone) viewport modes
 - **Dark/Light Theme** - Toggle between themes with custom scrollbar styling
+- **HTML Export** - Export your email template as HTML
 
 ### Panels
 - **Elements Panel** - Drag blocks: Image, Spacer, Headline, Paragraph, Button, Column, Blog Post, Inner Section, Form
 - **Layers Panel** - Dynamic tree view of document structure (Body → Rows → Columns → Blocks)
 - **Global Styles Panel** - Configure colors, typography for Body, Heading, Subheading, Buttons, Links
 - **Assets Panel** - Image library with search, upload, and drag-to-canvas functionality
+- **AI Assistant Panel** - Chat interface to create pages and add elements using natural language
 
 ### Style Controls
 - **Container Controls** - Flexbox/Grid layout, width, min-height, direction, justify, align, gaps, wrap
@@ -40,6 +42,18 @@ pnpm build
 pnpm preview
 ```
 
+## 🌐 Deployment
+
+The app is configured for GitHub Pages deployment:
+
+```bash
+# Build and deploy manually
+pnpm build
+# Push to main branch to trigger automatic deployment
+```
+
+Automatic deployment is configured via GitHub Actions (`.github/workflows/deploy.yml`).
+
 ## 🛠 Tech Stack
 
 | Category | Technology |
@@ -57,8 +71,15 @@ pnpm preview
 ```
 src/
 ├── components/
+│   ├── aiAssistant/      # AI Assistant chat panel
+│   │   ├── AIAssistantPanel.tsx
+│   │   ├── ChatMessage.tsx
+│   │   └── ChatInput.tsx
 │   ├── assets/           # Assets panel components
 │   ├── canvasComponents/ # Canvas blocks and rows
+│   │   ├── BlockCard.tsx
+│   │   ├── ContentRow.tsx
+│   │   └── ColumnContainer.tsx
 │   ├── controls/         # Style control components
 │   │   ├── border/       # Border controls
 │   │   └── container/    # Container/flexbox controls
@@ -114,6 +135,7 @@ export const MyComponent = observer(() => (
 | `LayersPanel` | Document structure tree view |
 | `GlobalStylesPanel` | Global color and typography settings |
 | `AssetsPanel` | Image asset library |
+| `AIAssistantPanel` | Chat interface for AI-powered template creation |
 
 ## 📜 Available Scripts
 
@@ -132,21 +154,37 @@ The app supports light and dark themes via CSS custom properties:
 
 ```scss
 :root {
+  // Dark theme (default)
   --bg-primary: #1f2124;      // Main background
   --bg-secondary: #0c0d0e;    // Darker elements
+  --bg-elevated: #2a2d31;     // Elevated surfaces
   --text-primary: #d1d5db;    // Primary text
-  --accent: #60a5fa;          // Accent color
+  --text-secondary: #9ca3af;  // Secondary text
+  --accent: #6366f1;          // Accent color
   --input-bg: #0c0d0e;        // Input backgrounds
   --input-border: #374151;    // Input borders
 }
 
 :root[data-theme='light'] {
-  --bg-primary: #f9fafb;
-  --bg-secondary: white;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-elevated: #ffffff;
   --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --accent: #3b82f6;
   // ...
 }
 ```
+
+## 🤖 AI Assistant
+
+The AI Assistant panel provides a chat interface for creating and modifying email templates:
+
+- **Create pages** - "Create a welcome page for my newsletter"
+- **Add elements** - "Add a button" or "Add an image"
+- **Modify content** - Natural language commands to update your template
+
+Access the AI Assistant by clicking the sparkles icon (✨) at the bottom of the left sidebar.
 
 ## 📄 License
 

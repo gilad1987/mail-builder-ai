@@ -134,10 +134,10 @@ select {
 // =================================================================
 
 .header-bar {
-  height: 3.5rem;
+  height: 3rem;
   background-color: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
-  padding: 0 $spacing-4;
+  padding: 0 $spacing-3;
   box-shadow: $shadow-sm;
   @include flex-between;
   flex-shrink: 0;
@@ -150,20 +150,20 @@ select {
 
   &__center {
     @include flex-center;
-    gap: $spacing-1;
-    padding: $spacing-1;
+    gap: 2px;
+    padding: 3px;
     border: 1px solid var(--input-border);
-    border-radius: $border-radius-xl;
+    border-radius: $border-radius-lg;
     background-color: var(--bg-primary);
   }
 
   &__right {
     @include flex-start;
-    gap: $spacing-3;
+    gap: $spacing-2;
   }
 
   &__title {
-    font-size: $font-size-lg;
+    font-size: $font-size-base;
     font-weight: $font-weight-semibold;
     color: var(--text-primary);
     display: none;
@@ -176,10 +176,15 @@ select {
 
 // Device View Buttons
 .btn-device {
-  padding: $spacing-2;
-  border-radius: $border-radius-lg;
+  padding: 6px;
+  border-radius: $border-radius-md;
   transition: all $transition-fast;
   color: var(--text-secondary);
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 
   &:hover {
     background-color: var(--bg-elevated);
