@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import {
@@ -155,23 +154,69 @@ type JustifyContent =
   | 'space-around'
   | 'space-evenly'
 type AlignItems = 'flex-start' | 'center' | 'flex-end' | 'stretch'
+type FlexWrap = 'nowrap' | 'wrap'
 
 export const ContainerItemsSection = observer(() => {
-  const [direction, setDirection] = useState<FlexDirection>('row')
-  const [justifyContent, setJustifyContent] = useState<JustifyContent>('flex-start')
-  const [alignItems, setAlignItems] = useState<AlignItems>('flex-start')
-  const [columnGap, setColumnGap] = useState(20)
-  const [rowGap, setRowGap] = useState(20)
-  const [gapsLinked, setGapsLinked] = useState(true)
-  const [flexWrap, setFlexWrap] = useState<'nowrap' | 'wrap'>('nowrap')
+  const element = editorStore.selectedElement
+  if (!element) return null
 
-  const handleColumnGap = (v: number) => {
-    setColumnGap(v)
-    if (gapsLinked) setRowGap(v)
+  const style = element.style
+  const deviceStyle = element._style[editorStore.activeDevice]
+
+  // Get current values from model
+  const direction = (style.flexDirection as FlexDirection) || 'row'
+  const justifyContent = (style.justifyContent as JustifyContent) || 'flex-start'
+  const alignItems = (style.alignItems as AlignItems) || 'flex-start'
+  const flexWrap = (style.flexWrap as FlexWrap) || 'nowrap'
+
+  // Parse gap values - gap can be "20px" or "20px 10px" (row column)
+  const columnGap = (deviceStyle['columnGap-size'] as number) ?? 20
+  const rowGap = (deviceStyle['rowGap-size'] as number) ?? 20
+
+  // Check if gaps are linked (same value)
+  const gapsLinked = columnGap === rowGap
+
+  const handleDirectionChange = (value: FlexDirection) => {
+    editorStore.updateSelectedStyle('flexDirection', value)
   }
-  const handleRowGap = (v: number) => {
-    setRowGap(v)
-    if (gapsLinked) setColumnGap(v)
+
+  const handleJustifyContentChange = (value: JustifyContent) => {
+    editorStore.updateSelectedStyle('justifyContent', value)
+  }
+
+  const handleAlignItemsChange = (value: AlignItems) => {
+    editorStore.updateSelectedStyle('alignItems', value)
+  }
+
+  const handleFlexWrapChange = (value: FlexWrap) => {
+    editorStore.updateSelectedStyle('flexWrap', value)
+  }
+
+  const handleColumnGapChange = (value: number, linked: boolean) => {
+    editorStore.updateSelectedStyle('columnGap-size', value)
+    editorStore.updateSelectedStyle('columnGap-unit', 'px')
+    if (linked) {
+      editorStore.updateSelectedStyle('rowGap-size', value)
+      editorStore.updateSelectedStyle('rowGap-unit', 'px')
+    }
+  }
+
+  const handleRowGapChange = (value: number, linked: boolean) => {
+    editorStore.updateSelectedStyle('rowGap-size', value)
+    editorStore.updateSelectedStyle('rowGap-unit', 'px')
+    if (linked) {
+      editorStore.updateSelectedStyle('columnGap-size', value)
+      editorStore.updateSelectedStyle('columnGap-unit', 'px')
+    }
+  }
+
+  const handleToggleLink = () => {
+    if (!gapsLinked) {
+      // Link them - set both to columnGap value
+      editorStore.updateSelectedStyle('rowGap-size', columnGap)
+      editorStore.updateSelectedStyle('rowGap-unit', 'px')
+    }
+    // When unlinking, no action needed - they just become independent
   }
 
   return (
@@ -186,14 +231,14 @@ export const ContainerItemsSection = observer(() => {
             <button
               key={d}
               className={`group-btn ${direction === d ? 'is-active' : ''}`}
-              onClick={() => setDirection(d)}
+              onClick={() => handleDirectionChange(d)}
             >
               {
                 [
-                  <ArrowRight size={16} />,
-                  <ArrowDown size={16} />,
-                  <ArrowLeft size={16} />,
-                  <ArrowUp size={16} />,
+                  <ArrowRight size={16} key="right" />,
+                  <ArrowDown size={16} key="down" />,
+                  <ArrowLeft size={16} key="left" />,
+                  <ArrowUp size={16} key="up" />,
                 ][i]
               }
             </button>
@@ -219,7 +264,7 @@ export const ContainerItemsSection = observer(() => {
           <button
             key={v}
             className={`group-btn ${justifyContent === v ? 'is-active' : ''}`}
-            onClick={() => setJustifyContent(v)}
+            onClick={() => handleJustifyContentChange(v)}
           >
             <Icon size={16} />
           </button>
@@ -241,7 +286,7 @@ export const ContainerItemsSection = observer(() => {
             <button
               key={v}
               className={`group-btn ${alignItems === v ? 'is-active' : ''}`}
-              onClick={() => setAlignItems(v)}
+              onClick={() => handleAlignItemsChange(v)}
             >
               <Icon size={16} />
             </button>
@@ -253,7 +298,7 @@ export const ContainerItemsSection = observer(() => {
           <span className="field-label">
             Gaps <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
           </span>
-          <span className="unit-selector">px ▾</span>
+          <span className="unit-selector">px</span>
         </div>
         <div className="gaps-row">
           <div className="gap-input-group">
@@ -261,7 +306,7 @@ export const ContainerItemsSection = observer(() => {
               type="number"
               className="gap-input"
               value={columnGap}
-              onChange={e => handleColumnGap(Number(e.target.value))}
+              onChange={e => handleColumnGapChange(Number(e.target.value), gapsLinked)}
             />
             <span className="gap-label">Column</span>
           </div>
@@ -270,13 +315,13 @@ export const ContainerItemsSection = observer(() => {
               type="number"
               className="gap-input"
               value={rowGap}
-              onChange={e => handleRowGap(Number(e.target.value))}
+              onChange={e => handleRowGapChange(Number(e.target.value), gapsLinked)}
             />
             <span className="gap-label">Row</span>
           </div>
           <button
             className={`link-btn ${gapsLinked ? 'is-linked' : ''}`}
-            onClick={() => setGapsLinked(!gapsLinked)}
+            onClick={handleToggleLink}
           >
             {gapsLinked ? <Link2 size={16} /> : <Link2Off size={16} />}
           </button>
@@ -289,13 +334,13 @@ export const ContainerItemsSection = observer(() => {
         <div className="button-group">
           <button
             className={`group-btn ${flexWrap === 'nowrap' ? 'is-active' : ''}`}
-            onClick={() => setFlexWrap('nowrap')}
+            onClick={() => handleFlexWrapChange('nowrap')}
           >
             <MoveHorizontal size={16} />
           </button>
           <button
             className={`group-btn ${flexWrap === 'wrap' ? 'is-active' : ''}`}
-            onClick={() => setFlexWrap('wrap')}
+            onClick={() => handleFlexWrapChange('wrap')}
           >
             <WrapText size={16} />
           </button>

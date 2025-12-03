@@ -206,7 +206,7 @@ export const EmptyCanvas = () => {
 
   const handleAddSection = () => {
     const section = editorStore.addSection()
-    section.addColumn({ width: 100 } as ColumnJSON)
+    section.addColumn({}) // No width = auto-expand
   }
 
   const handleQuickLayout = (columns: number[]) => {

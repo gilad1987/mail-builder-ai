@@ -64,9 +64,7 @@ const Container = styled.div`
   }
 
   .column-blocks {
-    display: flex;
-    flex-direction: column;
-    gap: ${tokens.spacing[2]};
+    min-height: 40px;
   }
 
   .drop-placeholder {
@@ -129,10 +127,10 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
   }
 
   const handleAddColumn = () => {
-    // Add a new column after this one
+    // Add a new column after this one (no fixed width = auto-expand with flex: 1)
     const section = editorStore.findElementById(sectionId)
     if (section) {
-      editorStore.addColumnToSection(sectionId, 50)
+      editorStore.addColumnToSection(sectionId)
     }
   }
 
@@ -144,14 +142,21 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
     .filter(Boolean)
     .join(' ')
 
+  // If width is defined, use it as flex-basis and max-width
+  // If width is undefined, use flex: 1 to expand as much as possible
+  const flexStyle =
+    column.width !== undefined
+      ? { flex: `0 0 ${column.width}%`, maxWidth: `${column.width}%` }
+      : { flex: 1 }
+
   return (
     <Container
       ref={setNodeRef}
       className={classNames}
       style={{
         ...column.style,
-        flex: `1 1 ${column.width}%`,
-        maxWidth: `${column.width}%`,
+        ...flexStyle,
+        alignSelf: 'stretch',
       }}
       onClick={handleClick}
       onMouseOver={handleMouseOver}
@@ -172,7 +177,21 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
           {isOver ? 'Drop here' : 'Drop elements here'}
         </div>
       ) : (
-        <div className="column-blocks">
+        <div
+          className="column-blocks"
+          style={{
+            display: column.style.display || 'flex',
+            flexDirection:
+              (column.style.flexDirection as React.CSSProperties['flexDirection']) || 'column',
+            justifyContent: column.style.justifyContent,
+            alignItems: column.style.alignItems,
+            flexWrap: column.style.flexWrap as React.CSSProperties['flexWrap'],
+            gap:
+              column.style.columnGap || column.style.rowGap
+                ? `${column.style.rowGap || 0} ${column.style.columnGap || 0}`
+                : tokens.spacing[2],
+          }}
+        >
           {showPlaceholder && <div className="drop-placeholder">Drop here</div>}
           {column.children.map(child => (
             <BlockElement key={child.key} block={child} columnId={column.id} />

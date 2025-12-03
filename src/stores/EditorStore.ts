@@ -98,10 +98,10 @@ class EditorStore {
     return this.template.addSection()
   }
 
-  addColumnToSection(sectionId: string, width: number = 100): Column | null {
+  addColumnToSection(sectionId: string, width?: number): Column | null {
     const section = this.template.findById(sectionId) as Section | null
     if (section && section instanceof Section) {
-      return section.addColumn({ width } as ColumnJSON)
+      return section.addColumn(width !== undefined ? ({ width } as ColumnJSON) : {})
     }
     return null
   }
@@ -230,6 +230,19 @@ class EditorStore {
     const a = document.createElement('a')
     a.href = url
     a.download = 'email-template.html'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
+  downloadJSON() {
+    const json = this.exportAsJSON()
+    const blob = new Blob([JSON.stringify(json, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'email-template.json'
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)

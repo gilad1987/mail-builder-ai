@@ -38,10 +38,13 @@ const Container = styled.div`
   }
 
   .section-content {
-    display: flex;
-    gap: ${tokens.spacing[2]};
     padding: ${tokens.spacing[4]};
     min-height: 100px;
+
+    /* Ensure columns stretch to fill height */
+    > * {
+      align-self: stretch;
+    }
   }
 
   .section-empty {
@@ -123,7 +126,20 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
           Drop columns or layout here
         </div>
       ) : (
-        <div className="section-content">
+        <div
+          className="section-content"
+          style={{
+            display: section.style.display || 'flex',
+            flexDirection: section.style.flexDirection as React.CSSProperties['flexDirection'],
+            justifyContent: section.style.justifyContent,
+            alignItems: section.style.alignItems,
+            flexWrap: section.style.flexWrap as React.CSSProperties['flexWrap'],
+            gap:
+              section.style.columnGap || section.style.rowGap
+                ? `${section.style.rowGap || 0} ${section.style.columnGap || 0}`
+                : tokens.spacing[2],
+          }}
+        >
           {section.children.map((column, index) => (
             <ColumnBox
               key={column.key}

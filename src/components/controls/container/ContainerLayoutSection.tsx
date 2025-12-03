@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { ChevronDown } from 'lucide-react'
@@ -110,14 +109,51 @@ const Container = styled.div`
   }
 `
 
-type LayoutType = 'flexbox' | 'grid'
+type LayoutType = 'flex' | 'grid' | 'block'
 type ContentWidth = 'boxed' | 'full'
 
 export const ContainerLayoutSection = observer(() => {
-  const [layout, setLayout] = useState<LayoutType>('flexbox')
-  const [contentWidth, setContentWidth] = useState<ContentWidth>('boxed')
-  const [width, setWidth] = useState(760)
-  const [minHeight, setMinHeight] = useState(0)
+  const element = editorStore.selectedElement
+  if (!element) return null
+
+  const style = element.style
+
+  // Get current values from model
+  const display = (style.display as LayoutType) || 'flex'
+  const contentWidth: ContentWidth =
+    style.maxWidth === '100%' || style.maxWidth === 'none' ? 'full' : 'boxed'
+  const maxWidthSize = (element._style[editorStore.activeDevice]['maxWidth-size'] as number) || 650
+  const minHeightSize = (element._style[editorStore.activeDevice]['minHeight-size'] as number) || 0
+
+  const handleLayoutChange = (value: LayoutType) => {
+    editorStore.updateSelectedStyle('display', value)
+  }
+
+  const handleContentWidthChange = (value: ContentWidth) => {
+    if (value === 'full') {
+      editorStore.updateSelectedStyle('maxWidth', '100%')
+      editorStore.updateSelectedStyle('maxWidth-size', undefined)
+      editorStore.updateSelectedStyle('maxWidth-unit', undefined)
+    } else {
+      editorStore.updateSelectedStyle('maxWidth-size', 650)
+      editorStore.updateSelectedStyle('maxWidth-unit', 'px')
+    }
+  }
+
+  const handleWidthChange = (value: number) => {
+    editorStore.updateSelectedStyle('maxWidth-size', value)
+    editorStore.updateSelectedStyle('maxWidth-unit', 'px')
+  }
+
+  const handleMinHeightChange = (value: number) => {
+    if (value === 0) {
+      editorStore.updateSelectedStyle('minHeight-size', undefined)
+      editorStore.updateSelectedStyle('minHeight-unit', undefined)
+    } else {
+      editorStore.updateSelectedStyle('minHeight-size', value)
+      editorStore.updateSelectedStyle('minHeight-unit', 'px')
+    }
+  }
 
   return (
     <Container>
@@ -126,11 +162,12 @@ export const ContainerLayoutSection = observer(() => {
         <div className="dropdown-wrapper">
           <select
             className="dropdown"
-            value={layout}
-            onChange={e => setLayout(e.target.value as LayoutType)}
+            value={display}
+            onChange={e => handleLayoutChange(e.target.value as LayoutType)}
           >
-            <option value="flexbox">Flexbox</option>
+            <option value="flex">Flexbox</option>
             <option value="grid">Grid</option>
+            <option value="block">Block</option>
           </select>
           <ChevronDown size={14} className="dropdown-icon" />
         </div>
@@ -141,7 +178,7 @@ export const ContainerLayoutSection = observer(() => {
           <select
             className="dropdown"
             value={contentWidth}
-            onChange={e => setContentWidth(e.target.value as ContentWidth)}
+            onChange={e => handleContentWidthChange(e.target.value as ContentWidth)}
           >
             <option value="boxed">Boxed</option>
             <option value="full">Full Width</option>
@@ -149,36 +186,38 @@ export const ContainerLayoutSection = observer(() => {
           <ChevronDown size={14} className="dropdown-icon" />
         </div>
       </div>
-      <div className="slider-field">
-        <div className="slider-header">
-          <span className="field-label">
-            Width <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
-          </span>
-          <span className="unit-selector">px ▾</span>
+      {contentWidth === 'boxed' && (
+        <div className="slider-field">
+          <div className="slider-header">
+            <span className="field-label">
+              Width <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+            </span>
+            <span className="unit-selector">px</span>
+          </div>
+          <div className="slider-row">
+            <input
+              type="range"
+              className="slider"
+              min={100}
+              max={1200}
+              value={maxWidthSize}
+              onChange={e => handleWidthChange(Number(e.target.value))}
+            />
+            <input
+              type="number"
+              className="slider-input"
+              value={maxWidthSize}
+              onChange={e => handleWidthChange(Number(e.target.value))}
+            />
+          </div>
         </div>
-        <div className="slider-row">
-          <input
-            type="range"
-            className="slider"
-            min={100}
-            max={1200}
-            value={width}
-            onChange={e => setWidth(Number(e.target.value))}
-          />
-          <input
-            type="number"
-            className="slider-input"
-            value={width}
-            onChange={e => setWidth(Number(e.target.value))}
-          />
-        </div>
-      </div>
+      )}
       <div className="slider-field">
         <div className="slider-header">
           <span className="field-label">
             Min Height <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
           </span>
-          <span className="unit-selector">px ▾</span>
+          <span className="unit-selector">px</span>
         </div>
         <div className="slider-row">
           <input
@@ -186,14 +225,15 @@ export const ContainerLayoutSection = observer(() => {
             className="slider"
             min={0}
             max={1000}
-            value={minHeight}
-            onChange={e => setMinHeight(Number(e.target.value))}
+            value={minHeightSize}
+            onChange={e => handleMinHeightChange(Number(e.target.value))}
           />
           <input
             type="number"
             className="slider-input"
-            value={minHeight || ''}
-            onChange={e => setMinHeight(Number(e.target.value))}
+            value={minHeightSize || ''}
+            placeholder="0"
+            onChange={e => handleMinHeightChange(Number(e.target.value) || 0)}
           />
         </div>
         <p className="hint-text">To achieve full height Container use 100vh.</p>

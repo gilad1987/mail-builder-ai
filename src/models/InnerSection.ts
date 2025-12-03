@@ -12,12 +12,28 @@ export class InnerSection extends Box {
     super(json, parent)
     this.name = 'InnerSection'
     this.type = 'InnerSection' as WidgetType
-    this._style.desktop = {
-      flex: 1,
-      width: '100%',
-      'padding-size': 0,
-      'padding-unit': 'px',
+
+    // Set default styles, but preserve any styles from JSON
+    if (json._style) {
+      this._style = json._style as StyleRecord
+    } else {
+      this._style.desktop = {
+        flex: 1,
+        width: '100%',
+        'padding-size': 0,
+        'padding-unit': 'px',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
+        flexWrap: 'nowrap',
+        'columnGap-size': 8,
+        'columnGap-unit': 'px',
+        'rowGap-size': 8,
+        'rowGap-unit': 'px',
+      }
     }
+
     if (json.children) {
       this.fromJSON(json)
     }
@@ -25,9 +41,6 @@ export class InnerSection extends Box {
 
   fromJSON(json: InnerSectionJSON): void {
     this.children = (json.children || []).map(c => new Column(c, this))
-    if (json._style) {
-      this._style = json._style as StyleRecord
-    }
   }
 
   clone(): InnerSection {

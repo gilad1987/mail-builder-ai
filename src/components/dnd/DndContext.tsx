@@ -88,7 +88,7 @@ export const DndProvider = ({ children }: DndProviderProps) => {
             // Create column and add block
             const section = editorStore.findElementById(overData.sectionId)
             if (section && section.children.length === 0) {
-              const col = editorStore.addColumnToSection(overData.sectionId, 100)
+              const col = editorStore.addColumnToSection(overData.sectionId)
               if (col) {
                 editorStore.addBlockToColumn(col.id, data.blockType, {})
               }

@@ -1507,3 +1507,286 @@ select {
     color: var(--text-secondary);
   }
 }
+
+// =================================================================
+// EXPORT DROPDOWN
+// =================================================================
+
+.export-dropdown {
+  position: relative;
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 160px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-lg;
+    z-index: $z-index-dropdown;
+    overflow: hidden;
+    animation: dropdown-fade-in 150ms ease-out;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-sm;
+    color: var(--text-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: var(--bg-elevated);
+    }
+
+    svg {
+      color: var(--text-secondary);
+    }
+  }
+}
+
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// =================================================================
+// EXPORT MODAL
+// =================================================================
+
+.export-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-4;
+  animation: modal-overlay-fade-in 200ms ease-out;
+}
+
+.export-modal {
+  background-color: #1e1e1e;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 1000px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  animation: modal-slide-in 200ms ease-out;
+  border: 1px solid #3c3c3c;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    padding-right: $spacing-3;
+    background-color: #2d2d2d;
+    border-bottom: 1px solid #3c3c3c;
+    flex-shrink: 0;
+    height: 40px;
+  }
+
+  &__file-tab {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    padding: 0 $spacing-4;
+    height: 100%;
+    background-color: #1e1e1e;
+    border-right: 1px solid #3c3c3c;
+    font-size: $font-size-sm;
+    color: #cccccc;
+  }
+
+  &__file-icon {
+    color: #e06c75;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  &__file-name {
+    color: #cccccc;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__action-btn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+    padding: 4px 10px;
+    background-color: transparent;
+    border: 1px solid #4d4d4d;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    color: #cccccc;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: #3c3c3c;
+      border-color: #5a5a5a;
+    }
+
+    svg {
+      width: 14px;
+      height: 14px;
+      color: #858585;
+    }
+  }
+
+  &__close {
+    padding: $spacing-1;
+    color: #858585;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: #c42b1c;
+      color: white;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow: hidden;
+    background-color: #1e1e1e;
+  }
+
+  &__code {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    max-height: calc(85vh - 40px);
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+    font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Monaco', 'Consolas', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #d4d4d4;
+    
+    // Line styling
+    .code-line {
+      display: flex;
+      min-height: 21px;
+      
+      &:hover {
+        background-color: #2a2d2e;
+      }
+    }
+
+    .line-number {
+      display: inline-block;
+      min-width: 50px;
+      padding: 0 16px 0 16px;
+      text-align: right;
+      color: #858585;
+      background-color: #1e1e1e;
+      user-select: none;
+      border-right: 1px solid #3c3c3c;
+      flex-shrink: 0;
+    }
+
+    .line-content {
+      flex: 1;
+      padding-left: 16px;
+      white-space: pre;
+    }
+
+    .indent {
+      color: transparent;
+    }
+
+    // Syntax highlighting - WebStorm Darcula theme colors
+    .token-doctype {
+      color: #808080;
+    }
+
+    .token-comment {
+      color: #6a9955;
+      font-style: italic;
+    }
+
+    .token-bracket {
+      color: #808080;
+    }
+
+    .token-tag {
+      color: #e06c75;
+    }
+
+    .token-attr-name {
+      color: #d19a66;
+    }
+
+    .token-punctuation {
+      color: #abb2bf;
+    }
+
+    .token-attr-value {
+      color: #98c379;
+    }
+
+    .token-text {
+      color: #d4d4d4;
+    }
+
+    // CSS tokens
+    .token-css-bracket {
+      color: #d4d4d4;
+    }
+
+    .token-css-property {
+      color: #9cdcfe;
+    }
+
+    .token-css-value {
+      color: #ce9178;
+    }
+  }
+}
+
+@keyframes modal-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-slide-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

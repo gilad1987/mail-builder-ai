@@ -10,17 +10,32 @@ export interface ColumnJSON extends BoxJSON {
 
 export class Column extends Box {
   declare children: (Block | InnerSection)[]
-  width: number = 100 // percentage
+  width?: number // percentage, undefined means auto (flex: 1)
 
   constructor(json: ColumnJSON = {}, parent: Box | null = null) {
     super(json, parent)
     this.name = 'Column'
     this.type = 'Column' as WidgetType
-    this.width = json.width || 100
-    this._style.desktop = {
-      flex: 1,
-      'padding-size': 10,
-      'padding-unit': 'px',
+    this.width = json.width // undefined means auto-expand
+
+    // Set default styles, but preserve any styles from JSON
+    if (json._style) {
+      this._style = json._style as StyleRecord
+    } else {
+      this._style.desktop = {
+        flex: 1,
+        'padding-size': 10,
+        'padding-unit': 'px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
+        flexWrap: 'nowrap',
+        'columnGap-size': 8,
+        'columnGap-unit': 'px',
+        'rowGap-size': 8,
+        'rowGap-unit': 'px',
+      }
     }
 
     makeObservable(this, {
@@ -39,9 +54,6 @@ export class Column extends Box {
       }
       return new Block(c, this)
     })
-    if (json._style) {
-      this._style = json._style as StyleRecord
-    }
     if (json.width !== undefined) {
       this.width = json.width
     }
@@ -66,7 +78,8 @@ export class Column extends Box {
   }
 
   renderHTML(): string {
-    return `<div class="${this.id}" style="width:${this.width}%;${this.styleToCSS(this._style.desktop)}">
+    const widthStyle = this.width !== undefined ? `width:${this.width}%;` : 'flex:1;'
+    return `<div class="${this.id}" style="${widthStyle}${this.styleToCSS(this._style.desktop)}">
       ${this.children.map(c => c.renderHTML()).join('')}
     </div>`
   }
