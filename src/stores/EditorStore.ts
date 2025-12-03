@@ -14,10 +14,12 @@ export interface Row {
   blocks: Block[]
 }
 
+export type TabType = 'Content' | 'Style' | 'Container'
+
 class EditorStore {
   selectedBlockId: string | null = 'row1-1'
   activeDevice: DeviceType = 'desktop'
-  activeTab: 'Content' | 'Style' = 'Style'
+  activeTab: TabType = 'Style'
 
   rows: Row[] = [
     {
@@ -57,7 +59,7 @@ class EditorStore {
     this.activeDevice = device
   }
 
-  setActiveTab(tab: 'Content' | 'Style') {
+  setActiveTab(tab: TabType) {
     this.activeTab = tab
   }
 

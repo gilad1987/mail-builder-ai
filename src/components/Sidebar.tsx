@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { ChevronLeft, Settings } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 import { ResponsiveIcon } from './controls'
-import { ContentTab, StyleTab } from './sidebarTabs'
+import { ContentTab, StyleTab, ContainerTab } from './sidebarTabs'
 
 export const Sidebar = observer(() => {
   const blockType = editorStore.selectedBlockId ? 'ParagraphBlock' : 'Add Elements'
@@ -39,11 +39,18 @@ export const Sidebar = observer(() => {
         >
           Style
         </button>
+        <button
+          className={`tabs__btn ${editorStore.activeTab === 'Container' ? 'tabs__btn--active' : ''}`}
+          onClick={() => editorStore.setActiveTab('Container')}
+        >
+          Container
+        </button>
       </div>
 
       <div className="tab-content">
         {editorStore.activeTab === 'Content' && <ContentTab />}
         {editorStore.activeTab === 'Style' && <StyleTab />}
+        {editorStore.activeTab === 'Container' && <ContainerTab />}
       </div>
     </div>
   )

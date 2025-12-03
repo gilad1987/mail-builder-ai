@@ -229,7 +229,7 @@ select {
   border-bottom: 1px solid $gray-200;
 
   &__btn {
-    width: 50%;
+    flex: 1;
     padding: $spacing-3;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
