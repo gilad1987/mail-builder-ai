@@ -31,9 +31,9 @@ export const StyleTab = observer(() => (
       </div>
     </div>
     <HorizontalAlignControl selectedAlign="left" />
-    <SliderField label="Letter Spacing" value="0" unit="px" />
-    <SliderField label="Font size" value="16" unit="px" />
-    <SliderField label="Line height" value="16" unit="px" />
+    <SliderField label="Letter Spacing" defaultValue={0} max={10} unit="px" />
+    <SliderField label="Font size" defaultValue={16} max={72} unit="px" />
+    <SliderField label="Line height" defaultValue={16} max={72} unit="px" />
     <SimpleDropdownField label="Text Decoration" value="Default" />
     <SimpleDropdownField label="Text Transform" value="Default" />
     <SimpleDropdownField label="Font family" value="Arial" />
