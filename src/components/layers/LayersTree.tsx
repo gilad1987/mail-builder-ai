@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 import { editorStore } from '../../stores/EditorStore'
-import { Block, Box, Column, Section } from '../../models'
+import { Block, Box, Column, InnerSection, Section } from '../../models'
 
 const Container = styled.div`
   .tree-item {
@@ -119,6 +119,25 @@ export const LayersTree = observer(() => {
             </span>
             <Columns size={16} className="tree-icon" />
             <span className="tree-label">Column ({element.width}%)</span>
+          </div>
+          {isExpanded && element.children.map(child => renderElement(child, depth + 1))}
+        </div>
+      )
+    }
+
+    if (element instanceof InnerSection) {
+      return (
+        <div key={element.key}>
+          <div
+            className={`tree-item ${isSelected ? 'is-selected' : ''}`}
+            style={{ paddingLeft: `${depth * 16 + 8}px` }}
+            onClick={() => editorStore.setSelectedElement(element.id)}
+          >
+            <span className="tree-toggle" onClick={e => toggle(element.id, e)}>
+              {hasChildren && (isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
+            </span>
+            <Square size={16} className="tree-icon" />
+            <span className="tree-label">Inner Section</span>
           </div>
           {isExpanded && element.children.map(child => renderElement(child, depth + 1))}
         </div>

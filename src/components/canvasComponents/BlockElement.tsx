@@ -6,6 +6,7 @@ import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
 import { Draggable } from '../dnd'
 import { BlockActions, ElementLabel } from '../WidgetActions'
+import { ColumnBox } from './ColumnBox'
 
 interface BlockElementProps {
   block: Box
@@ -135,29 +136,13 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
               Empty Inner Section
             </div>
           ) : (
-            block.children.map(col => (
-              <div
+            block.children.map((col, index) => (
+              <ColumnBox
                 key={col.key}
-                style={{
-                  ...col.style,
-                  flex: col.width === 100 ? 1 : `0 0 ${col.width}%`,
-                  width: `${col.width}%`,
-                  padding: '8px',
-                  background: '#f9f9f9',
-                  border: '1px dashed #ddd',
-                  borderRadius: '4px',
-                  minHeight: '40px',
-                  boxSizing: 'border-box',
-                }}
-              >
-                {col.children.length === 0 ? (
-                  <span style={{ color: '#999', fontSize: '12px' }}>Column ({col.width}%)</span>
-                ) : (
-                  col.children.map(child => (
-                    <BlockElement key={child.key} block={child} columnId={col.id} />
-                  ))
-                )}
-              </div>
+                column={col}
+                sectionId={block.id}
+                isLast={index === block.children.length - 1}
+              />
             ))
           )}
         </div>

@@ -6,6 +6,7 @@ import {
   Column,
   type ColumnJSON,
   type DeviceType,
+  InnerSection,
   Section,
   setActiveDeviceGetter,
   type StyleValue,
@@ -109,9 +110,19 @@ class EditorStore {
     columnId: string,
     blockType: string,
     data: Record<string, unknown> = {}
-  ): Block | null {
+  ): Block | InnerSection | null {
     const column = this.template.findById(columnId) as Column | null
     if (column && column instanceof Column) {
+      // Handle InnerSection separately
+      if (blockType === 'InnerSection') {
+        const innerSection = column.addInnerSection({})
+        // Add two default columns to the inner section
+        innerSection.addColumn({ width: 50 })
+        innerSection.addColumn({ width: 50 })
+        this.selectedElementId = innerSection.id
+        return innerSection
+      }
+
       // Map block type names to WidgetType and default data
       const typeMap: Record<string, { type: WidgetType; defaultData: Record<string, unknown> }> = {
         Image: { type: 'Image', defaultData: { src: '', alt: 'Image' } },
