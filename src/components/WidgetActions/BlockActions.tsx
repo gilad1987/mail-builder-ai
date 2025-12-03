@@ -10,8 +10,8 @@ interface BlockActionsProps {
 
 const Container = styled.div`
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: -37px;
+  right: 0;
   display: flex;
   align-items: center;
   gap: 4px;

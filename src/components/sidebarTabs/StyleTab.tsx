@@ -12,12 +12,15 @@ import {
 } from '../controls'
 
 export const StyleTab = observer(() => {
+  const element = editorStore.selectedElement
+  const elementType = element?.type || 'Element'
+
   return (
     <div>
-      {/*<div className="sidebar__header">*/}
-      {/*  <h3 className="sidebar__title">{element ? elementType : 'No Selection'}</h3>*/}
-      {/*  {!element && <p className="sidebar__hint">Select an element to edit its styles</p>}*/}
-      {/*</div>*/}
+      <div className="sidebar__header">
+        <h3 className="sidebar__title">{element ? elementType : 'No Selection'}</h3>
+        {!element && <p className="sidebar__hint">Select an element to edit its styles</p>}
+      </div>
 
       <SpacingControl label="Margin" />
       <SpacingControl label="Padding" />

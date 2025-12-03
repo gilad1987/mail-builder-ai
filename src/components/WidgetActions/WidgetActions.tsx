@@ -11,7 +11,7 @@ interface WidgetActionsProps {
 const Container = styled.div`
   position: absolute;
   right: 0;
-  top: 0;
+  top: -28px;
   font-size: 12px;
   color: #fdfdfd;
   background: ${tokens.colors.blue[500]};
@@ -19,7 +19,7 @@ const Container = styled.div`
   z-index: 100;
   transition: padding-left 250ms cubic-bezier(0, 0, 0, 1.08);
   overflow: hidden;
-  border-radius: 0px 0px 0px 4px;
+  border-radius: 4px;
   display: flex;
   align-items: center;
 

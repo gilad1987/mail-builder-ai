@@ -5,7 +5,7 @@ import { Block, Box, InnerSection } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
 import { Draggable } from '../dnd'
-import { BlockActions } from '../WidgetActions'
+import { BlockActions, ElementLabel } from '../WidgetActions'
 
 interface BlockElementProps {
   block: Box
@@ -17,19 +17,18 @@ const Container = styled.div`
   flex: 1;
   width: 100%;
   display: block;
+  overflow: visible;
   padding: ${tokens.spacing[3]};
-  padding-top: 2rem;
   background: #ffffff;
   border: 1px solid ${tokens.colors.gray[200]};
   border-radius: ${tokens.borderRadius.sm};
   cursor: pointer;
   transition: all ${tokens.transition.fast};
 
-  &:hover {
+  &.is-hovered {
     border-color: #1e88e5;
 
-    .block-actions,
-    .type-badge {
+    > .element-label {
       opacity: 1;
     }
   }
@@ -38,8 +37,7 @@ const Container = styled.div`
     border-color: #1e88e5;
     box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
 
-    .block-actions,
-    .type-badge {
+    .block-actions {
       opacity: 1;
     }
   }
@@ -71,6 +69,18 @@ const Container = styled.div`
 
 export const BlockElement = observer(({ block, columnId }: BlockElementProps) => {
   const isSelected = editorStore.selectedElementId === block.id
+  const isHovered = editorStore.hoveredElementId === block.id
+
+  const handleMouseOver = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    editorStore.setHoveredElement(block.id)
+  }
+
+  const handleMouseLeave = () => {
+    if (editorStore.hoveredElementId === block.id) {
+      editorStore.setHoveredElement(null)
+    }
+  }
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -97,13 +107,19 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
 
   // Handle InnerSection (nested columns)
   if (block instanceof InnerSection) {
+    const classNames = [isSelected ? 'is-selected' : '', isHovered ? 'is-hovered' : '']
+      .filter(Boolean)
+      .join(' ')
+
     return (
       <Container
-        className={isSelected ? 'is-selected' : ''}
+        className={classNames}
         style={{ ...block.style, flex: 1, width: '100%' }}
         onClick={handleClick}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
       >
-        {/*<TypeBadge type="section" />*/}
+        <ElementLabel label="Inner Section" color="#607d8b" />
         <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
         <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
           {block.children.length === 0 ? (
@@ -151,6 +167,10 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
 
   // Handle Block
   if (block instanceof Block) {
+    const classNames = [isSelected ? 'is-selected' : '', isHovered ? 'is-hovered' : '']
+      .filter(Boolean)
+      .join(' ')
+
     return (
       <Draggable
         id={`canvas-block-${block.id}`}
@@ -163,11 +183,13 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
         style={{ flex: 1, width: '100%', display: 'block' }}
       >
         <Container
-          className={isSelected ? 'is-selected' : ''}
+          className={classNames}
           style={block.style}
           onClick={handleClick}
+          onMouseOver={handleMouseOver}
+          onMouseLeave={handleMouseLeave}
         >
-          {/*<TypeBadge type={getBlockBadgeType(block.type)} />*/}
+          <ElementLabel label={block.type} color="#37474f" />
           <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
           {renderBlockContent(block)}
         </Container>

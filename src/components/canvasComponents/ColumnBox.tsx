@@ -5,7 +5,7 @@ import { Column } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
 import { useDndState } from '../dnd'
-import { AddColumnButton, ColumnActions } from '../WidgetActions'
+import { AddColumnButton, ColumnActions, ElementLabel } from '../WidgetActions'
 import { BlockElement } from './BlockElement'
 
 interface ColumnBoxProps {
@@ -18,19 +18,18 @@ const Container = styled.div`
   position: relative;
   min-height: 80px;
   min-width: 0; /* Allow flex shrinking */
+  overflow: visible;
   background: #ffffff;
   border: 2px dashed ${tokens.colors.gray[300]};
   border-radius: ${tokens.borderRadius.md};
   padding: ${tokens.spacing[3]};
   transition: all ${tokens.transition.fast};
 
-  &:hover {
+  &.is-hovered {
     border-color: #1e88e5;
     border-style: solid;
 
-    .column-actions,
-    .type-badge,
-    .add-column-btn {
+    > .element-label {
       opacity: 1;
     }
   }
@@ -41,7 +40,7 @@ const Container = styled.div`
     box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
 
     .column-actions,
-    .type-badge {
+    .add-column-btn {
       opacity: 1;
     }
   }
@@ -68,7 +67,6 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${tokens.spacing[2]};
-    padding-top: 2rem;
   }
 
   .drop-placeholder {
@@ -87,6 +85,7 @@ const Container = styled.div`
 
 export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps) => {
   const isSelected = editorStore.selectedElementId === column.id
+  const isHovered = editorStore.hoveredElementId === column.id
   const { activeData } = useDndState()
 
   // Make this container directly droppable
@@ -96,6 +95,25 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
   })
 
   const showPlaceholder = isOver && activeData?.source === 'sidebar'
+
+  const handleMouseOver = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    // Only set hover if mouse is directly over this element or empty area
+    const target = e.target as HTMLElement
+    if (
+      e.currentTarget === e.target ||
+      target.classList.contains('column-empty') ||
+      target.classList.contains('column-blocks')
+    ) {
+      editorStore.setHoveredElement(column.id)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (editorStore.hoveredElementId === column.id) {
+      editorStore.setHoveredElement(null)
+    }
+  }
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -118,7 +136,11 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
     }
   }
 
-  const classNames = [isSelected ? 'is-selected' : '', isOver ? 'is-over' : '']
+  const classNames = [
+    isSelected ? 'is-selected' : '',
+    isOver ? 'is-over' : '',
+    isHovered ? 'is-hovered' : '',
+  ]
     .filter(Boolean)
     .join(' ')
 
@@ -132,8 +154,10 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
         maxWidth: `${column.width}%`,
       }}
       onClick={handleClick}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
     >
-      {/*<TypeBadge type="column" />*/}
+      <ElementLabel label="Column" color="#1e88e5" />
       <ColumnActions onCopy={handleCopy} onDelete={handleDelete} />
       {!isLast && <AddColumnButton onClick={handleAddColumn} />}
 

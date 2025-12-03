@@ -11,15 +11,15 @@ interface SectionActionsProps {
 
 const Container = styled.div`
   position: absolute;
-  top: 0;
+  top: -33px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 0;
   background: linear-gradient(135deg, #26c6da 0%, #00acc1 100%);
-  border-radius: 0 0 ${tokens.borderRadius.md} ${tokens.borderRadius.md};
-  padding: 4px 8px;
+  border-radius: ${tokens.borderRadius.sm};
+  padding: 2px 5px;
   z-index: 50;
   opacity: 0;
   transition: opacity ${tokens.transition.fast};
@@ -29,8 +29,8 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
     background: transparent;
     border: none;
     color: white;
@@ -57,20 +57,20 @@ export const SectionActions = ({ onCopy, onMove, onGrid, onDelete }: SectionActi
   return (
     <Container className="section-actions">
       <button onClick={e => handleClick(e, onCopy)} title="Duplicate Section">
-        <Copy size={16} />
+        <Copy size={12} />
       </button>
       {onMove && (
         <button onClick={e => handleClick(e, onMove)} title="Move Section">
-          <Move size={16} />
+          <Move size={12} />
         </button>
       )}
       {onGrid && (
         <button onClick={e => handleClick(e, onGrid)} title="Layout Options">
-          <LayoutGrid size={16} />
+          <LayoutGrid size={12} />
         </button>
       )}
       <button className="delete" onClick={e => handleClick(e, onDelete)} title="Delete Section">
-        <Trash2 size={16} />
+        <Trash2 size={12} />
       </button>
     </Container>
   )

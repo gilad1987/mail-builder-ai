@@ -253,12 +253,6 @@ select {
     color: var(--text-primary);
   }
 
-  &__hint {
-    font-size: $font-size-xs;
-    color: var(--text-muted);
-    margin-top: $spacing-1;
-  }
-
   &__back {
     @include flex-start;
     cursor: pointer;
@@ -272,6 +266,12 @@ select {
         color: var(--text-primary);
       }
     }
+  }
+
+  &__hint {
+    font-size: $font-size-xs;
+    color: var(--text-secondary);
+    margin-top: $spacing-1;
   }
 
   &__footer {

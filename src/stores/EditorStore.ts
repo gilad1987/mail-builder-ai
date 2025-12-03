@@ -22,6 +22,7 @@ export type ThemeType = 'light' | 'dark'
 class EditorStore {
   template: Template
   selectedElementId: string | null = null
+  hoveredElementId: string | null = null
   activeDevice: DeviceType = 'desktop'
   activeTab: TabType = 'Style'
   theme: ThemeType = 'dark'
@@ -53,6 +54,10 @@ class EditorStore {
 
   setSelectedElement(id: string | null) {
     this.selectedElementId = id
+  }
+
+  setHoveredElement(id: string | null) {
+    this.hoveredElementId = id
   }
 
   get selectedElement(): Box | null {

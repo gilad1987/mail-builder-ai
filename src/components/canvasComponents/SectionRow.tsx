@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Section } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
-import { SectionActions } from '../WidgetActions'
+import { ElementLabel, SectionActions } from '../WidgetActions'
 import { ColumnBox } from './ColumnBox'
 
 interface SectionRowProps {
@@ -13,15 +13,17 @@ interface SectionRowProps {
 
 const Container = styled.div`
   position: relative;
+  overflow: visible;
+  margin-top: 36px; /* Space for floating actions */
   border: 2px solid transparent;
   border-radius: ${tokens.borderRadius.md};
   transition: all ${tokens.transition.fast};
   margin-bottom: ${tokens.spacing[4]};
 
-  &:hover {
+  &.is-hovered {
     border-color: #26c6da;
 
-    .section-actions {
+    > .element-label {
       opacity: 1;
     }
   }
@@ -54,27 +56,33 @@ const Container = styled.div`
     margin: ${tokens.spacing[4]};
     transition: all ${tokens.transition.fast};
   }
-
-  .section-label {
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background: var(--bg-primary);
-    padding: 0 ${tokens.spacing[2]};
-    font-size: ${tokens.fontSize.xs};
-    color: #26c6da;
-    font-weight: ${tokens.fontWeight.medium};
-  }
 `
 
 export const SectionRow = observer(({ section }: SectionRowProps) => {
   const isSelected = editorStore.selectedElementId === section.id
+  const isHovered = editorStore.hoveredElementId === section.id
 
   // Make empty section directly droppable
   const { isOver, setNodeRef } = useDroppable({
     id: `section-${section.id}`,
     data: { accepts: 'layout', sectionId: section.id },
   })
+
+  const handleMouseOver = (e: React.MouseEvent) => {
+    // Only set hover if the mouse is directly over this element (not a child)
+    if (
+      e.currentTarget === e.target ||
+      e.target === e.currentTarget.querySelector('.section-content')
+    ) {
+      editorStore.setHoveredElement(section.id)
+    }
+  }
+
+  const handleMouseLeave = () => {
+    if (editorStore.hoveredElementId === section.id) {
+      editorStore.setHoveredElement(null)
+    }
+  }
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -89,14 +97,20 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
     editorStore.removeElement(section.id)
   }
 
+  const classNames = [isSelected ? 'is-selected' : '', isHovered ? 'is-hovered' : '']
+    .filter(Boolean)
+    .join(' ')
+
   return (
     <Container
-      className={isSelected ? 'is-selected' : ''}
+      className={classNames}
       style={section.style}
       onClick={handleClick}
+      onMouseOver={handleMouseOver}
+      onMouseLeave={handleMouseLeave}
     >
+      <ElementLabel label="Section" color="#26c6da" />
       <SectionActions onCopy={handleCopy} onDelete={handleDelete} />
-      <span className="section-label">Section</span>
       {section.children.length === 0 ? (
         <div
           ref={setNodeRef}
