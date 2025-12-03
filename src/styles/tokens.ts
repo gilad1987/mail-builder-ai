@@ -31,7 +31,7 @@ export const tokens = {
     indigo: { 500: '#6366f1' },
     teal: { 500: '#14b8a6' },
     yellow: { 500: '#f59e0b' },
-    purple: { 500: '#8b5cf6' },
+    purple: { 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' },
   },
   fontSize: {
     xs: '0.75rem',
