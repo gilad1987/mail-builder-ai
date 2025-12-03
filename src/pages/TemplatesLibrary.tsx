@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Eye, Pencil, Copy, Trash2, Plus, Mail, Sparkles, Send } from 'lucide-react'
-import { emailTemplates, type EmailTemplateItem } from '../assets/email-templates'
+import { Copy, Eye, Mail, Pencil, Plus, Send, Sparkles, Trash2 } from 'lucide-react'
+import { type EmailTemplateItem, emailTemplates } from '../assets/email-templates'
 import { editorStore } from '../stores/EditorStore'
 import type { TemplateJSON } from '../models/Template'
 

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
-import { X, Copy, Check, Download } from 'lucide-react'
-import React, { useState, useMemo } from 'react'
+import { Check, Copy, Download, X } from 'lucide-react'
+import React, { useMemo, useState } from 'react'
 import { editorStore } from '../stores/EditorStore'
 
 interface ExportModalProps {

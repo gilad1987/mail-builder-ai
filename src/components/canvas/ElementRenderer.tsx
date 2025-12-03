@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { Box, Section, Column, Block, InnerSection } from '../../models'
+import { Block, Box, Column, InnerSection, Section } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
 

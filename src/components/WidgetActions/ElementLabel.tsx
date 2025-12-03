@@ -3,11 +3,11 @@ import {
   Columns,
   Image,
   LayoutGrid,
-  Type,
-  MousePointer,
-  Square,
   Minus,
+  MousePointer,
   SeparatorHorizontal,
+  Square,
+  Type,
 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 

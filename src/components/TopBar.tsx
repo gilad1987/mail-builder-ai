@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ChevronDown,
