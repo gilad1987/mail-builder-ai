@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Copy, Move, LayoutGrid, Trash2 } from 'lucide-react'
+import { Copy, LayoutGrid, Move, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface ColumnActionsProps {

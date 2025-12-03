@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { LayoutGrid, Columns, Type, Image, Square } from 'lucide-react'
+import { Columns, Image, LayoutGrid, Square, Type } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 type BadgeType = 'section' | 'column' | 'block' | 'image' | 'text'

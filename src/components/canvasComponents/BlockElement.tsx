@@ -1,11 +1,11 @@
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { Image } from 'lucide-react'
-import { Block, InnerSection, Box } from '../../models'
+import { Block, Box, InnerSection } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
 import { Draggable } from '../dnd'
-import { BlockActions, TypeBadge } from '../WidgetActions'
+import { BlockActions } from '../WidgetActions'
 
 interface BlockElementProps {
   block: Box
@@ -89,11 +89,11 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
     editorStore.removeElement(block.id)
   }
 
-  const getBlockBadgeType = (blockType: string) => {
-    if (blockType === 'Image') return 'image'
-    if (blockType === 'Paragraph' || blockType === 'Headline') return 'text'
-    return 'block'
-  }
+  // const getBlockBadgeType = (blockType: string) => {
+  //   if (blockType === 'Image') return 'image'
+  //   if (blockType === 'Paragraph' || blockType === 'Headline') return 'text'
+  //   return 'block'
+  // }
 
   // Handle InnerSection (nested columns)
   if (block instanceof InnerSection) {
@@ -103,7 +103,7 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
         style={{ ...block.style, flex: 1, width: '100%' }}
         onClick={handleClick}
       >
-        <TypeBadge type="section" />
+        {/*<TypeBadge type="section" />*/}
         <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
         <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
           {block.children.length === 0 ? (
@@ -167,7 +167,7 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
           style={block.style}
           onClick={handleClick}
         >
-          <TypeBadge type={getBlockBadgeType(block.type)} />
+          {/*<TypeBadge type={getBlockBadgeType(block.type)} />*/}
           <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
           {renderBlockContent(block)}
         </Container>

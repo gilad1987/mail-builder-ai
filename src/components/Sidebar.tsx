@@ -5,7 +5,8 @@ import { ResponsiveIcon } from './controls'
 import { ContainerTab, ContentTab, StyleTab } from './sidebarTabs'
 
 export const Sidebar = observer(() => {
-  const blockType = editorStore.selectedBlockId ? 'ParagraphBlock' : 'Add Elements'
+  const element = editorStore.selectedElement
+  const blockType = editorStore.selectedBlockId ? element?.type : 'Add Elements'
 
   return (
     <div className="sidebar">

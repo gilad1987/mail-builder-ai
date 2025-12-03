@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Trash2, Copy, ExternalLink } from 'lucide-react'
+import { Copy, ExternalLink, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface BlockActionsProps {

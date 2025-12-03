@@ -1,20 +1,20 @@
 import { useState } from 'react'
 import {
-  DndContext as DndKitContext,
-  DragOverlay,
   closestCenter,
+  DndContext as DndKitContext,
+  type DragEndEvent,
+  type DragOverEvent,
+  DragOverlay,
+  type DragStartEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-  type DragStartEvent,
-  type DragEndEvent,
-  type DragOverEvent,
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { editorStore } from '../../stores/EditorStore'
 import { DragPreview } from './DragPreview'
-import { DndStateContext, type DndState } from './useDndState'
+import { type DndState, DndStateContext } from './useDndState'
 import type { DragData, DropData } from './types'
 
 interface DndProviderProps {

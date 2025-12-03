@@ -1,16 +1,16 @@
 import { makeAutoObservable } from 'mobx'
 import {
-  Template,
-  Section,
-  Column,
   Block,
   Box,
-  setActiveDeviceGetter,
-  type DeviceType,
-  type WidgetType,
-  type StyleValue,
   type BoxJSON,
+  Column,
   type ColumnJSON,
+  type DeviceType,
+  Section,
+  setActiveDeviceGetter,
+  type StyleValue,
+  Template,
+  type WidgetType,
 } from '../models'
 
 export type { DeviceType, WidgetType }

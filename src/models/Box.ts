@@ -1,4 +1,4 @@
-import { makeObservable, observable, computed, action } from 'mobx'
+import { action, computed, makeObservable, observable } from 'mobx'
 import { v4 as uuidv4 } from 'uuid'
 
 export type WidgetType =

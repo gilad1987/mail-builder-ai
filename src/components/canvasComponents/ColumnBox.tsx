@@ -5,7 +5,7 @@ import { Column } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
 import { useDndState } from '../dnd'
-import { ColumnActions, TypeBadge, AddColumnButton } from '../WidgetActions'
+import { AddColumnButton, ColumnActions } from '../WidgetActions'
 import { BlockElement } from './BlockElement'
 
 interface ColumnBoxProps {
@@ -133,7 +133,7 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
       }}
       onClick={handleClick}
     >
-      <TypeBadge type="column" />
+      {/*<TypeBadge type="column" />*/}
       <ColumnActions onCopy={handleCopy} onDelete={handleDelete} />
       {!isLast && <AddColumnButton onClick={handleAddColumn} />}
 

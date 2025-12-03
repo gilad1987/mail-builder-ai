@@ -1,4 +1,4 @@
-import type { DeviceType, StyleRecord, StyleProperties, StyleValue } from '../models'
+import type { DeviceType, StyleProperties, StyleRecord, StyleValue } from '../models'
 
 /**
  * Utility functions for working with responsive styles

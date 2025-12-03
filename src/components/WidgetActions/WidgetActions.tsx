@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Edit, Copy, Trash2 } from 'lucide-react'
+import { Copy, Edit, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface WidgetActionsProps {

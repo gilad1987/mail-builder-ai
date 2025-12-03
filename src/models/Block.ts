@@ -1,4 +1,4 @@
-import { Box, type WidgetType, type BoxJSON, type StyleRecord } from './Box'
+import { Box, type BoxJSON, type StyleRecord, type WidgetType } from './Box'
 
 export interface BlockJSON extends BoxJSON {
   type?: WidgetType

@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 import { editorStore } from '../../stores/EditorStore'
-import { Box, Section, Column, Block } from '../../models'
+import { Block, Box, Column, Section } from '../../models'
 
 const Container = styled.div`
   .tree-item {
