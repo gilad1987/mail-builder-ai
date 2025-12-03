@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   ChevronDown,
   ChevronLeft,
@@ -36,6 +37,7 @@ const DeviceButton = observer(({ device, icon: Icon, label }: DeviceButtonProps)
 ))
 
 export const TopBar = observer(() => {
+  const navigate = useNavigate()
   const [showExportMenu, setShowExportMenu] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
   const exportMenuRef = useRef<HTMLDivElement>(null)
@@ -64,7 +66,13 @@ export const TopBar = observer(() => {
     <>
       <header className="header-bar">
         <div className="header-bar__left">
-          <ChevronLeft size={20} className="btn-ghost" />
+          <button
+            className="btn-ghost"
+            onClick={() => navigate('/templates')}
+            title="Back to Templates"
+          >
+            <ChevronLeft size={20} />
+          </button>
           <span className="header-bar__title">Design Editor</span>
         </div>
 
