@@ -183,11 +183,11 @@ export const ColumnBox = observer(({ column, sectionId, isLast, isOnlyColumn }: 
         <div
           className="column-blocks"
           style={{
-            display: column.style.display || 'flex',
+            display: (column.style.display as React.CSSProperties['display']) || 'flex',
             flexDirection:
               (column.style.flexDirection as React.CSSProperties['flexDirection']) || 'column',
-            justifyContent: column.style.justifyContent,
-            alignItems: column.style.alignItems,
+            justifyContent: column.style.justifyContent as React.CSSProperties['justifyContent'],
+            alignItems: column.style.alignItems as React.CSSProperties['alignItems'],
             flexWrap: column.style.flexWrap as React.CSSProperties['flexWrap'],
             gap:
               column.style.columnGap || column.style.rowGap

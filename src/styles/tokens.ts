@@ -41,6 +41,7 @@ interface Spacing {
   4: string
   5: string
   6: string
+  8: string
 }
 
 interface BorderRadius {
@@ -134,6 +135,7 @@ export const tokens: DesignTokens = {
     4: '1rem',
     5: '1.25rem',
     6: '1.5rem',
+    8: '2rem',
   },
   borderRadius: {
     sm: '0.25rem',

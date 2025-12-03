@@ -136,8 +136,8 @@ const BlockRenderer = observer(({ block, isSelected, onClick }: BlockRendererPro
       case 'Image':
         return (
           <img
-            src={block.data.src || 'https://via.placeholder.com/600x200'}
-            alt={block.data.alt || ''}
+            src={(block.data.src as string) || 'https://via.placeholder.com/600x200'}
+            alt={(block.data.alt as string) || ''}
             style={{ maxWidth: '100%', display: 'block' }}
           />
         )
@@ -145,7 +145,7 @@ const BlockRenderer = observer(({ block, isSelected, onClick }: BlockRendererPro
       case 'Button':
         return (
           <a
-            href={block.data.href || '#'}
+            href={(block.data.href as string) || '#'}
             style={{
               display: 'inline-block',
               padding: '12px 24px',
@@ -155,22 +155,22 @@ const BlockRenderer = observer(({ block, isSelected, onClick }: BlockRendererPro
               borderRadius: tokens.borderRadius.md,
             }}
           >
-            {block.data.text || 'Click Me'}
+            {(block.data.text as string) || 'Click Me'}
           </a>
         )
 
       case 'Headline':
-        return <h2 style={{ margin: 0 }}>{block.data.content || 'Headline'}</h2>
+        return <h2 style={{ margin: 0 }}>{(block.data.content as string) || 'Headline'}</h2>
 
       case 'Spacer':
-        return <div style={{ height: block.data.height || '20px' }} />
+        return <div style={{ height: (block.data.height as string) || '20px' }} />
 
       case 'Divider':
         return <hr style={{ border: 'none', borderTop: '1px solid #ddd', margin: '16px 0' }} />
 
       default:
         // Paragraph
-        return <p style={{ margin: 0 }}>{block.data.content || 'Lorem ipsum...'}</p>
+        return <p style={{ margin: 0 }}>{(block.data.content as string) || 'Lorem ipsum...'}</p>
     }
   }
 

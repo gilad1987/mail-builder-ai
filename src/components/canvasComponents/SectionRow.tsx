@@ -130,10 +130,10 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
         <div
           className="section-content"
           style={{
-            display: section.style.display || 'flex',
+            display: (section.style.display as React.CSSProperties['display']) || 'flex',
             flexDirection: section.style.flexDirection as React.CSSProperties['flexDirection'],
-            justifyContent: section.style.justifyContent,
-            alignItems: section.style.alignItems,
+            justifyContent: section.style.justifyContent as React.CSSProperties['justifyContent'],
+            alignItems: section.style.alignItems as React.CSSProperties['alignItems'],
             flexWrap: section.style.flexWrap as React.CSSProperties['flexWrap'],
             gap:
               section.style.columnGap || section.style.rowGap

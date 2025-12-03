@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import { X, Copy, Check, Download } from 'lucide-react'
-import { useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { editorStore } from '../stores/EditorStore'
 
 interface ExportModalProps {
@@ -9,11 +9,11 @@ interface ExportModalProps {
 }
 
 // Syntax highlighting for HTML
-const highlightHTML = (html: string): JSX.Element[] => {
+const highlightHTML = (html: string): React.ReactElement[] => {
   const lines = html.split('\n')
 
   return lines.map((line, lineIndex) => {
-    const tokens: JSX.Element[] = []
+    const tokens: React.ReactElement[] = []
     let remaining = line
     let keyIndex = 0
 
