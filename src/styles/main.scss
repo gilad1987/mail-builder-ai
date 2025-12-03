@@ -239,6 +239,7 @@ select {
   flex-shrink: 0;
   box-shadow: 5px 0 10px -5px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
+  overflow-x: hidden;
 
   &__header {
     padding: $spacing-4;

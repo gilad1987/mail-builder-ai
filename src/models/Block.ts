@@ -25,7 +25,7 @@ export class Block extends Box {
   }
 
   clone(): Block {
-    return new Block(this.toJSON() as BlockJSON, this.parent)
+    return new Block(this.toCloneJSON() as BlockJSON, this.parent)
   }
 
   renderHTML(): string {

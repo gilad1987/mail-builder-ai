@@ -29,7 +29,7 @@ export class InnerSection extends Box {
   }
 
   clone(): InnerSection {
-    return new InnerSection(this.toJSON() as InnerSectionJSON, this.parent)
+    return new InnerSection(this.toCloneJSON() as InnerSectionJSON, this.parent)
   }
 
   renderHTML(): string {

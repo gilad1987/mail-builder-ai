@@ -29,7 +29,7 @@ export class Template extends Box {
   }
 
   clone(): Template {
-    return new Template(this.toJSON() as TemplateJSON)
+    return new Template(this.toCloneJSON() as TemplateJSON)
   }
 
   // CSS Export - collects all styles with media queries

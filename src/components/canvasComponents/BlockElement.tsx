@@ -123,6 +123,7 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
           blockType: block.type,
           parentId: columnId,
         }}
+        style={{ flex: 1, width: '100%', display: 'block' }}
       >
         <Container
           className={isSelected ? 'is-selected' : ''}

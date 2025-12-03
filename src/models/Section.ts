@@ -31,7 +31,7 @@ export class Section extends Box {
   }
 
   clone(): Section {
-    return new Section(this.toJSON() as SectionJSON, this.parent)
+    return new Section(this.toCloneJSON() as SectionJSON, this.parent)
   }
 
   renderHTML(): string {

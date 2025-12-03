@@ -47,7 +47,14 @@ export class Column extends Box {
   }
 
   clone(): Column {
-    return new Column({ ...(this.toJSON() as ColumnJSON), width: this.width }, this.parent)
+    return new Column({ ...(this.toCloneJSON() as ColumnJSON), width: this.width }, this.parent)
+  }
+
+  toCloneJSON(): ColumnJSON {
+    return {
+      ...super.toCloneJSON(),
+      width: this.width,
+    }
   }
 
   toJSON(): ColumnJSON {

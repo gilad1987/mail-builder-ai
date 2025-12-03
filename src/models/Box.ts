@@ -161,6 +161,17 @@ export abstract class Box {
     }
   }
 
+  // Serialize to JSON for cloning (without id to force new id/key generation)
+  toCloneJSON(): BoxJSON {
+    return {
+      name: this.name,
+      type: this.type,
+      _style: JSON.parse(JSON.stringify(this._style)), // Deep clone styles
+      data: JSON.parse(JSON.stringify(this.data)), // Deep clone data
+      children: this.children.map(c => c.toCloneJSON()),
+    }
+  }
+
   // Default style structure
   factoryDefaultStyle(): StyleRecord {
     return { desktop: {}, tablet: {}, mobile: {} }
