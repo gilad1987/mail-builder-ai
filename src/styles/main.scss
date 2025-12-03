@@ -33,6 +33,10 @@ $dark-bg-darker: #0c0d0e;
   --input-text: #{$gray-200};
   --accent: #{$blue-400};
   --accent-hover: #{$blue-300};
+  // Scrollbar colors
+  --scrollbar-track: #{$dark-bg-darker};
+  --scrollbar-thumb: #{$gray-700};
+  --scrollbar-thumb-hover: #{$gray-600};
 }
 
 :root[data-theme='light'] {
@@ -49,6 +53,36 @@ $dark-bg-darker: #0c0d0e;
   --input-text: #{$gray-700};
   --accent: #{$blue-600};
   --accent-hover: #{$blue-700};
+  // Scrollbar colors
+  --scrollbar-track: #{$gray-100};
+  --scrollbar-thumb: #{$gray-300};
+  --scrollbar-thumb-hover: #{$gray-400};
+}
+
+// Custom Scrollbar Styles
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+  border: 2px solid var(--scrollbar-track);
+
+  &:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
 }
 
 body {
