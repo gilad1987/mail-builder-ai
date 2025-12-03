@@ -9,13 +9,14 @@ A modern, drag-and-drop email template editor built with React 19, TypeScript, a
 ### Editor
 - **Drag & Drop Interface** - Drag blocks and layouts onto the canvas
 - **Multi-Column Layouts** - 10+ pre-built column configurations (1-5 columns with various ratios)
+- **Inner Sections** - Nest columns within columns for complex layouts
 - **Responsive Preview** - Desktop, Tablet (iPad), and Mobile (iPhone) viewport modes
 - **Dark/Light Theme** - Toggle between themes with custom scrollbar styling
 - **HTML Export** - Export your email template as HTML
 
 ### Panels
 - **Elements Panel** - Drag blocks: Image, Spacer, Headline, Paragraph, Button, Column, Blog Post, Inner Section, Form
-- **Layers Panel** - Dynamic tree view of document structure (Body → Rows → Columns → Blocks)
+- **Layers Panel** - Dynamic tree view of document structure (Template → Body → Sections → Columns → Inner Sections → Blocks)
 - **Global Styles Panel** - Configure colors, typography for Body, Heading, Subheading, Buttons, Links
 - **Assets Panel** - Image library with search, upload, and drag-to-canvas functionality
 - **AI Assistant Panel** - Chat interface to create pages and add elements using natural language
@@ -77,15 +78,23 @@ src/
 │   │   └── ChatInput.tsx
 │   ├── assets/           # Assets panel components
 │   ├── canvasComponents/ # Canvas blocks and rows
-│   │   ├── BlockCard.tsx
-│   │   ├── ContentRow.tsx
-│   │   └── ColumnContainer.tsx
+│   │   ├── BlockElement.tsx    # Renders blocks and inner sections
+│   │   ├── ColumnBox.tsx       # Column container with drop support
+│   │   └── SectionRow.tsx      # Section row container
 │   ├── controls/         # Style control components
 │   │   ├── border/       # Border controls
 │   │   └── container/    # Container/flexbox controls
+│   ├── dnd/              # Drag and drop components
 │   ├── globalStyles/     # Global styles panel sections
 │   ├── layers/           # Layers tree components
 │   └── sidebarTabs/      # Content, Style, Container tabs
+├── models/
+│   ├── Block.ts          # Block element model
+│   ├── Box.ts            # Base box model
+│   ├── Column.ts         # Column model (contains blocks/inner sections)
+│   ├── InnerSection.ts   # Inner section model (nested columns)
+│   ├── Section.ts        # Section model (top-level rows)
+│   └── Template.ts       # Template root model
 ├── stores/
 │   └── EditorStore.ts    # MobX store for editor state
 ├── styles/
@@ -132,10 +141,30 @@ export const MyComponent = observer(() => (
 | `BlockSelectPanel` | Draggable block elements and layout options |
 | `Sidebar` | Style editing tabs (Content, Style, Container) |
 | `Canvas` | Main editing area with responsive device frames |
-| `LayersPanel` | Document structure tree view |
+| `LayersPanel` | Document structure tree view (supports nested Inner Sections) |
 | `GlobalStylesPanel` | Global color and typography settings |
 | `AssetsPanel` | Image asset library |
 | `AIAssistantPanel` | Chat interface for AI-powered template creation |
+
+## 📦 Element Hierarchy
+
+The email template follows this structure:
+
+```
+Template
+└── Section (row)
+    └── Column (can contain blocks or inner sections)
+        ├── Block (Image, Paragraph, Button, etc.)
+        └── InnerSection (nested layout)
+            └── Column
+                └── Block
+```
+
+- **Template** - Root container for the entire email
+- **Section** - A horizontal row that contains columns
+- **Column** - Vertical container with configurable width (%)
+- **InnerSection** - Nested section within a column for complex layouts
+- **Block** - Content elements (Image, Headline, Paragraph, Button, Spacer, Divider)
 
 ## 📜 Available Scripts
 
