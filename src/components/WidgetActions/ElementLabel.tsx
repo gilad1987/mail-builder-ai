@@ -1,4 +1,14 @@
 import styled from 'styled-components'
+import {
+  Columns,
+  Image,
+  LayoutGrid,
+  Type,
+  MousePointer,
+  Square,
+  Minus,
+  SeparatorHorizontal,
+} from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface ElementLabelProps {
@@ -10,6 +20,9 @@ const Label = styled.span<{ $color: string }>`
   position: absolute;
   top: -23px;
   left: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 10px;
   font-weight: ${tokens.fontWeight.medium};
   color: white;
@@ -21,11 +34,30 @@ const Label = styled.span<{ $color: string }>`
   white-space: nowrap;
   z-index: 40;
   pointer-events: none;
+
+  svg {
+    flex-shrink: 0;
+  }
 `
 
+const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
+  Section: LayoutGrid,
+  Column: Columns,
+  Image: Image,
+  Paragraph: Type,
+  Headline: Type,
+  Button: MousePointer,
+  Spacer: Minus,
+  Divider: SeparatorHorizontal,
+  'Inner Section': LayoutGrid,
+}
+
 export const ElementLabel = ({ label, color = '#37474f' }: ElementLabelProps) => {
+  const Icon = iconMap[label] || Square
+
   return (
     <Label $color={color} className="element-label">
+      <Icon size={10} />
       {label}
     </Label>
   )
