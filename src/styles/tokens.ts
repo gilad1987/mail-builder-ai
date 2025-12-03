@@ -1,6 +1,88 @@
 // Design tokens for styled-components (mirrors _variables.scss)
 
-export const tokens = {
+// Color shade types
+type GrayShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+type BlueShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800
+type PurpleShade = 500 | 600 | 700
+type SingleShade = 500
+
+// Color palette interface
+interface ColorPalette {
+  gray: Record<GrayShade, string>
+  blue: Record<BlueShade, string>
+  green: Record<SingleShade, string>
+  red: Record<SingleShade, string>
+  orange: Record<SingleShade, string>
+  indigo: Record<SingleShade, string>
+  teal: Record<SingleShade, string>
+  yellow: Record<SingleShade, string>
+  purple: Record<PurpleShade, string>
+}
+
+// Token interfaces
+interface FontSize {
+  xs: string
+  sm: string
+  base: string
+  lg: string
+}
+
+interface FontWeight {
+  normal: number
+  medium: number
+  semibold: number
+  bold: number
+}
+
+interface Spacing {
+  1: string
+  2: string
+  3: string
+  4: string
+  5: string
+  6: string
+}
+
+interface BorderRadius {
+  sm: string
+  md: string
+  lg: string
+  xl: string
+  full: string
+}
+
+interface Shadow {
+  sm: string
+  md: string
+  lg: string
+  xl: string
+}
+
+interface Transition {
+  fast: string
+  normal: string
+  slow: string
+}
+
+interface ZIndex {
+  dropdown: number
+  floating: number
+  header: number
+}
+
+// Main tokens interface
+export interface DesignTokens {
+  colors: ColorPalette
+  fontSize: FontSize
+  fontWeight: FontWeight
+  spacing: Spacing
+  borderRadius: BorderRadius
+  shadow: Shadow
+  transition: Transition
+  zIndex: ZIndex
+}
+
+export const tokens: DesignTokens = {
   colors: {
     gray: {
       50: '#f9fafb',
