@@ -1,0 +1,1013 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// =================================================================
+// GLOBAL RESET & BASE
+// =================================================================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: $font-family-base;
+  background-color: $gray-50;
+  color: $gray-800;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input,
+select {
+  @include input-base;
+}
+
+// Prevent selection during drag
+[draggable='true'] {
+  user-select: none;
+}
+
+// =================================================================
+// APP LAYOUT
+// =================================================================
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: $gray-50;
+  overflow: hidden;
+}
+
+.main-content {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+// =================================================================
+// HEADER BAR
+// =================================================================
+
+.header-bar {
+  height: 3.5rem;
+  background-color: white;
+  border-bottom: 1px solid $gray-200;
+  padding: 0 $spacing-4;
+  box-shadow: $shadow-sm;
+  @include flex-between;
+  flex-shrink: 0;
+  z-index: $z-index-header;
+
+  &__left {
+    @include flex-start;
+    gap: $spacing-2;
+  }
+
+  &__center {
+    @include flex-center;
+    gap: $spacing-1;
+    padding: $spacing-1;
+    border: 1px solid $gray-200;
+    border-radius: $border-radius-xl;
+    background-color: $gray-50;
+  }
+
+  &__right {
+    @include flex-start;
+    gap: $spacing-3;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $gray-800;
+    display: none;
+
+    @include sm {
+      display: block;
+    }
+  }
+}
+
+// Device View Buttons
+.btn-device {
+  padding: $spacing-2;
+  border-radius: $border-radius-lg;
+  transition: all $transition-fast;
+  color: $gray-500;
+
+  &:hover {
+    background-color: $gray-100;
+    color: $gray-600;
+  }
+
+  &--active {
+    background-color: $blue-50;
+    color: $blue-600;
+  }
+}
+
+// Action Buttons
+.btn-primary {
+  @include btn-primary;
+
+  span {
+    display: none;
+
+    @include sm {
+      display: inline;
+    }
+  }
+}
+
+.btn-secondary {
+  @include btn-secondary;
+
+  span {
+    display: none;
+
+    @include sm {
+      display: inline;
+    }
+  }
+}
+
+.btn-ghost {
+  @include btn-ghost;
+}
+
+// =================================================================
+// SIDEBAR PANELS
+// =================================================================
+
+.sidebar {
+  width: 20rem;
+  background-color: white;
+  border-right: 1px solid $gray-200;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow: 5px 0 10px -5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+
+  &__header {
+    padding: $spacing-4;
+    border-bottom: 1px solid $gray-200;
+    @include flex-between;
+  }
+
+  &__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: $gray-800;
+  }
+
+  &__back {
+    @include flex-start;
+    cursor: pointer;
+
+    svg {
+      color: $gray-500;
+      margin-right: $spacing-2;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $gray-700;
+      }
+    }
+  }
+
+  &__footer {
+    padding: $spacing-4;
+    border-top: 1px solid $gray-100;
+    margin-top: auto;
+
+    p {
+      font-size: $font-size-xs;
+      color: $gray-400;
+    }
+  }
+}
+
+// Device Indicator
+.device-indicator {
+  @include flex-center;
+  padding: $spacing-2;
+  background-color: $blue-50;
+  border-bottom: 1px solid $blue-100;
+
+  &__text {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $blue-800;
+    @include flex-center;
+  }
+
+  &__device {
+    margin-left: $spacing-1;
+    font-weight: $font-weight-semibold;
+    text-transform: capitalize;
+  }
+}
+
+// Tab Navigation
+.tabs {
+  display: flex;
+  border-bottom: 1px solid $gray-200;
+
+  &__btn {
+    width: 50%;
+    padding: $spacing-3;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $gray-500;
+    transition: color $transition-fast;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      color: $gray-700;
+    }
+
+    &--active {
+      color: $blue-600;
+      border-bottom-color: $blue-600;
+    }
+  }
+}
+
+.tab-content {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+// =================================================================
+// BLOCK SELECT PANEL
+// =================================================================
+
+.block-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-3;
+  padding: $spacing-4;
+}
+
+.block-card {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-4;
+  background-color: $gray-50;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  cursor: grab;
+  transition: all $transition-fast;
+  user-select: none;
+
+  &:hover {
+    background-color: $gray-100;
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &__icon {
+    margin-bottom: $spacing-2;
+
+    &--blue {
+      color: $blue-500;
+    }
+    &--gray {
+      color: $gray-500;
+    }
+    &--orange {
+      color: $orange-500;
+    }
+    &--green {
+      color: $green-500;
+    }
+    &--indigo {
+      color: $indigo-500;
+    }
+    &--teal {
+      color: $teal-500;
+    }
+    &--red {
+      color: $red-500;
+    }
+    &--yellow {
+      color: $yellow-500;
+    }
+    &--purple {
+      color: $purple-500;
+    }
+  }
+
+  &__name {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $gray-700;
+    text-align: center;
+  }
+}
+
+// =================================================================
+// STYLE CONTROLS
+// =================================================================
+
+.style-section {
+  &__header {
+    padding: $spacing-4;
+    border-bottom: 1px solid $gray-200;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $gray-800;
+  }
+}
+
+.style-field {
+  padding: $spacing-2 $spacing-4;
+  border-bottom: 1px solid $gray-100;
+
+  &__header {
+    @include flex-between;
+  }
+
+  &__label {
+    @include flex-start;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $gray-700;
+  }
+
+  &__actions {
+    @include flex-start;
+    gap: $spacing-2;
+  }
+
+  &__link {
+    font-size: $font-size-xs;
+    color: $blue-500;
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $blue-700;
+    }
+  }
+}
+
+// Responsive Icon
+.responsive-icon {
+  margin-left: $spacing-2;
+
+  &--desktop {
+    color: $blue-500;
+  }
+  &--tablet {
+    color: $green-500;
+  }
+  &--mobile {
+    color: $red-500;
+  }
+}
+
+// Side Value Control (Margin/Padding)
+.side-control {
+  @include flex-start;
+  padding: $spacing-1 0;
+
+  &__indicator {
+    font-size: $font-size-lg;
+    line-height: 1;
+    padding-right: $spacing-1;
+    color: $gray-700;
+    width: 1.5rem;
+    text-align: center;
+
+    &--top {
+      transform: rotate(90deg);
+    }
+    &--bottom {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__slider {
+    flex-grow: 1;
+    height: 4px;
+    background: $gray-200;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: $spacing-2;
+    -webkit-appearance: none;
+    appearance: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: $blue-500;
+      border-radius: 50%;
+      cursor: pointer;
+      margin-top: -4px;
+      box-shadow: 0 0 0 3px rgba($blue-500, 0.2);
+    }
+  }
+
+  &__input {
+    width: 3rem;
+    padding: $spacing-1;
+    text-align: center;
+    background-color: $gray-50;
+    flex-shrink: 0;
+  }
+
+  &__unit {
+    font-size: $font-size-sm;
+    color: $gray-500;
+    margin-left: $spacing-1;
+    flex-shrink: 0;
+  }
+}
+
+// Expand/Collapse Toggle
+.btn-toggle {
+  padding: $spacing-1;
+  color: $gray-500;
+  border: 1px solid $gray-300;
+  border-radius: $border-radius-sm;
+  background-color: white;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: $gray-700;
+  }
+}
+
+// Dimension Controls
+.dimension-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: $spacing-2;
+  row-gap: $spacing-4;
+}
+
+.dimension-input {
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: $gray-500;
+    margin-bottom: $spacing-1;
+  }
+
+  &__group {
+    @include flex-start;
+    gap: $spacing-1;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  &__unit {
+    font-size: $font-size-sm;
+    color: $gray-500;
+    padding-right: $spacing-1;
+    flex-shrink: 0;
+  }
+}
+
+// Unit Dropdown
+.unit-dropdown {
+  position: relative;
+  font-size: $font-size-sm;
+
+  select {
+    appearance: none;
+    background-color: white;
+    border: 1px solid $gray-300;
+    border-radius: $border-radius-md;
+    padding: $spacing-1;
+    padding-right: $spacing-6;
+    color: $gray-700;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    @include flex-center;
+    padding-right: $spacing-1;
+    pointer-events: none;
+    color: $gray-400;
+  }
+}
+
+// Alignment Controls
+.align-group {
+  display: flex;
+  gap: $spacing-2;
+  padding: $spacing-1;
+  background-color: $gray-100;
+  border-radius: $border-radius-lg;
+  width: fit-content;
+}
+
+.align-btn {
+  padding: $spacing-2;
+  border-radius: $border-radius-md;
+  color: $gray-700;
+  transition: background-color $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    background-color: $gray-200;
+  }
+
+  &--active {
+    background-color: white;
+    box-shadow: $shadow-md;
+  }
+}
+
+// Border Radius Controls
+.radius-controls {
+  @include flex-start;
+  gap: $spacing-3;
+}
+
+.btn-border-style {
+  padding: $spacing-1;
+  border: 1px solid $gray-300;
+  border-radius: $border-radius-sm;
+  color: $gray-700;
+  background-color: white;
+  transition: all $transition-fast;
+  box-shadow: $shadow-sm;
+
+  &:hover {
+    background-color: $gray-50;
+  }
+}
+
+// Border Side Controls
+.borders-group {
+  display: flex;
+  gap: $spacing-4;
+}
+
+.borders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: $spacing-1;
+  padding: $spacing-1;
+  border: 1px solid $gray-300;
+  border-radius: $border-radius-lg;
+  background-color: white;
+  height: fit-content;
+  width: fit-content;
+
+  &__cell {
+    &--top,
+    &--bottom {
+      grid-column: 1 / span 3;
+      @include flex-center;
+    }
+  }
+}
+
+.border-side-btn {
+  @include flex-center;
+  padding: $spacing-1;
+  border-radius: $border-radius-sm;
+  color: $gray-500;
+  transition: all 100ms;
+
+  &:hover:not(.border-side-btn--active) {
+    background-color: $gray-100;
+  }
+
+  &--active {
+    color: $blue-500;
+    background-color: rgba($blue-100, 0.7);
+  }
+
+  &__box {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid $gray-400;
+    border-radius: 2px;
+    @include flex-center;
+  }
+
+  &__inner {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    background-color: transparent;
+
+    &--active {
+      border-color: $blue-500;
+      background-color: $blue-100;
+    }
+  }
+}
+
+.border-inputs {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+
+  &__label {
+    display: block;
+    font-size: $font-size-xs;
+    color: $gray-400;
+    margin-bottom: $spacing-1;
+  }
+}
+
+.style-toggle {
+  display: flex;
+  gap: $spacing-1;
+  padding: $spacing-1;
+  background-color: $gray-100;
+  border-radius: $border-radius-lg;
+  border: 1px solid $gray-200;
+
+  &__btn {
+    width: 33.333%;
+    padding: $spacing-1;
+    border-radius: $border-radius-md;
+    color: $gray-700;
+    transition: background-color $transition-fast;
+    @include flex-center;
+
+    &:hover {
+      background-color: white;
+    }
+
+    &--active {
+      background-color: white;
+      box-shadow: $shadow-sm;
+      border: 1px solid $gray-300;
+    }
+  }
+}
+
+.input-with-unit {
+  @include flex-start;
+}
+
+.color-picker-placeholder {
+  width: 100%;
+  height: 2rem;
+  background-color: white;
+  border: 1px solid $gray-300;
+  border-radius: $border-radius-md;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.color-swatch {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: $border-radius-full;
+  border: 1px solid $gray-300;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+// Block Wrapper Preview (Content Tab)
+.block-wrapper-preview {
+  padding: $spacing-3;
+  background-color: $gray-50;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-md;
+  @include flex-between;
+
+  span {
+    font-size: $font-size-sm;
+    color: $gray-800;
+  }
+
+  svg {
+    color: $gray-500;
+  }
+}
+
+// =================================================================
+// CANVAS AREA
+// =================================================================
+
+.canvas {
+  flex-grow: 1;
+  background-color: $gray-50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-4 $spacing-6;
+  overflow-y: auto;
+
+  &__footer {
+    margin-top: 2.5rem;
+    font-size: $font-size-sm;
+    color: $gray-500;
+
+    span {
+      font-weight: $font-weight-semibold;
+      text-transform: capitalize;
+    }
+  }
+}
+
+// Viewport Frame
+.viewport {
+  background-color: white;
+  box-shadow: $shadow-xl;
+  transition: all $transition-slow;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  min-height: 600px;
+
+  &--desktop {
+    width: 100%;
+    border-radius: $border-radius-lg;
+
+    .viewport__content {
+      max-width: 80rem;
+    }
+  }
+
+  &--tablet {
+    width: 768px;
+    max-width: 100%;
+    border-radius: $border-radius-xl;
+    border-top: 8px solid $gray-800;
+    border-bottom: 8px solid $gray-800;
+  }
+
+  &--mobile {
+    width: 375px;
+    max-width: 100%;
+    border-radius: 40px;
+    border: 10px solid $gray-800;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  &__content {
+    padding: $spacing-4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    @include sm {
+      padding: $spacing-6;
+    }
+  }
+}
+
+// =================================================================
+// ROW CONTAINER
+// =================================================================
+
+.row {
+  position: relative;
+  padding: $spacing-6;
+  margin-bottom: $spacing-4;
+  width: 100%;
+  border-radius: $border-radius-xl;
+  transition: all $transition-normal;
+  min-height: 150px;
+  border: 2px dashed transparent;
+
+  &:hover {
+    border-color: $blue-300;
+    background-color: rgba($blue-50, 0.3);
+  }
+
+  &--selected {
+    border-color: $blue-500;
+    border-style: solid;
+    background-color: rgba($blue-50, 0.3);
+  }
+
+  &--dragover {
+    border-color: $blue-500;
+    border-style: solid;
+    background-color: rgba($blue-50, 0.5);
+  }
+
+  &__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $spacing-1;
+    background-color: white;
+    border: 1px solid $gray-200;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: $border-radius-lg;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: $shadow-sm;
+    display: flex;
+    gap: $spacing-1;
+    z-index: $z-index-dropdown;
+    opacity: 0;
+    transition: opacity $transition-fast;
+
+    span {
+      font-size: $font-size-xs;
+      color: $gray-400;
+      padding: 0 $spacing-2;
+      @include flex-center;
+    }
+  }
+
+  &:hover &__actions {
+    opacity: 1;
+  }
+
+  &__empty {
+    height: 100%;
+    @include flex-center;
+    flex-direction: column;
+    color: $gray-400;
+    border: 2px dashed $gray-200;
+    border-radius: $border-radius-lg;
+    padding: $spacing-4;
+  }
+
+  &__blocks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: $spacing-4;
+    height: 100%;
+
+    @include sm {
+      flex-direction: row;
+      gap: 0;
+
+      > * + * {
+        margin-left: $spacing-4;
+      }
+    }
+
+    @include md {
+      > * + * {
+        margin-left: $spacing-6;
+      }
+    }
+  }
+}
+
+// =================================================================
+// BLOCK CARD (Canvas Item)
+// =================================================================
+
+.block-item {
+  position: relative;
+  padding: $spacing-4;
+  background-color: white;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  width: 100%;
+  max-width: 20rem;
+  transition: all $transition-normal;
+  cursor: pointer;
+  min-height: 8rem;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    border-color: $blue-300;
+  }
+
+  &--selected {
+    border-color: $blue-500;
+    box-shadow: 0 0 0 2px $blue-500;
+  }
+
+  &__tools {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: $spacing-1;
+    opacity: 0;
+    transition: opacity $transition-fast;
+    z-index: $z-index-floating;
+  }
+
+  &:hover &__tools {
+    opacity: 1;
+  }
+
+  &__tool-btn {
+    padding: $spacing-1;
+    background-color: white;
+    border: 1px solid $gray-300;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-md;
+    font-size: $font-size-xs;
+
+    &--edit {
+      color: $blue-500;
+    }
+
+    &--move {
+      color: $gray-500;
+      cursor: move;
+    }
+  }
+
+  &__type {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    color: $gray-300;
+    margin-bottom: $spacing-2;
+  }
+
+  &__content {
+    font-size: $font-size-base;
+    color: $gray-700;
+    line-height: 1.625;
+    margin-bottom: $spacing-4;
+    text-align: left;
+    pointer-events: none;
+  }
+
+  &__image {
+    margin-top: $spacing-2;
+    background-color: $gray-100;
+    @include flex-center;
+    border: 1px solid $gray-300;
+    border-radius: $border-radius-md;
+    height: 6rem;
+    pointer-events: none;
+
+    svg {
+      color: $gray-400;
+    }
+  }
+}
+
+// =================================================================
+// ADD ROW BUTTON
+// =================================================================
+
+.add-row-btn {
+  width: 100%;
+  padding: $spacing-4;
+  border: 2px dashed $gray-200;
+  border-radius: $border-radius-lg;
+  @include flex-center;
+  color: $gray-400;
+  cursor: pointer;
+  transition: all $transition-fast;
+
+  &:hover {
+    border-color: $blue-400;
+    background-color: $blue-50;
+    color: $blue-500;
+  }
+
+  span {
+    @include flex-center;
+
+    svg {
+      margin-right: $spacing-2;
+    }
+  }
+}
+

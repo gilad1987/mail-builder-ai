@@ -1,0 +1,237 @@
+# Mail Builder 2026 - Cursor Rules
+
+## Project Overview
+
+This is a **Mail Builder** application - a drag-and-drop email template editor built with modern React.
+
+## Tech Stack
+
+- **Framework**: React 19 with TypeScript
+- **Build Tool**: Vite 7
+- **State Management**: MobX with mobx-react-lite
+- **Styling**: SCSS (primary), Tailwind CSS, styled-components available
+- **Code Quality**: ESLint, Prettier, Husky with lint-staged
+
+## Project Structure
+
+```
+src/
+├── components/       # React components
+├── stores/          # MobX stores
+├── styles/          # SCSS files
+│   ├── _variables.scss   # Design tokens (colors, spacing, etc.)
+│   ├── _mixins.scss      # Reusable SCSS mixins
+│   └── main.scss         # Global styles and component classes
+└── assets/          # Static assets
+```
+
+## Architecture Principles
+
+### Code Organization
+
+- **Max 100 lines per file** - Keep files focused and maintainable
+- **Self-contained components** - Each component manages its own logic
+- **Minimal prop drilling** - Use MobX stores for state management
+- **Reactive patterns** - MobX observer pattern with live queries
+- **Type safety** - Full TypeScript coverage
+
+### Styling Rules
+
+- **Single Container Pattern** - Use only ONE styled-component per page/component (the `Container`)
+- **Nested classNames** - All other elements should use `className` with nested CSS selectors
+- **No Multiple Styled Components** - Avoid creating separate styled-components like `Header`, `Section`, `Button`, etc.
+- **Example Pattern**:
+
+```typescript
+const Container = styled.div`
+  padding: ${tokens.spacing[6]};
+  
+  .header {
+    margin-bottom: ${tokens.spacing[6]};
+  }
+  
+  .section {
+    padding: ${tokens.spacing[4]} 0;
+    border-bottom: 1px solid ${tokens.colors.border.light};
+  }
+`;
+
+// In JSX:
+<Container>
+  <div className="header">...</div>
+  <div className="section">...</div>
+</Container>
+```
+
+- **Benefits**: Better performance, easier maintenance, cleaner JSX, less component overhead
+
+## Code Style Guidelines
+
+### TypeScript
+
+- Use strict TypeScript - avoid `any` types
+- Define interfaces for component props
+- Export types alongside components when reusable
+- Use `type` for unions/intersections, `interface` for object shapes
+
+### React Components
+
+- Use functional components with hooks
+- Wrap MobX-observed components with `observer()` from mobx-react-lite
+- Keep components focused and single-responsibility
+- Name files with PascalCase matching the component name
+
+```tsx
+// Component pattern
+import { observer } from 'mobx-react-lite'
+import { editorStore } from '../stores/EditorStore'
+
+interface MyComponentProps {
+  title: string
+  onAction?: () => void
+}
+
+export const MyComponent = observer(({ title, onAction }: MyComponentProps) => {
+  return (
+    <div className="my-component">
+      {/* content */}
+    </div>
+  )
+})
+```
+
+### MobX Stores
+
+- Use `makeAutoObservable(this)` in constructor
+- Export singleton instances for global stores
+- Use computed getters for derived state
+- Actions should be methods that modify state
+
+```ts
+// Store pattern
+import { makeAutoObservable } from 'mobx'
+
+class MyStore {
+  someValue = ''
+
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  setSomeValue(value: string) {
+    this.someValue = value
+  }
+
+  get derivedValue() {
+    return this.someValue.toUpperCase()
+  }
+}
+
+export const myStore = new MyStore()
+```
+
+### Styling (SCSS)
+
+- Use BEM naming convention: `.block__element--modifier`
+- Leverage variables from `_variables.scss` for consistency
+- Use mixins from `_mixins.scss` for common patterns
+- Component styles go in `main.scss` organized by sections
+
+```scss
+// BEM pattern
+.component-name {
+  // block styles
+
+  &__element {
+    // element styles
+  }
+
+  &--modifier {
+    // modifier styles
+  }
+}
+```
+
+### Design Tokens (from _variables.scss)
+
+**Colors:**
+- Grays: `$gray-50` to `$gray-900`
+- Blues: `$blue-50` to `$blue-800`
+- Semantic: `$green-500`, `$red-500`, `$orange-500`, etc.
+
+**Spacing:** `$spacing-1` (0.25rem) to `$spacing-6` (1.5rem)
+
+**Typography:**
+- Sizes: `$font-size-xs`, `$font-size-sm`, `$font-size-base`, `$font-size-lg`
+- Weights: `$font-weight-normal`, `$font-weight-medium`, `$font-weight-semibold`, `$font-weight-bold`
+
+**Borders & Shadows:**
+- Radius: `$border-radius-sm` to `$border-radius-full`
+- Shadows: `$shadow-sm`, `$shadow-md`, `$shadow-lg`, `$shadow-xl`
+
+**Transitions:** `$transition-fast`, `$transition-normal`, `$transition-slow`
+
+**Z-Index:** `$z-index-dropdown`, `$z-index-floating`, `$z-index-header`
+
+## Icons
+
+Use **Lucide React** for icons:
+
+```tsx
+import { Monitor, Tablet, Smartphone } from 'lucide-react'
+
+<Monitor size={18} />
+```
+
+## Drag and Drop
+
+The app uses native HTML5 drag and drop:
+
+```tsx
+// Draggable element
+<div
+  draggable
+  onDragStart={(e) => {
+    e.dataTransfer.setData('application/react-dnd-type', 'SIDEBAR_ITEM')
+    e.dataTransfer.setData('blockType', blockType)
+    e.dataTransfer.effectAllowed = 'copy'
+  }}
+>
+
+// Drop target
+<div
+  onDragOver={(e) => e.preventDefault()}
+  onDrop={(e) => {
+    const type = e.dataTransfer.getData('application/react-dnd-type')
+    const blockType = e.dataTransfer.getData('blockType')
+    // handle drop
+  }}
+>
+```
+
+## Commands
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm lint         # Run ESLint
+pnpm lint:fix     # Fix ESLint issues
+pnpm format       # Format with Prettier
+```
+
+## Best Practices
+
+1. **State Management**: Use MobX stores for shared state, React state for local UI state
+2. **Performance**: Use `observer()` only on components that read from stores
+3. **Styling**: Prefer SCSS classes over inline styles; use design tokens
+4. **Accessibility**: Include proper ARIA attributes and keyboard navigation
+5. **Type Safety**: Never use `any`; define proper interfaces
+
+## Editor Domain Concepts
+
+- **Block**: An individual content element (Image, Paragraph, Button, etc.)
+- **Row**: A horizontal container that holds one or more blocks
+- **Canvas**: The main editing area showing the email preview
+- **Viewport**: Device preview modes (desktop, tablet, mobile)
+- **Sidebar**: Left panel for block selection and style editing
+

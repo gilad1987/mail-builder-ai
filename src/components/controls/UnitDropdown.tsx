@@ -1,0 +1,19 @@
+interface UnitDropdownProps {
+  unit?: string
+}
+
+export const UnitDropdown = ({ unit = 'px' }: UnitDropdownProps) => (
+  <div className="unit-dropdown">
+    <select defaultValue={unit}>
+      <option value="px">px</option>
+      <option value="%">%</option>
+      <option value="vw">vw</option>
+      <option value="em">em</option>
+    </select>
+    <div className="unit-dropdown__icon">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </div>
+)
