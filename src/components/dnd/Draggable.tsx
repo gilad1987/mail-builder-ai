@@ -15,16 +15,15 @@ export const Draggable = ({ id, data, children, className, style }: DraggablePro
     data,
   })
 
-  // IMPORTANT: Don't apply any transform here!
-  // The DragOverlay component handles the visual drag preview.
-  // We only reduce opacity to indicate the element is being dragged.
+  // IMPORTANT: We use DragOverlay for the visual preview, so we explicitly
+  // set transform to 'none' to prevent the original element from moving.
+  // Only reduce opacity to indicate the element is being dragged.
   const combinedStyle: React.CSSProperties = {
     ...style,
+    transform: 'none', // Override any transform applied by dnd-kit
     opacity: isDragging ? 0.3 : 1,
     cursor: 'grab',
     touchAction: 'none',
-    // Prevent any layout shift during drag
-    position: 'relative' as const,
   }
 
   return (

@@ -28,7 +28,7 @@ class EditorStore {
 
   constructor() {
     this.template = new Template()
-    this.initializeTemplate()
+    // Start with empty canvas for best UX
 
     makeAutoObservable(this, {
       template: false,
@@ -37,28 +37,9 @@ class EditorStore {
     setActiveDeviceGetter(() => this.activeDevice)
   }
 
-  private initializeTemplate() {
-    // Section 1: Two columns
-    const section1 = this.template.addSection()
-    const col1 = section1.addColumn({ width: 60 } as ColumnJSON)
-    const col2 = section1.addColumn({ width: 40 } as ColumnJSON)
-
-    col1.addBlock({
-      type: 'Paragraph',
-      data: {
-        content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      },
-    })
-    col1.addBlock({ type: 'Image', data: { src: '', alt: 'Placeholder' } })
-    col2.addBlock({ type: 'Headline', data: { content: 'Welcome to the editor' } })
-
-    // Section 2: Single column with button
-    const section2 = this.template.addSection()
-    const col3 = section2.addColumn({ width: 100 } as ColumnJSON)
-    col3.addBlock({ type: 'Button', data: { text: 'Click Me', href: '#' } })
-
-    // Section 3: Empty
-    this.template.addSection()
+  // Check if canvas is empty
+  get isEmpty(): boolean {
+    return this.template.children.length === 0
   }
 
   // Selection

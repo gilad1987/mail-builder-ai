@@ -2,10 +2,28 @@ import { observer } from 'mobx-react-lite'
 import { Plus } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 import { SectionRow } from './canvasComponents'
+import { EmptyCanvas } from './EmptyCanvas'
 
 export const Canvas = observer(() => {
   const viewportClassName = `viewport viewport--${editorStore.activeDevice}`
   const isMobileOrTablet = editorStore.activeDevice !== 'desktop'
+
+  // Show empty state when no sections exist
+  if (editorStore.isEmpty) {
+    return (
+      <div className={`canvas ${editorStore.activeDevice === 'desktop' ? 'canvas--desktop' : ''}`}>
+        <div className={viewportClassName}>
+          {isMobileOrTablet ? (
+            <div className="viewport__screen">
+              <EmptyCanvas />
+            </div>
+          ) : (
+            <EmptyCanvas />
+          )}
+        </div>
+      </div>
+    )
+  }
 
   const content = (
     <>
@@ -17,7 +35,7 @@ export const Canvas = observer(() => {
 
       <button className="add-row-btn" onClick={() => editorStore.addSection()}>
         <span>
-          <Plus size={16} /> Add new Section
+          <Plus size={16} /> Add Section
         </span>
       </button>
     </>
@@ -30,10 +48,6 @@ export const Canvas = observer(() => {
       <div className={viewportClassName}>
         {isMobileOrTablet ? <div className="viewport__screen">{content}</div> : content}
       </div>
-
-      <p className="canvas__footer">
-        Current Viewport: <span>{editorStore.activeDevice}</span>
-      </p>
     </div>
   )
 })

@@ -70,9 +70,15 @@ export const DndProvider = ({ children }: DndProviderProps) => {
       // Handle sidebar item drop
       if (data.source === 'sidebar') {
         if (data.type === 'layout') {
-          // Layout dropped on section
-          if (overData?.accepts === 'layout' && overData?.sectionId && data.columns) {
-            editorStore.addColumnLayout(overData.sectionId, data.columns)
+          // Layout dropped on empty canvas or section
+          if (overData?.accepts === 'layout' && data.columns) {
+            if (overData.sectionId === 'new') {
+              // Create new section with layout
+              const section = editorStore.addSection()
+              data.columns.forEach(width => editorStore.addColumnToSection(section.id, width))
+            } else if (overData.sectionId) {
+              editorStore.addColumnLayout(overData.sectionId, data.columns)
+            }
           }
         } else if (data.type === 'block') {
           // Block dropped on column or section
