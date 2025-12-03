@@ -253,6 +253,12 @@ select {
     color: var(--text-primary);
   }
 
+  &__hint {
+    font-size: $font-size-xs;
+    color: var(--text-muted);
+    margin-top: $spacing-1;
+  }
+
   &__back {
     @include flex-start;
     cursor: pointer;
@@ -406,19 +412,6 @@ select {
 // =================================================================
 // STYLE CONTROLS
 // =================================================================
-
-.style-section {
-  &__header {
-    padding: $spacing-4;
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  &__title {
-    font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
-    color: var(--text-primary);
-  }
-}
 
 .style-field {
   padding: $spacing-2 $spacing-4;

@@ -1,9 +1,10 @@
+import { useDroppable } from '@dnd-kit/core'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { Column } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
-import { Droppable, useDndState } from '../dnd'
+import { useDndState } from '../dnd'
 import { ColumnActions, TypeBadge, AddColumnButton } from '../WidgetActions'
 import { BlockElement } from './BlockElement'
 
@@ -16,6 +17,7 @@ interface ColumnBoxProps {
 const Container = styled.div`
   position: relative;
   min-height: 80px;
+  min-width: 0; /* Allow flex shrinking */
   background: #ffffff;
   border: 2px dashed ${tokens.colors.gray[300]};
   border-radius: ${tokens.borderRadius.md};
@@ -85,8 +87,14 @@ const Container = styled.div`
 
 export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps) => {
   const isSelected = editorStore.selectedElementId === column.id
-  const { overId, activeData } = useDndState()
-  const isOver = overId === `column-${column.id}`
+  const { activeData } = useDndState()
+
+  // Make this container directly droppable
+  const { isOver, setNodeRef } = useDroppable({
+    id: `column-${column.id}`,
+    data: { accepts: 'block', columnId: column.id, sectionId },
+  })
+
   const showPlaceholder = isOver && activeData?.source === 'sidebar'
 
   const handleClick = (e: React.MouseEvent) => {
@@ -115,42 +123,38 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
     .join(' ')
 
   return (
-    <Droppable
-      id={`column-${column.id}`}
-      data={{ accepts: 'block', columnId: column.id, sectionId }}
+    <Container
+      ref={setNodeRef}
+      className={classNames}
+      style={{
+        ...column.style,
+        flex: `1 1 ${column.width}%`,
+        maxWidth: `${column.width}%`,
+      }}
+      onClick={handleClick}
     >
-      <Container
-        className={classNames}
-        style={{
-          ...column.style,
-          flex: `0 0 calc(${column.width}% - 8px)`,
-          width: `calc(${column.width}% - 8px)`,
-        }}
-        onClick={handleClick}
-      >
-        <TypeBadge type="column" />
-        <ColumnActions onCopy={handleCopy} onDelete={handleDelete} />
-        {!isLast && <AddColumnButton onClick={handleAddColumn} />}
+      <TypeBadge type="column" />
+      <ColumnActions onCopy={handleCopy} onDelete={handleDelete} />
+      {!isLast && <AddColumnButton onClick={handleAddColumn} />}
 
-        {column.children.length === 0 ? (
-          <div
-            className="column-empty"
-            style={{
-              borderColor: isOver ? '#1e88e5' : 'transparent',
-              background: isOver ? 'rgba(30, 136, 229, 0.1)' : 'transparent',
-            }}
-          >
-            {isOver ? 'Drop here' : 'Drop elements here'}
-          </div>
-        ) : (
-          <div className="column-blocks">
-            {showPlaceholder && <div className="drop-placeholder">Drop here</div>}
-            {column.children.map(child => (
-              <BlockElement key={child.key} block={child} columnId={column.id} />
-            ))}
-          </div>
-        )}
-      </Container>
-    </Droppable>
+      {column.children.length === 0 ? (
+        <div
+          className="column-empty"
+          style={{
+            borderColor: isOver ? '#1e88e5' : 'transparent',
+            background: isOver ? 'rgba(30, 136, 229, 0.1)' : 'transparent',
+          }}
+        >
+          {isOver ? 'Drop here' : 'Drop elements here'}
+        </div>
+      ) : (
+        <div className="column-blocks">
+          {showPlaceholder && <div className="drop-placeholder">Drop here</div>}
+          {column.children.map(child => (
+            <BlockElement key={child.key} block={child} columnId={column.id} />
+          ))}
+        </div>
+      )}
+    </Container>
   )
 })

@@ -1,9 +1,9 @@
+import { useDroppable } from '@dnd-kit/core'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { Section } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { tokens } from '../../styles/tokens'
-import { Droppable, useDndState } from '../dnd'
 import { SectionActions } from '../WidgetActions'
 import { ColumnBox } from './ColumnBox'
 
@@ -69,8 +69,12 @@ const Container = styled.div`
 
 export const SectionRow = observer(({ section }: SectionRowProps) => {
   const isSelected = editorStore.selectedElementId === section.id
-  const { overId } = useDndState()
-  const isOver = overId === `section-${section.id}`
+
+  // Make empty section directly droppable
+  const { isOver, setNodeRef } = useDroppable({
+    id: `section-${section.id}`,
+    data: { accepts: 'layout', sectionId: section.id },
+  })
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -94,17 +98,16 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
       <SectionActions onCopy={handleCopy} onDelete={handleDelete} />
       <span className="section-label">Section</span>
       {section.children.length === 0 ? (
-        <Droppable id={`section-${section.id}`} data={{ accepts: 'layout', sectionId: section.id }}>
-          <div
-            className="section-empty"
-            style={{
-              background: isOver ? 'rgba(38, 198, 218, 0.1)' : undefined,
-              borderColor: isOver ? '#26c6da' : undefined,
-            }}
-          >
-            Drop columns or layout here
-          </div>
-        </Droppable>
+        <div
+          ref={setNodeRef}
+          className="section-empty"
+          style={{
+            background: isOver ? 'rgba(38, 198, 218, 0.1)' : undefined,
+            borderColor: isOver ? '#26c6da' : undefined,
+          }}
+        >
+          Drop columns or layout here
+        </div>
       ) : (
         <div className="section-content">
           {section.children.map((column, index) => (

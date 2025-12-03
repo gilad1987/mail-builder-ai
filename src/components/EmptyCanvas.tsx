@@ -1,8 +1,8 @@
+import { useDroppable } from '@dnd-kit/core'
 import styled from 'styled-components'
 import { Layout, MousePointerClick, Sparkles } from 'lucide-react'
 import { tokens } from '../styles/tokens'
 import { editorStore } from '../stores/EditorStore'
-import { Droppable } from './dnd'
 import type { ColumnJSON } from '../models'
 
 const Container = styled.div`
@@ -198,6 +198,12 @@ const quickLayouts = [
 ]
 
 export const EmptyCanvas = () => {
+  // Make the drop zone directly droppable
+  const { setNodeRef } = useDroppable({
+    id: 'empty-canvas',
+    data: { accepts: 'layout', sectionId: 'new' },
+  })
+
   const handleAddSection = () => {
     const section = editorStore.addSection()
     section.addColumn({ width: 100 } as ColumnJSON)
@@ -227,14 +233,12 @@ export const EmptyCanvas = () => {
         </button>
       </div>
 
-      <Droppable id="empty-canvas" data={{ accepts: 'layout', sectionId: 'new' }}>
-        <div className="empty-drop-zone">
-          <div className="drop-hint">
-            <MousePointerClick size={20} />
-            <span>Drag a layout from the sidebar to get started</span>
-          </div>
+      <div ref={setNodeRef} className="empty-drop-zone">
+        <div className="drop-hint">
+          <MousePointerClick size={20} />
+          <span>Drag a layout from the sidebar to get started</span>
         </div>
-      </Droppable>
+      </div>
 
       <div className="quick-start">
         <div className="quick-start-title">Quick Start Layouts</div>
