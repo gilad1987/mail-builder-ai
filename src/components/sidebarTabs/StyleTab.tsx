@@ -34,9 +34,21 @@ export const StyleTab = observer(() => (
     <SliderField label="Letter Spacing" defaultValue={0} max={10} unit="px" />
     <SliderField label="Font size" defaultValue={16} max={72} unit="px" />
     <SliderField label="Line height" defaultValue={16} max={72} unit="px" />
-    <SimpleDropdownField label="Text Decoration" value="Default" />
-    <SimpleDropdownField label="Text Transform" value="Default" />
-    <SimpleDropdownField label="Font family" value="Arial" />
+    <SimpleDropdownField
+      label="Text Decoration"
+      value="Default"
+      options={['Default', 'Underline', 'Line-through', 'None']}
+    />
+    <SimpleDropdownField
+      label="Text Transform"
+      value="Default"
+      options={['Default', 'Uppercase', 'Lowercase', 'Capitalize', 'None']}
+    />
+    <SimpleDropdownField
+      label="Font family"
+      value="Arial"
+      options={['Arial', 'Verdana', 'Tahoma', 'Roboto', 'Open Sans', 'Lato', 'Montserrat']}
+    />
     <ColorControl label="Text color" colorValue="#000000" responsive={false} />
     <ColorControl label="Background color" colorValue="#FFFFFF" responsive={false} />
     <BorderController />
