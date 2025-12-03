@@ -38,6 +38,7 @@ const Container = styled.div`
   }
 
   .section-content {
+    flex: 1;
     padding: ${tokens.spacing[4]};
     min-height: 100px;
 
@@ -146,6 +147,7 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
               column={column}
               sectionId={section.id}
               isLast={index === section.children.length - 1}
+              isOnlyColumn={section.children.length === 1}
             />
           ))}
         </div>

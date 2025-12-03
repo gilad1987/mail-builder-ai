@@ -12,6 +12,7 @@ interface ColumnBoxProps {
   column: Column
   sectionId: string
   isLast?: boolean
+  isOnlyColumn?: boolean
 }
 
 const Container = styled.div`
@@ -81,7 +82,7 @@ const Container = styled.div`
   }
 `
 
-export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps) => {
+export const ColumnBox = observer(({ column, sectionId, isLast, isOnlyColumn }: ColumnBoxProps) => {
   const isSelected = editorStore.selectedElementId === column.id
   const isHovered = editorStore.hoveredElementId === column.id
   const { activeData } = useDndState()
@@ -142,10 +143,12 @@ export const ColumnBox = observer(({ column, sectionId, isLast }: ColumnBoxProps
     .filter(Boolean)
     .join(' ')
 
-  // If width is defined, use it as flex-basis and max-width
+  // If only column, always stretch to fill
+  // If width is defined and not only column, use it as flex-basis and max-width
   // If width is undefined, use flex: 1 to expand as much as possible
-  const flexStyle =
-    column.width !== undefined
+  const flexStyle = isOnlyColumn
+    ? { flex: 1 }
+    : column.width !== undefined
       ? { flex: `0 0 ${column.width}%`, maxWidth: `${column.width}%` }
       : { flex: 1 }
 

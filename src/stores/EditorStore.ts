@@ -101,7 +101,22 @@ class EditorStore {
   addColumnToSection(sectionId: string, width?: number): Column | null {
     const section = this.template.findById(sectionId) as Section | null
     if (section && section instanceof Section) {
-      return section.addColumn(width !== undefined ? ({ width } as ColumnJSON) : {})
+      // If width is explicitly provided, use it
+      if (width !== undefined) {
+        return section.addColumn({ width } as ColumnJSON)
+      }
+
+      // If no width provided, redistribute all columns evenly
+      const newColumnCount = section.children.length + 1
+      const evenWidth = Math.floor(100 / newColumnCount)
+
+      // Update existing columns to have even widths
+      section.children.forEach(col => {
+        col.width = evenWidth
+      })
+
+      // Add new column with even width
+      return section.addColumn({ width: evenWidth } as ColumnJSON)
     }
     return null
   }

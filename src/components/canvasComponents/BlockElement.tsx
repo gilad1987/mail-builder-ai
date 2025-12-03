@@ -142,6 +142,7 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
                 column={col}
                 sectionId={block.id}
                 isLast={index === block.children.length - 1}
+                isOnlyColumn={block.children.length === 1}
               />
             ))
           )}
