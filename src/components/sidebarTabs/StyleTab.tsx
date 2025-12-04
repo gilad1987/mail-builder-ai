@@ -41,8 +41,8 @@ export const StyleTab = observer(() => {
           </p>
           <div className="dimension-grid">
             <DimensionInput label="Width" styleProperty="width" defaultUnit="%" />
-            <DimensionInput label="Height" styleProperty="height" defaultUnit="px" />
             <DimensionInput label="Max Width" styleProperty="maxWidth" defaultUnit="px" />
+            <DimensionInput label="Height" styleProperty="height" defaultUnit="px" />
             <DimensionInput label="Max Height" styleProperty="maxHeight" defaultUnit="px" />
           </div>
         </div>

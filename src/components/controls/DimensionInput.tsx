@@ -64,7 +64,6 @@ export const DimensionInput = observer(
             value={sizeValue}
             onChange={e => handleSizeChange(e.target.value)}
             placeholder={String(defaultValue)}
-            style={{ textAlign: 'right' }}
             disabled={!element || unitValue === 'auto'}
           />
           <div className="unit-dropdown">

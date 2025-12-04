@@ -4,7 +4,7 @@ import './styles/main.scss'
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/mail-builder-ai">
       <Routes>
         <Route path="/" element={<TemplatesLibrary />} />
         <Route path="/templates" element={<TemplatesLibrary />} />
