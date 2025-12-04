@@ -51,22 +51,26 @@ export const BlockSelectPanel = observer(() => {
       </div>
 
       <div className="block-grid">
-        {blocks.map((block, index) => (
-          <Draggable
-            key={index}
-            id={`sidebar-block-${block.type}`}
-            data={{ source: 'sidebar', type: 'block', blockType: block.type, name: block.name }}
-          >
-            <div className="block-card" title={`Drag ${block.name} to canvas`}>
-              <block.icon
-                size={24}
-                className={`block-card__icon ${block.colorClass}`}
-                strokeWidth={1.5}
-              />
-              <span className="block-card__name">{block.name}</span>
-            </div>
-          </Draggable>
-        ))}
+        {blocks.map((block, index) => {
+          // Column is a special type - it's a layout element, not a block
+          const isColumn = block.type === WidgetType.Column
+          const dragData = isColumn
+            ? { source: 'sidebar', type: 'column', name: block.name }
+            : { source: 'sidebar', type: 'block', blockType: block.type, name: block.name }
+
+          return (
+            <Draggable key={index} id={`sidebar-block-${block.type}`} data={dragData}>
+              <div className="block-card" title={`Drag ${block.name} to canvas`}>
+                <block.icon
+                  size={24}
+                  className={`block-card__icon ${block.colorClass}`}
+                  strokeWidth={1.5}
+                />
+                <span className="block-card__name">{block.name}</span>
+              </div>
+            </Draggable>
+          )
+        })}
       </div>
 
       <LayoutSection />

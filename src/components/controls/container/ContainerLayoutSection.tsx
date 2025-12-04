@@ -127,6 +127,12 @@ export const ContainerLayoutSection = observer(() => {
 
   const handleLayoutChange = (value: LayoutType) => {
     editorStore.updateSelectedStyle('display', value)
+
+    // When switching to Grid, initialize gridTemplateColumns based on children count
+    if (value === 'grid' && element.children.length > 0) {
+      const template = Array(element.children.length).fill('1fr').join(' ')
+      editorStore.updateSelectedStyle('gridTemplateColumns', template)
+    }
   }
 
   const handleContentWidthChange = (value: ContentWidth) => {

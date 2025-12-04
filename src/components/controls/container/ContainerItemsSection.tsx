@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import {
@@ -14,6 +15,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUp,
+  ChevronDown,
   Link2,
   Link2Off,
   MoveHorizontal,
@@ -143,6 +145,188 @@ const Container = styled.div`
     color: var(--text-secondary);
     padding-top: ${tokens.spacing[2]};
   }
+
+  /* Grid-specific styles */
+  .toggle-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: ${tokens.spacing[2]} 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .toggle {
+    position: relative;
+    width: 56px;
+    height: 26px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 13px;
+    cursor: pointer;
+    transition: all ${tokens.transition.fast};
+    overflow: hidden;
+
+    &.is-active {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      background: white;
+      border-radius: 50%;
+      transition: all ${tokens.transition.fast};
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    &.is-active .toggle-knob {
+      left: 33px;
+    }
+
+    .toggle-label {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      font-weight: 600;
+      transition: opacity ${tokens.transition.fast};
+
+      &--on {
+        left: 8px;
+        color: white;
+        opacity: 0;
+      }
+      &--off {
+        right: 8px;
+        color: var(--text-secondary);
+        opacity: 1;
+      }
+    }
+
+    &.is-active .toggle-label--on {
+      opacity: 1;
+    }
+    &.is-active .toggle-label--off {
+      opacity: 0;
+    }
+  }
+
+  .slider-field {
+    padding: ${tokens.spacing[3]} 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: ${tokens.spacing[2]};
+  }
+
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: ${tokens.spacing[3]};
+  }
+
+  .slider {
+    flex: 1;
+    height: 4px;
+    background: var(--input-border);
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+
+    &::-webkit-slider-track {
+      height: 4px;
+      background: var(--input-border);
+      border-radius: 4px;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border: 2px solid var(--input-border);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      margin-top: -6px;
+    }
+
+    &::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      background: white;
+      border: 2px solid var(--input-border);
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .slider-input {
+    width: 60px;
+    padding: ${tokens.spacing[2]};
+    text-align: center;
+    font-size: ${tokens.fontSize.sm};
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: ${tokens.borderRadius.sm};
+    color: var(--input-text);
+  }
+
+  .unit-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: ${tokens.fontSize.xs};
+    color: var(--text-secondary);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--text-primary);
+    }
+  }
+
+  .dropdown-wrapper {
+    position: relative;
+    flex: 1;
+    max-width: 200px;
+  }
+
+  .dropdown {
+    width: 100%;
+    appearance: none;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: ${tokens.borderRadius.sm};
+    padding: ${tokens.spacing[2]};
+    padding-right: ${tokens.spacing[6]};
+    font-size: ${tokens.fontSize.sm};
+    color: var(--input-text);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+  }
+
+  .dropdown-icon {
+    position: absolute;
+    right: ${tokens.spacing[2]};
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+  }
 `
 
 type FlexDirection = 'row' | 'column' | 'row-reverse' | 'column-reverse'
@@ -156,10 +340,14 @@ type JustifyContent =
   | 'start'
   | 'end'
 type AlignItems = 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'start' | 'end'
+type JustifyItems = 'start' | 'center' | 'end' | 'stretch'
 type FlexWrap = 'nowrap' | 'wrap'
+type GridAutoFlow = 'row' | 'column' | 'dense' | 'row dense' | 'column dense'
 
 export const ContainerItemsSection = observer(() => {
   const element = editorStore.selectedElement
+  const [showGridOutline, setShowGridOutline] = useState(false)
+
   if (!element) return null
 
   const style = element.style
@@ -174,7 +362,22 @@ export const ContainerItemsSection = observer(() => {
   const justifyContent = (style.justifyContent as JustifyContent) || 'flex-start'
   const alignItems = (style.alignItems as AlignItems) || 'flex-start'
   const flexWrap = (style.flexWrap as FlexWrap) || 'nowrap'
+
+  // Grid-specific values
   const gridTemplateColumns = (style.gridTemplateColumns as string) || ''
+  const gridTemplateRows = (style.gridTemplateRows as string) || ''
+  const gridAutoFlow = (style.gridAutoFlow as GridAutoFlow) || 'row'
+  const justifyItems = (style.justifyItems as JustifyItems) || 'stretch'
+
+  // Parse grid columns/rows count from template (e.g., "1fr 1fr 1fr" -> 3)
+  const parseGridCount = (template: string): number => {
+    if (!template) return 1
+    return template.split(/\s+/).filter(Boolean).length
+  }
+
+  // Read column/row count from CSS gridTemplateColumns/gridTemplateRows
+  const gridColumns = parseGridCount(gridTemplateColumns)
+  const gridRows = parseGridCount(gridTemplateRows)
 
   // Parse gap values - gap can be "20px" or "20px 10px" (row column)
   const columnGap = (deviceStyle['columnGap-size'] as number) ?? 20
@@ -199,8 +402,23 @@ export const ContainerItemsSection = observer(() => {
     editorStore.updateSelectedStyle('flexWrap', value)
   }
 
-  const handleGridTemplateColumnsChange = (value: string) => {
-    editorStore.updateSelectedStyle('gridTemplateColumns', value)
+  const handleGridColumnsChange = (count: number) => {
+    const newCount = Math.max(1, count)
+    const template = Array(newCount).fill('1fr').join(' ')
+    editorStore.updateSelectedStyle('gridTemplateColumns', template)
+  }
+
+  const handleGridRowsChange = (count: number) => {
+    const template = Array(Math.max(1, count)).fill('1fr').join(' ')
+    editorStore.updateSelectedStyle('gridTemplateRows', template)
+  }
+
+  const handleGridAutoFlowChange = (value: string) => {
+    editorStore.updateSelectedStyle('gridAutoFlow', value)
+  }
+
+  const handleJustifyItemsChange = (value: JustifyItems) => {
+    editorStore.updateSelectedStyle('justifyItems', value)
   }
 
   const handleColumnGapChange = (value: number, linked: boolean) => {
@@ -267,19 +485,80 @@ export const ContainerItemsSection = observer(() => {
 
       {/* Grid-specific controls */}
       {isGrid && (
-        <div className="field" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
-          <span className="field-label" style={{ marginBottom: tokens.spacing[2] }}>
-            Grid Template Columns
-          </span>
-          <input
-            type="text"
-            className="gap-input"
-            style={{ width: '100%', textAlign: 'left', padding: tokens.spacing[2] }}
-            value={gridTemplateColumns}
-            placeholder="e.g., 1fr 1fr or 100px auto 1fr"
-            onChange={e => handleGridTemplateColumnsChange(e.target.value)}
-          />
-        </div>
+        <>
+          {/* Grid Outline Toggle */}
+          <div className="toggle-field">
+            <span className="field-label">Grid Outline</span>
+            <div
+              className={`toggle ${showGridOutline ? 'is-active' : ''}`}
+              onClick={() => setShowGridOutline(!showGridOutline)}
+            >
+              <span className="toggle-label toggle-label--on">Show</span>
+              <span className="toggle-label toggle-label--off">Hide</span>
+              <div className="toggle-knob" />
+            </div>
+          </div>
+
+          {/* Columns Slider */}
+          <div className="slider-field">
+            <div className="slider-header">
+              <span className="field-label">
+                Columns <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+              </span>
+              <span className="unit-dropdown">
+                fr <ChevronDown size={12} />
+              </span>
+            </div>
+            <div className="slider-row">
+              <input
+                type="range"
+                className="slider"
+                min={1}
+                max={12}
+                value={gridColumns}
+                onChange={e => handleGridColumnsChange(Number(e.target.value))}
+              />
+              <input
+                type="number"
+                className="slider-input"
+                min={1}
+                max={12}
+                value={gridColumns}
+                onChange={e => handleGridColumnsChange(Number(e.target.value))}
+              />
+            </div>
+          </div>
+
+          {/* Rows Slider */}
+          <div className="slider-field">
+            <div className="slider-header">
+              <span className="field-label">
+                Rows <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+              </span>
+              <span className="unit-dropdown">
+                fr <ChevronDown size={12} />
+              </span>
+            </div>
+            <div className="slider-row">
+              <input
+                type="range"
+                className="slider"
+                min={1}
+                max={12}
+                value={gridRows}
+                onChange={e => handleGridRowsChange(Number(e.target.value))}
+              />
+              <input
+                type="number"
+                className="slider-input"
+                min={1}
+                max={12}
+                value={gridRows}
+                onChange={e => handleGridRowsChange(Number(e.target.value))}
+              />
+            </div>
+          </div>
+        </>
       )}
 
       {/* Common controls */}
@@ -365,6 +644,57 @@ export const ContainerItemsSection = observer(() => {
           </button>
         </div>
       </div>
+
+      {/* Grid-only: Auto Flow and Justify Items */}
+      {isGrid && (
+        <>
+          {/* Auto Flow Dropdown */}
+          <div className="field">
+            <span className="field-label">
+              Auto Flow <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+            </span>
+            <div className="dropdown-wrapper">
+              <select
+                className="dropdown"
+                value={gridAutoFlow}
+                onChange={e => handleGridAutoFlowChange(e.target.value)}
+              >
+                <option value="row">Row</option>
+                <option value="column">Column</option>
+                <option value="dense">Dense</option>
+                <option value="row dense">Row Dense</option>
+                <option value="column dense">Column Dense</option>
+              </select>
+              <ChevronDown size={14} className="dropdown-icon" />
+            </div>
+          </div>
+
+          {/* Justify Items (Grid-specific) */}
+          <div className="field">
+            <span className="field-label">
+              Justify Items <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+            </span>
+            <div className="button-group">
+              {(
+                [
+                  ['start', AlignHorizontalJustifyStart],
+                  ['center', AlignHorizontalJustifyCenter],
+                  ['end', AlignHorizontalJustifyEnd],
+                  ['stretch', StretchHorizontal],
+                ] as [JustifyItems, typeof AlignHorizontalJustifyStart][]
+              ).map(([v, Icon]) => (
+                <button
+                  key={v}
+                  className={`group-btn ${justifyItems === v ? 'is-active' : ''}`}
+                  onClick={() => handleJustifyItemsChange(v)}
+                >
+                  <Icon size={16} />
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Flex-only wrap control */}
       {!isGrid && (

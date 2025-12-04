@@ -148,7 +148,8 @@ class EditorStore {
   addColumnToSection(sectionId: string, width: number = 100): Column | null {
     const section = this.template.findById(sectionId) as Section | null
     if (section && section instanceof Section) {
-      return section.addColumn({ width } as ColumnJSON)
+      const column = section.addColumn({ width } as ColumnJSON)
+      return column
     }
     return null
   }

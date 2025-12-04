@@ -24,9 +24,9 @@ export class Column extends Box {
     } else {
       this._style.desktop = {
         flex: 1,
-        'padding-size': 20,
+        'padding-size': 5,
         'padding-unit': 'px',
-        'margin-size': 20,
+        'margin-size': 5,
         'margin-unit': 'px',
         display: 'flex',
         flexDirection: 'column',

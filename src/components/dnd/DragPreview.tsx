@@ -76,6 +76,17 @@ export const DragPreview = ({ type, data }: DragPreviewProps) => {
     )
   }
 
+  if (type === 'sidebar' && data.type === 'column') {
+    return (
+      <LayoutPreview>
+        <div className="preview-columns">
+          <div className="preview-col" style={{ flex: 1, minWidth: 60 }} />
+        </div>
+        <div className="preview-label">{data.name || 'Column'}</div>
+      </LayoutPreview>
+    )
+  }
+
   if (type === 'sidebar' && data.type === 'block' && data.blockType) {
     const Icon = blockIcons[data.blockType] || AlignLeft
     return (

@@ -66,9 +66,15 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
   const isSelected = editorStore.selectedElementId === section.id
   const isHovered = editorStore.hoveredElementId === section.id
 
-  // Make empty section directly droppable
+  // Make section droppable for layouts and columns
   const { isOver, setNodeRef } = useDroppable({
     id: `section-${section.id}`,
+    data: { accepts: 'layout', sectionId: section.id },
+  })
+
+  // Separate droppable for section content (when section has children)
+  const { isOver: isOverContent, setNodeRef: setContentRef } = useDroppable({
+    id: `section-content-${section.id}`,
     data: { accepts: 'layout', sectionId: section.id },
   })
 
@@ -105,10 +111,29 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
     .filter(Boolean)
     .join(' ')
 
+  // Filter out layout-related properties that should only apply to .section-content
+  const layoutProps = [
+    'display',
+    'flexDirection',
+    'flexWrap',
+    'justifyContent',
+    'alignItems',
+    'gridTemplateColumns',
+    'gridTemplateRows',
+    'gridAutoFlow',
+    'justifyItems',
+    'gap',
+    'columnGap',
+    'rowGap',
+  ]
+  const containerStyle = Object.fromEntries(
+    Object.entries(section.style).filter(([key]) => !layoutProps.includes(key))
+  )
+
   return (
     <Container
       className={classNames}
-      style={section.style}
+      style={containerStyle}
       onClick={handleClick}
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
@@ -128,6 +153,7 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
         </div>
       ) : (
         <div
+          ref={setContentRef}
           className="section-content"
           style={{
             display: (section.style.display as React.CSSProperties['display']) || 'flex',
@@ -148,6 +174,11 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
               section.style.columnGap || section.style.rowGap
                 ? `${section.style.rowGap || 0} ${section.style.columnGap || 0}`
                 : tokens.spacing[2],
+            // Visual feedback when dragging over
+            ...(isOverContent && {
+              outline: '2px dashed #26c6da',
+              outlineOffset: '-2px',
+            }),
           }}
         >
           {section.children.map((column, index) => (

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import {
-  closestCenter,
   DndContext as DndKitContext,
   type DragEndEvent,
   type DragOverEvent,
@@ -8,6 +7,7 @@ import {
   type DragStartEvent,
   KeyboardSensor,
   PointerSensor,
+  pointerWithin,
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
@@ -80,6 +80,21 @@ export const DndProvider = ({ children }: DndProviderProps) => {
               editorStore.addColumnLayout(overData.sectionId, data.columns)
             }
           }
+        } else if (data.type === 'column') {
+          // Column dropped on section or column - add a new column to the section
+          if (overData?.accepts === 'layout' && overData?.sectionId) {
+            if (overData.sectionId === 'new') {
+              // Create new section with one column
+              const section = editorStore.addSection()
+              editorStore.addColumnToSection(section.id, 100)
+            } else {
+              // Add column to existing section
+              editorStore.addColumnToSection(overData.sectionId)
+            }
+          } else if (overData?.accepts === 'block' && overData?.sectionId) {
+            // Dropped on a column - add to the column's parent section
+            editorStore.addColumnToSection(overData.sectionId)
+          }
         } else if (data.type === 'block') {
           // Block dropped on column or section
           if (overData?.accepts === 'block' && overData?.columnId && data.blockType) {
@@ -127,7 +142,7 @@ export const DndProvider = ({ children }: DndProviderProps) => {
   return (
     <DndKitContext
       sensors={sensors}
-      collisionDetection={closestCenter}
+      collisionDetection={pointerWithin}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}

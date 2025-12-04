@@ -1,6 +1,6 @@
 export interface DragData {
   source: 'sidebar' | 'canvas'
-  type?: 'layout' | 'block'
+  type?: 'layout' | 'block' | 'column'
   blockType?: string
   columns?: number[]
   name?: string
