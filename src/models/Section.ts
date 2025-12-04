@@ -1,5 +1,5 @@
 import { Box, type BoxJSON, type StyleRecord, WidgetType } from './Box'
-import { Column } from './Column'
+import { Column, type ColumnJSON } from './Column'
 
 export interface SectionJSON extends BoxJSON {
   children?: BoxJSON[]
@@ -55,7 +55,7 @@ export class Section extends Box {
   }
 
   // Add a new column
-  addColumn(json: BoxJSON = {}): Column {
+  addColumn(json: ColumnJSON = {}): Column {
     const column = new Column(json, this)
     this.addChild(column)
     return column

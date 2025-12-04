@@ -131,10 +131,19 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
           className="section-content"
           style={{
             display: (section.style.display as React.CSSProperties['display']) || 'flex',
-            flexDirection: section.style.flexDirection as React.CSSProperties['flexDirection'],
+            // Flex properties
+            ...(section.style.display !== 'grid' && {
+              flexDirection: section.style.flexDirection as React.CSSProperties['flexDirection'],
+              flexWrap: section.style.flexWrap as React.CSSProperties['flexWrap'],
+            }),
+            // Grid properties
+            ...(section.style.display === 'grid' && {
+              gridTemplateColumns: section.style.gridTemplateColumns as string,
+              gridTemplateRows: section.style.gridTemplateRows as string,
+            }),
+            // Common properties
             justifyContent: section.style.justifyContent as React.CSSProperties['justifyContent'],
             alignItems: section.style.alignItems as React.CSSProperties['alignItems'],
-            flexWrap: section.style.flexWrap as React.CSSProperties['flexWrap'],
             gap:
               section.style.columnGap || section.style.rowGap
                 ? `${section.style.rowGap || 0} ${section.style.columnGap || 0}`

@@ -1,2 +1,3 @@
-export { ElementRenderer } from './ElementRenderer'
-export { TemplateCanvas } from './TemplateCanvas'
+export { Canvas } from './Canvas'
+export { EmptyCanvas } from './EmptyCanvas'
+export { StructureSelector } from './StructureSelector'

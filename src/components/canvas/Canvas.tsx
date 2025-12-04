@@ -1,13 +1,15 @@
+import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Plus } from 'lucide-react'
-import { editorStore } from '../stores/EditorStore'
-import { SectionRow } from './canvasComponents'
+import { editorStore } from '../../stores/EditorStore'
+import { SectionRow } from '../canvasComponents'
 import { EmptyCanvas } from './EmptyCanvas'
+import { StructureSelector } from './StructureSelector'
 
 export const Canvas = observer(() => {
+  const [showStructureSelector, setShowStructureSelector] = useState(false)
   const viewportClassName = `viewport viewport--${editorStore.activeDevice}`
   const isMobileOrTablet = editorStore.activeDevice !== 'desktop'
-  // Access templateVersion to trigger re-render when template is replaced
 
   // Show empty state when no sections exist
   if (editorStore.isEmpty) {
@@ -26,6 +28,14 @@ export const Canvas = observer(() => {
     )
   }
 
+  const handleAddSectionClick = () => {
+    setShowStructureSelector(true)
+  }
+
+  const handleStructureSelectorClose = () => {
+    setShowStructureSelector(false)
+  }
+
   const content = (
     <>
       <div className="viewport__content">
@@ -34,11 +44,15 @@ export const Canvas = observer(() => {
         ))}
       </div>
 
-      <button className="add-row-btn" onClick={() => editorStore.addSection()}>
-        <span>
-          <Plus size={16} /> Add Section
-        </span>
-      </button>
+      {showStructureSelector ? (
+        <StructureSelector onClose={handleStructureSelectorClose} />
+      ) : (
+        <button className="add-row-btn" onClick={handleAddSectionClick}>
+          <span>
+            <Plus size={16} /> Add Section
+          </span>
+        </button>
+      )}
     </>
   )
 

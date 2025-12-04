@@ -153,7 +153,9 @@ type JustifyContent =
   | 'space-between'
   | 'space-around'
   | 'space-evenly'
-type AlignItems = 'flex-start' | 'center' | 'flex-end' | 'stretch'
+  | 'start'
+  | 'end'
+type AlignItems = 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'start' | 'end'
 type FlexWrap = 'nowrap' | 'wrap'
 
 export const ContainerItemsSection = observer(() => {
@@ -163,11 +165,16 @@ export const ContainerItemsSection = observer(() => {
   const style = element.style
   const deviceStyle = element._style[editorStore.activeDevice]
 
+  // Get display type
+  const displayType = (style.display as string) || 'flex'
+  const isGrid = displayType === 'grid'
+
   // Get current values from model
   const direction = (style.flexDirection as FlexDirection) || 'row'
   const justifyContent = (style.justifyContent as JustifyContent) || 'flex-start'
   const alignItems = (style.alignItems as AlignItems) || 'flex-start'
   const flexWrap = (style.flexWrap as FlexWrap) || 'nowrap'
+  const gridTemplateColumns = (style.gridTemplateColumns as string) || ''
 
   // Parse gap values - gap can be "20px" or "20px 10px" (row column)
   const columnGap = (deviceStyle['columnGap-size'] as number) ?? 20
@@ -190,6 +197,10 @@ export const ContainerItemsSection = observer(() => {
 
   const handleFlexWrapChange = (value: FlexWrap) => {
     editorStore.updateSelectedStyle('flexWrap', value)
+  }
+
+  const handleGridTemplateColumnsChange = (value: string) => {
+    editorStore.updateSelectedStyle('gridTemplateColumns', value)
   }
 
   const handleColumnGapChange = (value: number, linked: boolean) => {
@@ -222,29 +233,56 @@ export const ContainerItemsSection = observer(() => {
   return (
     <Container>
       <h4 className="items-title">Items</h4>
-      <div className="field">
-        <span className="field-label">
-          Direction <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
-        </span>
-        <div className="button-group">
-          {(['row', 'column', 'row-reverse', 'column-reverse'] as FlexDirection[]).map((d, i) => (
-            <button
-              key={d}
-              className={`group-btn ${direction === d ? 'is-active' : ''}`}
-              onClick={() => handleDirectionChange(d)}
-            >
-              {
-                [
-                  <ArrowRight size={16} key="right" />,
-                  <ArrowDown size={16} key="down" />,
-                  <ArrowLeft size={16} key="left" />,
-                  <ArrowUp size={16} key="up" />,
-                ][i]
-              }
-            </button>
-          ))}
+
+      {/* Flex-specific controls */}
+      {!isGrid && (
+        <>
+          <div className="field">
+            <span className="field-label">
+              Direction <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+            </span>
+            <div className="button-group">
+              {(['row', 'column', 'row-reverse', 'column-reverse'] as FlexDirection[]).map(
+                (d, i) => (
+                  <button
+                    key={d}
+                    className={`group-btn ${direction === d ? 'is-active' : ''}`}
+                    onClick={() => handleDirectionChange(d)}
+                  >
+                    {
+                      [
+                        <ArrowRight size={16} key="right" />,
+                        <ArrowDown size={16} key="down" />,
+                        <ArrowLeft size={16} key="left" />,
+                        <ArrowUp size={16} key="up" />,
+                      ][i]
+                    }
+                  </button>
+                )
+              )}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Grid-specific controls */}
+      {isGrid && (
+        <div className="field" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+          <span className="field-label" style={{ marginBottom: tokens.spacing[2] }}>
+            Grid Template Columns
+          </span>
+          <input
+            type="text"
+            className="gap-input"
+            style={{ width: '100%', textAlign: 'left', padding: tokens.spacing[2] }}
+            value={gridTemplateColumns}
+            placeholder="e.g., 1fr 1fr or 100px auto 1fr"
+            onChange={e => handleGridTemplateColumnsChange(e.target.value)}
+          />
         </div>
-      </div>
+      )}
+
+      {/* Common controls */}
       <div className="field">
         <span className="field-label">
           Justify Content <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
@@ -253,8 +291,8 @@ export const ContainerItemsSection = observer(() => {
       <div className="button-group" style={{ marginBottom: tokens.spacing[3] }}>
         {(
           [
-            ['flex-start', AlignHorizontalJustifyStart],
-            ['flex-end', AlignHorizontalJustifyEnd],
+            [isGrid ? 'start' : 'flex-start', AlignHorizontalJustifyStart],
+            [isGrid ? 'end' : 'flex-end', AlignHorizontalJustifyEnd],
             ['center', AlignHorizontalJustifyCenter],
             ['space-between', AlignHorizontalSpaceBetween],
             ['space-around', AlignHorizontalSpaceAround],
@@ -277,9 +315,9 @@ export const ContainerItemsSection = observer(() => {
         <div className="button-group">
           {(
             [
-              ['flex-start', AlignStartVertical],
+              [isGrid ? 'start' : 'flex-start', AlignStartVertical],
               ['center', AlignCenterVertical],
-              ['flex-end', AlignEndVertical],
+              [isGrid ? 'end' : 'flex-end', AlignEndVertical],
               ['stretch', StretchHorizontal],
             ] as [AlignItems, typeof AlignStartVertical][]
           ).map(([v, Icon]) => (
@@ -327,29 +365,35 @@ export const ContainerItemsSection = observer(() => {
           </button>
         </div>
       </div>
-      <div className="field">
-        <span className="field-label">
-          Wrap <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
-        </span>
-        <div className="button-group">
-          <button
-            className={`group-btn ${flexWrap === 'nowrap' ? 'is-active' : ''}`}
-            onClick={() => handleFlexWrapChange('nowrap')}
-          >
-            <MoveHorizontal size={16} />
-          </button>
-          <button
-            className={`group-btn ${flexWrap === 'wrap' ? 'is-active' : ''}`}
-            onClick={() => handleFlexWrapChange('wrap')}
-          >
-            <WrapText size={16} />
-          </button>
-        </div>
-      </div>
-      <p className="wrap-hint">
-        Items within the container can stay in a single line (No wrap), or break into multiple lines
-        (Wrap).
-      </p>
+
+      {/* Flex-only wrap control */}
+      {!isGrid && (
+        <>
+          <div className="field">
+            <span className="field-label">
+              Wrap <ResponsiveIcon device={editorStore.activeDevice} responsive={true} />
+            </span>
+            <div className="button-group">
+              <button
+                className={`group-btn ${flexWrap === 'nowrap' ? 'is-active' : ''}`}
+                onClick={() => handleFlexWrapChange('nowrap')}
+              >
+                <MoveHorizontal size={16} />
+              </button>
+              <button
+                className={`group-btn ${flexWrap === 'wrap' ? 'is-active' : ''}`}
+                onClick={() => handleFlexWrapChange('wrap')}
+              >
+                <WrapText size={16} />
+              </button>
+            </div>
+          </div>
+          <p className="wrap-hint">
+            Items within the container can stay in a single line (No wrap), or break into multiple
+            lines (Wrap).
+          </p>
+        </>
+      )}
     </Container>
   )
 })
