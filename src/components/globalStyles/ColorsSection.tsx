@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
+import type { GlobalColors } from '../../models'
 
 interface ColorsSectionProps {
   expanded: boolean
   onToggle: () => void
+  colors: GlobalColors
+  onColorChange: (name: keyof GlobalColors, value: string) => void
 }
 
 const Container = styled.div`
@@ -46,6 +49,7 @@ const Container = styled.div`
   .field-label {
     font-size: ${tokens.fontSize.xs};
     color: var(--text-secondary);
+    text-transform: capitalize;
   }
 
   .color-input {
@@ -60,11 +64,23 @@ const Container = styled.div`
     cursor: pointer;
   }
 
-  .color-swatch {
-    width: 16px;
-    height: 16px;
+  .color-picker {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
     border-radius: 4px;
-    border: 1px solid var(--input-border);
+    cursor: pointer;
+    background: transparent;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: 1px solid var(--input-border);
+      border-radius: 4px;
+    }
   }
 
   .color-value {
@@ -73,41 +89,48 @@ const Container = styled.div`
   }
 `
 
-const defaultColors = [
-  { name: 'Primary', color: '#cf549e' },
-  { name: 'Secondary', color: '#b9227d' },
-  { name: 'Accent', color: '#ffb347' },
-  { name: 'Success', color: '#28a745' },
-  { name: 'Warning', color: '#ffc107' },
-  { name: 'Error', color: '#dc3545' },
-]
-
-export const ColorsSection = ({ expanded, onToggle }: ColorsSectionProps) => {
-  const [colors] = useState(defaultColors)
-
-  return (
-    <Container>
-      <div className="section-header" onClick={onToggle}>
-        <span className="section-title">Colors</span>
-        {expanded ? (
-          <ChevronUp size={16} className="section-icon" />
-        ) : (
-          <ChevronDown size={16} className="section-icon" />
-        )}
-      </div>
-      {expanded && (
-        <div className="section-content">
-          {colors.map(({ name, color }) => (
-            <div key={name} className="field">
-              <span className="field-label">{name}</span>
-              <div className="color-input">
-                <div className="color-swatch" style={{ background: color }} />
-                <span className="color-value">{color}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </Container>
-  )
+const colorLabels: Record<keyof GlobalColors, string> = {
+  primary: 'Primary',
+  secondary: 'Secondary',
+  accent: 'Accent',
+  success: 'Success',
+  warning: 'Warning',
+  error: 'Error',
 }
+
+export const ColorsSection = observer(
+  ({ expanded, onToggle, colors, onColorChange }: ColorsSectionProps) => {
+    const colorEntries = Object.entries(colors) as [keyof GlobalColors, string][]
+
+    return (
+      <Container>
+        <div className="section-header" onClick={onToggle}>
+          <span className="section-title">Colors</span>
+          {expanded ? (
+            <ChevronUp size={16} className="section-icon" />
+          ) : (
+            <ChevronDown size={16} className="section-icon" />
+          )}
+        </div>
+        {expanded && (
+          <div className="section-content">
+            {colorEntries.map(([name, color]) => (
+              <div key={name} className="field">
+                <span className="field-label">{colorLabels[name]}</span>
+                <div className="color-input">
+                  <input
+                    type="color"
+                    className="color-picker"
+                    value={color}
+                    onChange={e => onColorChange(name, e.target.value)}
+                  />
+                  <span className="color-value">{color}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Container>
+    )
+  }
+)

@@ -13,3 +13,9 @@ export { Section, type SectionJSON } from './Section'
 export { Column, type ColumnJSON } from './Column'
 export { InnerSection, type InnerSectionJSON } from './InnerSection'
 export { Block, type BlockJSON } from './Block'
+export {
+  type GlobalColors,
+  type TypographyStyle,
+  type GlobalStyles,
+  defaultGlobalStyles,
+} from './GlobalStyles'

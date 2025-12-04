@@ -19,6 +19,37 @@ const Container = styled.div`
   padding: ${tokens.spacing[2]} 0;
   gap: ${tokens.spacing[1]};
 
+  .icon-wrapper {
+    position: relative;
+
+    &:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-50%) translateX(4px);
+    }
+  }
+
+  .tooltip {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%) translateX(0);
+    margin-left: 8px;
+    padding: ${tokens.spacing[1]} ${tokens.spacing[2]};
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: ${tokens.borderRadius.md};
+    font-size: ${tokens.fontSize.xs};
+    color: var(--text-primary);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all ${tokens.transition.fast};
+    pointer-events: none;
+    z-index: ${tokens.zIndex.floating};
+    box-shadow: ${tokens.shadow.md};
+  }
+
   .icon-btn {
     width: 36px;
     height: 36px;
@@ -77,23 +108,26 @@ export const IconSidebar = observer(({ activePanel, onPanelChange }: IconSidebar
   return (
     <Container>
       {icons.map(({ id, icon: Icon, label }) => (
-        <button
-          key={id}
-          className={`icon-btn ${activePanel === id ? 'is-active' : ''}`}
-          onClick={() => onPanelChange(activePanel === id ? null : id)}
-          title={label}
-        >
-          <Icon size={20} />
-        </button>
+        <div key={id} className="icon-wrapper">
+          <button
+            className={`icon-btn ${activePanel === id ? 'is-active' : ''}`}
+            onClick={() => onPanelChange(activePanel === id ? null : id)}
+          >
+            <Icon size={20} />
+          </button>
+          <span className="tooltip">{label}</span>
+        </div>
       ))}
       {/*<div className="spacer" />*/}
-      <button
-        className={`icon-btn ai-btn ${activePanel === aiIcon.id ? 'is-active' : ''}`}
-        onClick={() => onPanelChange(activePanel === aiIcon.id ? null : aiIcon.id)}
-        title={aiIcon.label}
-      >
-        <aiIcon.icon size={20} />
-      </button>
+      <div className="icon-wrapper">
+        <button
+          className={`icon-btn ai-btn ${activePanel === aiIcon.id ? 'is-active' : ''}`}
+          onClick={() => onPanelChange(activePanel === aiIcon.id ? null : aiIcon.id)}
+        >
+          <aiIcon.icon size={20} />
+        </button>
+        <span className="tooltip">{aiIcon.label}</span>
+      </div>
     </Container>
   )
 })

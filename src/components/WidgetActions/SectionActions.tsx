@@ -12,8 +12,7 @@ interface SectionActionsProps {
 const Container = styled.div`
   position: absolute;
   top: -33px;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
   display: flex;
   align-items: center;
   gap: 0;

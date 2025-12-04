@@ -5,12 +5,16 @@ import {
   type BoxJSON,
   Column,
   type ColumnJSON,
+  defaultGlobalStyles,
   type DeviceType,
+  type GlobalColors,
+  type GlobalStyles,
   InnerSection,
   Section,
   setActiveDeviceGetter,
   type StyleValue,
   Template,
+  type TypographyStyle,
   WidgetType,
 } from '../models'
 
@@ -23,6 +27,7 @@ export type ThemeType = 'light' | 'dark'
 
 class EditorStore {
   template: Template
+  globalStyles: GlobalStyles = JSON.parse(JSON.stringify(defaultGlobalStyles))
   selectedElementId: string | null = null
   hoveredElementId: string | null = null
   activeDevice: DeviceType = 'desktop'
@@ -36,6 +41,7 @@ class EditorStore {
 
     makeAutoObservable(this, {
       template: true,
+      globalStyles: true,
     })
 
     setActiveDeviceGetter(() => this.activeDevice)
@@ -89,6 +95,45 @@ class EditorStore {
   setTheme(theme: ThemeType) {
     this.theme = theme
     document.documentElement.setAttribute('data-theme', this.theme)
+  }
+
+  // Global Styles
+  updateGlobalColor(name: keyof GlobalColors, value: string) {
+    this.globalStyles.colors[name] = value
+  }
+
+  updateTypography(
+    category: keyof GlobalStyles['typography'],
+    field: keyof TypographyStyle,
+    value: string
+  ) {
+    this.globalStyles.typography[category][field] = value
+  }
+
+  private applyGlobalStylesToBlock(block: Block) {
+    const { typography, colors } = this.globalStyles
+
+    switch (block.type) {
+      case WidgetType.Headline:
+        if (typography.heading.color !== 'inherit') {
+          block._style.desktop.color = typography.heading.color
+        }
+        block._style.desktop.fontSize = typography.heading.fontSize
+        block._style.desktop.lineHeight = typography.heading.lineHeight
+        break
+      case WidgetType.Paragraph:
+        if (typography.body.color !== 'inherit') {
+          block._style.desktop.color = typography.body.color
+        }
+        block._style.desktop.fontSize = typography.body.fontSize
+        block._style.desktop.lineHeight = typography.body.lineHeight
+        break
+      case WidgetType.Button:
+        block._style.desktop.color = typography.buttons.color
+        block._style.desktop.fontSize = typography.buttons.fontSize
+        block._style.desktop.backgroundColor = colors.primary
+        break
+    }
   }
 
   // Template Operations
@@ -150,6 +195,7 @@ class EditorStore {
         type: mapping.type,
         data: { ...mapping.defaultData, ...data },
       })
+      this.applyGlobalStylesToBlock(block)
       this.selectedElementId = block.id
       return block
     }
@@ -228,8 +274,11 @@ class EditorStore {
     return this.template.toHTML()
   }
 
-  exportAsJSON(): BoxJSON {
-    return this.template.toJSON()
+  exportAsJSON(): BoxJSON & { globalStyles: GlobalStyles } {
+    return {
+      ...this.template.toJSON(),
+      globalStyles: this.globalStyles,
+    }
   }
 
   downloadHTML() {
@@ -259,16 +308,19 @@ class EditorStore {
   }
 
   // Import
-  importFromJSON(json: BoxJSON) {
+  importFromJSON(json: BoxJSON & { globalStyles?: GlobalStyles }) {
     this.selectedElementId = null
     this.hoveredElementId = null
     this.template = new Template(json)
+    if (json.globalStyles) {
+      this.globalStyles = json.globalStyles
+    }
     this.templateVersion++ // Trigger re-render
   }
 
   importFromJSONString(jsonString: string): boolean {
     try {
-      const json = JSON.parse(jsonString) as BoxJSON
+      const json = JSON.parse(jsonString) as BoxJSON & { globalStyles?: GlobalStyles }
       this.importFromJSON(json)
       return true
     } catch (error) {

@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
+import type { TypographyStyle } from '../../models'
 
 interface TypographySectionProps {
   title: string
   expanded: boolean
   onToggle: () => void
+  style: TypographyStyle
+  onStyleChange: (field: keyof TypographyStyle, value: string) => void
 }
 
 const Container = styled.div`
@@ -60,11 +63,23 @@ const Container = styled.div`
     min-width: 120px;
   }
 
-  .color-swatch {
-    width: 16px;
-    height: 16px;
+  .color-picker {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: none;
     border-radius: 4px;
-    border: 1px solid var(--input-border);
+    cursor: pointer;
+    background: transparent;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: 1px solid var(--input-border);
+      border-radius: 4px;
+    }
   }
 
   .color-value {
@@ -108,68 +123,95 @@ const Container = styled.div`
   }
 `
 
-export const TypographySection = ({ title, expanded, onToggle }: TypographySectionProps) => {
-  const [color] = useState('inherit')
-  const [fontSize, setFontSize] = useState('1')
-  const [lineHeight, setLineHeight] = useState('1.75')
-
-  return (
-    <Container>
-      <div className="section-header" onClick={onToggle}>
-        <span className="section-title">{title}</span>
-        {expanded ? (
-          <ChevronUp size={16} className="section-icon" />
-        ) : (
-          <ChevronDown size={16} className="section-icon" />
-        )}
-      </div>
-      {expanded && (
-        <div className="section-content">
-          <div className="field">
-            <span className="field-label">Color</span>
-            <div className="color-input">
-              <div
-                className="color-swatch"
-                style={{ background: color === 'inherit' ? '#888' : color }}
-              />
-              <span className="color-value">{color}</span>
-            </div>
-          </div>
-          <div className="field">
-            <span className="field-label">Font Size</span>
-            <div className="number-input">
-              <input
-                type="number"
-                value={fontSize}
-                onChange={e => setFontSize(e.target.value)}
-                step="0.1"
-              />
-              <span className="unit">rem</span>
-            </div>
-          </div>
-          <div className="field">
-            <span className="field-label">Line Height</span>
-            <div className="number-input">
-              <input
-                type="number"
-                value={lineHeight}
-                onChange={e => setLineHeight(e.target.value)}
-                step="0.25"
-              />
-              <span className="unit">rem</span>
-            </div>
-          </div>
-          <div className="field">
-            <span className="field-label">Font Family</span>
-            <select className="select-input">
-              <option value="default">Default</option>
-              <option value="sans">Sans-serif</option>
-              <option value="serif">Serif</option>
-              <option value="mono">Monospace</option>
-            </select>
-          </div>
-        </div>
-      )}
-    </Container>
-  )
+// Parse numeric value from px string (e.g., "14px" -> "14")
+const parsePxValue = (value: string): string => {
+  const match = value.match(/^([\d.]+)/)
+  return match ? match[1] : '14'
 }
+
+export const TypographySection = observer(
+  ({ title, expanded, onToggle, style, onStyleChange }: TypographySectionProps) => {
+    const isInherit = style.color === 'inherit'
+    const displayColor = isInherit ? '#888888' : style.color
+
+    const handleFontSizeChange = (value: string) => {
+      onStyleChange('fontSize', `${value}px`)
+    }
+
+    const handleLineHeightChange = (value: string) => {
+      onStyleChange('lineHeight', `${value}px`)
+    }
+
+    const handleColorChange = (value: string) => {
+      onStyleChange('color', value)
+    }
+
+    return (
+      <Container>
+        <div className="section-header" onClick={onToggle}>
+          <span className="section-title">{title}</span>
+          {expanded ? (
+            <ChevronUp size={16} className="section-icon" />
+          ) : (
+            <ChevronDown size={16} className="section-icon" />
+          )}
+        </div>
+        {expanded && (
+          <div className="section-content">
+            <div className="field">
+              <span className="field-label">Color</span>
+              <div className="color-input">
+                <input
+                  type="color"
+                  className="color-picker"
+                  value={displayColor}
+                  onChange={e => handleColorChange(e.target.value)}
+                />
+                <span className="color-value">{style.color}</span>
+              </div>
+            </div>
+            <div className="field">
+              <span className="field-label">Font Size</span>
+              <div className="number-input">
+                <input
+                  type="number"
+                  value={parsePxValue(style.fontSize)}
+                  onChange={e => handleFontSizeChange(e.target.value)}
+                  step="1"
+                  min="8"
+                />
+                <span className="unit">px</span>
+              </div>
+            </div>
+            <div className="field">
+              <span className="field-label">Line Height</span>
+              <div className="number-input">
+                <input
+                  type="number"
+                  value={parsePxValue(style.lineHeight)}
+                  onChange={e => handleLineHeightChange(e.target.value)}
+                  step="1"
+                  min="8"
+                />
+                <span className="unit">px</span>
+              </div>
+            </div>
+            <div className="field">
+              <span className="field-label">Font Family</span>
+              <select
+                className="select-input"
+                value={style.fontFamily}
+                onChange={e => onStyleChange('fontFamily', e.target.value)}
+              >
+                <option value="default">Default</option>
+                <option value="sans-serif">Sans-serif</option>
+                <option value="serif">Serif</option>
+                <option value="monospace">Monospace</option>
+              </select>
+            </div>
+          </div>
+        )}
+      </Container>
+    )
+  }
+)
