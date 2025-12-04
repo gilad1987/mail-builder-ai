@@ -37,9 +37,9 @@ export const BorderSideSection = observer(() => {
 
   // Get the property key based on active side
   const getPropertyKey = (prop: string, side: BorderSide): string => {
-    if (side === 'all') return prop
+    if (side === 'all') return `border${prop}`
     const sideData = sides.find(s => s.side === side)
-    return `border${sideData?.capitalize}${prop.charAt(0).toUpperCase() + prop.slice(1)}`
+    return `border${sideData?.capitalize}${prop}`
   }
 
   // Get border style value
