@@ -4,6 +4,7 @@
 type GrayShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
 type BlueShade = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800
 type PurpleShade = 500 | 600 | 700
+type RedShade = 50 | 300 | 500
 type SingleShade = 500
 
 // Color palette interface
@@ -11,7 +12,7 @@ interface ColorPalette {
   gray: Record<GrayShade, string>
   blue: Record<BlueShade, string>
   green: Record<SingleShade, string>
-  red: Record<SingleShade, string>
+  red: Record<RedShade, string>
   orange: Record<SingleShade, string>
   indigo: Record<SingleShade, string>
   teal: Record<SingleShade, string>
@@ -109,7 +110,7 @@ export const tokens: DesignTokens = {
       800: '#1e40af',
     },
     green: { 500: '#10b981' },
-    red: { 500: '#ef4444' },
+    red: { 50: '#fef2f2', 300: '#fca5a5', 500: '#ef4444' },
     orange: { 500: '#f97316' },
     indigo: { 500: '#6366f1' },
     teal: { 500: '#14b8a6' },
