@@ -24,8 +24,10 @@ export class Column extends Box {
     } else {
       this._style.desktop = {
         flex: 1,
-        'padding-size': 10,
+        'padding-size': 20,
         'padding-unit': 'px',
+        'margin-size': 20,
+        'margin-unit': 'px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',

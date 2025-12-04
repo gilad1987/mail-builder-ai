@@ -22,8 +22,8 @@ export const StyleTab = observer(() => {
         {!element && <p className="sidebar__hint">Select an element to edit its styles</p>}
       </div>
 
-      <SpacingControl label="Margin" />
-      <SpacingControl label="Padding" />
+      <SpacingControl label="Margin" defaultValue={20} />
+      <SpacingControl label="Padding" defaultValue={20} />
 
       <div className="style-field">
         <p className="style-field__label">

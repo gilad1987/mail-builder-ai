@@ -7,6 +7,7 @@ import { EmptyCanvas } from './EmptyCanvas'
 export const Canvas = observer(() => {
   const viewportClassName = `viewport viewport--${editorStore.activeDevice}`
   const isMobileOrTablet = editorStore.activeDevice !== 'desktop'
+  // Access templateVersion to trigger re-render when template is replaced
 
   // Show empty state when no sections exist
   if (editorStore.isEmpty) {

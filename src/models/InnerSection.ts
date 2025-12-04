@@ -20,8 +20,10 @@ export class InnerSection extends Box {
       this._style.desktop = {
         flex: 1,
         width: '100%',
-        'padding-size': 0,
+        'padding-size': 20,
         'padding-unit': 'px',
+        'margin-size': 20,
+        'margin-unit': 'px',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-start',

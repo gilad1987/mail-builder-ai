@@ -15,6 +15,7 @@ import {
   Smartphone,
   Sun,
   Tablet,
+  Upload,
 } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 import { ExportModal } from './ExportModal'
@@ -65,6 +66,10 @@ export const TopBar = observer(() => {
     setShowExportMenu(false)
   }
 
+  const handleImportJSON = () => {
+    editorStore.openImportDialog()
+  }
+
   return (
     <>
       <header className="header-bar">
@@ -103,6 +108,9 @@ export const TopBar = observer(() => {
           >
             <Send size={16} />
             <span>Send Test</span>
+          </button>
+          <button className="btn-ghost" title="Import JSON" onClick={handleImportJSON}>
+            <Upload size={18} />
           </button>
           <div className="export-dropdown" ref={exportMenuRef}>
             <button

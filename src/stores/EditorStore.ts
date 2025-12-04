@@ -27,13 +27,14 @@ class EditorStore {
   activeDevice: DeviceType = 'desktop'
   activeTab: TabType = 'Style'
   theme: ThemeType = 'dark'
+  templateVersion: number = 0 // Used to trigger re-renders when template is replaced
 
   constructor() {
     this.template = new Template()
     // Start with empty canvas for best UX
 
     makeAutoObservable(this, {
-      template: false,
+      template: true,
     })
 
     setActiveDeviceGetter(() => this.activeDevice)
@@ -247,6 +248,54 @@ class EditorStore {
     a.click()
     document.body.removeChild(a)
     URL.revokeObjectURL(url)
+  }
+
+  // Import
+  importFromJSON(json: BoxJSON) {
+    this.selectedElementId = null
+    this.hoveredElementId = null
+    this.template = new Template(json)
+    this.templateVersion++ // Trigger re-render
+  }
+
+  importFromJSONString(jsonString: string): boolean {
+    try {
+      const json = JSON.parse(jsonString) as BoxJSON
+      this.importFromJSON(json)
+      return true
+    } catch (error) {
+      console.error('Failed to parse JSON:', error)
+      return false
+    }
+  }
+
+  // Open file dialog and import JSON
+  openImportDialog() {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.json,application/json'
+    input.onchange = e => {
+      const file = (e.target as HTMLInputElement).files?.[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = event => {
+          const content = event.target?.result as string
+          if (content) {
+            this.importFromJSONString(content)
+          }
+        }
+        reader.readAsText(file)
+      }
+    }
+    input.click()
+  }
+
+  // Clear template
+  clearTemplate() {
+    this.selectedElementId = null
+    this.hoveredElementId = null
+    this.template = new Template()
+    this.templateVersion++ // Trigger re-render
   }
 
   // Computed

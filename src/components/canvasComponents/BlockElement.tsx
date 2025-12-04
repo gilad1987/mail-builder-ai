@@ -187,15 +187,23 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
 })
 
 function renderBlockContent(block: Block) {
+  const style = block.style
+
   switch (block.type) {
     case 'Image':
       return (
-        <div className="block-image">
+        <div className="block-image" style={{ height: 'auto', background: 'transparent' }}>
           {block.data.src ? (
             <img
               src={block.data.src as string}
               alt={(block.data.alt as string) || ''}
-              style={{ maxWidth: '100%' }}
+              style={{
+                maxWidth: '100%',
+                width: style.width,
+                height: style.height,
+                borderRadius: style.borderRadius,
+                objectFit: 'cover',
+              }}
             />
           ) : (
             <Image size={32} />
@@ -204,25 +212,85 @@ function renderBlockContent(block: Block) {
       )
 
     case 'Button':
-      return <div className="block-button">{(block.data.text as string) || 'Click Me'}</div>
+      return (
+        <a
+          href={(block.data.href as string) || '#'}
+          className="block-button"
+          style={{
+            display: 'inline-block',
+            padding: style.padding || `${tokens.spacing[2]} ${tokens.spacing[4]}`,
+            backgroundColor: (style.backgroundColor as string) || tokens.colors.blue[500],
+            color: (style.color as string) || '#fff',
+            borderRadius: style.borderRadius || tokens.borderRadius.md,
+            fontSize: style.fontSize || tokens.fontSize.sm,
+            textDecoration: 'none',
+            textAlign: style.textAlign as React.CSSProperties['textAlign'],
+          }}
+        >
+          {(block.data.text as string) || 'Click Me'}
+        </a>
+      )
 
     case 'Headline':
-      return <h3 style={{ margin: 0 }}>{(block.data.content as string) || 'Headline'}</h3>
+      return (
+        <h3
+          style={{
+            margin: 0,
+            fontSize: style.fontSize,
+            fontFamily: style.fontFamily as string,
+            fontWeight: style.fontWeight,
+            color: style.color as string,
+            textAlign: style.textAlign as React.CSSProperties['textAlign'],
+            textDecoration: style.textDecoration,
+            textTransform: style.textTransform as React.CSSProperties['textTransform'],
+            letterSpacing: style.letterSpacing,
+            lineHeight: style.lineHeight,
+          }}
+        >
+          {(block.data.content as string) || 'Headline'}
+        </h3>
+      )
 
     case 'Spacer':
       return (
         <div
           style={{
-            height: (block.data.height as string) || '20px',
-            background: '#f0f0f0',
+            height: style.height || (block.data.height as string) || '20px',
+            background: style.backgroundColor || '#f0f0f0',
           }}
         />
       )
 
     case 'Divider':
-      return <hr style={{ border: 'none', borderTop: '1px solid #ddd' }} />
+      return (
+        <hr
+          style={{
+            border: 'none',
+            borderTop: `${style.borderTopWidth || '1px'} ${style.borderTopStyle || 'solid'} ${style.borderTopColor || '#ddd'}`,
+            margin: style.margin,
+          }}
+        />
+      )
 
     default:
-      return <p className="block-content">{(block.data.content as string) || 'Lorem ipsum...'}</p>
+      // Paragraph
+      return (
+        <p
+          className="block-content"
+          style={{
+            margin: 0,
+            fontSize: style.fontSize,
+            fontFamily: style.fontFamily as string,
+            color: style.color as string,
+            textAlign: style.textAlign as React.CSSProperties['textAlign'],
+            textDecoration: style.textDecoration,
+            textTransform: style.textTransform as React.CSSProperties['textTransform'],
+            letterSpacing: style.letterSpacing,
+            lineHeight: style.lineHeight,
+          }}
+        >
+          {(block.data.content as string) || 'Lorem ipsum...'}
+        </p>
+      )
   }
 }
