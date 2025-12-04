@@ -1,4 +1,4 @@
-import { Box, type BoxJSON, type StyleRecord, type WidgetType } from './Box'
+import { Box, type BoxJSON, type StyleRecord, WidgetType } from './Box'
 import { Column, type ColumnJSON } from './Column'
 
 export interface InnerSectionJSON extends BoxJSON {
@@ -11,7 +11,7 @@ export class InnerSection extends Box {
   constructor(json: InnerSectionJSON = {}, parent: Box | null = null) {
     super(json, parent)
     this.name = 'InnerSection'
-    this.type = 'InnerSection' as WidgetType
+    this.type = WidgetType.InnerSection
 
     // Set default styles, but preserve any styles from JSON
     if (json._style) {

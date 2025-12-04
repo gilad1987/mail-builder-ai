@@ -7,6 +7,7 @@ import { tokens } from '../../styles/tokens'
 import { Draggable } from '../dnd'
 import { BlockActions, ElementLabel } from '../WidgetActions'
 import { ColumnBox } from './ColumnBox'
+import { WidgetType } from '../../config/elementControls'
 
 interface BlockElementProps {
   block: Box
@@ -190,7 +191,7 @@ function renderBlockContent(block: Block) {
   const style = block.style
 
   switch (block.type) {
-    case 'Image':
+    case WidgetType.Image:
       return (
         <div className="block-image" style={{ height: 'auto', background: 'transparent' }}>
           {block.data.src ? (
@@ -211,7 +212,7 @@ function renderBlockContent(block: Block) {
         </div>
       )
 
-    case 'Button':
+    case WidgetType.Button:
       return (
         <a
           href={(block.data.href as string) || '#'}
@@ -231,7 +232,7 @@ function renderBlockContent(block: Block) {
         </a>
       )
 
-    case 'Headline':
+    case WidgetType.Headline:
       return (
         <h3
           style={{
@@ -251,7 +252,34 @@ function renderBlockContent(block: Block) {
         </h3>
       )
 
-    case 'Spacer':
+    case WidgetType.List: {
+      const items = (block.data.items as string[]) || ['Item 1', 'Item 2', 'Item 3']
+      const listType = (block.data.listType as string) || 'bullet'
+      const ListTag = listType === 'numbered' ? 'ol' : 'ul'
+
+      return (
+        <ListTag
+          style={{
+            margin: 0,
+            paddingLeft: '1.5em',
+            fontSize: style.fontSize,
+            fontFamily: style.fontFamily as string,
+            color: style.color as string,
+            textAlign: style.textAlign as React.CSSProperties['textAlign'],
+            textDecoration: style.textDecoration,
+            textTransform: style.textTransform as React.CSSProperties['textTransform'],
+            letterSpacing: style.letterSpacing,
+            lineHeight: style.lineHeight,
+          }}
+        >
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ListTag>
+      )
+    }
+
+    case WidgetType.Spacer:
       return (
         <div
           style={{
@@ -261,7 +289,7 @@ function renderBlockContent(block: Block) {
         />
       )
 
-    case 'Divider':
+    case WidgetType.Divider:
       return (
         <hr
           style={{

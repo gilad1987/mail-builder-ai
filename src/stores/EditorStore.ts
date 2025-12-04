@@ -11,10 +11,11 @@ import {
   setActiveDeviceGetter,
   type StyleValue,
   Template,
-  type WidgetType,
+  WidgetType,
 } from '../models'
 
-export type { DeviceType, WidgetType }
+export type { DeviceType }
+export { WidgetType }
 export { Box, Section, Column, Block, Template }
 
 export type TabType = 'Content' | 'Style' | 'Container'
@@ -126,16 +127,23 @@ class EditorStore {
 
       // Map block type names to WidgetType and default data
       const typeMap: Record<string, { type: WidgetType; defaultData: Record<string, unknown> }> = {
-        Image: { type: 'Image', defaultData: { src: '', alt: 'Image' } },
-        Spacer: { type: 'Spacer', defaultData: { height: '20px' } },
-        Headline: { type: 'Headline', defaultData: { content: 'Headline' } },
-        Paragraph: { type: 'Paragraph', defaultData: { content: 'Enter your text here...' } },
-        Button: { type: 'Button', defaultData: { text: 'Click Me', href: '#' } },
-        Divider: { type: 'Divider', defaultData: {} },
+        Image: { type: WidgetType.Image, defaultData: { src: '', alt: 'Image' } },
+        Spacer: { type: WidgetType.Spacer, defaultData: { height: '20px' } },
+        Headline: { type: WidgetType.Headline, defaultData: { content: 'Headline' } },
+        Paragraph: {
+          type: WidgetType.Paragraph,
+          defaultData: { content: 'Enter your text here...' },
+        },
+        Button: { type: WidgetType.Button, defaultData: { text: 'Click Me', href: '#' } },
+        Divider: { type: WidgetType.Divider, defaultData: {} },
+        List: {
+          type: WidgetType.List,
+          defaultData: { items: ['Item 1', 'Item 2', 'Item 3'], listType: 'bullet' },
+        },
       }
 
       const mapping = typeMap[blockType] || {
-        type: 'Paragraph' as WidgetType,
+        type: WidgetType.Paragraph,
         defaultData: { content: blockType },
       }
       const block = column.addBlock({

@@ -1,4 +1,4 @@
-import { Box, type BoxJSON, type StyleRecord, type WidgetType } from './Box'
+import { Box, type BoxJSON, type StyleRecord, WidgetType } from './Box'
 import { Section } from './Section'
 
 export interface TemplateJSON extends BoxJSON {
@@ -11,7 +11,7 @@ export class Template extends Box {
   constructor(json: TemplateJSON = {}) {
     super(json, null)
     this.name = 'Template'
-    this.type = 'Template' as WidgetType
+    this.type = WidgetType.Template
     this._style.desktop = {
       margin: '0 auto',
       backgroundColor: '#ffffff',

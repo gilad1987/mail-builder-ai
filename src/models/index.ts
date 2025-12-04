@@ -1,7 +1,7 @@
 export {
   Box,
   setActiveDeviceGetter,
-  type WidgetType,
+  WidgetType,
   type DeviceType,
   type StyleValue,
   type StyleProperties,

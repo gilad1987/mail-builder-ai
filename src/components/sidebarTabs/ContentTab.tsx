@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
+import { Plus, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 import { editorStore } from '../../stores/EditorStore'
+import { WidgetType } from '../../config/elementControls'
 
 const Container = styled.div`
   padding: ${tokens.spacing[4]};
@@ -74,6 +76,87 @@ const Container = styled.div`
     font-size: ${tokens.fontSize.sm};
     font-style: italic;
   }
+
+  .select-input {
+    width: 100%;
+    padding: ${tokens.spacing[2]};
+    font-size: ${tokens.fontSize.sm};
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: ${tokens.borderRadius.md};
+    color: var(--input-text);
+    cursor: pointer;
+    transition: border-color ${tokens.transition.fast};
+
+    &:hover {
+      border-color: var(--text-secondary);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+  }
+
+  .list-items {
+    display: flex;
+    flex-direction: column;
+    gap: ${tokens.spacing[2]};
+  }
+
+  .list-item {
+    display: flex;
+    align-items: center;
+    gap: ${tokens.spacing[2]};
+
+    .text-input {
+      flex: 1;
+    }
+
+    .delete-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      background: transparent;
+      border: 1px solid var(--input-border);
+      border-radius: ${tokens.borderRadius.sm};
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all ${tokens.transition.fast};
+
+      &:hover {
+        background: ${tokens.colors.red[50]};
+        border-color: ${tokens.colors.red[300]};
+        color: ${tokens.colors.red[500]};
+      }
+    }
+  }
+
+  .add-item-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${tokens.spacing[1]};
+    width: 100%;
+    padding: ${tokens.spacing[2]};
+    margin-top: ${tokens.spacing[2]};
+    background: transparent;
+    border: 1px dashed var(--input-border);
+    border-radius: ${tokens.borderRadius.md};
+    color: var(--text-secondary);
+    font-size: ${tokens.fontSize.sm};
+    cursor: pointer;
+    transition: all ${tokens.transition.fast};
+
+    &:hover {
+      background: var(--input-bg);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
 `
 
 export const ContentTab = observer(() => {
@@ -98,10 +181,40 @@ export const ContentTab = observer(() => {
     editorStore.updateSelectedData(key, value)
   }
 
+  // Helper to get list items
+  const getListItems = (): string[] => {
+    const items = element.data.items as string[] | undefined
+    return items && items.length > 0 ? items : ['Item 1', 'Item 2', 'Item 3']
+  }
+
+  // Helper to update list items
+  const updateListItems = (items: string[]) => {
+    editorStore.updateSelectedData('items', items)
+  }
+
+  // Helper to update a single list item
+  const updateListItem = (index: number, value: string) => {
+    const items = [...getListItems()]
+    items[index] = value
+    updateListItems(items)
+  }
+
+  // Helper to add a list item
+  const addListItem = () => {
+    const items = [...getListItems(), `Item ${getListItems().length + 1}`]
+    updateListItems(items)
+  }
+
+  // Helper to remove a list item
+  const removeListItem = (index: number) => {
+    const items = getListItems().filter((_, i) => i !== index)
+    updateListItems(items.length > 0 ? items : ['Item 1'])
+  }
+
   // Render content fields based on element type
   const renderContentFields = () => {
     switch (elementType) {
-      case 'Image':
+      case WidgetType.Image:
         return (
           <>
             <div className="field">
@@ -127,7 +240,7 @@ export const ContentTab = observer(() => {
           </>
         )
 
-      case 'Button':
+      case WidgetType.Button:
         return (
           <>
             <div className="field">
@@ -153,7 +266,7 @@ export const ContentTab = observer(() => {
           </>
         )
 
-      case 'Headline':
+      case WidgetType.Headline:
         return (
           <div className="field">
             <label className="field-label">Headline Text</label>
@@ -167,7 +280,7 @@ export const ContentTab = observer(() => {
           </div>
         )
 
-      case 'Paragraph':
+      case WidgetType.Paragraph:
         return (
           <div className="field">
             <label className="field-label">Paragraph Text</label>
@@ -180,7 +293,51 @@ export const ContentTab = observer(() => {
           </div>
         )
 
-      case 'Spacer':
+      case WidgetType.List:
+        return (
+          <>
+            <div className="field">
+              <label className="field-label">List Type</label>
+              <select
+                className="select-input"
+                value={getData('listType', 'bullet')}
+                onChange={e => updateData('listType', e.target.value)}
+              >
+                <option value="bullet">Bullet List</option>
+                <option value="numbered">Numbered List</option>
+              </select>
+            </div>
+            <div className="field">
+              <label className="field-label">List Items</label>
+              <div className="list-items">
+                {getListItems().map((item, index) => (
+                  <div key={index} className="list-item">
+                    <input
+                      type="text"
+                      className="text-input"
+                      placeholder={`Item ${index + 1}`}
+                      value={item}
+                      onChange={e => updateListItem(index, e.target.value)}
+                    />
+                    <button
+                      className="delete-btn"
+                      onClick={() => removeListItem(index)}
+                      title="Remove item"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button className="add-item-btn" onClick={addListItem}>
+                <Plus size={14} />
+                Add Item
+              </button>
+            </div>
+          </>
+        )
+
+      case WidgetType.Spacer:
         return (
           <div className="field">
             <label className="field-label">Height</label>
@@ -194,12 +351,12 @@ export const ContentTab = observer(() => {
           </div>
         )
 
-      case 'Divider':
+      case WidgetType.Divider:
         return <p className="no-selection">Divider has no content properties. Use the Style tab.</p>
 
-      case 'Section':
-      case 'Column':
-      case 'InnerSection':
+      case WidgetType.Section:
+      case WidgetType.Column:
+      case WidgetType.InnerSection:
         return (
           <p className="no-selection">
             {elementType} is a container element. Use the Container tab for layout options.

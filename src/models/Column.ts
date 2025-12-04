@@ -1,5 +1,5 @@
 import { makeObservable, observable } from 'mobx'
-import { Box, type BoxJSON, type StyleRecord, type WidgetType } from './Box'
+import { Box, type BoxJSON, type StyleRecord, WidgetType } from './Box'
 import { Block } from './Block'
 import { InnerSection } from './InnerSection'
 
@@ -15,7 +15,7 @@ export class Column extends Box {
   constructor(json: ColumnJSON = {}, parent: Box | null = null) {
     super(json, parent)
     this.name = 'Column'
-    this.type = 'Column' as WidgetType
+    this.type = WidgetType.Column
     this.width = json.width // undefined means auto-expand
 
     // Set default styles, but preserve any styles from JSON

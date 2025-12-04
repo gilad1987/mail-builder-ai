@@ -1,17 +1,9 @@
 import { action, computed, makeObservable, observable } from 'mobx'
 import { v4 as uuidv4 } from 'uuid'
 
-export type WidgetType =
-  | 'Template'
-  | 'Section'
-  | 'InnerSection'
-  | 'Column'
-  | 'Image'
-  | 'Paragraph'
-  | 'Headline'
-  | 'Button'
-  | 'Spacer'
-  | 'Divider'
+// Re-export WidgetType from config for backward compatibility
+export { WidgetType } from '../config/elementControls'
+import { WidgetType } from '../config/elementControls'
 
 export type DeviceType = 'desktop' | 'tablet' | 'mobile'
 
@@ -48,7 +40,7 @@ export abstract class Box {
   id: string
   key: string
   name: string = 'Box'
-  type: WidgetType = 'Section'
+  type: WidgetType = WidgetType.Section
   parent: Box | null = null
 
   _style: StyleRecord

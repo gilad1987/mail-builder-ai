@@ -5,6 +5,7 @@ import {
   Globe,
   Image,
   Layout,
+  List,
   Menu,
   MessageSquare,
   Minus,
@@ -12,20 +13,32 @@ import {
 } from 'lucide-react'
 import { Draggable } from './dnd'
 import { LayoutSection } from './LayoutSection'
+import { WidgetType } from '../config/elementControls'
 
 const blocks = [
-  { name: 'Image', icon: Image, colorClass: 'block-card__icon--blue', type: 'Image' },
-  { name: 'Spacer', icon: Minus, colorClass: 'block-card__icon--gray', type: 'Spacer' },
-  { name: 'Headline', icon: Menu, colorClass: 'block-card__icon--orange', type: 'Headline' },
-  { name: 'Paragraph', icon: AlignLeft, colorClass: 'block-card__icon--green', type: 'Paragraph' },
-  { name: 'Button', icon: Anchor, colorClass: 'block-card__icon--indigo', type: 'Button' },
-  { name: 'Column', icon: Layout, colorClass: 'block-card__icon--teal', type: 'Column' },
+  { name: 'Image', icon: Image, colorClass: 'block-card__icon--blue', type: WidgetType.Image },
+  { name: 'Spacer', icon: Minus, colorClass: 'block-card__icon--gray', type: WidgetType.Spacer },
+  {
+    name: 'Headline',
+    icon: Menu,
+    colorClass: 'block-card__icon--orange',
+    type: WidgetType.Headline,
+  },
+  {
+    name: 'Paragraph',
+    icon: AlignLeft,
+    colorClass: 'block-card__icon--green',
+    type: WidgetType.Paragraph,
+  },
+  { name: 'List', icon: List, colorClass: 'block-card__icon--cyan', type: WidgetType.List },
+  { name: 'Button', icon: Anchor, colorClass: 'block-card__icon--indigo', type: WidgetType.Button },
+  { name: 'Column', icon: Layout, colorClass: 'block-card__icon--teal', type: WidgetType.Column },
   { name: 'Blog Post', icon: MessageSquare, colorClass: 'block-card__icon--red', type: 'BlogPost' },
   {
     name: 'Inner section',
     icon: Square,
     colorClass: 'block-card__icon--yellow',
-    type: 'InnerSection',
+    type: WidgetType.InnerSection,
   },
   { name: 'Form', icon: Globe, colorClass: 'block-card__icon--purple', type: 'Form' },
 ]

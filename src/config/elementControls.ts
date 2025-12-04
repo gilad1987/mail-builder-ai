@@ -1,0 +1,131 @@
+/**
+ * Element Controls Configuration
+ *
+ * Defines which style controls are available for each element type.
+ * This ensures only relevant controls are shown in the StyleTab.
+ */
+
+// Widget types enum - all available element types
+export enum WidgetType {
+  Template = 'Template',
+  Section = 'Section',
+  InnerSection = 'InnerSection',
+  Column = 'Column',
+  Image = 'Image',
+  Paragraph = 'Paragraph',
+  Headline = 'Headline',
+  Button = 'Button',
+  Spacer = 'Spacer',
+  Divider = 'Divider',
+  List = 'List',
+}
+
+// Control types enum - all available style controls
+export enum ControlType {
+  Margin = 'margin',
+  Padding = 'padding',
+  Dimensions = 'dimensions',
+  Alignment = 'alignment',
+  LetterSpacing = 'letterSpacing',
+  FontSize = 'fontSize',
+  LineHeight = 'lineHeight',
+  TextDecoration = 'textDecoration',
+  TextTransform = 'textTransform',
+  FontFamily = 'fontFamily',
+  TextColor = 'textColor',
+  BackgroundColor = 'backgroundColor',
+  Border = 'border',
+}
+
+// All controls array for convenience
+const ALL_CONTROLS = Object.values(ControlType)
+
+// Layout controls (common to most elements)
+const LAYOUT_CONTROLS = [ControlType.Margin, ControlType.Padding, ControlType.Dimensions]
+
+// Container controls (for Section, Column, InnerSection)
+const CONTAINER_CONTROLS = [
+  ...LAYOUT_CONTROLS,
+  ControlType.Alignment,
+  ControlType.BackgroundColor,
+  ControlType.Border,
+]
+
+/**
+ * Mapping of each element type to its supported controls
+ */
+export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
+  // Text elements - all controls
+  [WidgetType.Paragraph]: ALL_CONTROLS,
+  [WidgetType.Headline]: ALL_CONTROLS,
+  [WidgetType.List]: ALL_CONTROLS,
+
+  // Button - all except LineHeight
+  [WidgetType.Button]: ALL_CONTROLS.filter(c => c !== ControlType.LineHeight),
+
+  // Image - layout + visual, no text controls
+  [WidgetType.Image]: [
+    ControlType.Margin,
+    ControlType.Padding,
+    ControlType.Dimensions,
+    ControlType.BackgroundColor,
+    ControlType.Border,
+  ],
+
+  // Spacer - minimal controls (just margin and height)
+  [WidgetType.Spacer]: [ControlType.Margin, ControlType.Dimensions],
+
+  // Divider - layout + visual, no text
+  [WidgetType.Divider]: [
+    ControlType.Margin,
+    ControlType.Dimensions,
+    ControlType.BackgroundColor,
+    ControlType.Border,
+  ],
+
+  // Container elements
+  [WidgetType.Section]: CONTAINER_CONTROLS,
+  [WidgetType.Column]: CONTAINER_CONTROLS,
+  [WidgetType.InnerSection]: CONTAINER_CONTROLS,
+
+  // Template - no direct style controls
+  [WidgetType.Template]: [],
+}
+
+/**
+ * Check if an element type supports a specific control
+ */
+export function hasControl(
+  elementType: WidgetType | string | undefined,
+  control: ControlType
+): boolean {
+  if (!elementType) return false
+  const type = elementType as WidgetType
+  return ELEMENT_CONTROLS[type]?.includes(control) ?? false
+}
+
+/**
+ * Get all controls for an element type
+ */
+export function getControlsForElement(elementType: WidgetType | string | undefined): ControlType[] {
+  if (!elementType) return []
+  const type = elementType as WidgetType
+  return ELEMENT_CONTROLS[type] ?? []
+}
+
+/**
+ * Check if element type is a text element (has text-related controls)
+ */
+export function isTextElement(elementType: WidgetType | string | undefined): boolean {
+  return hasControl(elementType, ControlType.TextColor)
+}
+
+/**
+ * Check if element type is a container element
+ */
+export function isContainerElement(elementType: WidgetType | string | undefined): boolean {
+  if (!elementType) return false
+  return [WidgetType.Section, WidgetType.Column, WidgetType.InnerSection].includes(
+    elementType as WidgetType
+  )
+}
