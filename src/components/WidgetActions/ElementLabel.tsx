@@ -27,7 +27,7 @@ const Label = styled.span<{ $color: string }>`
   font-weight: ${tokens.fontWeight.medium};
   color: white;
   background: ${({ $color }) => $color};
-  padding: 2px 6px;
+  padding: 2px 5px;
   border-radius: ${tokens.borderRadius.sm};
   opacity: 0;
   transition: opacity ${tokens.transition.fast};

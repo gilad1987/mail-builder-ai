@@ -10,36 +10,38 @@ interface BlockActionsProps {
 
 const Container = styled.div`
   position: absolute;
-  top: -37px;
+  top: -33px;
   right: 0;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 0;
+  background: linear-gradient(135deg, #546e7a 0%, #37474f 100%);
+  border-radius: ${tokens.borderRadius.sm};
+  padding: 2px 5px;
   z-index: 50;
   opacity: 0;
   transition: opacity ${tokens.transition.fast};
+  box-shadow: 0 2px 8px rgba(55, 71, 79, 0.3);
 
   button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
-    background: #37474f;
+    width: 22px;
+    height: 22px;
+    background: transparent;
     border: none;
     color: white;
     cursor: pointer;
     border-radius: ${tokens.borderRadius.sm};
-    transition: all ${tokens.transition.fast};
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background ${tokens.transition.fast};
 
     &:hover {
-      background: #455a64;
-      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.2);
     }
 
     &.delete:hover {
-      background: #f44336;
+      background: rgba(244, 67, 54, 0.8);
     }
   }
 `
@@ -52,14 +54,14 @@ export const BlockActions = ({ onDelete, onCopy, onEdit }: BlockActionsProps) =>
 
   return (
     <Container className="block-actions">
-      <button className="delete" onClick={e => handleClick(e, onDelete)} title="Delete Block">
-        <Trash2 size={14} />
-      </button>
       <button onClick={e => handleClick(e, onCopy)} title="Duplicate Block">
-        <Copy size={14} />
+        <Copy size={12} />
       </button>
       <button onClick={e => handleClick(e, onEdit)} title="Edit Block">
-        <ExternalLink size={14} />
+        <ExternalLink size={12} />
+      </button>
+      <button className="delete" onClick={e => handleClick(e, onDelete)} title="Delete Block">
+        <Trash2 size={12} />
       </button>
     </Container>
   )
