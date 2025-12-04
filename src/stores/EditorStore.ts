@@ -11,7 +11,6 @@ import {
   setActiveDeviceGetter,
   type StyleValue,
   Template,
-  type TemplateJSON,
   type WidgetType,
 } from '../models'
 
@@ -38,13 +37,6 @@ class EditorStore {
     })
 
     setActiveDeviceGetter(() => this.activeDevice)
-  }
-
-  // Load a template from JSON
-  loadTemplate(json: TemplateJSON) {
-    this.template = new Template(json)
-    this.selectedElementId = null
-    this.hoveredElementId = null
   }
 
   // Check if canvas is empty
@@ -106,25 +98,10 @@ class EditorStore {
     return this.template.addSection()
   }
 
-  addColumnToSection(sectionId: string, width?: number): Column | null {
+  addColumnToSection(sectionId: string, width: number = 100): Column | null {
     const section = this.template.findById(sectionId) as Section | null
     if (section && section instanceof Section) {
-      // If width is explicitly provided, use it
-      if (width !== undefined) {
-        return section.addColumn({ width } as ColumnJSON)
-      }
-
-      // If no width provided, redistribute all columns evenly
-      const newColumnCount = section.children.length + 1
-      const evenWidth = Math.floor(100 / newColumnCount)
-
-      // Update existing columns to have even widths
-      section.children.forEach(col => {
-        col.width = evenWidth
-      })
-
-      // Add new column with even width
-      return section.addColumn({ width: evenWidth } as ColumnJSON)
+      return section.addColumn({ width } as ColumnJSON)
     }
     return null
   }

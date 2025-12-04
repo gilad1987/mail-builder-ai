@@ -11,12 +11,14 @@ import {
   Moon,
   RotateCcw,
   Save,
+  Send,
   Smartphone,
   Sun,
   Tablet,
 } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 import { ExportModal } from './ExportModal'
+import { SendTestModal } from './SendTestModal'
 
 type DeviceType = 'desktop' | 'tablet' | 'mobile'
 
@@ -40,6 +42,7 @@ export const TopBar = observer(() => {
   const navigate = useNavigate()
   const [showExportMenu, setShowExportMenu] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
+  const [showSendTestModal, setShowSendTestModal] = useState(false)
   const exportMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -93,6 +96,14 @@ export const TopBar = observer(() => {
           <button className="btn-ghost" title="Undo">
             <RotateCcw size={18} />
           </button>
+          <button
+            className="btn-secondary"
+            title="Send Test Email"
+            onClick={() => setShowSendTestModal(true)}
+          >
+            <Send size={16} />
+            <span>Send Test</span>
+          </button>
           <div className="export-dropdown" ref={exportMenuRef}>
             <button
               className="btn-secondary"
@@ -123,6 +134,7 @@ export const TopBar = observer(() => {
         </div>
       </header>
       <ExportModal isOpen={showExportModal} onClose={() => setShowExportModal(false)} />
+      <SendTestModal isOpen={showSendTestModal} onClose={() => setShowSendTestModal(false)} />
     </>
   )
 })
