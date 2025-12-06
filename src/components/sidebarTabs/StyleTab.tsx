@@ -129,7 +129,7 @@ export const StyleTab = observer(() => {
         <ColorControl
           label="Background color"
           styleProperty="backgroundColor"
-          defaultValue="#ffffff"
+          defaultValue="transparent"
           responsive={true}
         />
       )}

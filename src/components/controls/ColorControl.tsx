@@ -98,7 +98,12 @@ interface ColorControlProps {
 }
 
 export const ColorControl = observer(
-  ({ label, styleProperty, defaultValue = '#000000', responsive = true }: ColorControlProps) => {
+  ({
+    label,
+    styleProperty,
+    defaultValue = 'transparent',
+    responsive = true,
+  }: ColorControlProps) => {
     const colorInputRef = useRef<HTMLInputElement>(null)
     const element = editorStore.selectedElement
     const device = editorStore.activeDevice
