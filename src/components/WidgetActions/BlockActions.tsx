@@ -1,11 +1,12 @@
 import styled from 'styled-components'
-import { Copy, ExternalLink, Trash2 } from 'lucide-react'
+import { Copy, ExternalLink, Save, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface BlockActionsProps {
   onDelete: () => void
   onCopy: () => void
   onEdit: () => void
+  onSave?: () => void
 }
 
 const Container = styled.div`
@@ -46,7 +47,7 @@ const Container = styled.div`
   }
 `
 
-export const BlockActions = ({ onDelete, onCopy, onEdit }: BlockActionsProps) => {
+export const BlockActions = ({ onDelete, onCopy, onEdit, onSave }: BlockActionsProps) => {
   const handleClick = (e: React.MouseEvent, action: () => void) => {
     e.stopPropagation()
     action()
@@ -60,6 +61,11 @@ export const BlockActions = ({ onDelete, onCopy, onEdit }: BlockActionsProps) =>
       <button onClick={e => handleClick(e, onEdit)} title="Edit Block">
         <ExternalLink size={12} />
       </button>
+      {onSave && (
+        <button onClick={e => handleClick(e, onSave)} title="Save as Widget">
+          <Save size={12} />
+        </button>
+      )}
       <button className="delete" onClick={e => handleClick(e, onDelete)} title="Delete Block">
         <Trash2 size={12} />
       </button>

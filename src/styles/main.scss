@@ -287,6 +287,20 @@ select {
       color: var(--text-secondary);
     }
   }
+
+  &__section-header {
+    padding: $spacing-3 $spacing-4;
+    border-top: 1px solid var(--border-color);
+    margin-top: $spacing-2;
+  }
+
+  &__subtitle {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
 }
 
 // Device Indicator
@@ -409,6 +423,43 @@ select {
     font-weight: $font-weight-medium;
     color: var(--text-primary);
     text-align: center;
+  }
+
+  &--saved {
+    position: relative;
+    border-color: rgba($purple-500, 0.3);
+    background: linear-gradient(135deg, rgba($purple-500, 0.05) 0%, transparent 100%);
+
+    &:hover {
+      border-color: rgba($purple-500, 0.5);
+
+      .block-card__delete {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__delete {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: $border-radius-sm;
+    background: rgba($red-500, 0.1);
+    color: $red-500;
+    opacity: 0;
+    transition: all $transition-fast;
+    @include flex-center;
+
+    &:hover {
+      background: $red-500;
+      color: white;
+    }
+  }
+
+  &--cyan {
+    color: $teal-500;
   }
 }
 

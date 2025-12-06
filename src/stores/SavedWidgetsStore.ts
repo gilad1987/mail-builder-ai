@@ -1,0 +1,64 @@
+import { makeAutoObservable } from 'mobx'
+import type { BoxJSON } from '../models'
+
+export interface SavedWidget {
+  id: string
+  name: string
+  type: 'Section' | 'InnerSection'
+  json: BoxJSON
+  createdAt: number
+}
+
+const STORAGE_KEY = 'mail-builder-saved-widgets'
+
+class SavedWidgetsStore {
+  widgets: SavedWidget[] = []
+
+  constructor() {
+    makeAutoObservable(this)
+    this.loadFromStorage()
+  }
+
+  private loadFromStorage() {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      if (stored) {
+        this.widgets = JSON.parse(stored)
+      }
+    } catch (e) {
+      console.error('Failed to load saved widgets:', e)
+    }
+  }
+
+  private saveToStorage() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.widgets))
+    } catch (e) {
+      console.error('Failed to save widgets:', e)
+    }
+  }
+
+  saveWidget(name: string, type: 'Section' | 'InnerSection', json: BoxJSON): SavedWidget {
+    const widget: SavedWidget = {
+      id: crypto.randomUUID(),
+      name,
+      type,
+      json,
+      createdAt: Date.now(),
+    }
+    this.widgets.push(widget)
+    this.saveToStorage()
+    return widget
+  }
+
+  deleteWidget(id: string) {
+    this.widgets = this.widgets.filter(w => w.id !== id)
+    this.saveToStorage()
+  }
+
+  getWidget(id: string): SavedWidget | undefined {
+    return this.widgets.find(w => w.id === id)
+  }
+}
+
+export const savedWidgetsStore = new SavedWidgetsStore()

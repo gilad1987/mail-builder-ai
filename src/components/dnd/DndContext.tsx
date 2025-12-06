@@ -13,6 +13,8 @@ import {
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { editorStore } from '../../stores/EditorStore'
+import { savedWidgetsStore } from '../../stores/SavedWidgetsStore'
+import { Section, InnerSection, Column } from '../../models'
 import { DragPreview } from './DragPreview'
 import { type DndState, DndStateContext } from './useDndState'
 import type { DragData, DropData } from './types'
@@ -62,9 +64,21 @@ export const DndProvider = ({ children }: DndProviderProps) => {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event
+    const data = active.data.current as DragData | undefined
 
-    if (over && active.data.current) {
-      const data = active.data.current as DragData
+    // Handle saved Section widget - can drop anywhere (even empty canvas)
+    if (data?.source === 'sidebar' && data?.type === 'saved-widget' && data?.widgetId) {
+      const widget = savedWidgetsStore.getWidget(data.widgetId)
+      if (widget?.type === 'Section') {
+        const section = new Section(widget.json, editorStore.template)
+        editorStore.template.addChild(section)
+        editorStore.setSelectedElement(section.id)
+        setState({ activeId: null, activeType: null, activeData: null, overId: null })
+        return
+      }
+    }
+
+    if (over && data) {
       const overData = over.data.current as DropData | undefined
 
       // Handle sidebar item drop
@@ -109,6 +123,21 @@ export const DndProvider = ({ children }: DndProviderProps) => {
               }
             } else if (section && section.children.length > 0) {
               editorStore.addBlockToColumn(section.children[0].id, data.blockType, {})
+            }
+          }
+        } else if (data.type === 'saved-widget' && data.widgetId) {
+          // Saved InnerSection widget dropped on a column
+          const widget = savedWidgetsStore.getWidget(data.widgetId)
+          if (
+            widget?.type === 'InnerSection' &&
+            overData?.accepts === 'block' &&
+            overData?.columnId
+          ) {
+            const column = editorStore.findElementById(overData.columnId) as Column | null
+            if (column && column instanceof Column) {
+              const innerSection = new InnerSection(widget.json, column)
+              column.addChild(innerSection)
+              editorStore.setSelectedElement(innerSection.id)
             }
           }
         }

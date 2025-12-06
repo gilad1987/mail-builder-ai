@@ -1,11 +1,12 @@
 import styled from 'styled-components'
-import { Copy, LayoutGrid, Move, Trash2 } from 'lucide-react'
+import { Copy, LayoutGrid, Move, Save, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface SectionActionsProps {
   onCopy: () => void
   onMove?: () => void
   onGrid?: () => void
+  onSave?: () => void
   onDelete: () => void
 }
 
@@ -47,7 +48,13 @@ const Container = styled.div`
   }
 `
 
-export const SectionActions = ({ onCopy, onMove, onGrid, onDelete }: SectionActionsProps) => {
+export const SectionActions = ({
+  onCopy,
+  onMove,
+  onGrid,
+  onSave,
+  onDelete,
+}: SectionActionsProps) => {
   const handleClick = (e: React.MouseEvent, action: () => void) => {
     e.stopPropagation()
     action()
@@ -66,6 +73,11 @@ export const SectionActions = ({ onCopy, onMove, onGrid, onDelete }: SectionActi
       {onGrid && (
         <button onClick={e => handleClick(e, onGrid)} title="Layout Options">
           <LayoutGrid size={12} />
+        </button>
+      )}
+      {onSave && (
+        <button onClick={e => handleClick(e, onSave)} title="Save as Widget">
+          <Save size={12} />
         </button>
       )}
       <button className="delete" onClick={e => handleClick(e, onDelete)} title="Delete Section">

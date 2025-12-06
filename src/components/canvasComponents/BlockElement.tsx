@@ -1,11 +1,14 @@
 import { observer } from 'mobx-react-lite'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Image } from 'lucide-react'
 import { Block, Box, InnerSection } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
+import { savedWidgetsStore } from '../../stores/SavedWidgetsStore'
 import { tokens } from '../../styles/tokens'
 import { Draggable } from '../dnd'
 import { BlockActions, ElementLabel } from '../WidgetActions'
+import { SaveWidgetModal } from '../SaveWidgetModal'
 import { ColumnBox } from './ColumnBox'
 import { WidgetType } from '../../config/elementControls'
 
@@ -70,6 +73,7 @@ const Container = styled.div`
 `
 
 export const BlockElement = observer(({ block, columnId }: BlockElementProps) => {
+  const [showSaveModal, setShowSaveModal] = useState(false)
   const isSelected = editorStore.selectedElementId === block.id
   const isHovered = editorStore.hoveredElementId === block.id
 
@@ -101,6 +105,12 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
     editorStore.removeElement(block.id)
   }
 
+  const handleSaveInnerSection = (name: string) => {
+    if (block instanceof InnerSection) {
+      savedWidgetsStore.saveWidget(name, 'InnerSection', block.toCloneJSON())
+    }
+  }
+
   // const getBlockBadgeType = (blockType: string) => {
   //   if (blockType === 'Image') return 'image'
   //   if (blockType === 'Paragraph' || blockType === 'Headline') return 'text'
@@ -122,7 +132,19 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
         onMouseLeave={handleMouseLeave}
       >
         <ElementLabel label="Inner Section" color="#607d8b" />
-        <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
+        <BlockActions
+          onEdit={handleEdit}
+          onCopy={handleCopy}
+          onSave={() => setShowSaveModal(true)}
+          onDelete={handleDelete}
+        />
+        {showSaveModal && (
+          <SaveWidgetModal
+            defaultName="My Inner Section"
+            onSave={handleSaveInnerSection}
+            onClose={() => setShowSaveModal(false)}
+          />
+        )}
         <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
           {block.children.length === 0 ? (
             <div

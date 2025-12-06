@@ -1,9 +1,12 @@
 import { useDroppable } from '@dnd-kit/core'
 import { observer } from 'mobx-react-lite'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Section } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
+import { savedWidgetsStore } from '../../stores/SavedWidgetsStore'
 import { tokens } from '../../styles/tokens'
+import { SaveWidgetModal } from '../SaveWidgetModal'
 import { ElementLabel, SectionActions } from '../WidgetActions'
 import { ColumnBox } from './ColumnBox'
 
@@ -62,6 +65,7 @@ const Container = styled.div`
 `
 
 export const SectionRow = observer(({ section }: SectionRowProps) => {
+  const [showSaveModal, setShowSaveModal] = useState(false)
   const isSelected = editorStore.selectedElementId === section.id
   const isHovered = editorStore.hoveredElementId === section.id
 
@@ -106,6 +110,10 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
     editorStore.removeElement(section.id)
   }
 
+  const handleSave = (name: string) => {
+    savedWidgetsStore.saveWidget(name, 'Section', section.toCloneJSON())
+  }
+
   const classNames = [isSelected ? 'is-selected' : '', isHovered ? 'is-hovered' : '']
     .filter(Boolean)
     .join(' ')
@@ -138,7 +146,18 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
       onMouseLeave={handleMouseLeave}
     >
       <ElementLabel label="Section" color="#26c6da" />
-      <SectionActions onCopy={handleCopy} onDelete={handleDelete} />
+      <SectionActions
+        onCopy={handleCopy}
+        onSave={() => setShowSaveModal(true)}
+        onDelete={handleDelete}
+      />
+      {showSaveModal && (
+        <SaveWidgetModal
+          defaultName="My Section"
+          onSave={handleSave}
+          onClose={() => setShowSaveModal(false)}
+        />
+      )}
       {section.children.length === 0 ? (
         <div
           ref={setNodeRef}

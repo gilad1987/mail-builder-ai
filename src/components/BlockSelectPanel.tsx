@@ -9,11 +9,14 @@ import {
   Menu,
   MessageSquare,
   Minus,
+  Package,
   Square,
+  Trash2,
 } from 'lucide-react'
 import { Draggable } from './dnd'
 import { LayoutSection } from './LayoutSection'
 import { WidgetType } from '../config/elementControls'
+import { savedWidgetsStore } from '../stores/SavedWidgetsStore'
 
 const blocks = [
   { name: 'Image', icon: Image, colorClass: 'block-card__icon--blue', type: WidgetType.Image },
@@ -72,6 +75,52 @@ export const BlockSelectPanel = observer(() => {
           )
         })}
       </div>
+
+      {savedWidgetsStore.widgets.length > 0 && (
+        <>
+          <div className="sidebar__section-header">
+            <h3 className="sidebar__subtitle">Saved Widgets</h3>
+          </div>
+          <div className="block-grid">
+            {savedWidgetsStore.widgets.map(widget => (
+              <Draggable
+                key={widget.id}
+                id={`saved-widget-${widget.id}`}
+                data={{
+                  source: 'sidebar',
+                  type: 'saved-widget',
+                  widgetId: widget.id,
+                  widgetType: widget.type,
+                  name: widget.name,
+                }}
+              >
+                <div
+                  className="block-card block-card--saved"
+                  title={`Drag ${widget.name} to canvas`}
+                >
+                  <Package
+                    size={24}
+                    className="block-card__icon block-card__icon--purple"
+                    strokeWidth={1.5}
+                  />
+                  <span className="block-card__name">{widget.name}</span>
+                  <button
+                    className="block-card__delete"
+                    onClick={e => {
+                      e.stopPropagation()
+                      e.preventDefault()
+                      savedWidgetsStore.deleteWidget(widget.id)
+                    }}
+                    title="Delete widget"
+                  >
+                    <Trash2 size={12} />
+                  </button>
+                </div>
+              </Draggable>
+            ))}
+          </div>
+        </>
+      )}
 
       <LayoutSection />
 

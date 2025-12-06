@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { tokens } from '../../styles/tokens'
-import { AlignLeft, Anchor, Image, Layout, Menu, Minus } from 'lucide-react'
+import { AlignLeft, Anchor, Image, Layout, Menu, Minus, Package } from 'lucide-react'
 import type { DragData } from './types'
 
 interface DragPreviewProps {
@@ -93,6 +93,15 @@ export const DragPreview = ({ type, data }: DragPreviewProps) => {
       <PreviewContainer>
         <Icon size={18} />
         <span>{data.blockType}</span>
+      </PreviewContainer>
+    )
+  }
+
+  if (type === 'sidebar' && data.type === 'saved-widget') {
+    return (
+      <PreviewContainer style={{ background: tokens.colors.purple[600] }}>
+        <Package size={18} />
+        <span>{data.name || 'Saved Widget'}</span>
       </PreviewContainer>
     )
   }
