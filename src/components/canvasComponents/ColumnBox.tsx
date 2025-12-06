@@ -164,13 +164,20 @@ export const ColumnBox = observer(({ column, sectionId, isLast, isOnlyColumn }: 
           ? { flex: `0 0 ${column.width}%`, maxWidth: `${column.width}%` }
           : { flex: 1 }
 
+  // Get column styles, but exclude width when in grid layout (grid controls sizing)
+  const columnStyle = { ...column.style }
+  if (isGridLayout) {
+    delete columnStyle.width
+    delete columnStyle.maxWidth
+  }
+
   return (
     <Container
       ref={setNodeRef}
       className={classNames}
       style={{
         ...layoutStyle,
-        ...column.style,
+        ...columnStyle,
         alignSelf: 'stretch',
       }}
       onClick={handleClick}
