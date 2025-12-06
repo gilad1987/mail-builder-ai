@@ -19,7 +19,7 @@ const Container = styled.div`
   background: linear-gradient(135deg, #26c6da 0%, #00acc1 100%);
   border-radius: ${tokens.borderRadius.sm};
   padding: 2px 5px;
-  z-index: 50;
+  z-index: 70;
   opacity: 0;
   transition: opacity ${tokens.transition.fast};
   box-shadow: 0 2px 8px rgba(0, 172, 193, 0.3);

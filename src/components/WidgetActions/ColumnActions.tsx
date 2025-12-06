@@ -19,7 +19,7 @@ const Container = styled.div`
   background: linear-gradient(135deg, #42a5f5 0%, #1e88e5 100%);
   border-radius: ${tokens.borderRadius.sm};
   padding: 2px 5px;
-  z-index: 50;
+  z-index: 60;
   opacity: 0;
   transition: opacity ${tokens.transition.fast};
   box-shadow: 0 2px 8px rgba(30, 136, 229, 0.3);
@@ -36,7 +36,7 @@ const Container = styled.div`
     cursor: pointer;
     border-radius: ${tokens.borderRadius.sm};
     transition: background ${tokens.transition.fast};
-
+    pointer-events: auto;
     &:hover {
       background: rgba(255, 255, 255, 0.2);
     }
@@ -53,8 +53,13 @@ export const ColumnActions = ({ onCopy, onMove, onGrid, onDelete }: ColumnAction
     action()
   }
 
+  // Prevent dnd-kit's Draggable from capturing pointer events
+  const handlePointerDown = (e: React.PointerEvent) => {
+    e.stopPropagation()
+  }
+
   return (
-    <Container className="column-actions">
+    <Container className="column-actions" onPointerDown={handlePointerDown}>
       <button onClick={e => handleClick(e, onCopy)} title="Duplicate Column">
         <Copy size={12} />
       </button>

@@ -12,6 +12,7 @@ import {
   ControlType,
   hasControl,
   isBlockElement,
+  isContainerElement,
   WidgetType,
 } from '../../../config/elementControls'
 
@@ -48,9 +49,13 @@ export const ContainerControl = observer(() => {
 
   // Check if this is a block element (has container wrapper)
   const isBlock = isBlockElement(elementType)
+  const isContainer = isContainerElement(elementType)
   const showContainerBg = hasControl(elementType, ControlType.ContainerBackgroundColor)
   const showContainerPadding = hasControl(elementType, ControlType.ContainerPadding)
   const showContainerMargin = hasControl(elementType, ControlType.ContainerMargin)
+  // For container elements (Section, Column, InnerSection), show regular padding/margin
+  const showPadding = hasControl(elementType, ControlType.Padding)
+  const showMargin = hasControl(elementType, ControlType.Margin)
 
   return (
     <Container>
@@ -64,6 +69,14 @@ export const ContainerControl = observer(() => {
       </div>
       {isExpanded && (
         <div className="section-content">
+          {/* Margin - for container elements (Section, Column, InnerSection) */}
+          {isContainer && showMargin && (
+            <SpacingControl label="Margin" propertyPrefix="margin" defaultValue={0} />
+          )}
+          {/* Padding - for container elements (Section, Column, InnerSection) */}
+          {isContainer && showPadding && (
+            <SpacingControl label="Padding" propertyPrefix="padding" defaultValue={0} />
+          )}
           {/* Container Margin - for block elements */}
           {isBlock && showContainerMargin && (
             <SpacingControl label="Margin" propertyPrefix="containerMargin" defaultValue={0} />

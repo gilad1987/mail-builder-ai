@@ -39,7 +39,6 @@ const Container = styled.div`
 
   .section-content {
     flex: 1;
-    padding: ${tokens.spacing[4]};
     min-height: 100px;
 
     /* Ensure columns stretch to fill height */
