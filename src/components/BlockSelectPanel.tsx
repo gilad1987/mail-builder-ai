@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite'
 import {
   AlignLeft,
   Anchor,
-  Globe,
   Image,
   Layout,
   List,
@@ -10,6 +9,7 @@ import {
   MessageSquare,
   Minus,
   Package,
+  Share2,
   Square,
   Trash2,
 } from 'lucide-react'
@@ -43,7 +43,12 @@ const blocks = [
     colorClass: 'block-card__icon--yellow',
     type: WidgetType.InnerSection,
   },
-  { name: 'Form', icon: Globe, colorClass: 'block-card__icon--purple', type: 'Form' },
+  {
+    name: 'Social Links',
+    icon: Share2,
+    colorClass: 'block-card__icon--pink',
+    type: WidgetType.SocialLinks,
+  },
 ]
 
 export const BlockSelectPanel = observer(() => {

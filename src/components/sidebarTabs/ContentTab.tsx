@@ -354,6 +354,112 @@ export const ContentTab = observer(() => {
       case WidgetType.Divider:
         return <p className="no-selection">Divider has no content properties. Use the Style tab.</p>
 
+      case WidgetType.SocialLinks: {
+        interface SocialLink {
+          platform: string
+          url: string
+        }
+
+        const links = (element.data.links as SocialLink[]) || [
+          { platform: 'facebook', url: 'https://facebook.com' },
+          { platform: 'twitter', url: 'https://twitter.com' },
+          { platform: 'instagram', url: 'https://instagram.com' },
+        ]
+
+        const updateLinks = (newLinks: SocialLink[]) => {
+          editorStore.updateSelectedData('links', newLinks)
+        }
+
+        const updateLink = (index: number, field: keyof SocialLink, value: string) => {
+          const newLinks = [...links]
+          newLinks[index] = { ...newLinks[index], [field]: value }
+          updateLinks(newLinks)
+        }
+
+        const addLink = () => {
+          updateLinks([...links, { platform: 'facebook', url: '' }])
+        }
+
+        const removeLink = (index: number) => {
+          updateLinks(links.filter((_, i) => i !== index))
+        }
+
+        return (
+          <>
+            <div className="field">
+              <label className="field-label">Icon Size (px)</label>
+              <input
+                type="number"
+                className="text-input"
+                placeholder="24"
+                value={(element.data.iconSize as number) || 24}
+                onChange={e =>
+                  editorStore.updateSelectedData('iconSize', parseInt(e.target.value) || 24)
+                }
+              />
+            </div>
+            <div className="field">
+              <label className="field-label">Gap Between Icons (px)</label>
+              <input
+                type="number"
+                className="text-input"
+                placeholder="12"
+                value={(element.data.gap as number) || 12}
+                onChange={e =>
+                  editorStore.updateSelectedData('gap', parseInt(e.target.value) || 12)
+                }
+              />
+            </div>
+            <div className="field">
+              <label className="field-label">Social Links</label>
+              <div className="list-items">
+                {links.map((link, index) => (
+                  <div
+                    key={index}
+                    className="list-item"
+                    style={{ flexDirection: 'column', alignItems: 'stretch', gap: '4px' }}
+                  >
+                    <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+                      <select
+                        className="select-input"
+                        style={{ flex: '0 0 120px' }}
+                        value={link.platform}
+                        onChange={e => updateLink(index, 'platform', e.target.value)}
+                      >
+                        <option value="facebook">Facebook</option>
+                        <option value="twitter">Twitter/X</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="email">Email</option>
+                      </select>
+                      <button
+                        className="delete-btn"
+                        onClick={() => removeLink(index)}
+                        title="Remove link"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                    <input
+                      type="text"
+                      className="text-input"
+                      placeholder="https://..."
+                      value={link.url}
+                      onChange={e => updateLink(index, 'url', e.target.value)}
+                    />
+                  </div>
+                ))}
+              </div>
+              <button className="add-item-btn" onClick={addLink}>
+                <Plus size={14} />
+                Add Social Link
+              </button>
+            </div>
+          </>
+        )
+      }
+
       case WidgetType.Section:
       case WidgetType.Column:
       case WidgetType.InnerSection:

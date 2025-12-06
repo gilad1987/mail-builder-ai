@@ -107,6 +107,11 @@ export const WIDGET_DEFAULTS: Record<WidgetType, ElementDefaults> = {
   [WidgetType.Template]: {
     backgroundColor: 'transparent',
   },
+  [WidgetType.SocialLinks]: {
+    color: '#333333',
+    backgroundColor: 'transparent',
+    textAlign: 'center',
+  },
 }
 
 /**

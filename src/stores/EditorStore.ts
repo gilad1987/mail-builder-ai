@@ -187,6 +187,18 @@ class EditorStore {
           type: WidgetType.List,
           defaultData: { items: ['Item 1', 'Item 2', 'Item 3'], listType: 'bullet' },
         },
+        SocialLinks: {
+          type: WidgetType.SocialLinks,
+          defaultData: {
+            links: [
+              { platform: 'facebook', url: 'https://facebook.com' },
+              { platform: 'twitter', url: 'https://twitter.com' },
+              { platform: 'instagram', url: 'https://instagram.com' },
+            ],
+            iconSize: 24,
+            gap: 12,
+          },
+        },
       }
 
       const mapping = typeMap[blockType] || {

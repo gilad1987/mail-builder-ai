@@ -112,6 +112,33 @@ export class Block extends Box {
         break
       }
 
+      case WidgetType.SocialLinks: {
+        const links = (this.data.links as Array<{ platform: string; url: string }>) || []
+        const iconSize = (this.data.iconSize as number) || 24
+        const gap = (this.data.gap as number) || 12
+        const textAlign = (desktopStyle.textAlign as string) || 'center'
+
+        // Social platform icon URLs (using simple SVG data URIs for email compatibility)
+        const iconUrls: Record<string, string> = {
+          facebook: 'https://cdn-icons-png.flaticon.com/512/733/733547.png',
+          twitter: 'https://cdn-icons-png.flaticon.com/512/733/733579.png',
+          instagram: 'https://cdn-icons-png.flaticon.com/512/733/733558.png',
+          linkedin: 'https://cdn-icons-png.flaticon.com/512/733/733561.png',
+          youtube: 'https://cdn-icons-png.flaticon.com/512/733/733646.png',
+          email: 'https://cdn-icons-png.flaticon.com/512/732/732200.png',
+        }
+
+        const iconsHtml = links
+          .map(link => {
+            const iconUrl = iconUrls[link.platform] || iconUrls.email
+            return `<a href="${link.url}" style="text-decoration:none;margin:0 ${gap / 2}px;display:inline-block;"><img src="${iconUrl}" alt="${link.platform}" width="${iconSize}" height="${iconSize}" style="display:block;" /></a>`
+          })
+          .join('')
+
+        elementHtml = `<div class="${this.id}" style="text-align:${textAlign};${style}">${iconsHtml}</div>`
+        break
+      }
+
       default:
         // Paragraph
         elementHtml = `<p class="${this.id}" style="${style}">${(this.data.content as string) || ''}</p>`
@@ -170,6 +197,8 @@ export class Block extends Box {
         return this.spacerToMJML()
       case WidgetType.List:
         return this.listToMJML()
+      case WidgetType.SocialLinks:
+        return this.socialLinksToMJML()
       default:
         return `<mj-text>${this.data.content || ''}</mj-text>`
     }
@@ -305,6 +334,23 @@ export class Block extends Box {
   private spacerToMJML(): string {
     const height = (this.data.height as string) || '20px'
     return `<mj-spacer height="${height}" />`
+  }
+
+  private socialLinksToMJML(): string {
+    const links = (this.data.links as Array<{ platform: string; url: string }>) || []
+    const iconSize = (this.data.iconSize as number) || 24
+
+    const socialElements = links
+      .map(link => {
+        return `<mj-social-element name="${link.platform}" href="${link.url}" icon-size="${iconSize}px" />`
+      })
+      .join('\n')
+
+    const style = this._style.desktop
+    const align = (style.textAlign as string) || 'center'
+    const padding = this.getMJMLPadding()
+
+    return `<mj-social align="${align}"${padding ? ` padding="${padding}"` : ''} mode="horizontal">\n${socialElements}\n</mj-social>`
   }
 
   private getTextMJMLAttributes(): string[] {

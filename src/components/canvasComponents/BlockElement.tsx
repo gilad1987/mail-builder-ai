@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import styled from 'styled-components'
-import { Image } from 'lucide-react'
+import { Image, Facebook, Twitter, Instagram, Linkedin, Youtube, Mail, Globe } from 'lucide-react'
 import { Block, Box, InnerSection, getWidgetDefaults } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { savedWidgetsStore } from '../../stores/SavedWidgetsStore'
@@ -391,6 +391,65 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
             margin: margin || 0,
           }}
         />
+      )
+    }
+
+    case WidgetType.SocialLinks: {
+      const socialDefaults = getWidgetDefaults(WidgetType.SocialLinks)
+      const links = (block.data.links as Array<{ platform: string; url: string }>) || [
+        { platform: 'facebook', url: 'https://facebook.com' },
+        { platform: 'twitter', url: 'https://twitter.com' },
+        { platform: 'instagram', url: 'https://instagram.com' },
+      ]
+      const iconSize = (block.data.iconSize as number) || 24
+      const iconColor = (style.color as string) || socialDefaults.color || '#333333'
+      const gap = (block.data.gap as number) || 12
+
+      const iconMap: Record<string, React.FC<{ size?: number; color?: string }>> = {
+        facebook: Facebook,
+        twitter: Twitter,
+        instagram: Instagram,
+        linkedin: Linkedin,
+        youtube: Youtube,
+        email: Mail,
+      }
+
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent:
+              style.textAlign === 'center'
+                ? 'center'
+                : style.textAlign === 'right'
+                  ? 'flex-end'
+                  : 'flex-start',
+            gap: `${gap}px`,
+            padding: padding,
+            margin: margin,
+          }}
+        >
+          {links.map((link, index) => {
+            const Icon = iconMap[link.platform] || Globe
+            return (
+              <a
+                key={index}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: iconColor,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Icon size={iconSize} />
+              </a>
+            )
+          })}
+        </div>
       )
     }
 

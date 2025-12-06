@@ -18,6 +18,7 @@ export enum WidgetType {
   Spacer = 'Spacer',
   Divider = 'Divider',
   List = 'List',
+  SocialLinks = 'SocialLinks',
 }
 
 // Control types enum - all available style controls
@@ -65,6 +66,7 @@ const BLOCK_ELEMENTS = [
   WidgetType.Image,
   WidgetType.Spacer,
   WidgetType.Divider,
+  WidgetType.SocialLinks,
 ]
 
 // Container-specific controls for block elements
@@ -118,6 +120,16 @@ export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
 
   // Template - no direct style controls
   [WidgetType.Template]: [],
+
+  // SocialLinks - layout + alignment + color controls
+  [WidgetType.SocialLinks]: [
+    ControlType.Margin,
+    ControlType.Padding,
+    ControlType.Alignment,
+    ControlType.TextColor,
+    ControlType.BackgroundColor,
+    ...BLOCK_CONTAINER_CONTROLS,
+  ],
 }
 
 /**
