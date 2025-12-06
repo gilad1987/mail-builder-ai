@@ -588,28 +588,9 @@ export const TemplatesLibrary = () => {
     return `Edited ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
   }
 
-  const handleOpenTemplate = async (templateId: string) => {
-    // Load template data dynamically
-    try {
-      let templateData
-      switch (templateId) {
-        case 'welcome-onboarding':
-          templateData = (await import('../assets/email-templates/welcome-onboarding.json')).default
-          break
-        case 'product-newsletter':
-          templateData = (await import('../assets/email-templates/product-newsletter.json')).default
-          break
-        case 'promotional-sale':
-          templateData = (await import('../assets/email-templates/promotional-sale.json')).default
-          break
-      }
-      if (templateData) {
-        editorStore.importFromJSON(templateData)
-      }
-    } catch (error) {
-      console.error('Failed to load template:', error)
-    }
-    navigate('/builder')
+  const handleOpenTemplate = (templateId: string) => {
+    // Navigate to builder with template ID in URL
+    navigate(`/builder/${templateId}`)
   }
 
   const handleCreateNew = () => {

@@ -25,7 +25,7 @@ const Container = styled.div`
   overflow: visible;
   padding: ${tokens.spacing[3]};
   background: transparent;
-  border: 1px solid ${tokens.colors.gray[200]};
+  border: 1px solid transparent;
   border-radius: ${tokens.borderRadius.sm};
   cursor: pointer;
   transition: all ${tokens.transition.fast};

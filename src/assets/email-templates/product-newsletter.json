@@ -1,11 +1,11 @@
 {
   "name": "Product Newsletter",
-  "description": "Material Design inspired product update newsletter with feature highlights",
+  "description": "Modern product update newsletter with vibrant gradient hero and feature cards",
   "thumbnail": "product-newsletter.png",
   "_style": {
     "desktop": {
       "margin": "0 auto",
-      "backgroundColor": "#1a1a2e"
+      "backgroundColor": "#f8fafc"
     },
     "tablet": {},
     "mobile": {}
@@ -32,7 +32,7 @@
           "paddingLeft-unit": "px",
           "paddingRight-size": 32,
           "paddingRight-unit": "px",
-          "backgroundColor": "#1a1a2e"
+          "backgroundColor": "#ffffff"
         },
         "tablet": {},
         "mobile": {}
@@ -58,13 +58,13 @@
               "name": "Block",
               "type": "Paragraph",
               "data": {
-                "content": "◆"
+                "content": "●"
               },
               "_style": {
                 "desktop": {
-                  "fontSize-size": 24,
+                  "fontSize-size": 28,
                   "fontSize-unit": "px",
-                  "color": "#6366f1"
+                  "color": "#10b981"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -74,15 +74,15 @@
               "name": "Block",
               "type": "Paragraph",
               "data": {
-                "content": "ProductCo"
+                "content": "Pulse"
               },
               "_style": {
                 "desktop": {
-                  "fontSize-size": 18,
+                  "fontSize-size": 20,
                   "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#ffffff",
-                  "fontFamily": "Inter, system-ui, sans-serif",
+                  "fontWeight": "700",
+                  "color": "#1e293b",
+                  "fontFamily": "DM Sans, system-ui, sans-serif",
                   "letterSpacing-size": -0.5,
                   "letterSpacing-unit": "px"
                 },
@@ -117,8 +117,8 @@
                   "fontSize-size": 13,
                   "fontSize-unit": "px",
                   "fontWeight": "500",
-                  "color": "#94a3b8",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "color": "#64748b",
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -141,15 +141,15 @@
           "flexDirection": "row",
           "justifyContent": "center",
           "alignItems": "center",
-          "paddingTop-size": 64,
+          "paddingTop-size": 72,
           "paddingTop-unit": "px",
-          "paddingBottom-size": 48,
+          "paddingBottom-size": 72,
           "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
+          "paddingLeft-size": 40,
           "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
+          "paddingRight-size": 40,
           "paddingRight-unit": "px",
-          "backgroundColor": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+          "backgroundColor": "#10b981"
         },
         "tablet": {},
         "mobile": {}
@@ -164,7 +164,7 @@
               "flexDirection": "column",
               "justifyContent": "center",
               "alignItems": "center",
-              "rowGap-size": 20,
+              "rowGap-size": 24,
               "rowGap-unit": "px"
             },
             "tablet": {},
@@ -182,11 +182,11 @@
                   "fontSize-size": 12,
                   "fontSize-unit": "px",
                   "fontWeight": "700",
-                  "color": "#c4b5fd",
+                  "color": "#d1fae5",
                   "textAlign": "center",
                   "letterSpacing-size": 2,
                   "letterSpacing-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -200,15 +200,15 @@
               },
               "_style": {
                 "desktop": {
-                  "fontSize-size": 42,
+                  "fontSize-size": 44,
                   "fontSize-unit": "px",
                   "fontWeight": "700",
                   "color": "#ffffff",
                   "textAlign": "center",
-                  "lineHeight-size": 48,
+                  "lineHeight-size": 52,
                   "lineHeight-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif",
-                  "letterSpacing-size": -1,
+                  "fontFamily": "DM Sans, system-ui, sans-serif",
+                  "letterSpacing-size": -1.5,
                   "letterSpacing-unit": "px"
                 },
                 "tablet": {},
@@ -226,12 +226,12 @@
                   "fontSize-size": 17,
                   "fontSize-unit": "px",
                   "fontWeight": "400",
-                  "color": "#e0e7ff",
+                  "color": "#ecfdf5",
                   "textAlign": "center",
                   "lineHeight-size": 28,
                   "lineHeight-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif",
-                  "maxWidth-size": 480,
+                  "fontFamily": "DM Sans, system-ui, sans-serif",
+                  "maxWidth-size": 460,
                   "maxWidth-unit": "px"
                 },
                 "tablet": {},
@@ -248,7 +248,7 @@
               "_style": {
                 "desktop": {
                   "backgroundColor": "#ffffff",
-                  "color": "#6366f1",
+                  "color": "#059669",
                   "fontSize-size": 14,
                   "fontSize-unit": "px",
                   "fontWeight": "600",
@@ -263,7 +263,7 @@
                   "borderRadius-size": 100,
                   "borderRadius-unit": "px",
                   "textAlign": "center",
-                  "fontFamily": "Inter, system-ui, sans-serif",
+                  "fontFamily": "DM Sans, system-ui, sans-serif",
                   "containerMarginTop-size": 8,
                   "containerMarginTop-unit": "px"
                 },
@@ -288,7 +288,7 @@
           "flexDirection": "row",
           "justifyContent": "center",
           "alignItems": "stretch",
-          "paddingTop-size": 48,
+          "paddingTop-size": 56,
           "paddingTop-unit": "px",
           "paddingBottom-size": 16,
           "paddingBottom-unit": "px",
@@ -296,7 +296,7 @@
           "paddingLeft-unit": "px",
           "paddingRight-size": 32,
           "paddingRight-unit": "px",
-          "backgroundColor": "#0f172a"
+          "backgroundColor": "#ffffff"
         },
         "tablet": {},
         "mobile": {}
@@ -329,10 +329,10 @@
                   "fontSize-size": 11,
                   "fontSize-unit": "px",
                   "fontWeight": "700",
-                  "color": "#6366f1",
+                  "color": "#10b981",
                   "letterSpacing-size": 1.5,
                   "letterSpacing-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -349,10 +349,10 @@
                   "fontSize-size": 28,
                   "fontSize-unit": "px",
                   "fontWeight": "700",
-                  "color": "#f1f5f9",
+                  "color": "#1e293b",
                   "lineHeight-size": 36,
                   "lineHeight-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif",
+                  "fontFamily": "DM Sans, system-ui, sans-serif",
                   "letterSpacing-size": -0.5,
                   "letterSpacing-unit": "px"
                 },
@@ -385,9 +385,9 @@
           "paddingLeft-unit": "px",
           "paddingRight-size": 32,
           "paddingRight-unit": "px",
-          "columnGap-size": 24,
+          "columnGap-size": 20,
           "columnGap-unit": "px",
-          "backgroundColor": "#0f172a"
+          "backgroundColor": "#ffffff"
         },
         "tablet": {},
         "mobile": {}
@@ -402,7 +402,7 @@
               "flexDirection": "column",
               "justifyContent": "flex-start",
               "alignItems": "flex-start",
-              "backgroundColor": "#1e293b",
+              "backgroundColor": "#f0fdf4",
               "borderRadius-size": 16,
               "borderRadius-unit": "px",
               "paddingTop-size": 28,
@@ -446,8 +446,8 @@
                   "fontSize-size": 18,
                   "fontSize-unit": "px",
                   "fontWeight": "600",
-                  "color": "#f1f5f9",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "color": "#1e293b",
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -464,10 +464,10 @@
                   "fontSize-size": 14,
                   "fontSize-unit": "px",
                   "fontWeight": "400",
-                  "color": "#94a3b8",
+                  "color": "#64748b",
                   "lineHeight-size": 22,
                   "lineHeight-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -484,7 +484,7 @@
               "flexDirection": "column",
               "justifyContent": "flex-start",
               "alignItems": "flex-start",
-              "backgroundColor": "#1e293b",
+              "backgroundColor": "#fef3c7",
               "borderRadius-size": 16,
               "borderRadius-unit": "px",
               "paddingTop-size": 28,
@@ -528,8 +528,8 @@
                   "fontSize-size": 18,
                   "fontSize-unit": "px",
                   "fontWeight": "600",
-                  "color": "#f1f5f9",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "color": "#1e293b",
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -546,10 +546,10 @@
                   "fontSize-size": 14,
                   "fontSize-unit": "px",
                   "fontWeight": "400",
-                  "color": "#94a3b8",
+                  "color": "#64748b",
                   "lineHeight-size": 22,
                   "lineHeight-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -580,9 +580,9 @@
           "paddingLeft-unit": "px",
           "paddingRight-size": 32,
           "paddingRight-unit": "px",
-          "columnGap-size": 24,
+          "columnGap-size": 20,
           "columnGap-unit": "px",
-          "backgroundColor": "#0f172a"
+          "backgroundColor": "#ffffff"
         },
         "tablet": {},
         "mobile": {}
@@ -597,7 +597,7 @@
               "flexDirection": "column",
               "justifyContent": "flex-start",
               "alignItems": "flex-start",
-              "backgroundColor": "#1e293b",
+              "backgroundColor": "#ede9fe",
               "borderRadius-size": 16,
               "borderRadius-unit": "px",
               "paddingTop-size": 28,
@@ -641,8 +641,8 @@
                   "fontSize-size": 18,
                   "fontSize-unit": "px",
                   "fontWeight": "600",
-                  "color": "#f1f5f9",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "color": "#1e293b",
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -659,10 +659,10 @@
                   "fontSize-size": 14,
                   "fontSize-unit": "px",
                   "fontWeight": "400",
-                  "color": "#94a3b8",
+                  "color": "#64748b",
                   "lineHeight-size": 22,
                   "lineHeight-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -679,7 +679,7 @@
               "flexDirection": "column",
               "justifyContent": "flex-start",
               "alignItems": "flex-start",
-              "backgroundColor": "#1e293b",
+              "backgroundColor": "#fce7f3",
               "borderRadius-size": 16,
               "borderRadius-unit": "px",
               "paddingTop-size": 28,
@@ -723,8 +723,8 @@
                   "fontSize-size": 18,
                   "fontSize-unit": "px",
                   "fontWeight": "600",
-                  "color": "#f1f5f9",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "color": "#1e293b",
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -741,10 +741,10 @@
                   "fontSize-size": 14,
                   "fontSize-unit": "px",
                   "fontWeight": "400",
-                  "color": "#94a3b8",
+                  "color": "#64748b",
                   "lineHeight-size": 22,
                   "lineHeight-unit": "px",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -767,15 +767,15 @@
           "flexDirection": "row",
           "justifyContent": "center",
           "alignItems": "center",
-          "paddingTop-size": 40,
+          "paddingTop-size": 48,
           "paddingTop-unit": "px",
-          "paddingBottom-size": 40,
+          "paddingBottom-size": 48,
           "paddingBottom-unit": "px",
           "paddingLeft-size": 32,
           "paddingLeft-unit": "px",
           "paddingRight-size": 32,
           "paddingRight-unit": "px",
-          "backgroundColor": "#1e293b"
+          "backgroundColor": "#f0fdf4"
         },
         "tablet": {},
         "mobile": {}
@@ -805,12 +805,12 @@
               },
               "_style": {
                 "desktop": {
-                  "fontSize-size": 24,
+                  "fontSize-size": 26,
                   "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#f1f5f9",
+                  "fontWeight": "700",
+                  "color": "#1e293b",
                   "textAlign": "center",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -827,9 +827,9 @@
                   "fontSize-size": 15,
                   "fontSize-unit": "px",
                   "fontWeight": "400",
-                  "color": "#94a3b8",
+                  "color": "#64748b",
                   "textAlign": "center",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -844,7 +844,7 @@
               },
               "_style": {
                 "desktop": {
-                  "backgroundColor": "#6366f1",
+                  "backgroundColor": "#10b981",
                   "color": "#ffffff",
                   "fontSize-size": 14,
                   "fontSize-unit": "px",
@@ -857,10 +857,10 @@
                   "paddingLeft-unit": "px",
                   "paddingRight-size": 32,
                   "paddingRight-unit": "px",
-                  "borderRadius-size": 8,
+                  "borderRadius-size": 10,
                   "borderRadius-unit": "px",
                   "textAlign": "center",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -891,10 +891,10 @@
           "paddingLeft-unit": "px",
           "paddingRight-size": 32,
           "paddingRight-unit": "px",
-          "backgroundColor": "#0f172a",
+          "backgroundColor": "#ffffff",
           "borderTopWidth-size": 1,
           "borderTopWidth-unit": "px",
-          "borderTopColor": "#1e293b",
+          "borderTopColor": "#e2e8f0",
           "borderTopStyle": "solid"
         },
         "tablet": {},
@@ -910,7 +910,7 @@
               "flexDirection": "column",
               "justifyContent": "center",
               "alignItems": "flex-start",
-              "rowGap-size": 8,
+              "rowGap-size": 4,
               "rowGap-unit": "px"
             },
             "tablet": {},
@@ -921,15 +921,15 @@
               "name": "Block",
               "type": "Paragraph",
               "data": {
-                "content": "ProductCo Inc."
+                "content": "Pulse Inc."
               },
               "_style": {
                 "desktop": {
                   "fontSize-size": 13,
                   "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#64748b",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontWeight": "600",
+                  "color": "#1e293b",
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -946,8 +946,8 @@
                   "fontSize-size": 12,
                   "fontSize-unit": "px",
                   "fontWeight": "400",
-                  "color": "#475569",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "color": "#94a3b8",
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}
@@ -981,9 +981,9 @@
                 "desktop": {
                   "fontSize-size": 12,
                   "fontSize-unit": "px",
-                  "fontWeight": "400",
-                  "color": "#6366f1",
-                  "fontFamily": "Inter, system-ui, sans-serif"
+                  "fontWeight": "500",
+                  "color": "#10b981",
+                  "fontFamily": "DM Sans, system-ui, sans-serif"
                 },
                 "tablet": {},
                 "mobile": {}

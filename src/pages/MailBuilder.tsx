@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import { editorStore } from '../stores/EditorStore'
 import { TopBar } from '../components/TopBar'
@@ -13,11 +14,43 @@ import { AIAssistantPanel } from '../components/aiAssistant'
 import { DndProvider } from '../components/dnd'
 
 export const MailBuilder = observer(() => {
+  const { templateId } = useParams<{ templateId: string }>()
   const [activePanel, setActivePanel] = useState<string | null>('elements')
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', editorStore.theme)
   }, [])
+
+  // Load template from URL param
+  useEffect(() => {
+    const loadTemplate = async () => {
+      if (!templateId) return
+
+      try {
+        let templateData
+        switch (templateId) {
+          case 'welcome-onboarding':
+            templateData = (await import('../assets/email-templates/welcome-onboarding.json'))
+              .default
+            break
+          case 'product-newsletter':
+            templateData = (await import('../assets/email-templates/product-newsletter.json'))
+              .default
+            break
+          case 'promotional-sale':
+            templateData = (await import('../assets/email-templates/promotional-sale.json')).default
+            break
+        }
+        if (templateData) {
+          editorStore.importFromJSON(templateData)
+        }
+      } catch (error) {
+        console.error('Failed to load template:', error)
+      }
+    }
+
+    loadTemplate()
+  }, [templateId])
 
   const renderPanel = () => {
     if (activePanel === 'styles') {

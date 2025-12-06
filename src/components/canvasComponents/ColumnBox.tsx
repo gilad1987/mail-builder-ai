@@ -21,7 +21,7 @@ const Container = styled.div`
   min-width: 0; /* Allow flex shrinking */
   overflow: visible;
   background: transparent;
-  border: 2px dashed ${tokens.colors.gray[300]};
+  border: 2px dashed transparent;
   border-radius: ${tokens.borderRadius.md};
   padding: ${tokens.spacing[3]};
   transition: all ${tokens.transition.fast};
