@@ -30,7 +30,7 @@ const Container = styled.div`
   padding-top: ${tokens.spacing[3]};
   border-top: 1px solid var(--border-color);
   margin-top: ${tokens.spacing[2]};
-
+  padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
   .items-title {
     font-size: ${tokens.fontSize.sm};
     font-weight: ${tokens.fontWeight.semibold};

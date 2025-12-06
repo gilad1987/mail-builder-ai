@@ -6,6 +6,7 @@ import { editorStore } from '../../../stores/EditorStore'
 import { ResponsiveIcon } from '../ResponsiveIcon'
 
 const Container = styled.div`
+  padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
   .field {
     display: flex;
     justify-content: space-between;

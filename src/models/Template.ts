@@ -22,7 +22,12 @@ export class Template extends Box {
   }
 
   fromJSON(json: TemplateJSON): void {
-    this.children = (json.children || []).map(s => new Section(s, this))
+    // Clear existing children in place (don't reassign the array)
+    this.children.splice(0, this.children.length)
+    // Add each child using proper method to ensure reactivity
+    ;(json.children || []).forEach(s => {
+      this.addChild(new Section(s, this))
+    })
     if (json._style) {
       this._style = json._style as StyleRecord
     }

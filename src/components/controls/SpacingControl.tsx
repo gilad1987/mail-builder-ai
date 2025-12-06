@@ -8,6 +8,8 @@ interface SpacingControlProps {
   label: 'Margin' | 'Padding'
   unit?: string
   defaultValue?: number
+  /** Optional custom property prefix (e.g., 'containerPadding' instead of 'padding') */
+  propertyPrefix?: string
 }
 
 type Side = 'top' | 'right' | 'bottom' | 'left'
@@ -20,11 +22,11 @@ const sideMap: Record<Side, { icon: React.FC<{ size?: number }>; capitalize: str
 }
 
 export const SpacingControl = observer(
-  ({ label, unit = 'px', defaultValue = 20 }: SpacingControlProps) => {
+  ({ label, unit = 'px', defaultValue = 20, propertyPrefix }: SpacingControlProps) => {
     const [mergedMode, setMergedMode] = useState(true)
     const element = editorStore.selectedElement
     const device = editorStore.activeDevice
-    const property = label.toLowerCase() // 'margin' or 'padding'
+    const property = propertyPrefix || label.toLowerCase() // 'margin' or 'padding' or custom
 
     // Get value for a specific side from the model
     const getSideValue = (side: Side): number | undefined => {

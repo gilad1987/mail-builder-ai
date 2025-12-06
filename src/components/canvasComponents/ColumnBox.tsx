@@ -153,21 +153,25 @@ export const ColumnBox = observer(({ column, sectionId, isLast, isOnlyColumn }: 
 
   // For Grid layout: columns are grid items, no flex properties needed
   // For Flex layout: use flex-basis and flex-grow
+  // But if user has set a custom width in styles, respect that instead
+  const hasCustomWidth = column.style.width !== undefined
   const layoutStyle: React.CSSProperties = isGridLayout
     ? {} // Grid items don't need special sizing - they follow grid template
-    : isOnlyColumn
-      ? { flex: 1 }
-      : column.width !== undefined
-        ? { flex: `0 0 ${column.width}%`, maxWidth: `${column.width}%` }
-        : { flex: 1 }
+    : hasCustomWidth
+      ? {} // User has set custom width, don't override with flex
+      : isOnlyColumn
+        ? { flex: 1 }
+        : column.width !== undefined
+          ? { flex: `0 0 ${column.width}%`, maxWidth: `${column.width}%` }
+          : { flex: 1 }
 
   return (
     <Container
       ref={setNodeRef}
       className={classNames}
       style={{
-        ...column.style,
         ...layoutStyle,
+        ...column.style,
         alignSelf: 'stretch',
       }}
       onClick={handleClick}

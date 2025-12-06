@@ -41,7 +41,12 @@ export class Section extends Box {
   }
 
   fromJSON(json: SectionJSON): void {
-    this.children = (json.children || []).map(c => new Column(c, this))
+    // Clear existing children in place (don't reassign the array)
+    this.children.splice(0, this.children.length)
+    // Add each child using proper method to ensure reactivity
+    ;(json.children || []).forEach(c => {
+      this.addChild(new Column(c, this))
+    })
   }
 
   clone(): Section {

@@ -116,7 +116,10 @@ export abstract class Box {
 
   // Action: remove child by id
   removeChild(id: string): void {
-    this.children = this.children.filter(c => c.id !== id)
+    const index = this.children.findIndex(c => c.id === id)
+    if (index !== -1) {
+      this.children.splice(index, 1)
+    }
   }
 
   // Action: remove self from parent

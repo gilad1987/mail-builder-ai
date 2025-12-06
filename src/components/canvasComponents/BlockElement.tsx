@@ -21,7 +21,7 @@ const Container = styled.div`
   display: block;
   overflow: visible;
   padding: ${tokens.spacing[3]};
-  background: #ffffff;
+  background: transparent;
   border: 1px solid ${tokens.colors.gray[200]};
   border-radius: ${tokens.borderRadius.sm};
   cursor: pointer;
@@ -158,6 +158,40 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
       .filter(Boolean)
       .join(' ')
 
+    // Separate container styles from element styles
+    // container* styles go on the wrapper, regular styles go on the element
+    const {
+      containerBackgroundColor,
+      containerPaddingTop,
+      containerPaddingRight,
+      containerPaddingBottom,
+      containerPaddingLeft,
+      containerMarginTop,
+      containerMarginRight,
+      containerMarginBottom,
+      containerMarginLeft,
+      ...elementStyle
+    } = block.style
+
+    // Build container padding string
+    const containerPadding =
+      containerPaddingTop || containerPaddingRight || containerPaddingBottom || containerPaddingLeft
+        ? `${containerPaddingTop || 0} ${containerPaddingRight || 0} ${containerPaddingBottom || 0} ${containerPaddingLeft || 0}`
+        : undefined
+
+    // Build container margin string
+    const containerMargin =
+      containerMarginTop || containerMarginRight || containerMarginBottom || containerMarginLeft
+        ? `${containerMarginTop || 0} ${containerMarginRight || 0} ${containerMarginBottom || 0} ${containerMarginLeft || 0}`
+        : undefined
+
+    // Container styles (wrapper)
+    const containerStyle: React.CSSProperties = {
+      backgroundColor: (containerBackgroundColor as string) || 'transparent',
+      ...(containerPadding && { padding: containerPadding }),
+      ...(containerMargin && { margin: containerMargin }),
+    }
+
     return (
       <Draggable
         id={`canvas-block-${block.id}`}
@@ -171,14 +205,14 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
       >
         <Container
           className={classNames}
-          style={block.style}
+          style={containerStyle}
           onClick={handleClick}
           onMouseOver={handleMouseOver}
           onMouseLeave={handleMouseLeave}
         >
           <ElementLabel label={block.type} color="#37474f" />
           <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
-          {renderBlockContent(block)}
+          {renderBlockContent(block, elementStyle)}
         </Container>
       </Draggable>
     )
@@ -187,8 +221,33 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
   return null
 })
 
-function renderBlockContent(block: Block) {
-  const style = block.style
+interface StyleProperties {
+  [key: string]: string | number | undefined
+}
+
+// Helper to build padding/margin string from individual sides
+function buildSpacingString(
+  style: StyleProperties,
+  prefix: 'padding' | 'margin'
+): string | undefined {
+  const top = style[`${prefix}Top`]
+  const right = style[`${prefix}Right`]
+  const bottom = style[`${prefix}Bottom`]
+  const left = style[`${prefix}Left`]
+
+  if (top || right || bottom || left) {
+    return `${top || 0} ${right || 0} ${bottom || 0} ${left || 0}`
+  }
+  return undefined
+}
+
+function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
+  // Use provided elementStyle (filtered) or fall back to block.style
+  const style = elementStyle || block.style
+
+  // Build padding and margin strings from individual sides
+  const padding = buildSpacingString(style, 'padding')
+  const margin = buildSpacingString(style, 'margin')
 
   switch (block.type) {
     case WidgetType.Image:
@@ -219,7 +278,8 @@ function renderBlockContent(block: Block) {
           className="block-button"
           style={{
             display: 'inline-block',
-            padding: style.padding || `${tokens.spacing[2]} ${tokens.spacing[4]}`,
+            padding: padding || `${tokens.spacing[2]} ${tokens.spacing[4]}`,
+            margin: margin,
             backgroundColor: (style.backgroundColor as string) || tokens.colors.blue[500],
             color: (style.color as string) || '#fff',
             borderRadius: style.borderRadius || tokens.borderRadius.md,
@@ -236,7 +296,8 @@ function renderBlockContent(block: Block) {
       return (
         <h3
           style={{
-            margin: 0,
+            margin: margin || 0,
+            padding: padding,
             fontSize: style.fontSize,
             fontFamily: style.fontFamily as string,
             fontWeight: style.fontWeight,
@@ -260,8 +321,9 @@ function renderBlockContent(block: Block) {
       return (
         <ListTag
           style={{
-            margin: 0,
-            paddingLeft: '1.5em',
+            margin: margin || 0,
+            padding: padding,
+            paddingLeft: style.paddingLeft || '1.5em',
             fontSize: style.fontSize,
             fontFamily: style.fontFamily as string,
             color: style.color as string,
@@ -295,7 +357,7 @@ function renderBlockContent(block: Block) {
           style={{
             border: 'none',
             borderTop: `${style.borderTopWidth || '1px'} ${style.borderTopStyle || 'solid'} ${style.borderTopColor || '#ddd'}`,
-            margin: style.margin,
+            margin: margin || 0,
           }}
         />
       )
@@ -306,7 +368,8 @@ function renderBlockContent(block: Block) {
         <p
           className="block-content"
           style={{
-            margin: 0,
+            margin: margin || 0,
+            padding: padding,
             fontSize: style.fontSize,
             fontFamily: style.fontFamily as string,
             color: style.color as string,

@@ -35,6 +35,10 @@ export enum ControlType {
   TextColor = 'textColor',
   BackgroundColor = 'backgroundColor',
   Border = 'border',
+  // Container-specific controls (for block elements)
+  ContainerBackgroundColor = 'containerBackgroundColor',
+  ContainerPadding = 'containerPadding',
+  ContainerMargin = 'containerMargin',
 }
 
 // All controls array for convenience
@@ -51,36 +55,59 @@ const CONTAINER_CONTROLS = [
   ControlType.Border,
 ]
 
+// Block elements that have a container wrapper (shown in Container tab)
+const BLOCK_ELEMENTS = [
+  WidgetType.Paragraph,
+  WidgetType.Headline,
+  WidgetType.List,
+  WidgetType.Button,
+  WidgetType.Image,
+  WidgetType.Spacer,
+  WidgetType.Divider,
+]
+
+// Container-specific controls for block elements
+const BLOCK_CONTAINER_CONTROLS = [
+  ControlType.ContainerBackgroundColor,
+  ControlType.ContainerPadding,
+  ControlType.ContainerMargin,
+]
+
 /**
  * Mapping of each element type to its supported controls
  */
 export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
-  // Text elements - all controls
-  [WidgetType.Paragraph]: ALL_CONTROLS,
-  [WidgetType.Headline]: ALL_CONTROLS,
-  [WidgetType.List]: ALL_CONTROLS,
+  // Text elements - all controls + container controls
+  [WidgetType.Paragraph]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],
+  [WidgetType.Headline]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],
+  [WidgetType.List]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],
 
-  // Button - all except LineHeight
-  [WidgetType.Button]: ALL_CONTROLS.filter(c => c !== ControlType.LineHeight),
+  // Button - all except LineHeight + container controls
+  [WidgetType.Button]: [
+    ...ALL_CONTROLS.filter(c => c !== ControlType.LineHeight),
+    ...BLOCK_CONTAINER_CONTROLS,
+  ],
 
-  // Image - layout + visual, no text controls
+  // Image - layout + visual, no text controls + container controls
   [WidgetType.Image]: [
     ControlType.Margin,
     ControlType.Padding,
     ControlType.Dimensions,
     ControlType.BackgroundColor,
     ControlType.Border,
+    ...BLOCK_CONTAINER_CONTROLS,
   ],
 
-  // Spacer - minimal controls (just margin and height)
-  [WidgetType.Spacer]: [ControlType.Margin, ControlType.Dimensions],
+  // Spacer - minimal controls (just margin and height) + container controls
+  [WidgetType.Spacer]: [ControlType.Margin, ControlType.Dimensions, ...BLOCK_CONTAINER_CONTROLS],
 
-  // Divider - layout + visual, no text
+  // Divider - layout + visual, no text + container controls
   [WidgetType.Divider]: [
     ControlType.Margin,
     ControlType.Dimensions,
     ControlType.BackgroundColor,
     ControlType.Border,
+    ...BLOCK_CONTAINER_CONTROLS,
   ],
 
   // Container elements
@@ -90,6 +117,14 @@ export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
 
   // Template - no direct style controls
   [WidgetType.Template]: [],
+}
+
+/**
+ * Check if element type is a block element (has container wrapper)
+ */
+export function isBlockElement(elementType: WidgetType | string | undefined): boolean {
+  if (!elementType) return false
+  return BLOCK_ELEMENTS.includes(elementType as WidgetType)
 }
 
 /**
