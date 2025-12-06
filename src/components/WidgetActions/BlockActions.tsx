@@ -3,6 +3,7 @@ import { Copy, ExternalLink, Save, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface BlockActionsProps {
+  isVisible?: boolean
   onDelete: () => void
   onCopy: () => void
   onEdit: () => void
@@ -19,9 +20,7 @@ const Container = styled.div`
   background: linear-gradient(135deg, #546e7a 0%, #37474f 100%);
   border-radius: ${tokens.borderRadius.sm};
   padding: 2px 5px;
-  z-index: 50;
-  opacity: 0;
-  transition: opacity ${tokens.transition.fast};
+  z-index: 70;
   box-shadow: 0 2px 8px rgba(55, 71, 79, 0.3);
 
   button {
@@ -47,11 +46,19 @@ const Container = styled.div`
   }
 `
 
-export const BlockActions = ({ onDelete, onCopy, onEdit, onSave }: BlockActionsProps) => {
+export const BlockActions = ({
+  isVisible = false,
+  onDelete,
+  onCopy,
+  onEdit,
+  onSave,
+}: BlockActionsProps) => {
   const handleClick = (e: React.MouseEvent, action: () => void) => {
     e.stopPropagation()
     action()
   }
+
+  if (!isVisible) return null
 
   return (
     <Container className="block-actions">

@@ -3,6 +3,7 @@ import { Copy, LayoutGrid, Move, Save, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface SectionActionsProps {
+  isVisible?: boolean
   onCopy: () => void
   onMove?: () => void
   onGrid?: () => void
@@ -20,9 +21,7 @@ const Container = styled.div`
   background: linear-gradient(135deg, #26c6da 0%, #00acc1 100%);
   border-radius: ${tokens.borderRadius.sm};
   padding: 2px 5px;
-  z-index: 70;
-  opacity: 0;
-  transition: opacity ${tokens.transition.fast};
+  z-index: 50;
   box-shadow: 0 2px 8px rgba(0, 172, 193, 0.3);
 
   button {
@@ -49,6 +48,7 @@ const Container = styled.div`
 `
 
 export const SectionActions = ({
+  isVisible = false,
   onCopy,
   onMove,
   onGrid,
@@ -59,6 +59,8 @@ export const SectionActions = ({
     e.stopPropagation()
     action()
   }
+
+  if (!isVisible) return null
 
   return (
     <Container className="section-actions">

@@ -34,10 +34,6 @@ const Container = styled.div`
   &.is-selected {
     border-color: #26c6da;
     box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.2);
-
-    .section-actions {
-      opacity: 1;
-    }
   }
 
   .section-content {
@@ -147,6 +143,7 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
     >
       <ElementLabel label="Section" color="#26c6da" />
       <SectionActions
+        isVisible={isSelected}
         onCopy={handleCopy}
         onSave={() => setShowSaveModal(true)}
         onDelete={handleDelete}

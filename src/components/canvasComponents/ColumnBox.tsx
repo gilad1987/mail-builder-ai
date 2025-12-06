@@ -40,7 +40,6 @@ const Container = styled.div`
     border-style: solid;
     box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
 
-    .column-actions,
     .add-column-btn {
       opacity: 1;
     }
@@ -179,7 +178,7 @@ export const ColumnBox = observer(({ column, sectionId, isLast, isOnlyColumn }: 
       onMouseLeave={handleMouseLeave}
     >
       <ElementLabel label="Column" color="#1e88e5" />
-      <ColumnActions onCopy={handleCopy} onDelete={handleDelete} />
+      <ColumnActions isVisible={isSelected} onCopy={handleCopy} onDelete={handleDelete} />
       {!isLast && <AddColumnButton onClick={handleAddColumn} />}
 
       {column.children.length === 0 ? (

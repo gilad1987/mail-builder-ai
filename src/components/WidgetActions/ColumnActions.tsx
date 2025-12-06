@@ -3,6 +3,7 @@ import { Copy, LayoutGrid, Move, Trash2 } from 'lucide-react'
 import { tokens } from '../../styles/tokens'
 
 interface ColumnActionsProps {
+  isVisible?: boolean
   onCopy: () => void
   onMove?: () => void
   onGrid?: () => void
@@ -20,8 +21,6 @@ const Container = styled.div`
   border-radius: ${tokens.borderRadius.sm};
   padding: 2px 5px;
   z-index: 60;
-  opacity: 0;
-  transition: opacity ${tokens.transition.fast};
   box-shadow: 0 2px 8px rgba(30, 136, 229, 0.3);
 
   button {
@@ -47,7 +46,13 @@ const Container = styled.div`
   }
 `
 
-export const ColumnActions = ({ onCopy, onMove, onGrid, onDelete }: ColumnActionsProps) => {
+export const ColumnActions = ({
+  isVisible = false,
+  onCopy,
+  onMove,
+  onGrid,
+  onDelete,
+}: ColumnActionsProps) => {
   const handleClick = (e: React.MouseEvent, action: () => void) => {
     e.stopPropagation()
     action()
@@ -57,6 +62,8 @@ export const ColumnActions = ({ onCopy, onMove, onGrid, onDelete }: ColumnAction
   const handlePointerDown = (e: React.PointerEvent) => {
     e.stopPropagation()
   }
+
+  if (!isVisible) return null
 
   return (
     <Container className="column-actions" onPointerDown={handlePointerDown}>

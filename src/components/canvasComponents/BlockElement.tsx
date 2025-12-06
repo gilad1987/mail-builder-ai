@@ -41,10 +41,6 @@ const Container = styled.div`
   &.is-selected {
     border-color: #1e88e5;
     box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
-
-    .block-actions {
-      opacity: 1;
-    }
   }
 
   .block-content {
@@ -133,6 +129,7 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
       >
         <ElementLabel label="Inner Section" color="#607d8b" />
         <BlockActions
+          isVisible={isSelected}
           onEdit={handleEdit}
           onCopy={handleCopy}
           onSave={() => setShowSaveModal(true)}
@@ -233,7 +230,12 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
           onMouseLeave={handleMouseLeave}
         >
           <ElementLabel label={block.type} color="#37474f" />
-          <BlockActions onEdit={handleEdit} onCopy={handleCopy} onDelete={handleDelete} />
+          <BlockActions
+            isVisible={isSelected}
+            onEdit={handleEdit}
+            onCopy={handleCopy}
+            onDelete={handleDelete}
+          />
           {renderBlockContent(block, elementStyle)}
         </Container>
       </Draggable>
