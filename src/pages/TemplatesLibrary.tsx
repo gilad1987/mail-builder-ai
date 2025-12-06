@@ -1,6 +1,41 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Eye, Pencil, Copy, Trash2, Plus, Mail, Sparkles, Send } from 'lucide-react'
+import { editorStore } from '../stores/EditorStore'
+
+console.log('[TemplatesLibrary] Module loaded')
+
+// Template metadata
+interface BuiltInTemplate {
+  id: string
+  name: string
+  description: string
+  thumbnail: string
+}
+
+// Hardcoded template metadata (JSON data will be loaded on demand)
+const builtInTemplates: BuiltInTemplate[] = [
+  {
+    id: 'welcome-onboarding',
+    name: 'Welcome Onboarding',
+    description: 'Clean Google-style welcome email with friendly onboarding steps',
+    thumbnail: 'welcome-onboarding.png',
+  },
+  {
+    id: 'product-newsletter',
+    name: 'Product Newsletter',
+    description: 'Material Design inspired product update newsletter',
+    thumbnail: 'product-newsletter.png',
+  },
+  {
+    id: 'promotional-sale',
+    name: 'Promotional Sale',
+    description: 'Modern minimalist promotional email with bold typography',
+    thumbnail: 'promotional-sale.png',
+  },
+]
+
+console.log('[TemplatesLibrary] Templates count:', builtInTemplates.length)
 
 interface TemplateItem {
   id: string
@@ -8,13 +43,8 @@ interface TemplateItem {
   savedAt: Date | null
   thumbnail?: string
   isExample?: boolean
+  description?: string
 }
-
-const exampleTemplates: TemplateItem[] = [
-  { id: 'example-1', name: 'Welcome Email', savedAt: null, isExample: true },
-  { id: 'example-2', name: 'Newsletter', savedAt: null, isExample: true },
-  { id: 'example-3', name: 'Promotion', savedAt: null, isExample: true },
-]
 
 const Container = styled.div`
   min-height: 100vh;
@@ -558,11 +588,32 @@ export const TemplatesLibrary = () => {
     return `Edited ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
   }
 
-  const handleOpenTemplate = (templateId: string) => {
-    navigate(`/builder/${templateId}`)
+  const handleOpenTemplate = async (templateId: string) => {
+    // Load template data dynamically
+    try {
+      let templateData
+      switch (templateId) {
+        case 'welcome-onboarding':
+          templateData = (await import('../assets/email-templates/welcome-onboarding.json')).default
+          break
+        case 'product-newsletter':
+          templateData = (await import('../assets/email-templates/product-newsletter.json')).default
+          break
+        case 'promotional-sale':
+          templateData = (await import('../assets/email-templates/promotional-sale.json')).default
+          break
+      }
+      if (templateData) {
+        editorStore.importFromJSON(templateData)
+      }
+    } catch (error) {
+      console.error('Failed to load template:', error)
+    }
+    navigate('/builder')
   }
 
   const handleCreateNew = () => {
+    editorStore.clearTemplate()
     navigate('/builder')
   }
 
@@ -634,19 +685,69 @@ export const TemplatesLibrary = () => {
               </div>
               <div className="create-card-label" />
             </div>
-            {exampleTemplates.map(template => (
+            {builtInTemplates.map(template => (
               <div key={template.id}>
                 <div className="template-card" onClick={() => handleOpenTemplate(template.id)}>
                   <div className="template-preview">
                     <span className="example-badge">Template</span>
-                    <div className="preview-placeholder">
-                      <div className="preview-icon">
-                        <Mail size={20} />
+                    <div
+                      className="preview-placeholder"
+                      style={{
+                        background:
+                          template.id === 'welcome-onboarding'
+                            ? 'linear-gradient(180deg, #f8f9fa 0%, #ffffff 30%, #f8f9fa 100%)'
+                            : template.id === 'product-newsletter'
+                              ? 'linear-gradient(180deg, #1a1a2e 0%, #667eea 30%, #0f172a 100%)'
+                              : 'linear-gradient(180deg, #faf5f0 0%, #1a1a1a 40%, #faf5f0 100%)',
+                      }}
+                    >
+                      <div
+                        className="preview-icon"
+                        style={{
+                          background:
+                            template.id === 'welcome-onboarding'
+                              ? '#1a73e8'
+                              : template.id === 'product-newsletter'
+                                ? 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)'
+                                : '#1a1a1a',
+                        }}
+                      >
+                        <Mail size={20} color="#fff" />
                       </div>
                       <div className="preview-lines">
-                        <div className="preview-line" />
-                        <div className="preview-line" />
-                        <div className="preview-line" />
+                        <div
+                          className="preview-line"
+                          style={{
+                            background:
+                              template.id === 'welcome-onboarding'
+                                ? '#1a73e8'
+                                : template.id === 'product-newsletter'
+                                  ? '#c4b5fd'
+                                  : '#c9a96e',
+                          }}
+                        />
+                        <div
+                          className="preview-line"
+                          style={{
+                            background:
+                              template.id === 'welcome-onboarding'
+                                ? '#5f6368'
+                                : template.id === 'product-newsletter'
+                                  ? '#94a3b8'
+                                  : '#666666',
+                          }}
+                        />
+                        <div
+                          className="preview-line"
+                          style={{
+                            background:
+                              template.id === 'welcome-onboarding'
+                                ? '#34a853'
+                                : template.id === 'product-newsletter'
+                                  ? '#6366f1'
+                                  : '#1a1a1a',
+                          }}
+                        />
                       </div>
                     </div>
                   </div>
@@ -654,7 +755,7 @@ export const TemplatesLibrary = () => {
                 <div className="template-info">
                   <div className="template-meta">
                     <div className="template-name">{template.name}</div>
-                    <div className="template-date">{formatDate(template.savedAt)}</div>
+                    <div className="template-date">{template.description}</div>
                   </div>
                 </div>
               </div>
