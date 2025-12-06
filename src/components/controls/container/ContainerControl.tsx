@@ -94,8 +94,13 @@ export const ContainerControl = observer(() => {
               responsive={true}
             />
           )}
-          <ContainerLayoutSection />
-          <ContainerItemsSection />
+          {/* Layout and Items sections - only for container elements */}
+          {isContainer && (
+            <>
+              <ContainerLayoutSection />
+              <ContainerItemsSection />
+            </>
+          )}
         </div>
       )}
     </Container>
