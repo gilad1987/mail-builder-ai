@@ -1660,6 +1660,57 @@ text-align: center;
     height: 40px;
   }
 
+  &__tabs {
+    display: flex;
+    height: 100%;
+  }
+
+  &__tab {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+    padding: 0 $spacing-4;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    border-right: 1px solid #3c3c3c;
+    font-size: $font-size-sm;
+    color: #858585;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: #3c3c3c;
+      color: #cccccc;
+    }
+
+    &.active {
+      background-color: #1e1e1e;
+      color: #cccccc;
+    }
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &__info {
+    padding: $spacing-2 $spacing-4;
+    background-color: rgba(#4ec9b0, 0.1);
+    color: #4ec9b0;
+    font-size: $font-size-xs;
+    border-bottom: 1px solid #3c3c3c;
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+
+    &--warning {
+      background-color: rgba(#d19a66, 0.1);
+      color: #d19a66;
+    }
+  }
+
   &__file-tab {
     display: flex;
     align-items: center;

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { Check, Copy, Download, X } from 'lucide-react'
+import { Check, Code, Copy, Download, Mail, X } from 'lucide-react'
 import React, { useMemo, useState } from 'react'
 import { editorStore } from '../stores/EditorStore'
 
@@ -7,6 +7,8 @@ interface ExportModalProps {
   isOpen: boolean
   onClose: () => void
 }
+
+type ExportFormat = 'email' | 'web'
 
 // Syntax highlighting for HTML
 const highlightHTML = (html: string): React.ReactElement[] => {
@@ -256,8 +258,11 @@ const formatHTML = (html: string): string => {
 
 export const ExportModal = observer(({ isOpen, onClose }: ExportModalProps) => {
   const [copied, setCopied] = useState(false)
+  const [format, setFormat] = useState<ExportFormat>('email')
 
-  const html = editorStore.exportAsHTML()
+  const html = useMemo(() => {
+    return format === 'email' ? editorStore.exportAsEmailHTML() : editorStore.exportAsHTML()
+  }, [format])
 
   const formattedHTML = useMemo(() => formatHTML(html), [html])
   const highlightedCode = useMemo(() => highlightHTML(formattedHTML), [formattedHTML])
@@ -269,7 +274,11 @@ export const ExportModal = observer(({ isOpen, onClose }: ExportModalProps) => {
   }
 
   const handleDownload = () => {
-    editorStore.downloadHTML()
+    if (format === 'email') {
+      editorStore.downloadEmailHTML()
+    } else {
+      editorStore.downloadHTML()
+    }
   }
 
   if (!isOpen) return null
@@ -278,9 +287,21 @@ export const ExportModal = observer(({ isOpen, onClose }: ExportModalProps) => {
     <div className="export-modal-overlay" onClick={onClose}>
       <div className="export-modal" onClick={e => e.stopPropagation()}>
         <div className="export-modal__header">
-          <div className="export-modal__file-tab">
-            <span className="export-modal__file-icon">{'</>'}</span>
-            <span className="export-modal__file-name">email-template.html</span>
+          <div className="export-modal__tabs">
+            <button
+              className={`export-modal__tab ${format === 'email' ? 'active' : ''}`}
+              onClick={() => setFormat('email')}
+            >
+              <Mail size={14} />
+              <span>Email HTML</span>
+            </button>
+            <button
+              className={`export-modal__tab ${format === 'web' ? 'active' : ''}`}
+              onClick={() => setFormat('web')}
+            >
+              <Code size={14} />
+              <span>Web HTML</span>
+            </button>
           </div>
           <div className="export-modal__actions">
             <button className="export-modal__action-btn" onClick={handleCopy} title="Copy HTML">
@@ -300,6 +321,16 @@ export const ExportModal = observer(({ isOpen, onClose }: ExportModalProps) => {
             </button>
           </div>
         </div>
+        {format === 'email' && (
+          <div className="export-modal__info">
+            ✓ Optimized for email clients (Outlook, Gmail, Apple Mail)
+          </div>
+        )}
+        {format === 'web' && (
+          <div className="export-modal__info export-modal__info--warning">
+            ⚠ Web HTML uses flexbox - not recommended for email clients
+          </div>
+        )}
         <div className="export-modal__content">
           <div className="export-modal__code">{highlightedCode}</div>
         </div>

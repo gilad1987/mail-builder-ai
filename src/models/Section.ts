@@ -65,4 +65,38 @@ export class Section extends Box {
     this.addChild(column)
     return column
   }
+
+  // MJML Export
+  toMJML(): string {
+    const attrs = this.getMJMLAttributes()
+    return `<mj-section${attrs}>
+      ${this.children.map(col => col.toMJML()).join('\n      ')}
+    </mj-section>`
+  }
+
+  private getMJMLAttributes(): string {
+    const attrs: string[] = []
+    const style = this._style.desktop
+
+    // Background color
+    const bgColor = style.backgroundColor as string | undefined
+    if (bgColor && bgColor !== 'transparent') {
+      attrs.push(`background-color="${bgColor}"`)
+    }
+
+    // Padding
+    const paddingTop = (style['paddingTop-size'] || style['padding-size'] || 0) as number
+    const paddingRight = (style['paddingRight-size'] || style['padding-size'] || 0) as number
+    const paddingBottom = (style['paddingBottom-size'] || style['padding-size'] || 0) as number
+    const paddingLeft = (style['paddingLeft-size'] || style['padding-size'] || 0) as number
+
+    if (paddingTop || paddingRight || paddingBottom || paddingLeft) {
+      attrs.push(`padding="${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px"`)
+    }
+
+    // Full width
+    attrs.push('full-width="false"')
+
+    return attrs.length ? ' ' + attrs.join(' ') : ''
+  }
 }

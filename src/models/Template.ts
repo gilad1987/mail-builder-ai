@@ -100,4 +100,26 @@ ${this.renderChildrenHTML()}
     this.addChild(section)
     return section
   }
+
+  // MJML Export
+  toMJML(): string {
+    const bgColor = this._style.desktop.backgroundColor as string | undefined
+    const bodyAttrs = bgColor && bgColor !== 'transparent' ? ` background-color="${bgColor}"` : ''
+
+    return `<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all font-family="Arial, sans-serif" />
+      <mj-text font-size="14px" line-height="1.5" />
+      <mj-section padding="0" />
+    </mj-attributes>
+    <mj-style>
+      .container { max-width: 650px; }
+    </mj-style>
+  </mj-head>
+  <mj-body${bodyAttrs}>
+    ${this.children.map(section => section.toMJML()).join('\n    ')}
+  </mj-body>
+</mjml>`
+  }
 }

@@ -126,4 +126,51 @@ export class Column extends Box {
     this.addChild(innerSection)
     return innerSection
   }
+
+  // MJML Export
+  toMJML(): string {
+    const attrs = this.getMJMLAttributes()
+    return `<mj-column${attrs}>
+        ${this.children.map(block => block.toMJML()).join('\n        ')}
+      </mj-column>`
+  }
+
+  private getMJMLAttributes(): string {
+    const attrs: string[] = []
+    const style = this._style.desktop
+
+    // Width
+    if (this.width !== undefined) {
+      attrs.push(`width="${this.width}%"`)
+    }
+
+    // Background color
+    const bgColor = style.backgroundColor as string | undefined
+    if (bgColor && bgColor !== 'transparent') {
+      attrs.push(`background-color="${bgColor}"`)
+    }
+
+    // Padding
+    const paddingTop = (style['paddingTop-size'] || style['padding-size'] || 0) as number
+    const paddingRight = (style['paddingRight-size'] || style['padding-size'] || 0) as number
+    const paddingBottom = (style['paddingBottom-size'] || style['padding-size'] || 0) as number
+    const paddingLeft = (style['paddingLeft-size'] || style['padding-size'] || 0) as number
+
+    if (paddingTop || paddingRight || paddingBottom || paddingLeft) {
+      attrs.push(`padding="${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px"`)
+    }
+
+    // Vertical alignment
+    const alignItems = style.alignItems as string | undefined
+    if (alignItems) {
+      const alignMap: Record<string, string> = {
+        'flex-start': 'top',
+        center: 'middle',
+        'flex-end': 'bottom',
+      }
+      attrs.push(`vertical-align="${alignMap[alignItems] || 'top'}"`)
+    }
+
+    return attrs.length ? ' ' + attrs.join(' ') : ''
+  }
 }

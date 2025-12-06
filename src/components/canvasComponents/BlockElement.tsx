@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Image } from 'lucide-react'
-import { Block, Box, InnerSection } from '../../models'
+import { Block, Box, InnerSection, getWidgetDefaults } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { savedWidgetsStore } from '../../stores/SavedWidgetsStore'
 import { tokens } from '../../styles/tokens'
@@ -268,6 +268,8 @@ function buildSpacingString(
 function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
   // Use provided elementStyle (filtered) or fall back to block.style
   const style = elementStyle || block.style
+  // Get defaults from model - single source of truth
+  const d = getWidgetDefaults(block.type)
 
   // Build padding and margin strings from individual sides
   const padding = buildSpacingString(style, 'padding')
@@ -295,26 +297,29 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
         </div>
       )
 
-    case WidgetType.Button:
+    case WidgetType.Button: {
+      const btnDefaults = getWidgetDefaults(WidgetType.Button)
       return (
         <a
           href={(block.data.href as string) || '#'}
           className="block-button"
           style={{
             display: 'inline-block',
-            padding: padding || `${tokens.spacing[2]} ${tokens.spacing[4]}`,
+            padding: padding || btnDefaults.padding,
             margin: margin,
-            backgroundColor: (style.backgroundColor as string) || tokens.colors.blue[500],
-            color: (style.color as string) || '#fff',
-            borderRadius: style.borderRadius || tokens.borderRadius.md,
-            fontSize: style.fontSize || tokens.fontSize.sm,
+            backgroundColor: (style.backgroundColor as string) || btnDefaults.backgroundColor,
+            color: (style.color as string) || btnDefaults.color,
+            borderRadius: style.borderRadius || `${btnDefaults.borderRadius}px`,
+            fontSize: style.fontSize || `${btnDefaults.fontSize}px`,
+            fontWeight: style.fontWeight || btnDefaults.fontWeight,
             textDecoration: 'none',
             textAlign: style.textAlign as React.CSSProperties['textAlign'],
           }}
         >
-          {(block.data.text as string) || 'Click Me'}
+          {(block.data.text as string) || btnDefaults.defaultText}
         </a>
       )
+    }
 
     case WidgetType.Headline:
       return (
@@ -322,22 +327,23 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
           style={{
             margin: margin || 0,
             padding: padding,
-            fontSize: style.fontSize,
-            fontFamily: style.fontFamily as string,
-            fontWeight: style.fontWeight,
-            color: style.color as string,
+            fontSize: style.fontSize || `${d.fontSize}px`,
+            fontFamily: (style.fontFamily as string) || d.fontFamily,
+            fontWeight: style.fontWeight || d.fontWeight,
+            color: (style.color as string) || d.color,
             textAlign: style.textAlign as React.CSSProperties['textAlign'],
-            textDecoration: style.textDecoration,
+            textDecoration: style.textDecoration || d.textDecoration,
             textTransform: style.textTransform as React.CSSProperties['textTransform'],
-            letterSpacing: style.letterSpacing,
-            lineHeight: style.lineHeight,
+            letterSpacing: style.letterSpacing ?? d.letterSpacing,
+            lineHeight: style.lineHeight || `${d.lineHeight}px`,
           }}
         >
-          {(block.data.content as string) || 'Headline'}
+          {(block.data.content as string) || d.defaultContent}
         </h3>
       )
 
     case WidgetType.List: {
+      const listDefaults = getWidgetDefaults(WidgetType.List)
       const items = (block.data.items as string[]) || ['Item 1', 'Item 2', 'Item 3']
       const listType = (block.data.listType as string) || 'bullet'
       const ListTag = listType === 'numbered' ? 'ol' : 'ul'
@@ -348,14 +354,14 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
             margin: margin || 0,
             padding: padding,
             paddingLeft: style.paddingLeft || '1.5em',
-            fontSize: style.fontSize,
-            fontFamily: style.fontFamily as string,
-            color: style.color as string,
+            fontSize: style.fontSize || `${listDefaults.fontSize}px`,
+            fontFamily: (style.fontFamily as string) || listDefaults.fontFamily,
+            color: (style.color as string) || listDefaults.color,
             textAlign: style.textAlign as React.CSSProperties['textAlign'],
-            textDecoration: style.textDecoration,
+            textDecoration: style.textDecoration || listDefaults.textDecoration,
             textTransform: style.textTransform as React.CSSProperties['textTransform'],
-            letterSpacing: style.letterSpacing,
-            lineHeight: style.lineHeight,
+            letterSpacing: style.letterSpacing ?? listDefaults.letterSpacing,
+            lineHeight: style.lineHeight || `${listDefaults.lineHeight}px`,
           }}
         >
           {items.map((item, index) => (
@@ -375,37 +381,41 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
         />
       )
 
-    case WidgetType.Divider:
+    case WidgetType.Divider: {
+      const divDefaults = getWidgetDefaults(WidgetType.Divider)
       return (
         <hr
           style={{
             border: 'none',
-            borderTop: `${style.borderTopWidth || '1px'} ${style.borderTopStyle || 'solid'} ${style.borderTopColor || '#ddd'}`,
+            borderTop: `${style.borderTopWidth || '1px'} ${style.borderTopStyle || 'solid'} ${style.borderTopColor || divDefaults.backgroundColor}`,
             margin: margin || 0,
           }}
         />
       )
+    }
 
-    default:
+    default: {
       // Paragraph
+      const pDefaults = getWidgetDefaults(WidgetType.Paragraph)
       return (
         <p
           className="block-content"
           style={{
             margin: margin || 0,
             padding: padding,
-            fontSize: style.fontSize,
-            fontFamily: style.fontFamily as string,
-            color: style.color as string,
+            fontSize: style.fontSize || `${pDefaults.fontSize}px`,
+            fontFamily: (style.fontFamily as string) || pDefaults.fontFamily,
+            color: (style.color as string) || pDefaults.color,
             textAlign: style.textAlign as React.CSSProperties['textAlign'],
-            textDecoration: style.textDecoration,
+            textDecoration: style.textDecoration || pDefaults.textDecoration,
             textTransform: style.textTransform as React.CSSProperties['textTransform'],
-            letterSpacing: style.letterSpacing,
-            lineHeight: style.lineHeight,
+            letterSpacing: style.letterSpacing ?? pDefaults.letterSpacing,
+            lineHeight: style.lineHeight || `${pDefaults.lineHeight}px`,
           }}
         >
-          {(block.data.content as string) || 'Lorem ipsum...'}
+          {(block.data.content as string) || pDefaults.defaultContent}
         </p>
       )
+    }
   }
 }

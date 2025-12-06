@@ -29,6 +29,93 @@ export interface BoxJSON {
   children?: BoxJSON[]
 }
 
+/**
+ * Element defaults - single source of truth for all default values
+ * Used by: Canvas rendering, Web HTML export, Email/MJML export, Controllers
+ */
+export interface ElementDefaults {
+  fontSize?: number
+  fontWeight?: string
+  lineHeight?: number
+  color?: string
+  backgroundColor?: string
+  fontFamily?: string
+  textAlign?: string
+  textDecoration?: string
+  letterSpacing?: number
+  padding?: string
+  borderRadius?: number
+  defaultText?: string
+  defaultContent?: string
+}
+
+// Default values for each widget type
+export const WIDGET_DEFAULTS: Record<WidgetType, ElementDefaults> = {
+  [WidgetType.Headline]: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    lineHeight: 32,
+    color: '#000000',
+    fontFamily: 'Arial',
+    textDecoration: 'none',
+    letterSpacing: 0,
+    defaultContent: 'Headline',
+  },
+  [WidgetType.Paragraph]: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    lineHeight: 24,
+    color: '#000000',
+    fontFamily: 'Arial',
+    textDecoration: 'none',
+    letterSpacing: 0,
+    defaultContent: 'Lorem ipsum dolor sit amet...',
+  },
+  [WidgetType.List]: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    lineHeight: 24,
+    color: '#000000',
+    fontFamily: 'Arial',
+    textDecoration: 'none',
+    letterSpacing: 0,
+  },
+  [WidgetType.Button]: {
+    fontSize: 14,
+    fontWeight: 'normal',
+    color: '#ffffff',
+    backgroundColor: '#3b82f6',
+    fontFamily: 'Arial',
+    padding: '10px 25px',
+    borderRadius: 6,
+    defaultText: 'Click Me',
+  },
+  [WidgetType.Image]: {},
+  [WidgetType.Spacer]: {},
+  [WidgetType.Divider]: {
+    backgroundColor: '#e5e7eb',
+  },
+  [WidgetType.Section]: {
+    backgroundColor: 'transparent',
+  },
+  [WidgetType.Column]: {
+    backgroundColor: 'transparent',
+  },
+  [WidgetType.InnerSection]: {
+    backgroundColor: 'transparent',
+  },
+  [WidgetType.Template]: {
+    backgroundColor: 'transparent',
+  },
+}
+
+/**
+ * Get defaults for a widget type
+ */
+export function getWidgetDefaults(type: WidgetType): ElementDefaults {
+  return WIDGET_DEFAULTS[type] || {}
+}
+
 // Will be set by EditorStore
 let activeDeviceGetter: () => DeviceType = () => 'desktop'
 
@@ -202,5 +289,20 @@ export abstract class Box {
         return `${cssProp}:${value}`
       })
       .join(';')
+  }
+
+  // Get defaults for this element type
+  get defaults(): ElementDefaults {
+    return getWidgetDefaults(this.type)
+  }
+
+  // Get a style value with fallback to default
+  getStyleWithDefault<K extends keyof ElementDefaults>(
+    property: string,
+    defaultKey: K
+  ): ElementDefaults[K] | StyleValue {
+    const value = this.style[property]
+    if (value !== undefined) return value
+    return this.defaults[defaultKey]
   }
 }

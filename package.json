@@ -28,6 +28,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@types/uuid": "^11.0.0",
     "lucide-react": "^0.555.0",
+    "mjml-browser": "^4.17.2",
     "mobx": "^6.15.0",
     "mobx-react-lite": "^4.1.1",
     "react": "^19.2.0",

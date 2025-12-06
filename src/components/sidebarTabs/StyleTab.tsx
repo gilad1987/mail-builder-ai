@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { editorStore } from '../../stores/EditorStore'
 import { ControlType, hasControl, WidgetType } from '../../config/elementControls'
+import { getWidgetDefaults } from '../../models'
 import {
   BorderController,
   ColorControl,
@@ -15,6 +16,8 @@ import {
 export const StyleTab = observer(() => {
   const element = editorStore.selectedElement
   const elementType = (element?.type as WidgetType) || WidgetType.Paragraph
+  // Get defaults from model - single source of truth
+  const defaults = getWidgetDefaults(elementType)
 
   // Helper to check if control should be shown
   const showControl = (control: ControlType) => hasControl(elementType, control)
@@ -56,7 +59,7 @@ export const StyleTab = observer(() => {
         <SliderField
           label="Letter Spacing"
           styleProperty="letterSpacing"
-          defaultValue={0}
+          defaultValue={defaults.letterSpacing ?? 0}
           max={10}
           unit="px"
         />
@@ -67,9 +70,31 @@ export const StyleTab = observer(() => {
         <SliderField
           label="Font size"
           styleProperty="fontSize"
-          defaultValue={16}
+          defaultValue={defaults.fontSize ?? 16}
           max={72}
           unit="px"
+        />
+      )}
+
+      {/* Font Weight - text elements only */}
+      {showControl(ControlType.FontWeight) && (
+        <SimpleDropdownField
+          label="Font weight"
+          styleProperty="fontWeight"
+          options={[
+            'Normal',
+            'Bold',
+            '100',
+            '200',
+            '300',
+            '400',
+            '500',
+            '600',
+            '700',
+            '800',
+            '900',
+          ]}
+          defaultValue={defaults.fontWeight ?? 'normal'}
         />
       )}
 
@@ -78,7 +103,7 @@ export const StyleTab = observer(() => {
         <SliderField
           label="Line height"
           styleProperty="lineHeight"
-          defaultValue={16}
+          defaultValue={defaults.lineHeight ?? 24}
           max={72}
           unit="px"
         />
@@ -90,7 +115,7 @@ export const StyleTab = observer(() => {
           label="Text Decoration"
           styleProperty="textDecoration"
           options={['None', 'Underline', 'Line-through', 'Overline']}
-          defaultValue="none"
+          defaultValue={defaults.textDecoration ?? 'none'}
         />
       )}
 
@@ -110,7 +135,7 @@ export const StyleTab = observer(() => {
           label="Font family"
           styleProperty="fontFamily"
           options={['Arial', 'Verdana', 'Tahoma', 'Georgia', 'Times New Roman', 'Helvetica']}
-          defaultValue="arial"
+          defaultValue={defaults.fontFamily ?? 'Arial'}
         />
       )}
 
@@ -119,7 +144,7 @@ export const StyleTab = observer(() => {
         <ColorControl
           label="Text color"
           styleProperty="color"
-          defaultValue="#000000"
+          defaultValue={defaults.color ?? '#000000'}
           responsive={true}
         />
       )}
@@ -129,7 +154,7 @@ export const StyleTab = observer(() => {
         <ColorControl
           label="Background color"
           styleProperty="backgroundColor"
-          defaultValue="transparent"
+          defaultValue={defaults.backgroundColor ?? 'transparent'}
           responsive={true}
         />
       )}

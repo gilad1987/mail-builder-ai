@@ -70,9 +70,26 @@ export class Block extends Box {
         elementHtml = `<img class="${this.id}" src="${(this.data.src as string) || ''}" alt="${(this.data.alt as string) || ''}" style="${style}" />`
         break
 
-      case WidgetType.Button:
-        elementHtml = `<a class="${this.id}" href="${(this.data.href as string) || '#'}" style="${style}">${(this.data.text as string) || 'Click'}</a>`
+      case WidgetType.Button: {
+        const d = this.defaults
+        // Build button-specific styles with defaults from model
+        const buttonDefaults = 'display:inline-block;text-decoration:none;'
+        const bgDefault = !desktopStyle.backgroundColor
+          ? `background-color:${d.backgroundColor};`
+          : ''
+        const colorDefault = !desktopStyle.color ? `color:${d.color};` : ''
+        const fontDefault = !desktopStyle['fontSize-size'] ? `font-size:${d.fontSize}px;` : ''
+        const paddingDefault =
+          !desktopStyle['paddingTop-size'] && !desktopStyle['padding-size']
+            ? `padding:${d.padding};`
+            : ''
+        const radiusDefault = !desktopStyle['borderRadius-size']
+          ? `border-radius:${d.borderRadius}px;`
+          : ''
+        const buttonStyle = `${buttonDefaults}${bgDefault}${colorDefault}${fontDefault}${paddingDefault}${radiusDefault}${style}`
+        elementHtml = `<a class="${this.id}" href="${(this.data.href as string) || '#'}" style="${buttonStyle}">${(this.data.text as string) || d.defaultText}</a>`
         break
+      }
 
       case WidgetType.Headline:
         elementHtml = `<h2 class="${this.id}" style="${style}">${(this.data.content as string) || ''}</h2>`
@@ -134,5 +151,209 @@ export class Block extends Box {
   // Helper to set content
   setContent(content: string): void {
     this.data.content = content
+  }
+
+  // MJML Export
+  toMJML(): string {
+    switch (this.type) {
+      case WidgetType.Image:
+        return this.imageToMJML()
+      case WidgetType.Button:
+        return this.buttonToMJML()
+      case WidgetType.Headline:
+        return this.headlineToMJML()
+      case WidgetType.Paragraph:
+        return this.paragraphToMJML()
+      case WidgetType.Divider:
+        return this.dividerToMJML()
+      case WidgetType.Spacer:
+        return this.spacerToMJML()
+      case WidgetType.List:
+        return this.listToMJML()
+      default:
+        return `<mj-text>${this.data.content || ''}</mj-text>`
+    }
+  }
+
+  private imageToMJML(): string {
+    const attrs: string[] = []
+    const style = this._style.desktop
+
+    attrs.push(`src="${(this.data.src as string) || ''}"`)
+    attrs.push(`alt="${(this.data.alt as string) || ''}"`)
+
+    // Width
+    const widthSize = style['width-size'] as number | undefined
+    if (widthSize) {
+      const unit = (style['width-unit'] as string) || 'px'
+      attrs.push(`width="${widthSize}${unit}"`)
+    }
+
+    // Padding
+    const padding = this.getMJMLPadding()
+    if (padding) attrs.push(`padding="${padding}"`)
+
+    // Alignment
+    const textAlign = style.textAlign as string | undefined
+    if (textAlign) {
+      attrs.push(`align="${textAlign}"`)
+    }
+
+    // Border radius
+    const borderRadius = style['borderRadius-size'] as number | undefined
+    if (borderRadius) {
+      attrs.push(`border-radius="${borderRadius}px"`)
+    }
+
+    return `<mj-image ${attrs.join(' ')} />`
+  }
+
+  private buttonToMJML(): string {
+    const attrs: string[] = []
+    const style = this._style.desktop
+    const d = this.defaults
+
+    attrs.push(`href="${(this.data.href as string) || '#'}"`)
+
+    // Background color
+    const bgColor = style.backgroundColor as string | undefined
+    attrs.push(
+      `background-color="${bgColor && bgColor !== 'transparent' ? bgColor : d.backgroundColor}"`
+    )
+
+    // Text color
+    const color = style.color as string | undefined
+    attrs.push(`color="${color || d.color}"`)
+
+    // Font size
+    const fontSize = style['fontSize-size'] as number | undefined
+    attrs.push(`font-size="${fontSize || d.fontSize}px"`)
+
+    // Font weight
+    const fontWeight = style.fontWeight as string | undefined
+    if (fontWeight && fontWeight !== d.fontWeight) {
+      attrs.push(`font-weight="${fontWeight}"`)
+    }
+
+    // Padding
+    const padding = this.getMJMLPadding()
+    attrs.push(`inner-padding="${padding || d.padding}"`)
+
+    // Border radius
+    const borderRadius = style['borderRadius-size'] as number | undefined
+    attrs.push(`border-radius="${borderRadius !== undefined ? borderRadius : d.borderRadius}px"`)
+
+    // Alignment
+    const textAlign = style.textAlign as string | undefined
+    if (textAlign) {
+      attrs.push(`align="${textAlign}"`)
+    }
+
+    return `<mj-button ${attrs.join(' ')}>${(this.data.text as string) || d.defaultText}</mj-button>`
+  }
+
+  private headlineToMJML(): string {
+    const attrs = this.getTextMJMLAttributes()
+    const content = (this.data.content as string) || this.defaults.defaultContent || ''
+
+    return `<mj-text ${attrs.join(' ')}><h2 style="margin:0;font-size:inherit;font-weight:inherit;">${content}</h2></mj-text>`
+  }
+
+  private paragraphToMJML(): string {
+    const attrs = this.getTextMJMLAttributes()
+    const content = (this.data.content as string) || this.defaults.defaultContent || ''
+
+    return `<mj-text ${attrs.join(' ')}>${content}</mj-text>`
+  }
+
+  private listToMJML(): string {
+    const attrs = this.getTextMJMLAttributes()
+    const items = (this.data.items as string[]) || ['Item 1', 'Item 2', 'Item 3']
+    const listType = (this.data.listType as string) || 'bullet'
+    const tag = listType === 'numbered' ? 'ol' : 'ul'
+    const itemsHtml = items.map(item => `<li>${item}</li>`).join('')
+
+    return `<mj-text ${attrs.join(' ')}><${tag} style="margin:0;padding-left:20px;">${itemsHtml}</${tag}></mj-text>`
+  }
+
+  private dividerToMJML(): string {
+    const attrs: string[] = []
+    const style = this._style.desktop
+
+    // Border color
+    const borderColor = style.borderColor as string | undefined
+    const bgColor = style.backgroundColor as string | undefined
+    if (borderColor) {
+      attrs.push(`border-color="${borderColor}"`)
+    } else if (bgColor && bgColor !== 'transparent') {
+      attrs.push(`border-color="${bgColor}"`)
+    }
+
+    // Border width
+    const borderWidth = style['borderWidth-size'] as number | undefined
+    if (borderWidth) {
+      attrs.push(`border-width="${borderWidth}px"`)
+    }
+
+    // Padding
+    const padding = this.getMJMLPadding()
+    if (padding) attrs.push(`padding="${padding}"`)
+
+    return `<mj-divider ${attrs.join(' ')} />`
+  }
+
+  private spacerToMJML(): string {
+    const height = (this.data.height as string) || '20px'
+    return `<mj-spacer height="${height}" />`
+  }
+
+  private getTextMJMLAttributes(): string[] {
+    const attrs: string[] = []
+    const style = this._style.desktop
+    const d = this.defaults
+
+    // Color - use default if not set
+    const color = style.color as string | undefined
+    attrs.push(`color="${color || d.color || '#000000'}"`)
+
+    // Font size - use default if not set
+    const fontSize = style['fontSize-size'] as number | undefined
+    attrs.push(`font-size="${fontSize || d.fontSize || 16}px"`)
+
+    // Font weight - use default if not set
+    const fontWeight = style.fontWeight as string | undefined
+    attrs.push(`font-weight="${fontWeight || d.fontWeight || 'normal'}"`)
+
+    // Line height - use default if not set
+    const lineHeight = style['lineHeight-size'] as number | undefined
+    if (lineHeight || d.lineHeight) {
+      attrs.push(`line-height="${lineHeight || d.lineHeight}px"`)
+    }
+
+    // Text align
+    const textAlign = style.textAlign as string | undefined
+    if (textAlign) {
+      attrs.push(`align="${textAlign}"`)
+    }
+
+    // Padding
+    const padding = this.getMJMLPadding()
+    if (padding) attrs.push(`padding="${padding}"`)
+
+    return attrs
+  }
+
+  private getMJMLPadding(): string | null {
+    const style = this._style.desktop
+
+    const top = (style['paddingTop-size'] || style['padding-size'] || 0) as number
+    const right = (style['paddingRight-size'] || style['padding-size'] || 0) as number
+    const bottom = (style['paddingBottom-size'] || style['padding-size'] || 0) as number
+    const left = (style['paddingLeft-size'] || style['padding-size'] || 0) as number
+
+    if (top || right || bottom || left) {
+      return `${top}px ${right}px ${bottom}px ${left}px`
+    }
+    return null
   }
 }

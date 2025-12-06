@@ -66,4 +66,25 @@ export class InnerSection extends Box {
     this.addChild(column)
     return column
   }
+
+  // MJML Export - Inner sections become a group in MJML
+  toMJML(): string {
+    const attrs = this.getMJMLAttributes()
+    return `<mj-group${attrs}>
+        ${this.children.map(col => col.toMJML()).join('\n        ')}
+      </mj-group>`
+  }
+
+  private getMJMLAttributes(): string {
+    const attrs: string[] = []
+    const style = this._style.desktop
+
+    // Background color
+    const bgColor = style.backgroundColor as string | undefined
+    if (bgColor && bgColor !== 'transparent') {
+      attrs.push(`background-color="${bgColor}"`)
+    }
+
+    return attrs.length ? ' ' + attrs.join(' ') : ''
+  }
 }

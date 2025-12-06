@@ -23,6 +23,9 @@ importers:
       lucide-react:
         specifier: ^0.555.0
         version: 0.555.0(react@19.2.0)
+      mjml-browser:
+        specifier: ^4.17.2
+        version: 4.17.2
       mobx:
         specifier: ^6.15.0
         version: 6.15.0
@@ -1213,6 +1216,9 @@ packages:
   minimatch@9.0.5:
     resolution: {integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==}
     engines: {node: '>=16 || 14 >=14.17'}
+
+  mjml-browser@4.17.2:
+    resolution: {integrity: sha512-3Sq0wFrWnxEPweK4VNt0rDvAcRIMDMaALoAxpj6mNLu5l1fV+Z8rPWLX4Bb3QKUg31wyIMa5SNj0EMQpNSJJNg==}
 
   mobx-react-lite@4.1.1:
     resolution: {integrity: sha512-iUxiMpsvNraCKXU+yPotsOncNNmyeS2B5DKL+TL6Tar/xm+wwNJAubJmtRSeAoYawdZqwv8Z/+5nPRHeQxTiXg==}
@@ -2625,6 +2631,8 @@ snapshots:
   minimatch@9.0.5:
     dependencies:
       brace-expansion: 2.0.2
+
+  mjml-browser@4.17.2: {}
 
   mobx-react-lite@4.1.1(mobx@6.15.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:

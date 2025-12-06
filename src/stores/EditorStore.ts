@@ -1,4 +1,5 @@
 import { makeAutoObservable } from 'mobx'
+import mjml2html from 'mjml-browser'
 import {
   Block,
   Box,
@@ -275,6 +276,26 @@ class EditorStore {
     return this.template.toHTML()
   }
 
+  // Export as email-compatible HTML using MJML
+  exportAsEmailHTML(): string {
+    const mjmlMarkup = this.template.toMJML()
+    const { html, errors } = mjml2html(mjmlMarkup, {
+      validationLevel: 'soft',
+      minify: false,
+    })
+
+    if (errors.length > 0) {
+      console.warn('MJML compilation warnings:', errors)
+    }
+
+    return html
+  }
+
+  // Export raw MJML markup (for debugging or external processing)
+  exportAsMJML(): string {
+    return this.template.toMJML()
+  }
+
   exportAsJSON(): BoxJSON & { globalStyles: GlobalStyles } {
     return {
       ...this.template.toJSON(),
@@ -284,6 +305,20 @@ class EditorStore {
 
   downloadHTML() {
     const html = this.exportAsHTML()
+    const blob = new Blob([html], { type: 'text/html' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'email-template.html'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }
+
+  // Download email-compatible HTML
+  downloadEmailHTML() {
+    const html = this.exportAsEmailHTML()
     const blob = new Blob([html], { type: 'text/html' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')

@@ -28,6 +28,7 @@ export enum ControlType {
   Alignment = 'alignment',
   LetterSpacing = 'letterSpacing',
   FontSize = 'fontSize',
+  FontWeight = 'fontWeight',
   LineHeight = 'lineHeight',
   TextDecoration = 'textDecoration',
   TextTransform = 'textTransform',
