@@ -1,8 +1,5 @@
-// @ts-expect-error - Vite handles JSON imports
 import welcomeOnboarding from './welcome-onboarding.json'
-// @ts-expect-error - Vite handles JSON imports
 import productNewsletter from './product-newsletter.json'
-// @ts-expect-error - Vite handles JSON imports
 import promotionalSale from './promotional-sale.json'
 
 export interface TemplateInfo {

@@ -58,8 +58,13 @@ export const BlockSelectPanel = observer(() => {
           // Column is a special type - it's a layout element, not a block
           const isColumn = block.type === WidgetType.Column
           const dragData = isColumn
-            ? { source: 'sidebar', type: 'column', name: block.name }
-            : { source: 'sidebar', type: 'block', blockType: block.type, name: block.name }
+            ? { source: 'sidebar' as const, type: 'column' as const, name: block.name }
+            : {
+                source: 'sidebar' as const,
+                type: 'block' as const,
+                blockType: block.type,
+                name: block.name,
+              }
 
           return (
             <Draggable key={index} id={`sidebar-block-${block.type}`} data={dragData}>

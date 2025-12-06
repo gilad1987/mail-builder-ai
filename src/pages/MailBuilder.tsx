@@ -12,6 +12,7 @@ import { LayersPanel } from '../components/LayersPanel'
 import { AssetsPanel } from '../components/AssetsPanel'
 import { AIAssistantPanel } from '../components/aiAssistant'
 import { DndProvider } from '../components/dnd'
+import type { BoxJSON, GlobalStyles } from '../models'
 
 export const MailBuilder = observer(() => {
   const { templateId } = useParams<{ templateId: string }>()
@@ -42,7 +43,7 @@ export const MailBuilder = observer(() => {
             break
         }
         if (templateData) {
-          editorStore.importFromJSON(templateData)
+          editorStore.importFromJSON(templateData as BoxJSON & { globalStyles?: GlobalStyles })
         }
       } catch (error) {
         console.error('Failed to load template:', error)
