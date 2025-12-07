@@ -37,7 +37,7 @@ const Container = styled.div<{ $isOpen: boolean }>`
 
   .toggle-btn {
     position: absolute;
-    left: -12px;
+    left: -2px;
     top: 50%;
     transform: translateY(-50%);
     width: 24px;
