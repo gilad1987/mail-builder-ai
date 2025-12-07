@@ -14,7 +14,7 @@ import {
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { editorStore } from '../../stores/EditorStore'
 import { savedWidgetsStore } from '../../stores/SavedWidgetsStore'
-import { Section, InnerSection, Column } from '../../models'
+import { Column, InnerSection, Section } from '../../models'
 import { DragPreview } from './DragPreview'
 import { type DndState, DndStateContext } from './useDndState'
 import type { DragData, DropData } from './types'

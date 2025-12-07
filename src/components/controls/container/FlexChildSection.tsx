@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import {
-  AlignVerticalJustifyStart,
+  AlignVerticalDistributeCenter,
   AlignVerticalJustifyCenter,
   AlignVerticalJustifyEnd,
-  AlignVerticalDistributeCenter,
+  AlignVerticalJustifyStart,
   ArrowLeftToLine,
   ArrowRightToLine,
-  MoreVertical,
   Ban,
+  MoreVertical,
   MoveHorizontal,
   Shrink,
 } from 'lucide-react'

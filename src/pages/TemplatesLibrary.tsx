@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Eye, Pencil, Copy, Trash2, Plus, Mail, Sparkles, Send } from 'lucide-react'
+import { Copy, Eye, Mail, Pencil, Plus, Send, Sparkles, Trash2 } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
 
 console.log('[TemplatesLibrary] Module loaded')

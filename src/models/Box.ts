@@ -1,9 +1,9 @@
 import { action, computed, makeObservable, observable } from 'mobx'
 import { v4 as uuidv4 } from 'uuid'
+import { WidgetType } from '../config/elementControls'
 
 // Re-export WidgetType from config for backward compatibility
 export { WidgetType } from '../config/elementControls'
-import { WidgetType } from '../config/elementControls'
 
 export type DeviceType = 'desktop' | 'tablet' | 'mobile'
 
