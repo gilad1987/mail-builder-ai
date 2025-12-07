@@ -83,9 +83,16 @@ export class Block extends Box {
           !desktopStyle['paddingTop-size'] && !desktopStyle['padding-size']
             ? `padding:${d.padding};`
             : ''
-        const radiusDefault = !desktopStyle['borderRadius-size']
-          ? `border-radius:${d.borderRadius}px;`
-          : ''
+        // Only apply default radius if no unified or individual radius is set
+        const hasIndividualRadius =
+          desktopStyle['borderTopLeftRadius-size'] !== undefined ||
+          desktopStyle['borderTopRightRadius-size'] !== undefined ||
+          desktopStyle['borderBottomLeftRadius-size'] !== undefined ||
+          desktopStyle['borderBottomRightRadius-size'] !== undefined
+        const radiusDefault =
+          !desktopStyle['borderRadius-size'] && !hasIndividualRadius
+            ? `border-radius:${d.borderRadius}px;`
+            : ''
         const buttonStyle = `${buttonDefaults}${bgDefault}${colorDefault}${fontDefault}${paddingDefault}${radiusDefault}${style}`
         elementHtml = `<a class="${this.id}" href="${(this.data.href as string) || '#'}" style="${buttonStyle}">${(this.data.text as string) || d.defaultText}</a>`
         break
@@ -228,10 +235,10 @@ export class Block extends Box {
       attrs.push(`align="${textAlign}"`)
     }
 
-    // Border radius
-    const borderRadius = style['borderRadius-size'] as number | undefined
-    if (borderRadius) {
-      attrs.push(`border-radius="${borderRadius}px"`)
+    // Border radius - supports individual corners
+    const borderRadiusAttr = this.getMJMLBorderRadius()
+    if (borderRadiusAttr) {
+      attrs.push(`border-radius="${borderRadiusAttr}"`)
     }
 
     return `<mj-image ${attrs.join(' ')} />`

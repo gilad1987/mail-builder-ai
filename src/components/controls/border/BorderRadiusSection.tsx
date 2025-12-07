@@ -32,12 +32,18 @@ export const BorderRadiusSection = observer(() => {
     return typeof value === 'number' ? value : 0
   }
 
-  // Get radius value for a specific corner
+  // Get radius value for a specific corner (falls back to unified radius)
   const getCornerValue = (corner: Corner): number => {
     if (!element) return 0
     const key = `border${corner}Radius-size`
     const style = element._style[device]
-    const value = style[key] ?? element._style.desktop[key] ?? 0
+    // Try individual corner first, then fall back to unified radius
+    const value =
+      style[key] ??
+      element._style.desktop[key] ??
+      style['borderRadius-size'] ??
+      element._style.desktop['borderRadius-size'] ??
+      0
     return typeof value === 'number' ? value : 0
   }
 
@@ -46,10 +52,10 @@ export const BorderRadiusSection = observer(() => {
     if (!element) return
     element.update('borderRadius-size', value)
     element.update('borderRadius-unit', 'px')
-    // Clear individual corners when using unified mode
+    // Also set all individual corners to the same value
     corners.forEach(({ key }) => {
-      element.update(`border${key}Radius-size`, undefined)
-      element.update(`border${key}Radius-unit`, undefined)
+      element.update(`border${key}Radius-size`, value)
+      element.update(`border${key}Radius-unit`, 'px')
     })
   }
 

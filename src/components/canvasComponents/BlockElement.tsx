@@ -265,6 +265,79 @@ function buildSpacingString(
   return undefined
 }
 
+// Helper to build border-radius style object with individual corners support
+function buildBorderRadiusStyle(style: StyleProperties): React.CSSProperties {
+  const topLeft = style.borderTopLeftRadius
+  const topRight = style.borderTopRightRadius
+  const bottomLeft = style.borderBottomLeftRadius
+  const bottomRight = style.borderBottomRightRadius
+
+  // If any individual corner is set, use individual values
+  if (
+    topLeft !== undefined ||
+    topRight !== undefined ||
+    bottomLeft !== undefined ||
+    bottomRight !== undefined
+  ) {
+    return {
+      borderTopLeftRadius: topLeft || 0,
+      borderTopRightRadius: topRight || 0,
+      borderBottomLeftRadius: bottomLeft || 0,
+      borderBottomRightRadius: bottomRight || 0,
+    }
+  }
+
+  // Otherwise use unified borderRadius
+  if (style.borderRadius !== undefined) {
+    return { borderRadius: style.borderRadius }
+  }
+
+  return {}
+}
+
+// Helper to build border style object with individual sides support
+function buildBorderStyle(style: StyleProperties): React.CSSProperties {
+  const result: React.CSSProperties = {}
+
+  // Check for individual sides first
+  const hasIndividualSides =
+    style.borderTopWidth !== undefined ||
+    style.borderTopStyle !== undefined ||
+    style.borderRightWidth !== undefined ||
+    style.borderRightStyle !== undefined ||
+    style.borderBottomWidth !== undefined ||
+    style.borderBottomStyle !== undefined ||
+    style.borderLeftWidth !== undefined ||
+    style.borderLeftStyle !== undefined
+
+  if (hasIndividualSides) {
+    // Top
+    if (style.borderTopStyle && style.borderTopStyle !== 'none') {
+      result.borderTop = `${style.borderTopWidth || '1px'} ${style.borderTopStyle} ${style.borderTopColor || '#000000'}`
+    }
+    // Right
+    if (style.borderRightStyle && style.borderRightStyle !== 'none') {
+      result.borderRight = `${style.borderRightWidth || '1px'} ${style.borderRightStyle} ${style.borderRightColor || '#000000'}`
+    }
+    // Bottom
+    if (style.borderBottomStyle && style.borderBottomStyle !== 'none') {
+      result.borderBottom = `${style.borderBottomWidth || '1px'} ${style.borderBottomStyle} ${style.borderBottomColor || '#000000'}`
+    }
+    // Left
+    if (style.borderLeftStyle && style.borderLeftStyle !== 'none') {
+      result.borderLeft = `${style.borderLeftWidth || '1px'} ${style.borderLeftStyle} ${style.borderLeftColor || '#000000'}`
+    }
+    return result
+  }
+
+  // Check for unified border (all sides)
+  if (style.borderStyle && style.borderStyle !== 'none') {
+    result.border = `${style.borderWidth || '1px'} ${style.borderStyle} ${style.borderColor || '#000000'}`
+  }
+
+  return result
+}
+
 function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
   // Use provided elementStyle (filtered) or fall back to block.style
   const style = elementStyle || block.style
@@ -287,7 +360,8 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
                 maxWidth: '100%',
                 width: style.width,
                 height: style.height,
-                borderRadius: style.borderRadius,
+                ...buildBorderRadiusStyle(style),
+                ...buildBorderStyle(style),
                 objectFit: 'cover',
               }}
             />
@@ -299,6 +373,9 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
 
     case WidgetType.Button: {
       const btnDefaults = getWidgetDefaults(WidgetType.Button)
+      const borderRadiusStyle = buildBorderRadiusStyle(style)
+      // Use default if no border radius is set
+      const hasBorderRadius = Object.keys(borderRadiusStyle).length > 0
       return (
         <a
           href={(block.data.href as string) || '#'}
@@ -309,7 +386,10 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
             margin: margin,
             backgroundColor: (style.backgroundColor as string) || btnDefaults.backgroundColor,
             color: (style.color as string) || btnDefaults.color,
-            borderRadius: style.borderRadius || `${btnDefaults.borderRadius}px`,
+            ...(hasBorderRadius
+              ? borderRadiusStyle
+              : { borderRadius: `${btnDefaults.borderRadius}px` }),
+            ...buildBorderStyle(style),
             fontSize: style.fontSize || `${btnDefaults.fontSize}px`,
             fontWeight: style.fontWeight || btnDefaults.fontWeight,
             textDecoration: 'none',
@@ -336,6 +416,8 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
             textTransform: style.textTransform as React.CSSProperties['textTransform'],
             letterSpacing: style.letterSpacing ?? d.letterSpacing,
             lineHeight: style.lineHeight || `${d.lineHeight}px`,
+            ...buildBorderRadiusStyle(style),
+            ...buildBorderStyle(style),
           }}
         >
           {(block.data.content as string) || d.defaultContent}
@@ -362,6 +444,8 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
             textTransform: style.textTransform as React.CSSProperties['textTransform'],
             letterSpacing: style.letterSpacing ?? listDefaults.letterSpacing,
             lineHeight: style.lineHeight || `${listDefaults.lineHeight}px`,
+            ...buildBorderRadiusStyle(style),
+            ...buildBorderStyle(style),
           }}
         >
           {items.map((item, index) => (
@@ -428,6 +512,8 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
             gap: `${gap}px`,
             padding: padding,
             margin: margin,
+            ...buildBorderRadiusStyle(style),
+            ...buildBorderStyle(style),
           }}
         >
           {links.map((link, index) => {
@@ -470,6 +556,8 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
             textTransform: style.textTransform as React.CSSProperties['textTransform'],
             letterSpacing: style.letterSpacing ?? pDefaults.letterSpacing,
             lineHeight: style.lineHeight || `${pDefaults.lineHeight}px`,
+            ...buildBorderRadiusStyle(style),
+            ...buildBorderStyle(style),
           }}
         >
           {(block.data.content as string) || pDefaults.defaultContent}
