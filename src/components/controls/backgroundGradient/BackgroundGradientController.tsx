@@ -245,7 +245,7 @@ interface GradientValues {
 const defaultValues: GradientValues = {
   type: 'gradient',
   gradientType: 'linear',
-  color1: '#6366f1',
+  color1: 'transparent',
   location1: 0,
   color2: '#ec4899',
   location2: 100,

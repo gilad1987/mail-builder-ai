@@ -287,7 +287,7 @@ export abstract class Box {
       const bgType = style['bgGradient-type']
       if (bgType === 'gradient') {
         const gradientType = style['bgGradient-gradientType'] || 'linear'
-        const color1 = style['bgGradient-color1'] || '#6366f1'
+        const color1 = style['bgGradient-color1'] || 'transparent'
         const location1 = style['bgGradient-location1'] ?? 0
         const color2 = style['bgGradient-color2'] || '#ec4899'
         const location2 = style['bgGradient-location2'] ?? 100
@@ -299,7 +299,7 @@ export abstract class Box {
           result.background = `radial-gradient(circle, ${color1} ${location1}%, ${color2} ${location2}%)`
         }
       } else if (bgType === 'solid') {
-        const color1 = style['bgGradient-color1'] || '#6366f1'
+        const color1 = style['bgGradient-color1'] || 'transparent'
         result.backgroundColor = color1
       }
     }

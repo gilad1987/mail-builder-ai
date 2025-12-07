@@ -18,7 +18,7 @@ import type { BoxJSON, GlobalStyles } from '../models'
 export const MailBuilder = observer(() => {
   const { templateId } = useParams<{ templateId: string }>()
   const [activePanel, setActivePanel] = useState<string | null>('elements')
-  const [layersPanelOpen, setLayersPanelOpen] = useState(true)
+  const [layersPanelOpen, setLayersPanelOpen] = useState(false)
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', editorStore.theme)
