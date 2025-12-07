@@ -48,9 +48,7 @@ export const Canvas = observer(() => {
         <StructureSelector onClose={handleStructureSelectorClose} />
       ) : (
         <button className="add-row-btn" onClick={handleAddSectionClick}>
-          <span>
-            <Plus size={16} /> Add Section
-          </span>
+          <Plus size={16} /> Add Section
         </button>
       )}
     </>
