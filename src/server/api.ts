@@ -1,0 +1,42 @@
+import { remultApi } from 'remult/remult-express'
+import { createKnexDataProvider } from 'remult/remult-knex'
+import { TemplateEntity, SavedWidgetEntity } from './entities/index.js'
+
+export const dataProvider = createKnexDataProvider({
+  client: 'pg',
+  connection: {
+    host: process.env['POSTGRES_HOST'] || 'localhost',
+    database: process.env['POSTGRES_DATABASE'] || 'mail_builder',
+    user: process.env['POSTGRES_USER'] || 'postgres',
+    password: process.env['POSTGRES_PASSWORD'] || 'password',
+    port: process.env['POSTGRES_PORT'] ? Number(process.env['POSTGRES_PORT']) : 5432,
+  },
+  pool: {
+    min: 2,
+    max: 10,
+    acquireTimeoutMillis: 30000,
+    createTimeoutMillis: 30000,
+    destroyTimeoutMillis: 5000,
+    idleTimeoutMillis: 30000,
+    reapIntervalMillis: 1000,
+    createRetryIntervalMillis: 100,
+  },
+})
+
+export const api = remultApi({
+  entities: [TemplateEntity, SavedWidgetEntity],
+  dataProvider,
+  logApiEndPoints: true,
+  initApi: async remult => {
+    console.log('🔧 Database Configuration:', {
+      host: process.env['POSTGRES_HOST'] || 'localhost',
+      database: process.env['POSTGRES_DATABASE'] || 'mail_builder',
+      user: process.env['POSTGRES_USER'] || 'postgres',
+      port: process.env['POSTGRES_PORT'] ? Number(process.env['POSTGRES_PORT']) : 5432,
+      hasPassword: !!process.env['POSTGRES_PASSWORD'],
+      nodeEnv: process.env.NODE_ENV,
+    })
+    console.log('🚀 Remult API initialized')
+    console.log('📊 Database provider:', remult.dataProvider.constructor.name)
+  },
+})

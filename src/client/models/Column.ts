@@ -9,7 +9,7 @@ export interface ColumnJSON extends BoxJSON {
 }
 
 export class Column extends Box {
-  declare children: (Block | InnerSection)[]
+  override children: (Block | InnerSection)[] = []
   width?: number // percentage, undefined means auto (flex: 1)
 
   constructor(json: ColumnJSON = {}, parent: Box | null = null) {

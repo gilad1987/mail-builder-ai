@@ -1,12 +1,15 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
+  Check,
   ChevronDown,
   ChevronLeft,
   Code,
   Download,
   FileJson,
+  LayoutTemplate,
+  Loader2,
   Monitor,
   Moon,
   Redo2,
@@ -18,6 +21,8 @@ import {
   Undo2,
   Upload,
 } from 'lucide-react'
+import { remult } from 'remult'
+import { TemplateEntity } from '../../server/entities/TemplateEntity'
 import { editorStore } from '../stores/EditorStore'
 import { ExportModal } from './ExportModal'
 import { SendTestModal } from './SendTestModal'
@@ -40,11 +45,17 @@ const DeviceButton = observer(({ device, icon: Icon, label }: DeviceButtonProps)
   </button>
 ))
 
+const templateRepo = remult.repo(TemplateEntity)
+
 export const TopBar = observer(() => {
   const navigate = useNavigate()
+  const { templateId } = useParams<{ templateId?: string }>()
   const [showExportMenu, setShowExportMenu] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
   const [showSendTestModal, setShowSendTestModal] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const [currentTemplateId, setCurrentTemplateId] = useState<string | null>(templateId || null)
   const exportMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -57,7 +68,7 @@ export const TopBar = observer(() => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // Keyboard shortcuts for undo/redo
+  // Keyboard shortcuts for undo/redo and save
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'z') {
@@ -72,10 +83,55 @@ export const TopBar = observer(() => {
         e.preventDefault()
         editorStore.redo()
       }
+      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+        e.preventDefault()
+        handleSave()
+      }
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [currentTemplateId])
+
+  const handleSave = async () => {
+    if (saving) return
+
+    setSaving(true)
+    setSaved(false)
+
+    try {
+      const templateData = editorStore.exportAsJSON()
+
+      if (currentTemplateId) {
+        // Update existing template
+        await templateRepo.update(currentTemplateId, {
+          data: templateData,
+        })
+      } else {
+        // Create new template - prompt for name
+        const name = prompt('Enter template name:', 'Untitled Template')
+        if (!name) {
+          setSaving(false)
+          return
+        }
+
+        const newTemplate = await templateRepo.insert({
+          name,
+          data: templateData,
+        })
+        setCurrentTemplateId(newTemplate.id)
+        // Update URL without full navigation
+        window.history.replaceState(null, '', `/builder/${newTemplate.id}`)
+      }
+
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    } catch (error) {
+      console.error('Failed to save template:', error)
+      alert('Failed to save template. Please try again.')
+    } finally {
+      setSaving(false)
+    }
+  }
 
   const handleExportJSON = () => {
     editorStore.downloadJSON()
@@ -112,6 +168,14 @@ export const TopBar = observer(() => {
         </div>
 
         <div className="header-bar__right">
+          <button
+            className="btn-secondary"
+            title="Start with Template"
+            onClick={() => navigate('/start-templates')}
+          >
+            <LayoutTemplate size={16} />
+            <span>Templates</span>
+          </button>
           <button
             className="btn-ghost"
             title={editorStore.theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
@@ -169,9 +233,20 @@ export const TopBar = observer(() => {
               </div>
             )}
           </div>
-          <button className="btn-primary" title="Save">
-            <Save size={16} />
-            <span>Save</span>
+          <button
+            className="btn-primary"
+            title="Save (Ctrl+S)"
+            onClick={handleSave}
+            disabled={saving}
+          >
+            {saving ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : saved ? (
+              <Check size={16} />
+            ) : (
+              <Save size={16} />
+            )}
+            <span>{saving ? 'Saving...' : saved ? 'Saved!' : 'Save'}</span>
           </button>
         </div>
       </header>

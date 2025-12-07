@@ -6,7 +6,7 @@ export interface TemplateJSON extends BoxJSON {
 }
 
 export class Template extends Box {
-  declare children: Section[]
+  override children: Section[] = []
 
   constructor(json: TemplateJSON = {}) {
     super(json, null)

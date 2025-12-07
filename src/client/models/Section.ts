@@ -6,7 +6,7 @@ export interface SectionJSON extends BoxJSON {
 }
 
 export class Section extends Box {
-  declare children: Column[]
+  override children: Column[] = []
 
   constructor(json: SectionJSON = {}, parent: Box | null = null) {
     super(json, parent)

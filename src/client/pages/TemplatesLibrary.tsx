@@ -1,9 +1,21 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Copy, Eye, Mail, Pencil, Plus, Send, Sparkles, Trash2 } from 'lucide-react'
+import {
+  Copy,
+  Eye,
+  FolderOpen,
+  Loader2,
+  Mail,
+  Pencil,
+  Plus,
+  Send,
+  Sparkles,
+  Trash2,
+} from 'lucide-react'
+import { remult } from 'remult'
+import { TemplateEntity } from '../../server/entities/TemplateEntity'
 import { editorStore } from '../stores/EditorStore'
-
-console.log('[TemplatesLibrary] Module loaded')
 
 // Template metadata
 interface BuiltInTemplate {
@@ -35,17 +47,6 @@ const builtInTemplates: BuiltInTemplate[] = [
   },
 ]
 
-console.log('[TemplatesLibrary] Templates count:', builtInTemplates.length)
-
-interface TemplateItem {
-  id: string
-  name: string
-  savedAt: Date | null
-  thumbnail?: string
-  isExample?: boolean
-  description?: string
-}
-
 const Container = styled.div`
   min-height: 100vh;
   height: 100vh;
@@ -58,7 +59,7 @@ const Container = styled.div`
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
     position: sticky;
     top: 0;
     background: rgba(15, 15, 17, 0.9);
@@ -66,10 +67,38 @@ const Container = styled.div`
     z-index: 10;
   }
 
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
   .logo {
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+
+  .my-templates-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #a1a1aa;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #fafafa;
+    }
   }
 
   .logo-icon {
@@ -178,8 +207,8 @@ const Container = styled.div`
   }
 
   .template-preview {
-    aspect-ratio: 4/5;
-    background: #27272a;
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #27272a 0%, #3f3f46 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -192,40 +221,41 @@ const Container = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       color: #52525b;
     }
 
     .preview-icon {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: #3f3f46;
+      background: rgba(0, 191, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
+      color: #00bfff;
     }
 
     .preview-lines {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       align-items: center;
     }
 
     .preview-line {
-      height: 4px;
-      background: #3f3f46;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.15);
       border-radius: 2px;
 
       &:nth-child(1) {
-        width: 80px;
+        width: 60px;
       }
       &:nth-child(2) {
-        width: 100px;
+        width: 80px;
       }
       &:nth-child(3) {
-        width: 60px;
+        width: 50px;
       }
     }
   }
@@ -298,7 +328,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 4/5;
+    aspect-ratio: 4/3;
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
@@ -320,15 +350,15 @@ const Container = styled.div`
     }
 
     .create-icon {
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: #27272a;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #71717a;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       transition: all 0.2s ease;
     }
 
@@ -350,18 +380,6 @@ const Container = styled.div`
     min-height: 64px;
   }
 
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: #e8f0fe;
-    color: #1967d2;
-    padding: 4px 12px;
-    border-radius: 16px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-
   .example-badge {
     position: absolute;
     top: 12px;
@@ -376,7 +394,8 @@ const Container = styled.div`
   }
 
   .ai-section {
-    margin-bottom: 56px;
+    max-width: 70%;
+    margin: 0px auto 80px;
     background: linear-gradient(
       135deg,
       rgba(0, 191, 255, 0.1) 0%,
@@ -567,14 +586,61 @@ const Container = styled.div`
     font-size: 12px;
     color: #3f3f46;
   }
+
+  .loading-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 40px;
+    color: #71717a;
+    font-size: 14px;
+
+    svg {
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #71717a;
+    font-size: 14px;
+  }
 `
+
+const templateRepo = remult.repo(TemplateEntity)
 
 export const TemplatesLibrary = () => {
   const navigate = useNavigate()
+  const [savedTemplates, setSavedTemplates] = useState<TemplateEntity[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const userTemplates: TemplateItem[] = [
-    { id: '668271', name: 'My First Template', savedAt: new Date('2024-12-01') },
-  ]
+  // Fetch templates from server
+  useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const templates = await templateRepo.find({
+          orderBy: { updatedAt: 'desc' },
+        })
+        setSavedTemplates(templates)
+      } catch (error) {
+        console.error('Failed to fetch templates:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTemplates()
+  }, [])
 
   const formatDate = (date: Date | null) => {
     if (!date) return 'Template'
@@ -589,8 +655,13 @@ export const TemplatesLibrary = () => {
   }
 
   const handleOpenTemplate = (templateId: string) => {
-    // Navigate to builder with template ID in URL
     navigate(`/builder/${templateId}`)
+  }
+
+  const handleOpenSavedTemplate = async (template: TemplateEntity) => {
+    // Load template data into editor store
+    editorStore.importFromJSON(template.data as Parameters<typeof editorStore.importFromJSON>[0])
+    navigate(`/builder/${template.id}`)
   }
 
   const handleCreateNew = () => {
@@ -598,25 +669,55 @@ export const TemplatesLibrary = () => {
     navigate('/builder')
   }
 
+  const handleDuplicateTemplate = async (e: React.MouseEvent, template: TemplateEntity) => {
+    e.stopPropagation()
+    try {
+      await templateRepo.insert({
+        name: `${template.name} (Copy)`,
+        data: template.data,
+      })
+      // Refresh the list
+      const templates = await templateRepo.find({
+        orderBy: { updatedAt: 'desc' },
+      })
+      setSavedTemplates(templates)
+    } catch (error) {
+      console.error('Failed to duplicate template:', error)
+    }
+  }
+
+  const handleDeleteTemplate = async (e: React.MouseEvent, templateId: string) => {
+    e.stopPropagation()
+    if (!confirm('Are you sure you want to delete this template?')) return
+
+    try {
+      await templateRepo.delete(templateId)
+      setSavedTemplates(prev => prev.filter(t => t.id !== templateId))
+    } catch (error) {
+      console.error('Failed to delete template:', error)
+    }
+  }
+
   return (
     <Container>
       <header className="header">
-        <div className="logo">
-          <div className="logo-icon">
-            <Mail size={20} />
+        <div className="header-left">
+          <div className="logo">
+            <div className="logo-icon">
+              <Mail size={20} />
+            </div>
+            <span className="logo-text">Mail Builder</span>
           </div>
-          <span className="logo-text">Mail Builder</span>
         </div>
+        <button className="my-templates-btn" onClick={() => navigate('/start-templates')}>
+          <FolderOpen size={18} />
+          My Templates
+        </button>
       </header>
 
       <div className="content">
         <div className="hero">
-          {/*<h1 className="hero-title">Create beautiful emails</h1>*/}
           <h1 className="hero-title">Design emails effortlessly</h1>
-          {/*<p className="hero-subtitle">*/}
-          {/*  Start with a template or create from scratch. Design responsive emails that look great*/}
-          {/*  everywhere.*/}
-          {/*</p>*/}
           <p className="hero-subtitle">
             Focus on your message. We'll make it beautiful. No code, no complexity — just results.
           </p>
@@ -746,74 +847,84 @@ export const TemplatesLibrary = () => {
 
         <section className="section">
           <div className="section-header">
-            <h2 className="section-title">Recent emails</h2>
-            <span className="section-link">View all</span>
+            <h2 className="section-title">Your saved templates</h2>
+            {savedTemplates.length > 0 && (
+              <span className="section-link">{savedTemplates.length} templates</span>
+            )}
           </div>
-          <div className="templates-grid">
-            {userTemplates.map(template => (
-              <div key={template.id}>
-                <div className="template-card" onClick={() => handleOpenTemplate(template.id)}>
-                  <div className="template-preview">
-                    <div className="preview-placeholder">
-                      <div className="preview-icon">
-                        <Mail size={20} />
-                      </div>
-                      <div className="preview-lines">
-                        <div className="preview-line" />
-                        <div className="preview-line" />
-                        <div className="preview-line" />
+
+          {loading ? (
+            <div className="loading-state">
+              <Loader2 size={20} />
+              Loading templates...
+            </div>
+          ) : savedTemplates.length === 0 ? (
+            <div className="empty-state">
+              No saved templates yet. Create your first email template!
+            </div>
+          ) : (
+            <div className="templates-grid">
+              {savedTemplates.map(template => (
+                <div key={template.id}>
+                  <div className="template-card" onClick={() => handleOpenSavedTemplate(template)}>
+                    <div className="template-preview">
+                      <div className="preview-placeholder">
+                        <div className="preview-icon">
+                          <Mail size={20} />
+                        </div>
+                        <div className="preview-lines">
+                          <div className="preview-line" />
+                          <div className="preview-line" />
+                          <div className="preview-line" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="template-info">
-                    <div className="template-meta">
-                      <div className="template-name">{template.name}</div>
-                      <div className="template-date">{formatDate(template.savedAt)}</div>
-                    </div>
-                    <div className="template-actions">
-                      <button
-                        className="action-btn"
-                        title="Preview"
-                        onClick={e => {
-                          e.stopPropagation()
-                        }}
-                      >
-                        <Eye size={18} />
-                      </button>
-                      <button
-                        className="action-btn"
-                        title="Edit"
-                        onClick={e => {
-                          e.stopPropagation()
-                          handleOpenTemplate(template.id)
-                        }}
-                      >
-                        <Pencil size={18} />
-                      </button>
-                      <button
-                        className="action-btn"
-                        title="Duplicate"
-                        onClick={e => {
-                          e.stopPropagation()
-                        }}
-                      >
-                        <Copy size={18} />
-                      </button>
-                      <button
-                        className="action-btn delete"
-                        title="Delete"
-                        onClick={e => {
-                          e.stopPropagation()
-                        }}
-                      >
-                        <Trash2 size={18} />
-                      </button>
+                    <div className="template-info">
+                      <div className="template-meta">
+                        <div className="template-name">{template.name}</div>
+                        <div className="template-date">{formatDate(template.updatedAt)}</div>
+                      </div>
+                      <div className="template-actions">
+                        <button
+                          className="action-btn"
+                          title="Preview"
+                          onClick={e => {
+                            e.stopPropagation()
+                          }}
+                        >
+                          <Eye size={18} />
+                        </button>
+                        <button
+                          className="action-btn"
+                          title="Edit"
+                          onClick={e => {
+                            e.stopPropagation()
+                            handleOpenSavedTemplate(template)
+                          }}
+                        >
+                          <Pencil size={18} />
+                        </button>
+                        <button
+                          className="action-btn"
+                          title="Duplicate"
+                          onClick={e => handleDuplicateTemplate(e, template)}
+                        >
+                          <Copy size={18} />
+                        </button>
+                        <button
+                          className="action-btn delete"
+                          title="Delete"
+                          onClick={e => handleDeleteTemplate(e, template.id)}
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
       </div>
 
