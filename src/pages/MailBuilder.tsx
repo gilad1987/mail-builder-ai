@@ -17,6 +17,7 @@ import type { BoxJSON, GlobalStyles } from '../models'
 export const MailBuilder = observer(() => {
   const { templateId } = useParams<{ templateId: string }>()
   const [activePanel, setActivePanel] = useState<string | null>('elements')
+  const [layersPanelOpen, setLayersPanelOpen] = useState(true)
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', editorStore.theme)
@@ -57,9 +58,6 @@ export const MailBuilder = observer(() => {
     if (activePanel === 'styles') {
       return <GlobalStylesPanel onClose={() => setActivePanel(null)} />
     }
-    if (activePanel === 'layers') {
-      return <LayersPanel />
-    }
     if (activePanel === 'assets') {
       return <AssetsPanel onClose={() => setActivePanel(null)} />
     }
@@ -80,6 +78,10 @@ export const MailBuilder = observer(() => {
           <IconSidebar activePanel={activePanel} onPanelChange={setActivePanel} />
           {renderPanel()}
           <Canvas />
+          <LayersPanel
+            isOpen={layersPanelOpen}
+            onToggle={() => setLayersPanelOpen(!layersPanelOpen)}
+          />
         </div>
       </div>
     </DndProvider>

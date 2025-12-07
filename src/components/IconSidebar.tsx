@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { Image, Layers, Palette, Plus, Sparkles } from 'lucide-react'
+import { Image, Palette, Plus, Sparkles } from 'lucide-react'
 import { tokens } from '../styles/tokens'
 
 interface IconSidebarProps {
@@ -98,7 +98,6 @@ const Container = styled.div`
 export const IconSidebar = observer(({ activePanel, onPanelChange }: IconSidebarProps) => {
   const icons = [
     { id: 'elements', icon: Plus, label: 'Elements' },
-    { id: 'layers', icon: Layers, label: 'Layers' },
     { id: 'styles', icon: Palette, label: 'Global Styles' },
     { id: 'assets', icon: Image, label: 'Assets' },
   ]

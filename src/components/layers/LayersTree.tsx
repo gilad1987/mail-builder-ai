@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 import {
@@ -67,7 +67,55 @@ const getBlockIcon = (type: string) => {
 }
 
 export const LayersTree = observer(() => {
-  const [expanded, setExpanded] = useState<Set<string>>(new Set(['body']))
+  const [expanded, setExpanded] = useState<Set<string>>(new Set(['body', 'template']))
+  const selectedRef = useRef<HTMLDivElement>(null)
+
+  // Find the path to an element (all parent IDs)
+  const findPathToElement = (targetId: string): string[] => {
+    const path: string[] = []
+
+    const searchInChildren = (element: Box, currentPath: string[]): boolean => {
+      if (element.id === targetId) {
+        path.push(...currentPath)
+        return true
+      }
+
+      for (const child of element.children) {
+        if (searchInChildren(child, [...currentPath, element.id])) {
+          return true
+        }
+      }
+      return false
+    }
+
+    for (const section of editorStore.sections) {
+      if (searchInChildren(section, [])) {
+        break
+      }
+    }
+
+    return path
+  }
+
+  // Auto-expand tree to show selected element
+  useEffect(() => {
+    if (editorStore.selectedElementId) {
+      const pathToElement = findPathToElement(editorStore.selectedElementId)
+      if (pathToElement.length > 0) {
+        setExpanded(prev => {
+          const next = new Set(prev)
+          next.add('body')
+          next.add('template')
+          pathToElement.forEach(id => next.add(id))
+          return next
+        })
+      }
+      // Scroll selected element into view
+      setTimeout(() => {
+        selectedRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }, 50)
+    }
+  }, [editorStore.selectedElementId])
 
   const toggle = (id: string, e: React.MouseEvent) => {
     e.stopPropagation()
@@ -91,6 +139,7 @@ export const LayersTree = observer(() => {
       return (
         <div key={element.key}>
           <div
+            ref={isSelected ? selectedRef : undefined}
             className={`tree-item ${isSelected ? 'is-selected' : ''}`}
             style={{ paddingLeft: `${depth * 16 + 8}px` }}
             onClick={() => editorStore.setSelectedElement(element.id)}
@@ -110,6 +159,7 @@ export const LayersTree = observer(() => {
       return (
         <div key={element.key}>
           <div
+            ref={isSelected ? selectedRef : undefined}
             className={`tree-item ${isSelected ? 'is-selected' : ''}`}
             style={{ paddingLeft: `${depth * 16 + 8}px` }}
             onClick={() => editorStore.setSelectedElement(element.id)}
@@ -129,6 +179,7 @@ export const LayersTree = observer(() => {
       return (
         <div key={element.key}>
           <div
+            ref={isSelected ? selectedRef : undefined}
             className={`tree-item ${isSelected ? 'is-selected' : ''}`}
             style={{ paddingLeft: `${depth * 16 + 8}px` }}
             onClick={() => editorStore.setSelectedElement(element.id)}
@@ -148,6 +199,7 @@ export const LayersTree = observer(() => {
       const Icon = getBlockIcon(element.type)
       return (
         <div
+          ref={isSelected ? selectedRef : undefined}
           key={element.key}
           className={`tree-item ${isSelected ? 'is-selected' : ''}`}
           style={{ paddingLeft: `${depth * 16 + 8}px` }}
