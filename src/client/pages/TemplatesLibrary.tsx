@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
 import {
   Copy,
   Eye,
@@ -17,689 +16,84 @@ import { remult } from 'remult'
 import { TemplateEntity } from '../../server/entities/TemplateEntity'
 import { editorStore } from '../stores/EditorStore'
 
-// Template metadata
-interface BuiltInTemplate {
-  id: string
-  name: string
-  description: string
-  thumbnail: string
-}
-
-// Hardcoded template metadata (JSON data will be loaded on demand)
-const builtInTemplates: BuiltInTemplate[] = [
+// Built-in template data
+const builtInTemplates = [
   {
     id: 'welcome-onboarding',
     name: 'Welcome Onboarding',
     description: 'Clean Google-style welcome email with friendly onboarding steps',
-    thumbnail: 'welcome-onboarding.png',
+    colors: { bg: '#f8f9fa', icon: '#1a73e8', lines: ['#1a73e8', '#5f6368', '#34a853'] },
   },
   {
     id: 'product-newsletter',
     name: 'Product Newsletter',
     description: 'Material Design inspired product update newsletter',
-    thumbnail: 'product-newsletter.png',
+    colors: { bg: '#1a1a2e', icon: '#6366f1', lines: ['#c4b5fd', '#94a3b8', '#6366f1'] },
   },
   {
     id: 'promotional-sale',
     name: 'Promotional Sale',
     description: 'Modern minimalist promotional email with bold typography',
-    thumbnail: 'promotional-sale.png',
+    colors: { bg: '#faf5f0', icon: '#1a1a1a', lines: ['#c9a96e', '#666666', '#1a1a1a'] },
   },
 ]
 
-const Container = styled.div`
-  min-height: 100vh;
-  height: 100vh;
-  overflow-y: auto;
-  background: #0f0f11;
-  font-family: Poppins, Roboto, 'Noto Sans Hebrew', 'Noto Kufi Arabic', 'Noto Sans JP', sans-serif;
-
-  .header {
-    padding: 20px 32px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    background: rgba(15, 15, 17, 0.9);
-    backdrop-filter: blur(12px);
-    z-index: 10;
-  }
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .my-templates-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 18px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    color: #a1a1aa;
-    font-size: 14px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.2);
-      color: #fafafa;
-    }
-  }
-
-  .logo-icon {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 2px 12px rgba(0, 191, 255, 0.4);
-  }
-
-  .logo-text {
-    font-size: 18px;
-    font-weight: 600;
-    color: #ffffff;
-  }
-
-  .content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 32px 80px;
-  }
-
-  .hero {
-    text-align: center;
-    padding: 48px 0 56px;
-  }
-
-  .hero-title {
-    font-size: 44px;
-    font-weight: 400;
-    color: #ffffff;
-    margin-bottom: 16px;
-    letter-spacing: -1px;
-  }
-
-  .hero-subtitle {
-    font-size: 16px;
-    color: #a1a1aa;
-    max-width: 500px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  .section {
-    margin-bottom: 56px;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .section-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: #71717a;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .section-link {
-    font-size: 14px;
-    color: #00bfff;
-    text-decoration: none;
-    font-weight: 500;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .templates-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 24px;
-  }
-
-  .template-card {
-    background: #18181b;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    overflow: hidden;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    position: relative;
-
-    &:hover {
-      border-color: rgba(0, 191, 255, 0.4);
-      box-shadow:
-        0 4px 24px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(0, 191, 255, 0.2);
-
-      .template-actions {
-        opacity: 1;
-      }
-    }
-  }
-
-  .template-preview {
-    aspect-ratio: 4/3;
-    background: linear-gradient(135deg, #27272a 0%, #3f3f46 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s ease;
-
-    .preview-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      color: #52525b;
-    }
-
-    .preview-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(0, 191, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #00bfff;
-    }
-
-    .preview-lines {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      align-items: center;
-    }
-
-    .preview-line {
-      height: 3px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 2px;
-
-      &:nth-child(1) {
-        width: 60px;
-      }
-      &:nth-child(2) {
-        width: 80px;
-      }
-      &:nth-child(3) {
-        width: 50px;
-      }
-    }
-  }
-
-  .template-info {
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 64px;
-  }
-
-  .template-meta {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .template-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #fafafa;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .template-date {
-    font-size: 12px;
-    color: #71717a;
-  }
-
-  .template-actions {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-  }
-
-  .action-btn {
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: transparent;
-    color: #71717a;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: all 0.15s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-      background: #3f3f46;
-      color: #fafafa;
-    }
-
-    &.delete:hover {
-      background: rgba(239, 68, 68, 0.2);
-      color: #ef4444;
-    }
-  }
-
-  .create-card {
-    background: #18181b;
-    border: 2px dashed #3f3f46;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    aspect-ratio: 4/3;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-
-    &:hover {
-      border-color: #00bfff;
-      background: rgba(0, 191, 255, 0.05);
-
-      .create-icon {
-        background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
-        color: white;
-        transform: scale(1.05);
-        box-shadow: 0 4px 16px rgba(0, 191, 255, 0.4);
-      }
-
-      .create-text {
-        color: #00bfff;
-      }
-    }
-
-    .create-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #27272a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #71717a;
-      margin-bottom: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .create-text {
-      font-size: 14px;
-      font-weight: 500;
-      color: #71717a;
-      transition: color 0.2s ease;
-    }
-  }
-
-  .create-card-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .create-card-label {
-    padding: 16px;
-    min-height: 64px;
-  }
-
-  .example-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: rgba(39, 39, 42, 0.9);
-    color: #a1a1aa;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .ai-section {
-    max-width: 70%;
-    margin: 0px auto 80px;
-    background: linear-gradient(
-      135deg,
-      rgba(0, 191, 255, 0.1) 0%,
-      rgba(0, 168, 230, 0.1) 50%,
-      rgba(0, 140, 200, 0.05) 100%
-    );
-    border-radius: 16px;
-    padding: 32px;
-    border: 1px solid rgba(0, 191, 255, 0.2);
-  }
-
-  .ai-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
-  }
-
-  .ai-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 4px 16px rgba(0, 191, 255, 0.4);
-  }
-
-  .ai-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #fafafa;
-  }
-
-  .ai-subtitle {
-    font-size: 14px;
-    color: #a1a1aa;
-    margin-bottom: 20px;
-    max-width: 500px;
-  }
-
-  .ai-input-wrapper {
-    display: flex;
-    gap: 12px;
-    align-items: stretch;
-  }
-
-  .ai-input {
-    flex: 1;
-    padding: 14px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    font-size: 15px;
-    font-family: inherit;
-    background: #18181b;
-    color: #fafafa;
-    outline: none;
-    transition: all 0.2s ease;
-
-    &::placeholder {
-      color: #52525b;
-    }
-
-    &:focus {
-      border-color: #00bfff;
-      box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
-    }
-  }
-
-  .ai-submit {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 24px;
-    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-
-    &:hover {
-      background: linear-gradient(135deg, #00a8e6 0%, #008cc8 100%);
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(0, 191, 255, 0.4);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-  }
-
-  .ai-suggestions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 16px;
-  }
-
-  .ai-suggestion {
-    padding: 8px 14px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    font-size: 13px;
-    color: #a1a1aa;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    font-family: inherit;
-
-    &:hover {
-      border-color: #00bfff;
-      color: #7dd3fc;
-      background: rgba(0, 191, 255, 0.1);
-    }
-  }
-
-  .footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 24px 32px;
-    margin-top: auto;
-    background: #09090b;
-  }
-
-  .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  .footer-logo-icon {
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-  }
-
-  .footer-logo-text {
-    color: #a1a1aa;
-  }
-
-  .footer-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .footer-link {
-    font-size: 13px;
-    color: #52525b;
-    text-decoration: none;
-    transition: color 0.15s ease;
-
-    &:hover {
-      color: #a1a1aa;
-    }
-  }
-
-  .footer-right {
-    font-size: 12px;
-    color: #3f3f46;
-  }
-
-  .loading-state {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 40px;
-    color: #71717a;
-    font-size: 14px;
-
-    svg {
-      animation: spin 1s linear infinite;
-    }
-  }
-
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .empty-state {
-    text-align: center;
-    padding: 40px;
-    color: #71717a;
-    font-size: 14px;
-  }
-`
-
 const templateRepo = remult.repo(TemplateEntity)
+
+// Pure function for formatting dates - takes "now" as parameter
+const formatDateRelative = (date: Date | null, now: number) => {
+  if (!date) return 'Template'
+  const days = Math.floor((now - date.getTime()) / 86400000)
+  if (days === 0) return 'Edited today'
+  if (days === 1) return 'Edited yesterday'
+  if (days < 7) return `Edited ${days} days ago`
+  return `Edited ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
+}
 
 export const TemplatesLibrary = () => {
   const navigate = useNavigate()
   const [savedTemplates, setSavedTemplates] = useState<TemplateEntity[]>([])
   const [loading, setLoading] = useState(true)
+  const [now, setNow] = useState(() => Date.now())
 
-  // Fetch templates from server
   useEffect(() => {
-    const fetchTemplates = async () => {
-      try {
-        const templates = await templateRepo.find({
-          orderBy: { updatedAt: 'desc' },
-        })
+    templateRepo
+      .find({ orderBy: { updatedAt: 'desc' } })
+      .then(templates => {
         setSavedTemplates(templates)
-      } catch (error) {
-        console.error('Failed to fetch templates:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchTemplates()
+        setNow(Date.now()) // Update "now" when templates are fetched
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false))
   }, [])
 
-  const formatDate = (date: Date | null) => {
-    if (!date) return 'Template'
-    const now = new Date()
-    const diff = now.getTime() - date.getTime()
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  // Memoize formatted dates based on templates and "now" timestamp
+  const formattedDates = useMemo(() => {
+    const map = new Map<string, string>()
+    savedTemplates.forEach(t => map.set(t.id, formatDateRelative(t.updatedAt, now)))
+    return map
+  }, [savedTemplates, now])
 
-    if (days === 0) return 'Edited today'
-    if (days === 1) return 'Edited yesterday'
-    if (days < 7) return `Edited ${days} days ago`
-    return `Edited ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
-  }
-
-  const handleOpenTemplate = (templateId: string) => {
-    navigate(`/builder/${templateId}`)
-  }
-
-  const handleOpenSavedTemplate = async (template: TemplateEntity) => {
-    // Load template data into editor store
-    editorStore.importFromJSON(template.data as Parameters<typeof editorStore.importFromJSON>[0])
-    navigate(`/builder/${template.id}`)
-  }
-
-  const handleCreateNew = () => {
-    editorStore.clearTemplate()
-    navigate('/builder')
-  }
-
-  const handleDuplicateTemplate = async (e: React.MouseEvent, template: TemplateEntity) => {
+  const handleDuplicate = async (e: React.MouseEvent, t: TemplateEntity) => {
     e.stopPropagation()
-    try {
-      await templateRepo.insert({
-        name: `${template.name} (Copy)`,
-        data: template.data,
-      })
-      // Refresh the list
-      const templates = await templateRepo.find({
-        orderBy: { updatedAt: 'desc' },
-      })
-      setSavedTemplates(templates)
-    } catch (error) {
-      console.error('Failed to duplicate template:', error)
-    }
+    await templateRepo.insert({ name: `${t.name} (Copy)`, data: t.data })
+    setSavedTemplates(await templateRepo.find({ orderBy: { updatedAt: 'desc' } }))
   }
 
-  const handleDeleteTemplate = async (e: React.MouseEvent, templateId: string) => {
+  const handleDelete = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation()
-    if (!confirm('Are you sure you want to delete this template?')) return
+    if (!confirm('Delete this template?')) return
+    await templateRepo.delete(id)
+    setSavedTemplates(prev => prev.filter(t => t.id !== id))
+  }
 
-    try {
-      await templateRepo.delete(templateId)
-      setSavedTemplates(prev => prev.filter(t => t.id !== templateId))
-    } catch (error) {
-      console.error('Failed to delete template:', error)
-    }
+  const openSaved = (t: TemplateEntity) => {
+    editorStore.importFromJSON(t.data as Parameters<typeof editorStore.importFromJSON>[0])
+    navigate(`/builder/${t.id}`)
   }
 
   return (
-    <Container>
+    <div className="templates-library">
       <header className="header">
         <div className="header-left">
           <div className="logo">
@@ -710,8 +104,7 @@ export const TemplatesLibrary = () => {
           </div>
         </div>
         <button className="my-templates-btn" onClick={() => navigate('/start-templates')}>
-          <FolderOpen size={18} />
-          My Templates
+          <FolderOpen size={18} /> My Templates
         </button>
       </header>
 
@@ -730,26 +123,24 @@ export const TemplatesLibrary = () => {
             </div>
             <h2 className="ai-title">Create with AI</h2>
           </div>
-          <p className="ai-subtitle">
-            Describe the email you want to create and let AI generate it for you.
-          </p>
+          <p className="ai-subtitle">Describe the email you want and let AI generate it.</p>
           <div className="ai-input-wrapper">
             <input
-              type="text"
               className="ai-input"
-              placeholder="E.g., A welcome email for new subscribers with a discount code..."
+              placeholder="E.g., A welcome email for new subscribers..."
             />
             <button className="ai-submit">
-              <Send size={18} />
-              Generate
+              <Send size={18} /> Generate
             </button>
           </div>
           <div className="ai-suggestions">
-            <button className="ai-suggestion">Welcome email</button>
-            <button className="ai-suggestion">Newsletter</button>
-            <button className="ai-suggestion">Product launch</button>
-            <button className="ai-suggestion">Event invitation</button>
-            <button className="ai-suggestion">Thank you email</button>
+            {['Welcome email', 'Newsletter', 'Product launch', 'Event invitation', 'Thank you'].map(
+              s => (
+                <button key={s} className="ai-suggestion">
+                  {s}
+                </button>
+              )
+            )}
           </div>
         </section>
 
@@ -759,7 +150,13 @@ export const TemplatesLibrary = () => {
           </div>
           <div className="templates-grid">
             <div className="create-card-wrapper">
-              <div className="create-card" onClick={handleCreateNew}>
+              <div
+                className="create-card"
+                onClick={() => {
+                  editorStore.clearTemplate()
+                  navigate('/builder')
+                }}
+              >
                 <div className="create-icon">
                   <Plus size={24} />
                 </div>
@@ -767,77 +164,27 @@ export const TemplatesLibrary = () => {
               </div>
               <div className="create-card-label" />
             </div>
-            {builtInTemplates.map(template => (
-              <div key={template.id}>
-                <div className="template-card" onClick={() => handleOpenTemplate(template.id)}>
+            {builtInTemplates.map(t => (
+              <div key={t.id}>
+                <div className="template-card" onClick={() => navigate(`/builder/${t.id}`)}>
                   <div className="template-preview">
                     <span className="example-badge">Template</span>
-                    <div
-                      className="preview-placeholder"
-                      style={{
-                        background:
-                          template.id === 'welcome-onboarding'
-                            ? 'linear-gradient(180deg, #f8f9fa 0%, #ffffff 30%, #f8f9fa 100%)'
-                            : template.id === 'product-newsletter'
-                              ? 'linear-gradient(180deg, #1a1a2e 0%, #667eea 30%, #0f172a 100%)'
-                              : 'linear-gradient(180deg, #faf5f0 0%, #1a1a1a 40%, #faf5f0 100%)',
-                      }}
-                    >
-                      <div
-                        className="preview-icon"
-                        style={{
-                          background:
-                            template.id === 'welcome-onboarding'
-                              ? '#1a73e8'
-                              : template.id === 'product-newsletter'
-                                ? 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)'
-                                : '#1a1a1a',
-                        }}
-                      >
+                    <div className="preview-placeholder">
+                      <div className="preview-icon" style={{ background: t.colors.icon }}>
                         <Mail size={20} color="#fff" />
                       </div>
                       <div className="preview-lines">
-                        <div
-                          className="preview-line"
-                          style={{
-                            background:
-                              template.id === 'welcome-onboarding'
-                                ? '#1a73e8'
-                                : template.id === 'product-newsletter'
-                                  ? '#c4b5fd'
-                                  : '#c9a96e',
-                          }}
-                        />
-                        <div
-                          className="preview-line"
-                          style={{
-                            background:
-                              template.id === 'welcome-onboarding'
-                                ? '#5f6368'
-                                : template.id === 'product-newsletter'
-                                  ? '#94a3b8'
-                                  : '#666666',
-                          }}
-                        />
-                        <div
-                          className="preview-line"
-                          style={{
-                            background:
-                              template.id === 'welcome-onboarding'
-                                ? '#34a853'
-                                : template.id === 'product-newsletter'
-                                  ? '#6366f1'
-                                  : '#1a1a1a',
-                          }}
-                        />
+                        {t.colors.lines.map((c, i) => (
+                          <div key={i} className="preview-line" style={{ background: c }} />
+                        ))}
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="template-info">
                   <div className="template-meta">
-                    <div className="template-name">{template.name}</div>
-                    <div className="template-date">{template.description}</div>
+                    <div className="template-name">{t.name}</div>
+                    <div className="template-date">{t.description}</div>
                   </div>
                 </div>
               </div>
@@ -852,21 +199,17 @@ export const TemplatesLibrary = () => {
               <span className="section-link">{savedTemplates.length} templates</span>
             )}
           </div>
-
           {loading ? (
             <div className="loading-state">
-              <Loader2 size={20} />
-              Loading templates...
+              <Loader2 size={20} /> Loading...
             </div>
           ) : savedTemplates.length === 0 ? (
-            <div className="empty-state">
-              No saved templates yet. Create your first email template!
-            </div>
+            <div className="empty-state">No saved templates yet.</div>
           ) : (
             <div className="templates-grid">
-              {savedTemplates.map(template => (
-                <div key={template.id}>
-                  <div className="template-card" onClick={() => handleOpenSavedTemplate(template)}>
+              {savedTemplates.map(t => (
+                <div key={t.id}>
+                  <div className="template-card" onClick={() => openSaved(t)}>
                     <div className="template-preview">
                       <div className="preview-placeholder">
                         <div className="preview-icon">
@@ -881,16 +224,14 @@ export const TemplatesLibrary = () => {
                     </div>
                     <div className="template-info">
                       <div className="template-meta">
-                        <div className="template-name">{template.name}</div>
-                        <div className="template-date">{formatDate(template.updatedAt)}</div>
+                        <div className="template-name">{t.name}</div>
+                        <div className="template-date">{formattedDates.get(t.id)}</div>
                       </div>
                       <div className="template-actions">
                         <button
                           className="action-btn"
                           title="Preview"
-                          onClick={e => {
-                            e.stopPropagation()
-                          }}
+                          onClick={e => e.stopPropagation()}
                         >
                           <Eye size={18} />
                         </button>
@@ -899,7 +240,7 @@ export const TemplatesLibrary = () => {
                           title="Edit"
                           onClick={e => {
                             e.stopPropagation()
-                            handleOpenSavedTemplate(template)
+                            openSaved(t)
                           }}
                         >
                           <Pencil size={18} />
@@ -907,14 +248,14 @@ export const TemplatesLibrary = () => {
                         <button
                           className="action-btn"
                           title="Duplicate"
-                          onClick={e => handleDuplicateTemplate(e, template)}
+                          onClick={e => handleDuplicate(e, t)}
                         >
                           <Copy size={18} />
                         </button>
                         <button
                           className="action-btn delete"
                           title="Delete"
-                          onClick={e => handleDeleteTemplate(e, template.id)}
+                          onClick={e => handleDelete(e, t.id)}
                         >
                           <Trash2 size={18} />
                         </button>
@@ -952,6 +293,6 @@ export const TemplatesLibrary = () => {
           <div className="footer-right">© {new Date().getFullYear()} Mail Builder</div>
         </div>
       </footer>
-    </Container>
+    </div>
   )
 }

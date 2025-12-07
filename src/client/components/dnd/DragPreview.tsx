@@ -8,32 +8,34 @@ interface DragPreviewProps {
   data: DragData
 }
 
-const PreviewContainer = styled.div`
-  padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
-  background: ${tokens.colors.blue[500]};
-  color: white;
-  border-radius: ${tokens.borderRadius.md};
-  box-shadow: ${tokens.shadow.lg};
-  display: flex;
-  align-items: center;
-  gap: ${tokens.spacing[2]};
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  pointer-events: none;
-  opacity: 0.9;
+const Container = styled.div`
+  .preview {
+    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
+    background: ${tokens.colors.blue[500]};
+    color: white;
+    border-radius: ${tokens.borderRadius.md};
+    box-shadow: ${tokens.shadow.lg};
+    display: flex;
+    align-items: center;
+    gap: ${tokens.spacing[2]};
+    font-size: ${tokens.fontSize.sm};
+    font-weight: ${tokens.fontWeight.medium};
+    pointer-events: none;
+    opacity: 0.9;
 
-  svg {
-    flex-shrink: 0;
+    svg {
+      flex-shrink: 0;
+    }
   }
-`
 
-const LayoutPreview = styled.div`
-  padding: ${tokens.spacing[2]} ${tokens.spacing[3]};
-  background: ${tokens.colors.blue[500]};
-  color: white;
-  border-radius: ${tokens.borderRadius.md};
-  box-shadow: ${tokens.shadow.lg};
-  pointer-events: none;
+  .layout-preview {
+    padding: ${tokens.spacing[2]} ${tokens.spacing[3]};
+    background: ${tokens.colors.blue[500]};
+    color: white;
+    border-radius: ${tokens.borderRadius.md};
+    box-shadow: ${tokens.shadow.lg};
+    pointer-events: none;
+  }
 
   .preview-columns {
     display: flex;
@@ -65,52 +67,62 @@ const blockIcons: Record<string, React.FC<{ size?: number }>> = {
 export const DragPreview = ({ type, data }: DragPreviewProps) => {
   if (type === 'sidebar' && data.type === 'layout' && data.columns) {
     return (
-      <LayoutPreview>
-        <div className="preview-columns">
-          {data.columns.map((width: number, i: number) => (
-            <div key={i} className="preview-col" style={{ flex: width }} />
-          ))}
+      <Container>
+        <div className="layout-preview">
+          <div className="preview-columns">
+            {data.columns.map((width: number, i: number) => (
+              <div key={i} className="preview-col" style={{ flex: width }} />
+            ))}
+          </div>
+          <div className="preview-label">{data.name}</div>
         </div>
-        <div className="preview-label">{data.name}</div>
-      </LayoutPreview>
+      </Container>
     )
   }
 
   if (type === 'sidebar' && data.type === 'column') {
     return (
-      <LayoutPreview>
-        <div className="preview-columns">
-          <div className="preview-col" style={{ flex: 1, minWidth: 60 }} />
+      <Container>
+        <div className="layout-preview">
+          <div className="preview-columns">
+            <div className="preview-col" style={{ flex: 1, minWidth: 60 }} />
+          </div>
+          <div className="preview-label">{data.name || 'Column'}</div>
         </div>
-        <div className="preview-label">{data.name || 'Column'}</div>
-      </LayoutPreview>
+      </Container>
     )
   }
 
   if (type === 'sidebar' && data.type === 'block' && data.blockType) {
     const Icon = blockIcons[data.blockType] || AlignLeft
     return (
-      <PreviewContainer>
-        <Icon size={18} />
-        <span>{data.blockType}</span>
-      </PreviewContainer>
+      <Container>
+        <div className="preview">
+          <Icon size={18} />
+          <span>{data.blockType}</span>
+        </div>
+      </Container>
     )
   }
 
   if (type === 'sidebar' && data.type === 'saved-widget') {
     return (
-      <PreviewContainer style={{ background: tokens.colors.purple[600] }}>
-        <Package size={18} />
-        <span>{data.name || 'Saved Widget'}</span>
-      </PreviewContainer>
+      <Container>
+        <div className="preview" style={{ background: tokens.colors.purple[600] }}>
+          <Package size={18} />
+          <span>{data.name || 'Saved Widget'}</span>
+        </div>
+      </Container>
     )
   }
 
   if (type === 'canvas') {
     return (
-      <PreviewContainer>
-        <span>Moving {data.blockType || 'element'}</span>
-      </PreviewContainer>
+      <Container>
+        <div className="preview">
+          <span>Moving {data.blockType || 'element'}</span>
+        </div>
+      </Container>
     )
   }
 
