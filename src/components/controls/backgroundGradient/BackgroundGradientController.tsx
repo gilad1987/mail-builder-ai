@@ -1,10 +1,11 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
-import { Brush, Square, Globe, Monitor, ChevronDown } from 'lucide-react'
+import { Brush, Square, Globe, Monitor, ChevronDown, RotateCcw } from 'lucide-react'
 import { tokens } from '../../../styles/tokens'
 import { editorStore } from '../../../stores/EditorStore'
 import { ResponsiveIcon } from '../ResponsiveIcon'
+import type { GlobalColors } from '../../../models'
 
 const Container = styled.div`
   padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
@@ -108,6 +109,51 @@ const Container = styled.div`
       color: var(--accent);
       border-color: var(--accent);
     }
+  }
+
+  .global-colors-wrapper {
+    position: relative;
+  }
+
+  .global-colors-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 4px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--input-border);
+    border-radius: ${tokens.borderRadius.md};
+    box-shadow: ${tokens.shadow.lg};
+    z-index: 100;
+    min-width: 140px;
+    padding: ${tokens.spacing[2]};
+  }
+
+  .global-color-item {
+    display: flex;
+    align-items: center;
+    gap: ${tokens.spacing[2]};
+    padding: ${tokens.spacing[1]} ${tokens.spacing[2]};
+    border-radius: ${tokens.borderRadius.sm};
+    cursor: pointer;
+    transition: background ${tokens.transition.fast};
+
+    &:hover {
+      background: var(--bg-secondary);
+    }
+  }
+
+  .global-color-swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--input-border);
+  }
+
+  .global-color-label {
+    font-size: ${tokens.fontSize.xs};
+    color: var(--text-primary);
+    text-transform: capitalize;
   }
 
   .color-swatch {
@@ -252,11 +298,42 @@ const defaultValues: GradientValues = {
   angle: 180,
 }
 
+const globalColorLabels: Record<keyof GlobalColors, string> = {
+  primary: 'Primary',
+  secondary: 'Secondary',
+  accent: 'Accent',
+  success: 'Success',
+  warning: 'Warning',
+  error: 'Error',
+}
+
 export const BackgroundGradientController = observer(() => {
   const color1Ref = useRef<HTMLInputElement>(null)
   const color2Ref = useRef<HTMLInputElement>(null)
+  const globalColors1Ref = useRef<HTMLDivElement>(null)
+  const globalColors2Ref = useRef<HTMLDivElement>(null)
+  const [showGlobalColors1, setShowGlobalColors1] = useState(false)
+  const [showGlobalColors2, setShowGlobalColors2] = useState(false)
   const element = editorStore.selectedElement
   const device = editorStore.activeDevice
+  const globalColors = editorStore.globalStyles.colors
+
+  // Close dropdowns on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (globalColors1Ref.current && !globalColors1Ref.current.contains(e.target as Node)) {
+        setShowGlobalColors1(false)
+      }
+      if (globalColors2Ref.current && !globalColors2Ref.current.contains(e.target as Node)) {
+        setShowGlobalColors2(false)
+      }
+    }
+
+    if (showGlobalColors1 || showGlobalColors2) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showGlobalColors1, showGlobalColors2])
 
   const getValue = <K extends keyof GradientValues>(key: K): GradientValues[K] => {
     if (!element) return defaultValues[key]
@@ -270,6 +347,14 @@ export const BackgroundGradientController = observer(() => {
   const handleChange = <K extends keyof GradientValues>(key: K, value: GradientValues[K]) => {
     if (!element) return
     element.update(`bgGradient-${key}`, value)
+  }
+
+  const handleReset = () => {
+    if (!element) return
+    // Clear all gradient-related styles
+    Object.keys(defaultValues).forEach(key => {
+      element.update(`bgGradient-${key}`, undefined)
+    })
   }
 
   const bgType = getValue('type')
@@ -287,21 +372,36 @@ export const BackgroundGradientController = observer(() => {
           Background Type
           <ResponsiveIcon device={device} responsive={true} />
         </div>
-        <div className="type-toggle">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <button
-            className={`type-btn ${bgType === 'gradient' ? 'active' : ''}`}
-            onClick={() => handleChange('type', 'gradient')}
-            title="Gradient"
+            className="type-btn"
+            onClick={handleReset}
+            title="Reset to transparent"
+            style={{
+              padding: '4px',
+              background: 'var(--input-bg)',
+              border: '1px solid var(--input-border)',
+              borderRadius: '4px',
+            }}
           >
-            <Brush size={14} />
+            <RotateCcw size={12} />
           </button>
-          <button
-            className={`type-btn ${bgType === 'solid' ? 'active' : ''}`}
-            onClick={() => handleChange('type', 'solid')}
-            title="Solid Color"
-          >
-            <Square size={14} />
-          </button>
+          <div className="type-toggle">
+            <button
+              className={`type-btn ${bgType === 'gradient' ? 'active' : ''}`}
+              onClick={() => handleChange('type', 'gradient')}
+              title="Gradient"
+            >
+              <Brush size={14} />
+            </button>
+            <button
+              className={`type-btn ${bgType === 'solid' ? 'active' : ''}`}
+              onClick={() => handleChange('type', 'solid')}
+              title="Solid Color"
+            >
+              <Square size={14} />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -320,9 +420,37 @@ export const BackgroundGradientController = observer(() => {
               <div className="color-header">
                 <span className="color-label">Color</span>
                 <div className="color-actions">
-                  <button className="icon-btn" title="Global color">
-                    <Globe size={12} />
-                  </button>
+                  <div className="global-colors-wrapper" ref={globalColors1Ref}>
+                    <button
+                      className="icon-btn"
+                      title="Global color"
+                      onClick={() => setShowGlobalColors1(!showGlobalColors1)}
+                    >
+                      <Globe size={12} />
+                    </button>
+                    {showGlobalColors1 && (
+                      <div className="global-colors-dropdown">
+                        {(Object.entries(globalColors) as [keyof GlobalColors, string][]).map(
+                          ([name, color]) => (
+                            <div
+                              key={name}
+                              className="global-color-item"
+                              onClick={() => {
+                                handleChange('color1', color)
+                                setShowGlobalColors1(false)
+                              }}
+                            >
+                              <div
+                                className="global-color-swatch"
+                                style={{ backgroundColor: color }}
+                              />
+                              <span className="global-color-label">{globalColorLabels[name]}</span>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    )}
+                  </div>
                   <div style={{ position: 'relative' }}>
                     <div
                       className="color-swatch"
@@ -375,9 +503,37 @@ export const BackgroundGradientController = observer(() => {
               <div className="color-header">
                 <span className="color-label">Second Color</span>
                 <div className="color-actions">
-                  <button className="icon-btn" title="Global color">
-                    <Globe size={12} />
-                  </button>
+                  <div className="global-colors-wrapper" ref={globalColors2Ref}>
+                    <button
+                      className="icon-btn"
+                      title="Global color"
+                      onClick={() => setShowGlobalColors2(!showGlobalColors2)}
+                    >
+                      <Globe size={12} />
+                    </button>
+                    {showGlobalColors2 && (
+                      <div className="global-colors-dropdown">
+                        {(Object.entries(globalColors) as [keyof GlobalColors, string][]).map(
+                          ([name, color]) => (
+                            <div
+                              key={name}
+                              className="global-color-item"
+                              onClick={() => {
+                                handleChange('color2', color)
+                                setShowGlobalColors2(false)
+                              }}
+                            >
+                              <div
+                                className="global-color-swatch"
+                                style={{ backgroundColor: color }}
+                              />
+                              <span className="global-color-label">{globalColorLabels[name]}</span>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    )}
+                  </div>
                   <div style={{ position: 'relative' }}>
                     <div
                       className="color-swatch"
@@ -485,9 +641,37 @@ export const BackgroundGradientController = observer(() => {
             <div className="color-header">
               <span className="color-label">Background Color</span>
               <div className="color-actions">
-                <button className="icon-btn" title="Global color">
-                  <Globe size={14} />
-                </button>
+                <div className="global-colors-wrapper" ref={globalColors1Ref}>
+                  <button
+                    className="icon-btn"
+                    title="Global color"
+                    onClick={() => setShowGlobalColors1(!showGlobalColors1)}
+                  >
+                    <Globe size={14} />
+                  </button>
+                  {showGlobalColors1 && (
+                    <div className="global-colors-dropdown">
+                      {(Object.entries(globalColors) as [keyof GlobalColors, string][]).map(
+                        ([name, color]) => (
+                          <div
+                            key={name}
+                            className="global-color-item"
+                            onClick={() => {
+                              handleChange('color1', color)
+                              setShowGlobalColors1(false)
+                            }}
+                          >
+                            <div
+                              className="global-color-swatch"
+                              style={{ backgroundColor: color }}
+                            />
+                            <span className="global-color-label">{globalColorLabels[name]}</span>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+                </div>
                 <div style={{ position: 'relative' }}>
                   <div
                     className="color-swatch"

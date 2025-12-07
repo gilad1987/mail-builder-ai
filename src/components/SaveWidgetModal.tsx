@@ -19,7 +19,7 @@ const Container = styled.div`
   z-index: 1000;
 
   .modal {
-    background: var(--panel-bg);
+    background: var(--bg-secondary);
     border-radius: ${tokens.borderRadius.lg};
     padding: ${tokens.spacing[6]};
     width: 380px;
