@@ -20,7 +20,21 @@ import type { BoxJSON, GlobalStyles } from '../models'
 const templateRepo = remult.repo(TemplateEntity)
 
 // Built-in template IDs
-const BUILTIN_TEMPLATES = ['welcome-onboarding', 'product-newsletter', 'promotional-sale']
+const BUILTIN_TEMPLATES = [
+  'welcome-onboarding',
+  'product-newsletter',
+  'promotional-sale',
+  'black-friday-sale',
+  'trial-ending',
+  'event-invitation',
+  'abandoned-cart',
+  'weekly-digest',
+  'feature-announcement',
+  'order-confirmation',
+  'referral-program',
+  'feedback-request',
+  'win-back',
+]
 
 export const MailBuilder = observer(() => {
   const { templateId } = useParams<{ templateId: string }>()
@@ -55,6 +69,42 @@ export const MailBuilder = observer(() => {
             case 'promotional-sale':
               templateData = (await import('../assets/email-templates/promotional-sale.json'))
                 .default
+              break
+            case 'black-friday-sale':
+              templateData = (await import('../assets/email-templates/black-friday-sale.json'))
+                .default
+              break
+            case 'trial-ending':
+              templateData = (await import('../assets/email-templates/trial-ending.json')).default
+              break
+            case 'event-invitation':
+              templateData = (await import('../assets/email-templates/event-invitation.json'))
+                .default
+              break
+            case 'abandoned-cart':
+              templateData = (await import('../assets/email-templates/abandoned-cart.json')).default
+              break
+            case 'weekly-digest':
+              templateData = (await import('../assets/email-templates/weekly-digest.json')).default
+              break
+            case 'feature-announcement':
+              templateData = (await import('../assets/email-templates/feature-announcement.json'))
+                .default
+              break
+            case 'order-confirmation':
+              templateData = (await import('../assets/email-templates/order-confirmation.json'))
+                .default
+              break
+            case 'referral-program':
+              templateData = (await import('../assets/email-templates/referral-program.json'))
+                .default
+              break
+            case 'feedback-request':
+              templateData = (await import('../assets/email-templates/feedback-request.json'))
+                .default
+              break
+            case 'win-back':
+              templateData = (await import('../assets/email-templates/win-back.json')).default
               break
           }
           if (templateData) {

@@ -22,19 +22,79 @@ const builtInTemplates = [
     id: 'welcome-onboarding',
     name: 'Welcome Onboarding',
     description: 'Clean Google-style welcome email with friendly onboarding steps',
-    colors: { bg: '#f8f9fa', icon: '#1a73e8', lines: ['#1a73e8', '#5f6368', '#34a853'] },
+    colors: { bg: '#eff6ff', icon: '#2563eb', lines: ['#2563eb', '#7c3aed', '#059669'] },
   },
   {
     id: 'product-newsletter',
     name: 'Product Newsletter',
     description: 'Material Design inspired product update newsletter',
-    colors: { bg: '#1a1a2e', icon: '#6366f1', lines: ['#c4b5fd', '#94a3b8', '#6366f1'] },
+    colors: { bg: '#10b981', icon: '#ffffff', lines: ['#ffffff', '#d1fae5', '#10b981'] },
   },
   {
     id: 'promotional-sale',
     name: 'Promotional Sale',
     description: 'Modern minimalist promotional email with bold typography',
-    colors: { bg: '#faf5f0', icon: '#1a1a1a', lines: ['#c9a96e', '#666666', '#1a1a1a'] },
+    colors: { bg: '#1a1a1a', icon: '#c9a96e', lines: ['#ffffff', '#c9a96e', '#999999'] },
+  },
+  {
+    id: 'black-friday-sale',
+    name: 'Black Friday Flash Sale',
+    description: 'Bold dark-themed flash sale with countdown urgency',
+    colors: { bg: '#0a0a0a', icon: '#fbbf24', lines: ['#ffffff', '#fbbf24', '#ef4444'] },
+  },
+  {
+    id: 'trial-ending',
+    name: 'Trial Ending Reminder',
+    description: 'Modern SaaS trial expiration with clear value proposition',
+    colors: { bg: '#0ea5e9', icon: '#ffffff', lines: ['#ffffff', '#7dd3fc', '#0c4a6e'] },
+  },
+  {
+    id: 'event-invitation',
+    name: 'Event Invitation',
+    description: 'Elegant invitation with sophisticated typography',
+    colors: { bg: '#1c1917', icon: '#d4a574', lines: ['#fefdfb', '#d4a574', '#78716c'] },
+  },
+  {
+    id: 'abandoned-cart',
+    name: 'Abandoned Cart Recovery',
+    description: 'Warm and persuasive cart recovery with product showcase',
+    colors: { bg: '#fff7ed', icon: '#ea580c', lines: ['#ea580c', '#9a3412', '#16a34a'] },
+  },
+  {
+    id: 'weekly-digest',
+    name: 'Weekly Digest',
+    description: 'Clean newsletter with stats, articles, and curated content',
+    colors: { bg: '#6366f1', icon: '#ffffff', lines: ['#ffffff', '#c7d2fe', '#1e293b'] },
+  },
+  {
+    id: 'feature-announcement',
+    name: 'Feature Announcement',
+    description: 'Vibrant new feature announcement with dynamic design',
+    colors: { bg: '#a855f7', icon: '#ffffff', lines: ['#ffffff', '#f5d0fe', '#1e1b4b'] },
+  },
+  {
+    id: 'order-confirmation',
+    name: 'Order Confirmation',
+    description: 'Clean and reassuring order confirmation with tracking info',
+    colors: { bg: '#0d9488', icon: '#ffffff', lines: ['#ffffff', '#99f6e4', '#134e4a'] },
+  },
+  {
+    id: 'referral-program',
+    name: 'Referral Program',
+    description: 'Playful referral invitation with gamified elements',
+    colors: { bg: '#f59e0b', icon: '#78350f', lines: ['#ffffff', '#fef3c7', '#78350f'] },
+  },
+  {
+    id: 'feedback-request',
+    name: 'Feedback Request',
+    description: 'Friendly feedback request with rating options',
+    colors: { bg: '#8b5cf6', icon: '#ffffff', lines: ['#ffffff', '#ede9fe', '#4c1d95'] },
+  },
+  {
+    id: 'win-back',
+    name: 'Win-Back Campaign',
+    description: 'Compelling re-engagement with exclusive comeback offer',
+    colors: { bg: '#164e63', icon: '#a5f3fc', lines: ['#ffffff', '#67e8f9', '#0891b2'] },
   },
 ]
 
@@ -167,7 +227,7 @@ export const TemplatesLibrary = () => {
             {builtInTemplates.map(t => (
               <div key={t.id}>
                 <div className="template-card" onClick={() => navigate(`/builder/${t.id}`)}>
-                  <div className="template-preview">
+                  <div className="template-preview" style={{ background: t.colors.bg }}>
                     <span className="example-badge">Template</span>
                     <div className="preview-placeholder">
                       <div className="preview-icon" style={{ background: t.colors.icon }}>

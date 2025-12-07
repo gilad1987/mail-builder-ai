@@ -1,6 +1,16 @@
 import welcomeOnboarding from './welcome-onboarding.json'
 import productNewsletter from './product-newsletter.json'
 import promotionalSale from './promotional-sale.json'
+import blackFridaySale from './black-friday-sale.json'
+import trialEnding from './trial-ending.json'
+import eventInvitation from './event-invitation.json'
+import abandonedCart from './abandoned-cart.json'
+import weeklyDigest from './weekly-digest.json'
+import featureAnnouncement from './feature-announcement.json'
+import orderConfirmation from './order-confirmation.json'
+import referralProgram from './referral-program.json'
+import feedbackRequest from './feedback-request.json'
+import winBack from './win-back.json'
 
 export interface TemplateInfo {
   id: string
@@ -33,6 +43,97 @@ export const templates: TemplateInfo[] = [
     thumbnail: 'promotional-sale.png',
     data: promotionalSale,
   },
+  {
+    id: 'black-friday-sale',
+    name: 'Black Friday Flash Sale',
+    description: 'Bold dark-themed flash sale email with countdown urgency and striking typography',
+    thumbnail: 'black-friday-sale.png',
+    data: blackFridaySale,
+  },
+  {
+    id: 'trial-ending',
+    name: 'Trial Ending Reminder',
+    description:
+      'Modern SaaS trial expiration email with gradient accents and clear value proposition',
+    thumbnail: 'trial-ending.png',
+    data: trialEnding,
+  },
+  {
+    id: 'event-invitation',
+    name: 'Event Invitation',
+    description: 'Elegant event invitation with sophisticated typography and refined color palette',
+    thumbnail: 'event-invitation.png',
+    data: eventInvitation,
+  },
+  {
+    id: 'abandoned-cart',
+    name: 'Abandoned Cart Recovery',
+    description:
+      'Warm and persuasive cart recovery email with product showcase and urgency elements',
+    thumbnail: 'abandoned-cart.png',
+    data: abandonedCart,
+  },
+  {
+    id: 'weekly-digest',
+    name: 'Weekly Digest',
+    description:
+      'Clean and informative weekly newsletter with stats, articles, and curated content',
+    thumbnail: 'weekly-digest.png',
+    data: weeklyDigest,
+  },
+  {
+    id: 'feature-announcement',
+    name: 'Feature Announcement',
+    description:
+      'Vibrant and exciting new feature announcement with dynamic gradients and modern design',
+    thumbnail: 'feature-announcement.png',
+    data: featureAnnouncement,
+  },
+  {
+    id: 'order-confirmation',
+    name: 'Order Confirmation',
+    description:
+      'Clean and reassuring order confirmation with order details and tracking information',
+    thumbnail: 'order-confirmation.png',
+    data: orderConfirmation,
+  },
+  {
+    id: 'referral-program',
+    name: 'Referral Program',
+    description:
+      'Playful and rewarding referral invitation with gamified elements and clear benefits',
+    thumbnail: 'referral-program.png',
+    data: referralProgram,
+  },
+  {
+    id: 'feedback-request',
+    name: 'Feedback Request',
+    description:
+      'Friendly and engaging feedback request with rating options and personalized touch',
+    thumbnail: 'feedback-request.png',
+    data: feedbackRequest,
+  },
+  {
+    id: 'win-back',
+    name: 'Win-Back Campaign',
+    description: 'Compelling re-engagement email with nostalgic touch and exclusive comeback offer',
+    thumbnail: 'win-back.png',
+    data: winBack,
+  },
 ]
 
-export { welcomeOnboarding, productNewsletter, promotionalSale }
+export {
+  welcomeOnboarding,
+  productNewsletter,
+  promotionalSale,
+  blackFridaySale,
+  trialEnding,
+  eventInvitation,
+  abandonedCart,
+  weeklyDigest,
+  featureAnnouncement,
+  orderConfirmation,
+  referralProgram,
+  feedbackRequest,
+  winBack,
+}

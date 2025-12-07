@@ -40,14 +40,16 @@ const Container = styled.div`
     border-radius: ${tokens.borderRadius.sm};
     color: var(--text-secondary);
     transition: all ${tokens.transition.fast};
+    background: transparent;
 
     &:hover {
       color: var(--text-primary);
+      background: var(--bg-hover);
     }
 
     &.active {
-      background: var(--bg-elevated);
-      color: var(--text-primary);
+      background: ${tokens.colors.blue[500]};
+      color: white;
     }
   }
 
@@ -157,10 +159,10 @@ const Container = styled.div`
   }
 
   .color-swatch {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     border-radius: ${tokens.borderRadius.sm};
-    border: 1px solid var(--input-border);
+    border: 2px solid var(--input-border);
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -289,9 +291,9 @@ interface GradientValues {
 }
 
 const defaultValues: GradientValues = {
-  type: 'gradient',
+  type: 'solid',
   gradientType: 'linear',
-  color1: 'transparent',
+  color1: '#ffffff',
   location1: 0,
   color2: '#ec4899',
   location2: 100,
@@ -314,9 +316,42 @@ export const BackgroundGradientController = observer(() => {
   const globalColors2Ref = useRef<HTMLDivElement>(null)
   const [showGlobalColors1, setShowGlobalColors1] = useState(false)
   const [showGlobalColors2, setShowGlobalColors2] = useState(false)
+  const [originalValues, setOriginalValues] = useState<
+    (GradientValues & { backgroundColor?: string }) | null
+  >(null)
   const element = editorStore.selectedElement
   const device = editorStore.activeDevice
   const globalColors = editorStore.globalStyles.colors
+
+  // Capture original values when element changes
+  useEffect(() => {
+    if (element) {
+      const style = element._style[device]
+      const desktopStyle = element._style.desktop
+
+      // Get the original backgroundColor (direct property)
+      const originalBgColor = style.backgroundColor ?? desktopStyle.backgroundColor
+
+      // Get the original bgGradient values
+      const getOriginal = (key: string) =>
+        style[`bgGradient-${key}`] ?? desktopStyle[`bgGradient-${key}`]
+
+      setOriginalValues({
+        type:
+          (getOriginal('type') as BackgroundType) ??
+          (originalBgColor ? 'solid' : defaultValues.type),
+        gradientType: (getOriginal('gradientType') as GradientType) ?? defaultValues.gradientType,
+        color1: getOriginal('color1') ?? originalBgColor ?? defaultValues.color1,
+        location1: getOriginal('location1') ?? defaultValues.location1,
+        color2: getOriginal('color2') ?? defaultValues.color2,
+        location2: getOriginal('location2') ?? defaultValues.location2,
+        angle: getOriginal('angle') ?? defaultValues.angle,
+        backgroundColor: originalBgColor,
+      })
+    } else {
+      setOriginalValues(null)
+    }
+  }, [element?.id]) // Only re-capture when element changes, not on every style change
 
   // Close dropdowns on click outside
   useEffect(() => {
@@ -339,21 +374,42 @@ export const BackgroundGradientController = observer(() => {
     if (!element) return defaultValues[key]
     const styleKey = `bgGradient-${key}`
     const style = element._style[device]
-    return (style[styleKey] ??
-      element._style.desktop[styleKey] ??
-      defaultValues[key]) as GradientValues[K]
+    const desktopStyle = element._style.desktop
+
+    // For color1, also check the direct backgroundColor property (for backwards compatibility)
+    if (key === 'color1') {
+      const bgGradientColor = style[styleKey] ?? desktopStyle[styleKey]
+      if (bgGradientColor) return bgGradientColor as GradientValues[K]
+
+      // Fall back to direct backgroundColor if no bgGradient-color1 is set
+      const directBgColor = style.backgroundColor ?? desktopStyle.backgroundColor
+      if (directBgColor) return directBgColor as GradientValues[K]
+
+      return defaultValues[key]
+    }
+
+    return (style[styleKey] ?? desktopStyle[styleKey] ?? defaultValues[key]) as GradientValues[K]
   }
 
   const handleChange = <K extends keyof GradientValues>(key: K, value: GradientValues[K]) => {
     if (!element) return
     element.update(`bgGradient-${key}`, value)
+
+    // When changing color1 in solid mode, also update the direct backgroundColor for compatibility
+    if (key === 'color1' && getValue('type') === 'solid') {
+      element.update('backgroundColor', value as string)
+    }
   }
 
   const handleReset = () => {
-    if (!element) return
-    // Clear all gradient-related styles
-    Object.keys(defaultValues).forEach(key => {
-      element.update(`bgGradient-${key}`, undefined)
+    if (!element || !originalValues) return
+    // Reset to original values (captured when element was first selected)
+    Object.entries(originalValues).forEach(([key, value]) => {
+      if (key === 'backgroundColor') {
+        element.update('backgroundColor', value as string | undefined)
+      } else {
+        element.update(`bgGradient-${key}`, value)
+      }
     })
   }
 
@@ -376,7 +432,7 @@ export const BackgroundGradientController = observer(() => {
           <button
             className="type-btn"
             onClick={handleReset}
-            title="Reset to transparent"
+            title="Reset to default"
             style={{
               padding: '4px',
               background: 'var(--input-bg)',
