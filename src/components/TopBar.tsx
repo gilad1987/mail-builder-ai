@@ -9,12 +9,13 @@ import {
   FileJson,
   Monitor,
   Moon,
-  RotateCcw,
+  Redo2,
   Save,
   Send,
   Smartphone,
   Sun,
   Tablet,
+  Undo2,
   Upload,
 } from 'lucide-react'
 import { editorStore } from '../stores/EditorStore'
@@ -54,6 +55,26 @@ export const TopBar = observer(() => {
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  // Keyboard shortcuts for undo/redo
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'z') {
+        e.preventDefault()
+        if (e.shiftKey) {
+          editorStore.redo()
+        } else {
+          editorStore.undo()
+        }
+      }
+      if ((e.metaKey || e.ctrlKey) && e.key === 'y') {
+        e.preventDefault()
+        editorStore.redo()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   const handleExportJSON = () => {
@@ -98,8 +119,21 @@ export const TopBar = observer(() => {
           >
             {editorStore.theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-          <button className="btn-ghost" title="Undo">
-            <RotateCcw size={18} />
+          <button
+            className="btn-ghost"
+            title="Undo (Ctrl+Z)"
+            onClick={() => editorStore.undo()}
+            disabled={!editorStore.canUndo}
+          >
+            <Undo2 size={18} />
+          </button>
+          <button
+            className="btn-ghost"
+            title="Redo (Ctrl+Shift+Z)"
+            onClick={() => editorStore.redo()}
+            disabled={!editorStore.canRedo}
+          >
+            <Redo2 size={18} />
           </button>
           <button
             className="btn-secondary"

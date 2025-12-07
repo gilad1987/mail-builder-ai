@@ -36,6 +36,12 @@ class EditorStore {
   theme: ThemeType = 'dark'
   templateVersion: number = 0 // Used to trigger re-renders when template is replaced
 
+  // Undo/Redo history
+  private history: Array<{ template: BoxJSON; globalStyles: GlobalStyles }> = []
+  private historyIndex: number = -1
+  private maxHistorySize: number = 50
+  private isUndoRedoAction: boolean = false
+
   constructor() {
     this.template = new Template()
     // Start with empty canvas for best UX
@@ -46,6 +52,74 @@ class EditorStore {
     })
 
     setActiveDeviceGetter(() => this.activeDevice)
+    // Save initial state to history
+    this.saveToHistory()
+  }
+
+  // Undo/Redo computed properties
+  get canUndo(): boolean {
+    return this.historyIndex > 0
+  }
+
+  get canRedo(): boolean {
+    return this.historyIndex < this.history.length - 1
+  }
+
+  // Save current state to history
+  saveToHistory() {
+    if (this.isUndoRedoAction) return
+
+    // Remove any future states if we're not at the end
+    if (this.historyIndex < this.history.length - 1) {
+      this.history = this.history.slice(0, this.historyIndex + 1)
+    }
+
+    // Add current state
+    const snapshot = {
+      template: this.template.toJSON(),
+      globalStyles: JSON.parse(JSON.stringify(this.globalStyles)),
+    }
+    this.history.push(snapshot)
+
+    // Trim history if it exceeds max size
+    if (this.history.length > this.maxHistorySize) {
+      this.history = this.history.slice(-this.maxHistorySize)
+      this.historyIndex = this.history.length - 1
+    } else {
+      this.historyIndex = this.history.length - 1
+    }
+  }
+
+  undo() {
+    if (!this.canUndo) return
+
+    this.isUndoRedoAction = true
+    this.historyIndex--
+    const snapshot = this.history[this.historyIndex]
+
+    this.template = new Template(snapshot.template)
+    this.globalStyles = JSON.parse(JSON.stringify(snapshot.globalStyles))
+    this.selectedElementId = null
+    this.hoveredElementId = null
+    this.templateVersion++
+
+    this.isUndoRedoAction = false
+  }
+
+  redo() {
+    if (!this.canRedo) return
+
+    this.isUndoRedoAction = true
+    this.historyIndex++
+    const snapshot = this.history[this.historyIndex]
+
+    this.template = new Template(snapshot.template)
+    this.globalStyles = JSON.parse(JSON.stringify(snapshot.globalStyles))
+    this.selectedElementId = null
+    this.hoveredElementId = null
+    this.templateVersion++
+
+    this.isUndoRedoAction = false
   }
 
   // Check if canvas is empty
@@ -101,6 +175,7 @@ class EditorStore {
   // Global Styles
   updateGlobalColor(name: keyof GlobalColors, value: string) {
     this.globalStyles.colors[name] = value
+    this.saveToHistory()
   }
 
   updateTypography(
@@ -109,6 +184,7 @@ class EditorStore {
     value: string
   ) {
     this.globalStyles.typography[category][field] = value
+    this.saveToHistory()
   }
 
   private applyGlobalStylesToBlock(block: Block) {
@@ -143,13 +219,16 @@ class EditorStore {
   }
 
   addSection(): Section {
-    return this.template.addSection()
+    const section = this.template.addSection()
+    this.saveToHistory()
+    return section
   }
 
   addColumnToSection(sectionId: string, width: number = 100): Column | null {
     const section = this.template.findById(sectionId) as Section | null
     if (section && section instanceof Section) {
       const column = section.addColumn({ width } as ColumnJSON)
+      this.saveToHistory()
       return column
     }
     return null
@@ -169,6 +248,7 @@ class EditorStore {
         innerSection.addColumn({ width: 50 })
         innerSection.addColumn({ width: 50 })
         this.selectedElementId = innerSection.id
+        this.saveToHistory()
         return innerSection
       }
 
@@ -211,6 +291,7 @@ class EditorStore {
       })
       this.applyGlobalStylesToBlock(block)
       this.selectedElementId = block.id
+      this.saveToHistory()
       return block
     }
     return null
@@ -223,6 +304,7 @@ class EditorStore {
       section.children = []
       // Add new columns
       columnWidths.forEach(width => section.addColumn({ width } as ColumnJSON))
+      this.saveToHistory()
     }
   }
 
@@ -237,6 +319,7 @@ class EditorStore {
       if (this.selectedElementId === id) {
         this.selectedElementId = null
       }
+      this.saveToHistory()
     }
   }
 
@@ -250,6 +333,7 @@ class EditorStore {
       // Add to new column
       targetColumn.addChild(block)
       this.selectedElementId = block.id
+      this.saveToHistory()
     }
   }
 
@@ -266,6 +350,7 @@ class EditorStore {
     // Add clone after the original
     parent.addChild(clone, index + 1)
     this.selectedElementId = clone.id
+    this.saveToHistory()
   }
 
   // Style Operations
@@ -273,6 +358,7 @@ class EditorStore {
     const element = this.selectedElement
     if (element) {
       element.update(field, value)
+      this.saveToHistory()
     }
   }
 
@@ -280,6 +366,7 @@ class EditorStore {
     const element = this.selectedElement
     if (element) {
       element.updateData(key, value)
+      this.saveToHistory()
     }
   }
 
@@ -364,6 +451,7 @@ class EditorStore {
       this.globalStyles = json.globalStyles
     }
     this.templateVersion++ // Trigger re-render
+    this.saveToHistory()
   }
 
   importFromJSONString(jsonString: string): boolean {
@@ -404,6 +492,7 @@ class EditorStore {
     this.hoveredElementId = null
     this.template = new Template()
     this.templateVersion++ // Trigger re-render
+    this.saveToHistory()
   }
 
   // Computed

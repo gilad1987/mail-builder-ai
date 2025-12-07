@@ -229,6 +229,15 @@ select {
   @include btn-ghost;
 }
 
+// Disabled button states
+.btn-ghost:disabled,
+.btn-secondary:disabled,
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 // =================================================================
 // SIDEBAR PANELS
 // =================================================================
