@@ -3,7 +3,9 @@ import { editorStore } from '../../stores/EditorStore'
 import { ControlType, hasControl, WidgetType } from '../../config/elementControls'
 import { getWidgetDefaults } from '../../models'
 import {
+  BackgroundGradientController,
   BorderController,
+  BoxShadowController,
   ColorControl,
   DimensionInput,
   HorizontalAlignControl,
@@ -149,18 +151,14 @@ export const StyleTab = observer(() => {
         />
       )}
 
-      {/* Background Color - most elements except Spacer */}
-      {showControl(ControlType.BackgroundColor) && (
-        <ColorControl
-          label="Background color"
-          styleProperty="backgroundColor"
-          defaultValue={defaults.backgroundColor ?? 'transparent'}
-          responsive={true}
-        />
-      )}
+      {/* Background Gradient - containers and visual elements (replaces BackgroundColor) */}
+      {showControl(ControlType.BackgroundGradient) && <BackgroundGradientController />}
 
       {/* Border - most elements except Spacer */}
       {showControl(ControlType.Border) && <BorderController />}
+
+      {/* Box Shadow - containers and visual elements */}
+      {showControl(ControlType.BoxShadow) && <BoxShadowController />}
     </div>
   )
 })

@@ -278,6 +278,40 @@ export abstract class Box {
         result[prop] = unit === 'auto' ? 'auto' : `${size}${unit}`
       })
 
+    // Process background gradient
+    if (style['bgGradient-type']) {
+      const bgType = style['bgGradient-type']
+      if (bgType === 'gradient') {
+        const gradientType = style['bgGradient-gradientType'] || 'linear'
+        const color1 = style['bgGradient-color1'] || 'transparent'
+        const location1 = style['bgGradient-location1'] ?? 0
+        const color2 = style['bgGradient-color2'] || '#ec4899'
+        const location2 = style['bgGradient-location2'] ?? 100
+        const angle = style['bgGradient-angle'] ?? 180
+
+        if (gradientType === 'linear') {
+          result.background = `linear-gradient(${angle}deg, ${color1} ${location1}%, ${color2} ${location2}%)`
+        } else {
+          result.background = `radial-gradient(circle, ${color1} ${location1}%, ${color2} ${location2}%)`
+        }
+      } else if (bgType === 'solid') {
+        const color1 = style['bgGradient-color1'] || 'transparent'
+        result.backgroundColor = color1
+      }
+    }
+
+    // Process box shadow
+    if (style['boxShadow-color'] || style['boxShadow-blur'] !== undefined) {
+      const color = style['boxShadow-color'] || 'rgba(0,0,0,0.25)'
+      const horizontal = style['boxShadow-horizontal'] ?? 0
+      const vertical = style['boxShadow-vertical'] ?? 0
+      const blur = style['boxShadow-blur'] ?? 10
+      const spread = style['boxShadow-spread'] ?? 0
+      const position = style['boxShadow-position'] || 'outline'
+      const inset = position === 'inset' ? 'inset ' : ''
+      result.boxShadow = `${inset}${horizontal}px ${vertical}px ${blur}px ${spread}px ${color}`
+    }
+
     // Clean up internal properties (those with dashes)
     Object.keys(result)
       .filter(k => k.includes('-'))

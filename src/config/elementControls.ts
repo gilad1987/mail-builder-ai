@@ -36,7 +36,9 @@ export enum ControlType {
   FontFamily = 'fontFamily',
   TextColor = 'textColor',
   BackgroundColor = 'backgroundColor',
+  BackgroundGradient = 'backgroundGradient',
   Border = 'border',
+  BoxShadow = 'boxShadow',
   // Container-specific controls (for block elements)
   ContainerBackgroundColor = 'containerBackgroundColor',
   ContainerPadding = 'containerPadding',
@@ -54,7 +56,9 @@ const CONTAINER_CONTROLS = [
   ...LAYOUT_CONTROLS,
   ControlType.Alignment,
   ControlType.BackgroundColor,
+  ControlType.BackgroundGradient,
   ControlType.Border,
+  ControlType.BoxShadow,
 ]
 
 // Block elements that have a container wrapper (shown in Container tab)
@@ -97,7 +101,9 @@ export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
     ControlType.Padding,
     ControlType.Dimensions,
     ControlType.BackgroundColor,
+    ControlType.BackgroundGradient,
     ControlType.Border,
+    ControlType.BoxShadow,
     ...BLOCK_CONTAINER_CONTROLS,
   ],
 
@@ -109,7 +115,9 @@ export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
     ControlType.Margin,
     ControlType.Dimensions,
     ControlType.BackgroundColor,
+    ControlType.BackgroundGradient,
     ControlType.Border,
+    ControlType.BoxShadow,
     ...BLOCK_CONTAINER_CONTROLS,
   ],
 
@@ -128,6 +136,8 @@ export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
     ControlType.Alignment,
     ControlType.TextColor,
     ControlType.BackgroundColor,
+    ControlType.BackgroundGradient,
+    ControlType.BoxShadow,
     ...BLOCK_CONTAINER_CONTROLS,
   ],
 }
