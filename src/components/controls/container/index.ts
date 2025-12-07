@@ -1,3 +1,4 @@
 export { ContainerControl } from './ContainerControl'
 export { ContainerLayoutSection } from './ContainerLayoutSection'
 export { ContainerItemsSection } from './ContainerItemsSection'
+export { FlexChildSection } from './FlexChildSection'

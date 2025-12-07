@@ -179,6 +179,7 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
 
     // Separate container styles from element styles
     // container* styles go on the wrapper, regular styles go on the element
+    // Flex child styles go on the outermost Draggable wrapper
     const {
       containerBackgroundColor,
       containerPaddingTop,
@@ -189,6 +190,12 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
       containerMarginRight,
       containerMarginBottom,
       containerMarginLeft,
+      // Flex child properties - these go on the Draggable wrapper
+      alignSelf,
+      order,
+      flexGrow,
+      flexShrink,
+      flexBasis,
       ...elementStyle
     } = block.style
 
@@ -211,6 +218,21 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
       ...(containerMargin && { margin: containerMargin }),
     }
 
+    // Flex child styles (outermost Draggable wrapper)
+    // Only apply if explicitly set (not undefined)
+    const flexChildStyle: React.CSSProperties = {
+      width: '100%',
+      display: 'block',
+      // Default flex behavior - grow to fill
+      flex: flexGrow !== undefined || flexShrink !== undefined ? undefined : 1,
+      // Explicit flex child properties
+      ...(alignSelf !== undefined && { alignSelf: alignSelf as React.CSSProperties['alignSelf'] }),
+      ...(order !== undefined && { order: order as number }),
+      ...(flexGrow !== undefined && { flexGrow: flexGrow as number }),
+      ...(flexShrink !== undefined && { flexShrink: flexShrink as number }),
+      ...(flexBasis !== undefined && { flexBasis: flexBasis as React.CSSProperties['flexBasis'] }),
+    }
+
     return (
       <Draggable
         id={`canvas-block-${block.id}`}
@@ -220,7 +242,7 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
           blockType: block.type,
           parentId: columnId,
         }}
-        style={{ flex: 1, width: '100%', display: 'block' }}
+        style={flexChildStyle}
       >
         <Container
           className={classNames}

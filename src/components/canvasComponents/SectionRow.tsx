@@ -181,13 +181,15 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
             ...(section.style.display === 'grid' && {
               gridTemplateColumns: section.style.gridTemplateColumns as string,
               gridTemplateRows: section.style.gridTemplateRows as string,
+              gridAutoFlow: section.style.gridAutoFlow as React.CSSProperties['gridAutoFlow'],
+              justifyItems: section.style.justifyItems as React.CSSProperties['justifyItems'],
             }),
             // Common properties
             justifyContent: section.style.justifyContent as React.CSSProperties['justifyContent'],
             alignItems: section.style.alignItems as React.CSSProperties['alignItems'],
             gap:
               section.style.columnGap || section.style.rowGap
-                ? `${section.style.rowGap || 0} ${section.style.columnGap || 0}`
+                ? `${section.style.rowGap || '0px'} ${section.style.columnGap || '0px'}`
                 : tokens.spacing[2],
             // Visual feedback when dragging over
             ...(isOverContent && {

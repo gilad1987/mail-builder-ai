@@ -150,22 +150,39 @@ export const ColumnBox = observer(({ column, sectionId, isLast, isOnlyColumn }: 
     .filter(Boolean)
     .join(' ')
 
+  // Extract flex child properties from column style
+  const { alignSelf, order, flexGrow, flexShrink, flexBasis, ...otherColumnStyles } = column.style
+
   // For Grid layout: columns are grid items, no flex properties needed
   // For Flex layout: use flex-basis and flex-grow
   // But if user has set a custom width in styles, respect that instead
-  const hasCustomWidth = column.style.width !== undefined
+  const hasCustomWidth = otherColumnStyles.width !== undefined
+  const hasExplicitFlexProps = flexGrow !== undefined || flexShrink !== undefined
+
   const layoutStyle: React.CSSProperties = isGridLayout
     ? {} // Grid items don't need special sizing - they follow grid template
-    : hasCustomWidth
-      ? {} // User has set custom width, don't override with flex
-      : isOnlyColumn
-        ? { flex: 1 }
-        : column.width !== undefined
-          ? { flex: `0 0 ${column.width}%`, maxWidth: `${column.width}%` }
-          : { flex: 1 }
+    : hasExplicitFlexProps
+      ? {} // User has set explicit flex properties, don't override
+      : hasCustomWidth
+        ? {} // User has set custom width, don't override with flex
+        : isOnlyColumn
+          ? { flex: 1 }
+          : column.width !== undefined
+            ? { flex: `0 0 ${column.width}%`, maxWidth: `${column.width}%` }
+            : { flex: 1 }
+
+  // Flex child styles (applied to this column as a flex item of its parent section)
+  const flexChildStyle: React.CSSProperties = {
+    // Default to stretch if no alignSelf is set
+    alignSelf: (alignSelf as React.CSSProperties['alignSelf']) || 'stretch',
+    ...(order !== undefined && { order: order as number }),
+    ...(flexGrow !== undefined && { flexGrow: flexGrow as number }),
+    ...(flexShrink !== undefined && { flexShrink: flexShrink as number }),
+    ...(flexBasis !== undefined && { flexBasis: flexBasis as React.CSSProperties['flexBasis'] }),
+  }
 
   // Get column styles, but exclude width when in grid layout (grid controls sizing)
-  const columnStyle = { ...column.style }
+  const columnStyle = { ...otherColumnStyles }
   if (isGridLayout) {
     delete columnStyle.width
     delete columnStyle.maxWidth
@@ -177,8 +194,8 @@ export const ColumnBox = observer(({ column, sectionId, isLast, isOnlyColumn }: 
       className={classNames}
       style={{
         ...layoutStyle,
+        ...flexChildStyle,
         ...columnStyle,
-        alignSelf: 'stretch',
       }}
       onClick={handleClick}
       onMouseOver={handleMouseOver}
@@ -203,14 +220,25 @@ export const ColumnBox = observer(({ column, sectionId, isLast, isOnlyColumn }: 
           className="column-blocks"
           style={{
             display: (column.style.display as React.CSSProperties['display']) || 'flex',
-            flexDirection:
-              (column.style.flexDirection as React.CSSProperties['flexDirection']) || 'column',
+            // Flex properties
+            ...(column.style.display !== 'grid' && {
+              flexDirection:
+                (column.style.flexDirection as React.CSSProperties['flexDirection']) || 'column',
+              flexWrap: column.style.flexWrap as React.CSSProperties['flexWrap'],
+            }),
+            // Grid properties
+            ...(column.style.display === 'grid' && {
+              gridTemplateColumns: column.style.gridTemplateColumns as string,
+              gridTemplateRows: column.style.gridTemplateRows as string,
+              gridAutoFlow: column.style.gridAutoFlow as React.CSSProperties['gridAutoFlow'],
+              justifyItems: column.style.justifyItems as React.CSSProperties['justifyItems'],
+            }),
+            // Common properties
             justifyContent: column.style.justifyContent as React.CSSProperties['justifyContent'],
             alignItems: column.style.alignItems as React.CSSProperties['alignItems'],
-            flexWrap: column.style.flexWrap as React.CSSProperties['flexWrap'],
             gap:
               column.style.columnGap || column.style.rowGap
-                ? `${column.style.rowGap || 0} ${column.style.columnGap || 0}`
+                ? `${column.style.rowGap || '0px'} ${column.style.columnGap || '0px'}`
                 : tokens.spacing[2],
           }}
         >
