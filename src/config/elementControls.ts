@@ -150,6 +150,7 @@ export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
     ControlType.Dimensions,
     ControlType.Alignment,
     ControlType.BackgroundColor,
+    ControlType.BackgroundGradient,
     ControlType.Border,
     ControlType.BoxShadow,
     ...BLOCK_CONTAINER_CONTROLS,
