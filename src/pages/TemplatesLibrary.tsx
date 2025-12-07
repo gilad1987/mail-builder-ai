@@ -75,13 +75,13 @@ const Container = styled.div`
   .logo-icon {
     width: 32px;
     height: 32px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    box-shadow: 0 2px 12px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 2px 12px rgba(0, 191, 255, 0.4);
   }
 
   .logo-text {
@@ -140,7 +140,7 @@ const Container = styled.div`
 
   .section-link {
     font-size: 14px;
-    color: #8b5cf6;
+    color: #00bfff;
     text-decoration: none;
     font-weight: 500;
     cursor: pointer;
@@ -166,10 +166,10 @@ const Container = styled.div`
     position: relative;
 
     &:hover {
-      border-color: rgba(139, 92, 246, 0.4);
+      border-color: rgba(0, 191, 255, 0.4);
       box-shadow:
         0 4px 24px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(139, 92, 246, 0.2);
+        0 0 0 1px rgba(0, 191, 255, 0.2);
 
       .template-actions {
         opacity: 1;
@@ -304,18 +304,18 @@ const Container = styled.div`
     position: relative;
 
     &:hover {
-      border-color: #8b5cf6;
-      background: rgba(139, 92, 246, 0.05);
+      border-color: #00bfff;
+      background: rgba(0, 191, 255, 0.05);
 
       .create-icon {
-        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
         color: white;
         transform: scale(1.05);
-        box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+        box-shadow: 0 4px 16px rgba(0, 191, 255, 0.4);
       }
 
       .create-text {
-        color: #8b5cf6;
+        color: #00bfff;
       }
     }
 
@@ -379,13 +379,13 @@ const Container = styled.div`
     margin-bottom: 56px;
     background: linear-gradient(
       135deg,
-      rgba(99, 102, 241, 0.1) 0%,
-      rgba(139, 92, 246, 0.1) 50%,
-      rgba(236, 72, 153, 0.05) 100%
+      rgba(0, 191, 255, 0.1) 0%,
+      rgba(0, 168, 230, 0.1) 50%,
+      rgba(0, 140, 200, 0.05) 100%
     );
     border-radius: 16px;
     padding: 32px;
-    border: 1px solid rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(0, 191, 255, 0.2);
   }
 
   .ai-header {
@@ -398,13 +398,13 @@ const Container = styled.div`
   .ai-icon {
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 4px 16px rgba(0, 191, 255, 0.4);
   }
 
   .ai-title {
@@ -443,8 +443,8 @@ const Container = styled.div`
     }
 
     &:focus {
-      border-color: #8b5cf6;
-      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+      border-color: #00bfff;
+      box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
     }
   }
 
@@ -453,7 +453,7 @@ const Container = styled.div`
     align-items: center;
     gap: 8px;
     padding: 14px 24px;
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -465,9 +465,9 @@ const Container = styled.div`
     white-space: nowrap;
 
     &:hover {
-      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+      background: linear-gradient(135deg, #00a8e6 0%, #008cc8 100%);
       transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 191, 255, 0.4);
     }
 
     &:active {
@@ -494,9 +494,9 @@ const Container = styled.div`
     font-family: inherit;
 
     &:hover {
-      border-color: #8b5cf6;
-      color: #c4b5fd;
-      background: rgba(139, 92, 246, 0.1);
+      border-color: #00bfff;
+      color: #7dd3fc;
+      background: rgba(0, 191, 255, 0.1);
     }
   }
 
@@ -534,7 +534,7 @@ const Container = styled.div`
   .footer-logo-icon {
     width: 20px;
     height: 20px;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
     border-radius: 5px;
     display: flex;
     align-items: center;

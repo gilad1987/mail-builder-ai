@@ -112,6 +112,10 @@ export const WIDGET_DEFAULTS: Record<WidgetType, ElementDefaults> = {
     backgroundColor: 'transparent',
     textAlign: 'center',
   },
+  [WidgetType.Video]: {
+    backgroundColor: 'transparent',
+    borderRadius: 10,
+  },
 }
 
 /**

@@ -146,6 +146,43 @@ export class Block extends Box {
         break
       }
 
+      case WidgetType.Video: {
+        const videoUrl = (this.data.videoUrl as string) || ''
+        const thumbnailUrl = (this.data.thumbnailUrl as string) || ''
+        const textAlign = (desktopStyle.textAlign as string) || 'center'
+
+        // Extract YouTube video ID from URL
+        const getYouTubeId = (url: string): string | null => {
+          const regex = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+          const match = url.match(regex)
+          return match ? match[1] : null
+        }
+
+        const videoId = getYouTubeId(videoUrl)
+        const autoThumbnail = videoId
+          ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
+          : ''
+        const displayThumbnail = thumbnailUrl || autoThumbnail
+        const videoLink = videoId ? `https://www.youtube.com/watch?v=${videoId}` : '#'
+
+        if (displayThumbnail) {
+          // Render as clickable thumbnail linking to YouTube
+          elementHtml = `<div class="${this.id}" style="text-align:${textAlign};${style}">
+            <a href="${videoLink}" target="_blank" style="display:inline-block;position:relative;max-width:100%;">
+              <img src="${displayThumbnail}" alt="Video thumbnail" style="max-width:100%;display:block;" />
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:68px;height:48px;background:rgba(255,0,0,0.9);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </a>
+          </div>`
+        } else {
+          elementHtml = `<div class="${this.id}" style="text-align:${textAlign};${style}">
+            <p style="color:#666;">Add a YouTube video URL</p>
+          </div>`
+        }
+        break
+      }
+
       default:
         // Paragraph
         elementHtml = `<p class="${this.id}" style="${style}">${(this.data.content as string) || ''}</p>`
@@ -206,6 +243,8 @@ export class Block extends Box {
         return this.listToMJML()
       case WidgetType.SocialLinks:
         return this.socialLinksToMJML()
+      case WidgetType.Video:
+        return this.videoToMJML()
       default:
         return `<mj-text>${this.data.content || ''}</mj-text>`
     }
@@ -358,6 +397,34 @@ export class Block extends Box {
     const padding = this.getMJMLPadding()
 
     return `<mj-social align="${align}"${padding ? ` padding="${padding}"` : ''} mode="horizontal">\n${socialElements}\n</mj-social>`
+  }
+
+  private videoToMJML(): string {
+    const videoUrl = (this.data.videoUrl as string) || ''
+    const thumbnailUrl = (this.data.thumbnailUrl as string) || ''
+
+    // Extract YouTube video ID from URL
+    const getYouTubeId = (url: string): string | null => {
+      const regex = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+      const match = url.match(regex)
+      return match ? match[1] : null
+    }
+
+    const videoId = getYouTubeId(videoUrl)
+    const autoThumbnail = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : ''
+    const displayThumbnail = thumbnailUrl || autoThumbnail
+    const videoLink = videoId ? `https://www.youtube.com/watch?v=${videoId}` : '#'
+
+    const style = this._style.desktop
+    const align = (style.textAlign as string) || 'center'
+    const padding = this.getMJMLPadding()
+
+    if (displayThumbnail && videoId) {
+      // Use mj-image with href for clickable thumbnail
+      return `<mj-image src="${displayThumbnail}" alt="Play video" href="${videoLink}" align="${align}"${padding ? ` padding="${padding}"` : ''} />`
+    }
+
+    return `<mj-text align="${align}"${padding ? ` padding="${padding}"` : ''}>Add a YouTube video URL</mj-text>`
   }
 
   private getTextMJMLAttributes(): string[] {

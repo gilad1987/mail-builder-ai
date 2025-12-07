@@ -12,6 +12,7 @@ import {
   Share2,
   Square,
   Trash2,
+  Youtube,
 } from 'lucide-react'
 import { Draggable } from './dnd'
 import { LayoutSection } from './LayoutSection'
@@ -48,6 +49,12 @@ const blocks = [
     icon: Share2,
     colorClass: 'block-card__icon--pink',
     type: WidgetType.SocialLinks,
+  },
+  {
+    name: 'Video',
+    icon: Youtube,
+    colorClass: 'block-card__icon--red',
+    type: WidgetType.Video,
   },
 ]
 

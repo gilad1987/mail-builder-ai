@@ -561,6 +561,78 @@ function renderBlockContent(block: Block, elementStyle?: StyleProperties) {
       )
     }
 
+    case WidgetType.Video: {
+      const videoUrl = (block.data.videoUrl as string) || ''
+      const videoDefaults = getWidgetDefaults(WidgetType.Video)
+
+      // Extract YouTube video ID from URL
+      const getYouTubeId = (url: string): string | null => {
+        const regex = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+        const match = url.match(regex)
+        return match ? match[1] : null
+      }
+
+      const videoId = getYouTubeId(videoUrl)
+
+      // Get border radius - use style if set, otherwise use default
+      const borderRadiusStyle = buildBorderRadiusStyle(style)
+      const hasBorderRadius = Object.keys(borderRadiusStyle).length > 0
+      const defaultBorderRadius = hasBorderRadius
+        ? borderRadiusStyle
+        : { borderRadius: `${videoDefaults.borderRadius || 10}px` }
+
+      return (
+        <div
+          style={{
+            position: 'relative',
+            width: style.width || '100%',
+            maxWidth: '100%',
+            padding: padding,
+            margin: margin,
+            ...defaultBorderRadius,
+            ...buildBorderStyle(style),
+            overflow: 'hidden',
+          }}
+        >
+          {videoId ? (
+            <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0 }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}`}
+                title="YouTube video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                  ...defaultBorderRadius,
+                }}
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 180,
+                background: '#1a1a1a',
+                color: '#fff',
+                ...defaultBorderRadius,
+              }}
+            >
+              <Youtube size={48} color="#ff0000" />
+              <span style={{ marginTop: 12, fontSize: 14, opacity: 0.8 }}>Add YouTube URL</span>
+            </div>
+          )}
+        </div>
+      )
+    }
+
     default: {
       // Paragraph
       const pDefaults = getWidgetDefaults(WidgetType.Paragraph)

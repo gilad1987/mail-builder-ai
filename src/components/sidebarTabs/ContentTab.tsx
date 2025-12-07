@@ -460,6 +460,32 @@ export const ContentTab = observer(() => {
         )
       }
 
+      case WidgetType.Video:
+        return (
+          <>
+            <div className="field">
+              <label className="field-label">YouTube Video URL</label>
+              <input
+                type="text"
+                className="text-input"
+                placeholder="https://www.youtube.com/watch?v=..."
+                value={getData('videoUrl')}
+                onChange={e => updateData('videoUrl', e.target.value)}
+              />
+            </div>
+            <div className="field">
+              <label className="field-label">Custom Thumbnail URL (optional)</label>
+              <input
+                type="text"
+                className="text-input"
+                placeholder="Leave empty to use YouTube thumbnail"
+                value={getData('thumbnailUrl')}
+                onChange={e => updateData('thumbnailUrl', e.target.value)}
+              />
+            </div>
+          </>
+        )
+
       case WidgetType.Section:
       case WidgetType.Column:
       case WidgetType.InnerSection:

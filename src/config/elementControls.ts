@@ -19,6 +19,7 @@ export enum WidgetType {
   Divider = 'Divider',
   List = 'List',
   SocialLinks = 'SocialLinks',
+  Video = 'Video',
 }
 
 // Control types enum - all available style controls
@@ -71,6 +72,7 @@ const BLOCK_ELEMENTS = [
   WidgetType.Spacer,
   WidgetType.Divider,
   WidgetType.SocialLinks,
+  WidgetType.Video,
 ]
 
 // Container-specific controls for block elements
@@ -137,6 +139,18 @@ export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
     ControlType.TextColor,
     ControlType.BackgroundColor,
     ControlType.BackgroundGradient,
+    ControlType.BoxShadow,
+    ...BLOCK_CONTAINER_CONTROLS,
+  ],
+
+  // Video (YouTube) - layout + visual controls
+  [WidgetType.Video]: [
+    ControlType.Margin,
+    ControlType.Padding,
+    ControlType.Dimensions,
+    ControlType.Alignment,
+    ControlType.BackgroundColor,
+    ControlType.Border,
     ControlType.BoxShadow,
     ...BLOCK_CONTAINER_CONTROLS,
   ],

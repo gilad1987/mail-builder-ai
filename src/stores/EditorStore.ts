@@ -372,6 +372,13 @@ class EditorStore {
             gap: 12,
           },
         },
+        Video: {
+          type: WidgetType.Video,
+          defaultData: {
+            videoUrl: 'https://www.youtube.com/watch?v=hsHO39PnC1s',
+            thumbnailUrl: '',
+          },
+        },
       }
 
       const mapping = typeMap[blockType] || {
