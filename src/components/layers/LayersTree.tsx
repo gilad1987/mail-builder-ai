@@ -115,7 +115,7 @@ export const LayersTree = observer(() => {
         selectedRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
       }, 50)
     }
-  }, [editorStore.selectedElementId])
+  }, [])
 
   const toggle = (id: string, e: React.MouseEvent) => {
     e.stopPropagation()

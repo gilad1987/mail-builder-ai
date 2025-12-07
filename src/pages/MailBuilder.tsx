@@ -8,6 +8,7 @@ import { Sidebar } from '../components/Sidebar'
 import { Canvas } from '../components/canvas'
 import { IconSidebar } from '../components/IconSidebar'
 import { GlobalStylesPanel } from '../components/GlobalStylesPanel'
+import { HistoryPanel } from '../components/HistoryPanel'
 import { LayersPanel } from '../components/LayersPanel'
 import { AssetsPanel } from '../components/AssetsPanel'
 import { AIAssistantPanel } from '../components/aiAssistant'
@@ -57,6 +58,9 @@ export const MailBuilder = observer(() => {
   const renderPanel = () => {
     if (activePanel === 'styles') {
       return <GlobalStylesPanel onClose={() => setActivePanel(null)} />
+    }
+    if (activePanel === 'history') {
+      return <HistoryPanel onClose={() => setActivePanel(null)} />
     }
     if (activePanel === 'assets') {
       return <AssetsPanel onClose={() => setActivePanel(null)} />

@@ -26,6 +26,22 @@ export { Box, Section, Column, Block, Template }
 export type TabType = 'Content' | 'Style' | 'Container'
 export type ThemeType = 'light' | 'dark'
 
+export interface HistoryEntry {
+  id: string
+  template: BoxJSON
+  globalStyles: GlobalStyles
+  timestamp: number
+  action: string
+}
+
+export interface Revision {
+  id: string
+  name: string
+  template: BoxJSON
+  globalStyles: GlobalStyles
+  timestamp: number
+}
+
 class EditorStore {
   template: Template
   globalStyles: GlobalStyles = JSON.parse(JSON.stringify(defaultGlobalStyles))
@@ -37,10 +53,14 @@ class EditorStore {
   templateVersion: number = 0 // Used to trigger re-renders when template is replaced
 
   // Undo/Redo history
-  private history: Array<{ template: BoxJSON; globalStyles: GlobalStyles }> = []
+  private history: HistoryEntry[] = []
   private historyIndex: number = -1
   private maxHistorySize: number = 50
   private isUndoRedoAction: boolean = false
+  private lastAction: string = 'Initial state'
+
+  // Revisions (saved snapshots)
+  revisions: Revision[] = []
 
   constructor() {
     this.template = new Template()
@@ -66,7 +86,7 @@ class EditorStore {
   }
 
   // Save current state to history
-  saveToHistory() {
+  saveToHistory(action?: string) {
     if (this.isUndoRedoAction) return
 
     // Remove any future states if we're not at the end
@@ -75,11 +95,14 @@ class EditorStore {
     }
 
     // Add current state
-    const snapshot = {
+    const entry: HistoryEntry = {
+      id: `history-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       template: this.template.toJSON(),
       globalStyles: JSON.parse(JSON.stringify(this.globalStyles)),
+      timestamp: Date.now(),
+      action: action || this.lastAction,
     }
-    this.history.push(snapshot)
+    this.history.push(entry)
 
     // Trim history if it exceeds max size
     if (this.history.length > this.maxHistorySize) {
@@ -87,6 +110,78 @@ class EditorStore {
       this.historyIndex = this.history.length - 1
     } else {
       this.historyIndex = this.history.length - 1
+    }
+
+    // Reset action for next save
+    this.lastAction = 'Edit'
+  }
+
+  // Set the action name for the next history entry
+  setNextAction(action: string) {
+    this.lastAction = action
+  }
+
+  // Get history entries for display
+  get historyEntries(): HistoryEntry[] {
+    return this.history.slice().reverse()
+  }
+
+  // Get current history index (for highlighting current state)
+  get currentHistoryIndex(): number {
+    return this.history.length - 1 - this.historyIndex
+  }
+
+  // Jump to a specific history entry
+  jumpToHistory(entryId: string) {
+    const index = this.history.findIndex(h => h.id === entryId)
+    if (index === -1) return
+
+    this.isUndoRedoAction = true
+    this.historyIndex = index
+    const snapshot = this.history[index]
+
+    this.template = new Template(snapshot.template)
+    this.globalStyles = JSON.parse(JSON.stringify(snapshot.globalStyles))
+    this.selectedElementId = null
+    this.hoveredElementId = null
+    this.templateVersion++
+
+    this.isUndoRedoAction = false
+  }
+
+  // Revision methods
+  saveRevision(name: string) {
+    const revision: Revision = {
+      id: `revision-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      name,
+      template: this.template.toJSON(),
+      globalStyles: JSON.parse(JSON.stringify(this.globalStyles)),
+      timestamp: Date.now(),
+    }
+    this.revisions.unshift(revision) // Add to beginning
+  }
+
+  loadRevision(revisionId: string) {
+    const revision = this.revisions.find(r => r.id === revisionId)
+    if (!revision) return
+
+    this.setNextAction(`Restored revision: ${revision.name}`)
+    this.template = new Template(revision.template)
+    this.globalStyles = JSON.parse(JSON.stringify(revision.globalStyles))
+    this.selectedElementId = null
+    this.hoveredElementId = null
+    this.templateVersion++
+    this.saveToHistory()
+  }
+
+  deleteRevision(revisionId: string) {
+    this.revisions = this.revisions.filter(r => r.id !== revisionId)
+  }
+
+  renameRevision(revisionId: string, newName: string) {
+    const revision = this.revisions.find(r => r.id === revisionId)
+    if (revision) {
+      revision.name = newName
     }
   }
 
@@ -172,10 +267,9 @@ class EditorStore {
     document.documentElement.setAttribute('data-theme', this.theme)
   }
 
-  // Global Styles
+  // Global Styles (style changes not saved to history to avoid clutter)
   updateGlobalColor(name: keyof GlobalColors, value: string) {
     this.globalStyles.colors[name] = value
-    this.saveToHistory()
   }
 
   updateTypography(
@@ -184,7 +278,6 @@ class EditorStore {
     value: string
   ) {
     this.globalStyles.typography[category][field] = value
-    this.saveToHistory()
   }
 
   private applyGlobalStylesToBlock(block: Block) {
@@ -220,7 +313,7 @@ class EditorStore {
 
   addSection(): Section {
     const section = this.template.addSection()
-    this.saveToHistory()
+    this.saveToHistory('Add section')
     return section
   }
 
@@ -228,7 +321,7 @@ class EditorStore {
     const section = this.template.findById(sectionId) as Section | null
     if (section && section instanceof Section) {
       const column = section.addColumn({ width } as ColumnJSON)
-      this.saveToHistory()
+      this.saveToHistory('Add column')
       return column
     }
     return null
@@ -248,7 +341,7 @@ class EditorStore {
         innerSection.addColumn({ width: 50 })
         innerSection.addColumn({ width: 50 })
         this.selectedElementId = innerSection.id
-        this.saveToHistory()
+        this.saveToHistory('Add inner section')
         return innerSection
       }
 
@@ -291,7 +384,7 @@ class EditorStore {
       })
       this.applyGlobalStylesToBlock(block)
       this.selectedElementId = block.id
-      this.saveToHistory()
+      this.saveToHistory(`Add ${blockType}`)
       return block
     }
     return null
@@ -304,7 +397,7 @@ class EditorStore {
       section.children = []
       // Add new columns
       columnWidths.forEach(width => section.addColumn({ width } as ColumnJSON))
-      this.saveToHistory()
+      this.saveToHistory('Change column layout')
     }
   }
 
@@ -315,11 +408,12 @@ class EditorStore {
   removeElement(id: string) {
     const element = this.template.findById(id)
     if (element) {
+      const elementType = element.type || 'element'
       element.remove()
       if (this.selectedElementId === id) {
         this.selectedElementId = null
       }
-      this.saveToHistory()
+      this.saveToHistory(`Delete ${elementType}`)
     }
   }
 
@@ -333,7 +427,7 @@ class EditorStore {
       // Add to new column
       targetColumn.addChild(block)
       this.selectedElementId = block.id
-      this.saveToHistory()
+      this.saveToHistory('Move element')
     }
   }
 
@@ -350,7 +444,7 @@ class EditorStore {
     // Add clone after the original
     parent.addChild(clone, index + 1)
     this.selectedElementId = clone.id
-    this.saveToHistory()
+    this.saveToHistory('Duplicate element')
   }
 
   // Style Operations
@@ -358,7 +452,7 @@ class EditorStore {
     const element = this.selectedElement
     if (element) {
       element.update(field, value)
-      this.saveToHistory()
+      this.saveToHistory(`Update ${field}`)
     }
   }
 
@@ -366,7 +460,7 @@ class EditorStore {
     const element = this.selectedElement
     if (element) {
       element.updateData(key, value)
-      this.saveToHistory()
+      this.saveToHistory('Update content')
     }
   }
 
@@ -451,7 +545,7 @@ class EditorStore {
       this.globalStyles = json.globalStyles
     }
     this.templateVersion++ // Trigger re-render
-    this.saveToHistory()
+    this.saveToHistory('Import template')
   }
 
   importFromJSONString(jsonString: string): boolean {
@@ -492,7 +586,7 @@ class EditorStore {
     this.hoveredElementId = null
     this.template = new Template()
     this.templateVersion++ // Trigger re-render
-    this.saveToHistory()
+    this.saveToHistory('Clear template')
   }
 
   // Computed
