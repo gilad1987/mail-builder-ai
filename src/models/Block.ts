@@ -409,4 +409,32 @@ export class Block extends Box {
     }
     return null
   }
+
+  private getMJMLBorderRadius(): string | null {
+    const style = this._style.desktop
+
+    // Check for individual corner radii first
+    const topLeft = style['borderTopLeftRadius-size'] as number | undefined
+    const topRight = style['borderTopRightRadius-size'] as number | undefined
+    const bottomLeft = style['borderBottomLeftRadius-size'] as number | undefined
+    const bottomRight = style['borderBottomRightRadius-size'] as number | undefined
+
+    if (
+      topLeft !== undefined ||
+      topRight !== undefined ||
+      bottomLeft !== undefined ||
+      bottomRight !== undefined
+    ) {
+      // Return individual corners in CSS order: top-left top-right bottom-right bottom-left
+      return `${topLeft || 0}px ${topRight || 0}px ${bottomRight || 0}px ${bottomLeft || 0}px`
+    }
+
+    // Fall back to unified border radius
+    const unified = style['borderRadius-size'] as number | undefined
+    if (unified !== undefined) {
+      return `${unified}px`
+    }
+
+    return null
+  }
 }
