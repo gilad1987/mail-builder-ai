@@ -1,136 +1,1 @@
-import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import { tokens } from '../../styles/tokens'
-import type { GlobalColors } from '../../models'
-
-interface ColorsSectionProps {
-  expanded: boolean
-  onToggle: () => void
-  colors: GlobalColors
-  onColorChange: (name: keyof GlobalColors, value: string) => void
-}
-
-const Container = styled.div`
-  border-bottom: 1px solid var(--border-color);
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
-    cursor: pointer;
-    &:hover {
-      background: var(--bg-elevated);
-    }
-  }
-
-  .section-title {
-    font-size: ${tokens.fontSize.sm};
-    font-weight: ${tokens.fontWeight.medium};
-    color: var(--text-primary);
-  }
-
-  .section-icon {
-    color: var(--text-secondary);
-  }
-
-  .section-content {
-    padding: 0 ${tokens.spacing[4]} ${tokens.spacing[3]};
-  }
-
-  .field {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: ${tokens.spacing[2]} 0;
-  }
-
-  .field-label {
-    font-size: ${tokens.fontSize.xs};
-    color: var(--text-secondary);
-    text-transform: capitalize;
-  }
-
-  .color-input {
-    display: flex;
-    align-items: center;
-    gap: ${tokens.spacing[2]};
-    background: var(--input-bg);
-    border: 1px solid var(--input-border);
-    border-radius: ${tokens.borderRadius.md};
-    padding: ${tokens.spacing[1]} ${tokens.spacing[2]};
-    min-width: 120px;
-    cursor: pointer;
-  }
-
-  .color-picker {
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background: transparent;
-
-    &::-webkit-color-swatch-wrapper {
-      padding: 0;
-    }
-
-    &::-webkit-color-swatch {
-      border: 1px solid var(--input-border);
-      border-radius: 4px;
-    }
-  }
-
-  .color-value {
-    font-size: ${tokens.fontSize.xs};
-    color: var(--input-text);
-  }
-`
-
-const colorLabels: Record<keyof GlobalColors, string> = {
-  primary: 'Primary',
-  secondary: 'Secondary',
-  accent: 'Accent',
-  success: 'Success',
-  warning: 'Warning',
-  error: 'Error',
-}
-
-export const ColorsSection = observer(
-  ({ expanded, onToggle, colors, onColorChange }: ColorsSectionProps) => {
-    const colorEntries = Object.entries(colors) as [keyof GlobalColors, string][]
-
-    return (
-      <Container>
-        <div className="section-header" onClick={onToggle}>
-          <span className="section-title">Colors</span>
-          {expanded ? (
-            <ChevronUp size={16} className="section-icon" />
-          ) : (
-            <ChevronDown size={16} className="section-icon" />
-          )}
-        </div>
-        {expanded && (
-          <div className="section-content">
-            {colorEntries.map(([name, color]) => (
-              <div key={name} className="field">
-                <span className="field-label">{colorLabels[name]}</span>
-                <div className="color-input">
-                  <input
-                    type="color"
-                    className="color-picker"
-                    value={color}
-                    onChange={e => onColorChange(name, e.target.value)}
-                  />
-                  <span className="color-value">{color}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </Container>
-    )
-  }
-)
+import { observer } from 'mobx-react-lite';import styled from 'styled-components';import { ChevronDown, ChevronUp } from 'lucide-react';import { tokens } from '../../styles/tokens';import type { GlobalColors } from '../../models';interface ColorsSectionProps {  expanded: boolean;  onToggle: () => void;  colors: GlobalColors;  onColorChange: (name: keyof GlobalColors, value: string) => void;}const Container = styled.div`  border-bottom: 1px solid var(--border-color);  .section-header {    display: flex;    align-items: center;    justify-content: space-between;    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};    cursor: pointer;    &:hover {      background: var(--bg-elevated);    }  }  .section-title {    font-size: ${tokens.fontSize.sm};    font-weight: ${tokens.fontWeight.medium};    color: var(--text-primary);  }  .section-icon {    color: var(--text-secondary);  }  .section-content {    padding: 0 ${tokens.spacing[4]} ${tokens.spacing[3]};  }  .field {    display: flex;    align-items: center;    justify-content: space-between;    padding: ${tokens.spacing[2]} 0;  }  .field-label {    font-size: ${tokens.fontSize.xs};    color: var(--text-secondary);    text-transform: capitalize;  }  .color-input {    display: flex;    align-items: center;    gap: ${tokens.spacing[2]};    background: var(--input-bg);    border: 1px solid var(--input-border);    border-radius: ${tokens.borderRadius.md};    padding: ${tokens.spacing[1]} ${tokens.spacing[2]};    min-width: 120px;    cursor: pointer;  }  .color-picker {    width: 20px;    height: 20px;    padding: 0;    border: none;    border-radius: 4px;    cursor: pointer;    background: transparent;    &::-webkit-color-swatch-wrapper {      padding: 0;    }    &::-webkit-color-swatch {      border: 1px solid var(--input-border);      border-radius: 4px;    }  }  .color-value {    font-size: ${tokens.fontSize.xs};    color: var(--input-text);  }`;const colorLabels: Record<keyof GlobalColors, string> = {  primary: 'Primary',  secondary: 'Secondary',  accent: 'Accent',  success: 'Success',  warning: 'Warning',  error: 'Error',};export const ColorsSection = observer(  ({ expanded, onToggle, colors, onColorChange }: ColorsSectionProps) => {    const colorEntries = Object.entries(colors) as [keyof GlobalColors, string][];    return (      <Container>        <div className="section-header" onClick={onToggle}>          <span className="section-title">Colors</span>          {expanded ? (            <ChevronUp size={16} className="section-icon" />          ) : (            <ChevronDown size={16} className="section-icon" />          )}        </div>        {expanded && (          <div className="section-content">            {colorEntries.map(([name, color]) => (              <div key={name} className="field">                <span className="field-label">{colorLabels[name]}</span>                <div className="color-input">                  <input                    type="color"                    className="color-picker"                    value={color}                    onChange={e => onColorChange(name, e.target.value)}                  />                  <span className="color-value">{color}</span>                </div>              </div>            ))}          </div>        )}      </Container>    );  });

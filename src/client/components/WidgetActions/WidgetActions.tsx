@@ -1,98 +1,1 @@
-import styled from 'styled-components'
-import { Copy, Edit, Trash2 } from 'lucide-react'
-import { tokens } from '../../styles/tokens'
-
-interface WidgetActionsProps {
-  onEdit: () => void
-  onCopy: () => void
-  onDelete: () => void
-}
-
-const Container = styled.div`
-  position: absolute;
-  right: 0;
-  top: -28px;
-  font-size: 12px;
-  color: #fdfdfd;
-  background: ${tokens.colors.blue[500]};
-  padding: 2px;
-  z-index: 100;
-  transition: padding-left 250ms cubic-bezier(0, 0, 0, 1.08);
-  overflow: hidden;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-
-  button {
-    cursor: pointer;
-    border: none;
-    background: ${tokens.colors.blue[500]};
-    color: white;
-    padding: 4px 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    &:hover {
-      background: ${tokens.colors.blue[600]};
-    }
-
-    &:nth-child(1) {
-      border-right-width: 0;
-      z-index: 3;
-    }
-    &:nth-child(2) {
-      z-index: 2;
-    }
-    &:nth-child(3) {
-      z-index: 1;
-    }
-
-    &:nth-child(2),
-    &:nth-child(3) {
-      transition: all 250ms cubic-bezier(0, 0, 0, 1.08);
-      position: absolute;
-      right: 0px;
-      opacity: 0;
-      pointer-events: none;
-    }
-  }
-
-  &:hover {
-    padding-left: 56px;
-
-    button {
-      pointer-events: initial;
-      opacity: 1;
-
-      &:nth-child(2) {
-        right: 28px;
-      }
-      &:nth-child(3) {
-        right: 56px;
-      }
-    }
-  }
-`
-
-export const WidgetActions = ({ onEdit, onCopy, onDelete }: WidgetActionsProps) => {
-  const handleClick = (e: React.MouseEvent, action: () => void) => {
-    e.stopPropagation()
-    action()
-  }
-
-  return (
-    <Container className="widget-actions">
-      <button onClick={e => handleClick(e, onEdit)} title="Edit Block">
-        <Edit size={12} />
-      </button>
-      <button onClick={e => handleClick(e, onCopy)} title="Duplicate Block">
-        <Copy size={12} />
-      </button>
-      <button onClick={e => handleClick(e, onDelete)} title="Delete Block">
-        <Trash2 size={12} />
-      </button>
-    </Container>
-  )
-}
+import styled from 'styled-components';import { Copy, Edit, Trash2 } from 'lucide-react';import { tokens } from '../../styles/tokens';interface WidgetActionsProps {  onEdit: () => void;  onCopy: () => void;  onDelete: () => void;}const Container = styled.div`  position: absolute;  right: 0;  top: -28px;  font-size: 12px;  color: #fdfdfd;  background: ${tokens.colors.blue[500]};  padding: 2px;  z-index: 100;  transition: padding-left 250ms cubic-bezier(0, 0, 0, 1.08);  overflow: hidden;  border-radius: 4px;  display: flex;  align-items: center;  button {    cursor: pointer;    border: none;    background: ${tokens.colors.blue[500]};    color: white;    padding: 4px 6px;    display: flex;    align-items: center;    justify-content: center;    position: relative;    &:hover {      background: ${tokens.colors.blue[600]};    }    &:nth-child(1) {      border-right-width: 0;      z-index: 3;    }    &:nth-child(2) {      z-index: 2;    }    &:nth-child(3) {      z-index: 1;    }    &:nth-child(2),    &:nth-child(3) {      transition: all 250ms cubic-bezier(0, 0, 0, 1.08);      position: absolute;      right: 0px;      opacity: 0;      pointer-events: none;    }  }  &:hover {    padding-left: 56px;    button {      pointer-events: initial;      opacity: 1;      &:nth-child(2) {        right: 28px;      }      &:nth-child(3) {        right: 56px;      }    }  }`;export const WidgetActions = ({ onEdit, onCopy, onDelete }: WidgetActionsProps) => {  const handleClick = (e: React.MouseEvent, action: () => void) => {    e.stopPropagation();    action();  };  return (    <Container className="widget-actions">      <button onClick={e => handleClick(e, onEdit)} title="Edit Block">        <Edit size={12} />      </button>      <button onClick={e => handleClick(e, onCopy)} title="Duplicate Block">        <Copy size={12} />      </button>      <button onClick={e => handleClick(e, onDelete)} title="Delete Block">        <Trash2 size={12} />      </button>    </Container>  );};

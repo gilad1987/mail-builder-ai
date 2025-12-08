@@ -1,18 +1,1 @@
-import { createContext, useContext } from 'react'
-import type { DragData } from './types'
-
-export interface DndState {
-  activeId: string | null
-  activeType: 'sidebar' | 'canvas' | null
-  activeData: DragData | null
-  overId: string | null
-}
-
-export const DndStateContext = createContext<DndState>({
-  activeId: null,
-  activeType: null,
-  activeData: null,
-  overId: null,
-})
-
-export const useDndState = () => useContext(DndStateContext)
+import { createContext, useContext } from 'react';import type { DragData } from './types';export interface DndState {  activeId: string | null;  activeType: 'sidebar' | 'canvas' | null;  activeData: DragData | null;  overId: string | null;}export const DndStateContext = createContext<DndState>({  activeId: null,  activeType: null,  activeData: null,  overId: null,});export const useDndState = () => useContext(DndStateContext);

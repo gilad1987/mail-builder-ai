@@ -1,913 +1,1 @@
-{
-  "name": "Black Friday Flash Sale",
-  "description": "Bold dark-themed flash sale email with countdown urgency and striking typography",
-  "thumbnail": "black-friday-sale.png",
-  "_style": {
-    "desktop": {
-      "margin": "0 auto",
-      "backgroundColor": "#0a0a0a"
-    },
-    "tablet": {},
-    "mobile": {}
-  },
-  "children": [
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 650,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-          "alignItems": "center",
-          "paddingTop-size": 24,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 24,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#0a0a0a"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "width": 50,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "row",
-              "justifyContent": "flex-start",
-              "alignItems": "center"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "NEXUS"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 22,
-                  "fontSize-unit": "px",
-                  "fontWeight": "800",
-                  "color": "#ffffff",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif",
-                  "letterSpacing-size": -1,
-                  "letterSpacing-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 50,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "row",
-              "justifyContent": "flex-end",
-              "alignItems": "center"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "🔥 LIVE NOW"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#ef4444",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif",
-                  "letterSpacing-size": 1,
-                  "letterSpacing-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 650,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "center",
-          "paddingTop-size": 80,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 60,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#0a0a0a"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "_style": {
-            "desktop": {
-              "flex": 1,
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 24,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "BLACK FRIDAY"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 14,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#fbbf24",
-                  "textAlign": "center",
-                  "letterSpacing-size": 6,
-                  "letterSpacing-unit": "px",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "70% OFF"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 96,
-                  "fontSize-unit": "px",
-                  "fontWeight": "900",
-                  "color": "#ffffff",
-                  "textAlign": "center",
-                  "lineHeight-size": 88,
-                  "lineHeight-unit": "px",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif",
-                  "letterSpacing-size": -4,
-                  "letterSpacing-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "EVERYTHING"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 48,
-                  "fontSize-unit": "px",
-                  "fontWeight": "300",
-                  "color": "#a1a1aa",
-                  "textAlign": "center",
-                  "lineHeight-size": 52,
-                  "lineHeight-unit": "px",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif",
-                  "letterSpacing-size": 8,
-                  "letterSpacing-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "The biggest sale of the year is here. Don't miss out on incredible savings across our entire collection."
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 16,
-                  "fontSize-unit": "px",
-                  "fontWeight": "400",
-                  "color": "#71717a",
-                  "textAlign": "center",
-                  "lineHeight-size": 26,
-                  "lineHeight-unit": "px",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif",
-                  "maxWidth-size": 400,
-                  "maxWidth-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 650,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "center",
-          "paddingTop-size": 0,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 48,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "columnGap-size": 12,
-          "columnGap-unit": "px",
-          "backgroundColor": "#0a0a0a"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "width": 25,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "backgroundColor": "#18181b",
-              "borderRadius-size": 12,
-              "borderRadius-unit": "px",
-              "paddingTop-size": 20,
-              "paddingTop-unit": "px",
-              "paddingBottom-size": 20,
-              "paddingBottom-unit": "px",
-              "paddingLeft-size": 16,
-              "paddingLeft-unit": "px",
-              "paddingRight-size": 16,
-              "paddingRight-unit": "px",
-              "rowGap-size": 4,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "02"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 36,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#ffffff",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "DAYS"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 10,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#71717a",
-                  "textAlign": "center",
-                  "letterSpacing-size": 1,
-                  "letterSpacing-unit": "px",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 25,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "backgroundColor": "#18181b",
-              "borderRadius-size": 12,
-              "borderRadius-unit": "px",
-              "paddingTop-size": 20,
-              "paddingTop-unit": "px",
-              "paddingBottom-size": 20,
-              "paddingBottom-unit": "px",
-              "paddingLeft-size": 16,
-              "paddingLeft-unit": "px",
-              "paddingRight-size": 16,
-              "paddingRight-unit": "px",
-              "rowGap-size": 4,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "18"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 36,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#ffffff",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "HOURS"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 10,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#71717a",
-                  "textAlign": "center",
-                  "letterSpacing-size": 1,
-                  "letterSpacing-unit": "px",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 25,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "backgroundColor": "#18181b",
-              "borderRadius-size": 12,
-              "borderRadius-unit": "px",
-              "paddingTop-size": 20,
-              "paddingTop-unit": "px",
-              "paddingBottom-size": 20,
-              "paddingBottom-unit": "px",
-              "paddingLeft-size": 16,
-              "paddingLeft-unit": "px",
-              "paddingRight-size": 16,
-              "paddingRight-unit": "px",
-              "rowGap-size": 4,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "45"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 36,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#ffffff",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "MINS"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 10,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#71717a",
-                  "textAlign": "center",
-                  "letterSpacing-size": 1,
-                  "letterSpacing-unit": "px",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 25,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "backgroundColor": "#ef4444",
-              "borderRadius-size": 12,
-              "borderRadius-unit": "px",
-              "paddingTop-size": 20,
-              "paddingTop-unit": "px",
-              "paddingBottom-size": 20,
-              "paddingBottom-unit": "px",
-              "paddingLeft-size": 16,
-              "paddingLeft-unit": "px",
-              "paddingRight-size": 16,
-              "paddingRight-unit": "px",
-              "rowGap-size": 4,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "32"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 36,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#ffffff",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "SECS"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 10,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#fecaca",
-                  "textAlign": "center",
-                  "letterSpacing-size": 1,
-                  "letterSpacing-unit": "px",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 650,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "center",
-          "paddingTop-size": 0,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 56,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#0a0a0a"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "_style": {
-            "desktop": {
-              "flex": 1,
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Button",
-              "data": {
-                "text": "SHOP NOW →",
-                "href": "#"
-              },
-              "_style": {
-                "desktop": {
-                  "backgroundColor": "#fbbf24",
-                  "color": "#0a0a0a",
-                  "fontSize-size": 14,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "paddingTop-size": 18,
-                  "paddingTop-unit": "px",
-                  "paddingBottom-size": 18,
-                  "paddingBottom-unit": "px",
-                  "paddingLeft-size": 48,
-                  "paddingLeft-unit": "px",
-                  "paddingRight-size": 48,
-                  "paddingRight-unit": "px",
-                  "borderRadius-size": 8,
-                  "borderRadius-unit": "px",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif",
-                  "letterSpacing-size": 2,
-                  "letterSpacing-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 650,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "stretch",
-          "paddingTop-size": 32,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 32,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "columnGap-size": 16,
-          "columnGap-unit": "px",
-          "backgroundColor": "#18181b"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "width": 33,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 8,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "🚚"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 28,
-                  "fontSize-unit": "px",
-                  "textAlign": "center"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Free Express Shipping"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#a1a1aa",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 33,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 8,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "🔄"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 28,
-                  "fontSize-unit": "px",
-                  "textAlign": "center"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "30-Day Returns"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#a1a1aa",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 33,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 8,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "🔒"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 28,
-                  "fontSize-unit": "px",
-                  "textAlign": "center"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Secure Checkout"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#a1a1aa",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 650,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "center",
-          "paddingTop-size": 32,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 32,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#0a0a0a"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "_style": {
-            "desktop": {
-              "flex": 1,
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 16,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "NEXUS"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 16,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#52525b",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Unsubscribe • View in browser • Privacy"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 11,
-                  "fontSize-unit": "px",
-                  "fontWeight": "400",
-                  "color": "#52525b",
-                  "textAlign": "center",
-                  "fontFamily": "Space Grotesk, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+{  "name": "Black Friday Flash Sale",  "description": "Bold dark-themed flash sale email with countdown urgency and striking typography",  "thumbnail": "black-friday-sale.png",  "_style": {    "desktop": {      "margin": "0 auto",      "backgroundColor": "#0a0a0a"    },    "tablet": {},    "mobile": {}  },  "children": [    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 650,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "space-between",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#0a0a0a"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-start",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "NEXUS"              },              "_style": {                "desktop": {                  "fontSize-size": 22,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#ffffff",                  "fontFamily": "Space Grotesk, system-ui, sans-serif",                  "letterSpacing-size": -1,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-end",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🔥 LIVE NOW"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ef4444",                  "fontFamily": "Space Grotesk, system-ui, sans-serif",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 650,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 80,          "paddingTop-unit": "px",          "paddingBottom-size": 60,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#0a0a0a"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 24,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "BLACK FRIDAY"              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#fbbf24",                  "textAlign": "center",                  "letterSpacing-size": 6,                  "letterSpacing-unit": "px",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "70% OFF"              },              "_style": {                "desktop": {                  "fontSize-size": 96,                  "fontSize-unit": "px",                  "fontWeight": "900",                  "color": "#ffffff",                  "textAlign": "center",                  "lineHeight-size": 88,                  "lineHeight-unit": "px",                  "fontFamily": "Space Grotesk, system-ui, sans-serif",                  "letterSpacing-size": -4,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "EVERYTHING"              },              "_style": {                "desktop": {                  "fontSize-size": 48,                  "fontSize-unit": "px",                  "fontWeight": "300",                  "color": "#a1a1aa",                  "textAlign": "center",                  "lineHeight-size": 52,                  "lineHeight-unit": "px",                  "fontFamily": "Space Grotesk, system-ui, sans-serif",                  "letterSpacing-size": 8,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "The biggest sale of the year is here. Don't miss out on incredible savings across our entire collection."              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#71717a",                  "textAlign": "center",                  "lineHeight-size": 26,                  "lineHeight-unit": "px",                  "fontFamily": "Space Grotesk, system-ui, sans-serif",                  "maxWidth-size": 400,                  "maxWidth-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 650,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 0,          "paddingTop-unit": "px",          "paddingBottom-size": 48,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 12,          "columnGap-unit": "px",          "backgroundColor": "#0a0a0a"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "backgroundColor": "#18181b",              "borderRadius-size": 12,              "borderRadius-unit": "px",              "paddingTop-size": 20,              "paddingTop-unit": "px",              "paddingBottom-size": 20,              "paddingBottom-unit": "px",              "paddingLeft-size": 16,              "paddingLeft-unit": "px",              "paddingRight-size": 16,              "paddingRight-unit": "px",              "rowGap-size": 4,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "02"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ffffff",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "DAYS"              },              "_style": {                "desktop": {                  "fontSize-size": 10,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#71717a",                  "textAlign": "center",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "backgroundColor": "#18181b",              "borderRadius-size": 12,              "borderRadius-unit": "px",              "paddingTop-size": 20,              "paddingTop-unit": "px",              "paddingBottom-size": 20,              "paddingBottom-unit": "px",              "paddingLeft-size": 16,              "paddingLeft-unit": "px",              "paddingRight-size": 16,              "paddingRight-unit": "px",              "rowGap-size": 4,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "18"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ffffff",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "HOURS"              },              "_style": {                "desktop": {                  "fontSize-size": 10,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#71717a",                  "textAlign": "center",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "backgroundColor": "#18181b",              "borderRadius-size": 12,              "borderRadius-unit": "px",              "paddingTop-size": 20,              "paddingTop-unit": "px",              "paddingBottom-size": 20,              "paddingBottom-unit": "px",              "paddingLeft-size": 16,              "paddingLeft-unit": "px",              "paddingRight-size": 16,              "paddingRight-unit": "px",              "rowGap-size": 4,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "45"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ffffff",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "MINS"              },              "_style": {                "desktop": {                  "fontSize-size": 10,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#71717a",                  "textAlign": "center",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "backgroundColor": "#ef4444",              "borderRadius-size": 12,              "borderRadius-unit": "px",              "paddingTop-size": 20,              "paddingTop-unit": "px",              "paddingBottom-size": 20,              "paddingBottom-unit": "px",              "paddingLeft-size": 16,              "paddingLeft-unit": "px",              "paddingRight-size": 16,              "paddingRight-unit": "px",              "rowGap-size": 4,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "32"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ffffff",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "SECS"              },              "_style": {                "desktop": {                  "fontSize-size": 10,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#fecaca",                  "textAlign": "center",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 650,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 0,          "paddingTop-unit": "px",          "paddingBottom-size": 56,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#0a0a0a"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Button",              "data": {                "text": "SHOP NOW →",                "href": "#"              },              "_style": {                "desktop": {                  "backgroundColor": "#fbbf24",                  "color": "#0a0a0a",                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "paddingTop-size": 18,                  "paddingTop-unit": "px",                  "paddingBottom-size": 18,                  "paddingBottom-unit": "px",                  "paddingLeft-size": 48,                  "paddingLeft-unit": "px",                  "paddingRight-size": 48,                  "paddingRight-unit": "px",                  "borderRadius-size": 8,                  "borderRadius-unit": "px",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif",                  "letterSpacing-size": 2,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 650,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "stretch",          "paddingTop-size": 32,          "paddingTop-unit": "px",          "paddingBottom-size": 32,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 16,          "columnGap-unit": "px",          "backgroundColor": "#18181b"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🚚"              },              "_style": {                "desktop": {                  "fontSize-size": 28,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Free Express Shipping"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#a1a1aa",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🔄"              },              "_style": {                "desktop": {                  "fontSize-size": 28,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "30-Day Returns"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#a1a1aa",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🔒"              },              "_style": {                "desktop": {                  "fontSize-size": 28,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Secure Checkout"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#a1a1aa",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 650,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 32,          "paddingTop-unit": "px",          "paddingBottom-size": 32,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#0a0a0a"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 16,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "NEXUS"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#52525b",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Unsubscribe • View in browser • Privacy"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#52525b",                  "textAlign": "center",                  "fontFamily": "Space Grotesk, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    }  ]}

@@ -1,78 +1,1 @@
-import styled from 'styled-components'
-import { Sparkles } from 'lucide-react'
-import { tokens } from '../../styles/tokens'
-import { StructureSelector } from './StructureSelector'
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
-  height: 100%;
-  padding: ${tokens.spacing[6]};
-  text-align: center;
-
-  .empty-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: ${tokens.spacing[5]};
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
-    animation: float 3s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .empty-title {
-    font-size: 1.5rem;
-    font-weight: ${tokens.fontWeight.semibold};
-    color: ${tokens.colors.gray[800]};
-    margin-bottom: ${tokens.spacing[2]};
-  }
-
-  .empty-subtitle {
-    font-size: ${tokens.fontSize.base};
-    color: ${tokens.colors.gray[500]};
-    margin-bottom: ${tokens.spacing[6]};
-    max-width: 400px;
-    line-height: 1.6;
-  }
-
-  .selector-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-`
-
-export const EmptyCanvas = () => {
-  return (
-    <Container>
-      <div className="empty-icon">
-        <Sparkles size={36} color="white" />
-      </div>
-
-      <h2 className="empty-title">Start Building Your Email</h2>
-      <p className="empty-subtitle">
-        Choose a layout type and structure to begin creating your email template.
-      </p>
-
-      <div className="selector-wrapper">
-        <StructureSelector />
-      </div>
-    </Container>
-  )
-}
+import styled from 'styled-components';import { Sparkles } from 'lucide-react';import { tokens } from '../../styles/tokens';import { StructureSelector } from './StructureSelector';const Container = styled.div`  display: flex;  flex-direction: column;  align-items: center;  justify-content: center;  min-height: 100%;  height: 100%;  padding: ${tokens.spacing[6]};  text-align: center;  .empty-icon {    width: 80px;    height: 80px;    border-radius: 50%;    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);    display: flex;    align-items: center;    justify-content: center;    margin-bottom: ${tokens.spacing[5]};    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);    animation: float 3s ease-in-out infinite;  }  @keyframes float {    0%,    100% {      transform: translateY(0);    }    50% {      transform: translateY(-10px);    }  }  .empty-title {    font-size: 1.5rem;    font-weight: ${tokens.fontWeight.semibold};    color: ${tokens.colors.gray[800]};    margin-bottom: ${tokens.spacing[2]};  }  .empty-subtitle {    font-size: ${tokens.fontSize.base};    color: ${tokens.colors.gray[500]};    margin-bottom: ${tokens.spacing[6]};    max-width: 400px;    line-height: 1.6;  }  .selector-wrapper {    width: 100%;    display: flex;    justify-content: center;  }`;export const EmptyCanvas = () => {  return (    <Container>      <div className="empty-icon">        <Sparkles size={36} color="white" />      </div>      <h2 className="empty-title">Start Building Your Email</h2>      <p className="empty-subtitle">        Choose a layout type and structure to begin creating your email template.      </p>      <div className="selector-wrapper">        <StructureSelector />      </div>    </Container>  );};

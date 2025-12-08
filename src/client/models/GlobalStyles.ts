@@ -1,70 +1,1 @@
-export interface GlobalColors {
-  primary: string
-  secondary: string
-  accent: string
-  success: string
-  warning: string
-  error: string
-}
-
-export interface TypographyStyle {
-  color: string
-  fontSize: string
-  lineHeight: string
-  fontFamily: string
-}
-
-export interface GlobalStyles {
-  colors: GlobalColors
-  typography: {
-    body: TypographyStyle
-    heading: TypographyStyle
-    subheading: TypographyStyle
-    buttons: TypographyStyle
-    links: TypographyStyle
-  }
-}
-
-// Default values matching tokens.ts and BlockElement.tsx rendering defaults
-export const defaultGlobalStyles: GlobalStyles = {
-  colors: {
-    primary: '#3b82f6', // tokens.colors.blue[500] - used for buttons
-    secondary: '#6366f1', // tokens.colors.indigo[500]
-    accent: '#f97316', // tokens.colors.orange[500]
-    success: '#10b981', // tokens.colors.green[500]
-    warning: '#f59e0b', // tokens.colors.yellow[500]
-    error: '#ef4444', // tokens.colors.red[500]
-  },
-  typography: {
-    body: {
-      color: '#1f2937', // tokens.colors.gray[800]
-      fontSize: '14px',
-      lineHeight: '24px',
-      fontFamily: 'default',
-    },
-    heading: {
-      color: '#1f2937', // tokens.colors.gray[800]
-      fontSize: '24px',
-      lineHeight: '32px',
-      fontFamily: 'default',
-    },
-    subheading: {
-      color: '#1f2937', // tokens.colors.gray[800]
-      fontSize: '18px',
-      lineHeight: '28px',
-      fontFamily: 'default',
-    },
-    buttons: {
-      color: '#ffffff', // white text on blue background
-      fontSize: '14px',
-      lineHeight: '20px',
-      fontFamily: 'default',
-    },
-    links: {
-      color: '#3b82f6', // tokens.colors.blue[500]
-      fontSize: '14px',
-      lineHeight: '24px',
-      fontFamily: 'default',
-    },
-  },
-}
+export interface GlobalColors {  primary: string;  secondary: string;  accent: string;  success: string;  warning: string;  error: string;}export interface TypographyStyle {  color: string;  fontSize: string;  lineHeight: string;  fontFamily: string;}export interface GlobalStyles {  colors: GlobalColors;  typography: {    body: TypographyStyle;    heading: TypographyStyle;    subheading: TypographyStyle;    buttons: TypographyStyle;    links: TypographyStyle;  };}// Default values matching tokens.ts and BlockElement.tsx rendering defaultsexport const defaultGlobalStyles: GlobalStyles = {  colors: {    primary: '#3b82f6', // tokens.colors.blue[500] - used for buttons    secondary: '#6366f1', // tokens.colors.indigo[500]    accent: '#f97316', // tokens.colors.orange[500]    success: '#10b981', // tokens.colors.green[500]    warning: '#f59e0b', // tokens.colors.yellow[500]    error: '#ef4444', // tokens.colors.red[500]  },  typography: {    body: {      color: '#1f2937', // tokens.colors.gray[800]      fontSize: '14px',      lineHeight: '24px',      fontFamily: 'default',    },    heading: {      color: '#1f2937', // tokens.colors.gray[800]      fontSize: '24px',      lineHeight: '32px',      fontFamily: 'default',    },    subheading: {      color: '#1f2937', // tokens.colors.gray[800]      fontSize: '18px',      lineHeight: '28px',      fontFamily: 'default',    },    buttons: {      color: '#ffffff', // white text on blue background      fontSize: '14px',      lineHeight: '20px',      fontFamily: 'default',    },    links: {      color: '#3b82f6', // tokens.colors.blue[500]      fontSize: '14px',      lineHeight: '24px',      fontFamily: 'default',    },  },};

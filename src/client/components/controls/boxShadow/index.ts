@@ -1,1 +1,1 @@
-export { BoxShadowController } from './BoxShadowController'
+export { BoxShadowController } from './BoxShadowController';

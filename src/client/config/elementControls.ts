@@ -1,204 +1,1 @@
-/**
- * Element Controls Configuration
- *
- * Defines which style controls are available for each element type.
- * This ensures only relevant controls are shown in the StyleTab.
- */
-
-// Widget types enum - all available element types
-export enum WidgetType {
-  Template = 'Template',
-  Section = 'Section',
-  InnerSection = 'InnerSection',
-  Column = 'Column',
-  Image = 'Image',
-  Paragraph = 'Paragraph',
-  Headline = 'Headline',
-  Button = 'Button',
-  Spacer = 'Spacer',
-  Divider = 'Divider',
-  List = 'List',
-  SocialLinks = 'SocialLinks',
-  Video = 'Video',
-}
-
-// Control types enum - all available style controls
-export enum ControlType {
-  Margin = 'margin',
-  Padding = 'padding',
-  Dimensions = 'dimensions',
-  Alignment = 'alignment',
-  LetterSpacing = 'letterSpacing',
-  FontSize = 'fontSize',
-  FontWeight = 'fontWeight',
-  LineHeight = 'lineHeight',
-  TextDecoration = 'textDecoration',
-  TextTransform = 'textTransform',
-  FontFamily = 'fontFamily',
-  TextColor = 'textColor',
-  BackgroundColor = 'backgroundColor',
-  BackgroundGradient = 'backgroundGradient',
-  Border = 'border',
-  BoxShadow = 'boxShadow',
-  // Container-specific controls (for block elements)
-  ContainerBackgroundColor = 'containerBackgroundColor',
-  ContainerPadding = 'containerPadding',
-  ContainerMargin = 'containerMargin',
-}
-
-// All controls array for convenience
-const ALL_CONTROLS = Object.values(ControlType)
-
-// Layout controls (common to most elements)
-const LAYOUT_CONTROLS = [ControlType.Margin, ControlType.Padding, ControlType.Dimensions]
-
-// Container controls (for Section, Column, InnerSection)
-const CONTAINER_CONTROLS = [
-  ...LAYOUT_CONTROLS,
-  ControlType.Alignment,
-  ControlType.BackgroundColor,
-  ControlType.BackgroundGradient,
-  ControlType.Border,
-  ControlType.BoxShadow,
-]
-
-// Block elements that have a container wrapper (shown in Container tab)
-const BLOCK_ELEMENTS = [
-  WidgetType.Paragraph,
-  WidgetType.Headline,
-  WidgetType.List,
-  WidgetType.Button,
-  WidgetType.Image,
-  WidgetType.Spacer,
-  WidgetType.Divider,
-  WidgetType.SocialLinks,
-  WidgetType.Video,
-]
-
-// Container-specific controls for block elements
-const BLOCK_CONTAINER_CONTROLS = [
-  ControlType.ContainerBackgroundColor,
-  ControlType.ContainerPadding,
-  ControlType.ContainerMargin,
-]
-
-/**
- * Mapping of each element type to its supported controls
- */
-export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
-  // Text elements - all controls + container controls
-  [WidgetType.Paragraph]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],
-  [WidgetType.Headline]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],
-  [WidgetType.List]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],
-
-  // Button - all except LineHeight + container controls
-  [WidgetType.Button]: [
-    ...ALL_CONTROLS.filter(c => c !== ControlType.LineHeight),
-    ...BLOCK_CONTAINER_CONTROLS,
-  ],
-
-  // Image - layout + visual, no text controls + container controls
-  [WidgetType.Image]: [
-    ControlType.Margin,
-    ControlType.Padding,
-    ControlType.Dimensions,
-    ControlType.BackgroundColor,
-    ControlType.BackgroundGradient,
-    ControlType.Border,
-    ControlType.BoxShadow,
-    ...BLOCK_CONTAINER_CONTROLS,
-  ],
-
-  // Spacer - minimal controls (just margin and height) + container controls
-  [WidgetType.Spacer]: [ControlType.Margin, ControlType.Dimensions, ...BLOCK_CONTAINER_CONTROLS],
-
-  // Divider - layout + visual, no text + container controls
-  [WidgetType.Divider]: [
-    ControlType.Margin,
-    ControlType.Dimensions,
-    ControlType.BackgroundColor,
-    ControlType.BackgroundGradient,
-    ControlType.Border,
-    ControlType.BoxShadow,
-    ...BLOCK_CONTAINER_CONTROLS,
-  ],
-
-  // Container elements
-  [WidgetType.Section]: CONTAINER_CONTROLS,
-  [WidgetType.Column]: CONTAINER_CONTROLS,
-  [WidgetType.InnerSection]: CONTAINER_CONTROLS,
-
-  // Template - no direct style controls
-  [WidgetType.Template]: [],
-
-  // SocialLinks - layout + alignment + color controls
-  [WidgetType.SocialLinks]: [
-    ControlType.Margin,
-    ControlType.Padding,
-    ControlType.Alignment,
-    ControlType.TextColor,
-    ControlType.BackgroundColor,
-    ControlType.BackgroundGradient,
-    ControlType.BoxShadow,
-    ...BLOCK_CONTAINER_CONTROLS,
-  ],
-
-  // Video (YouTube) - layout + visual controls
-  [WidgetType.Video]: [
-    ControlType.Margin,
-    ControlType.Padding,
-    ControlType.Dimensions,
-    ControlType.Alignment,
-    ControlType.BackgroundColor,
-    ControlType.BackgroundGradient,
-    ControlType.Border,
-    ControlType.BoxShadow,
-    ...BLOCK_CONTAINER_CONTROLS,
-  ],
-}
-
-/**
- * Check if element type is a block element (has container wrapper)
- */
-export function isBlockElement(elementType: WidgetType | string | undefined): boolean {
-  if (!elementType) return false
-  return BLOCK_ELEMENTS.includes(elementType as WidgetType)
-}
-
-/**
- * Check if an element type supports a specific control
- */
-export function hasControl(
-  elementType: WidgetType | string | undefined,
-  control: ControlType
-): boolean {
-  if (!elementType) return false
-  const type = elementType as WidgetType
-  return ELEMENT_CONTROLS[type]?.includes(control) ?? false
-}
-
-/**
- * Get all controls for an element type
- */
-export function getControlsForElement(elementType: WidgetType | string | undefined): ControlType[] {
-  if (!elementType) return []
-  const type = elementType as WidgetType
-  return ELEMENT_CONTROLS[type] ?? []
-}
-
-/**
- * Check if element type is a text element (has text-related controls)
- */
-export function isTextElement(elementType: WidgetType | string | undefined): boolean {
-  return hasControl(elementType, ControlType.TextColor)
-}
-
-/**
- * Check if element type is a container element
- */
-export function isContainerElement(elementType: WidgetType | string | undefined): boolean {
-  if (!elementType) return false
-  return [WidgetType.Section, WidgetType.Column, WidgetType.InnerSection].includes(
-    elementType as WidgetType
-  )
-}
+/** * Element Controls Configuration * * Defines which style controls are available for each element type. * This ensures only relevant controls are shown in the StyleTab. */// Widget types enum - all available element typesexport enum WidgetType {  Template = 'Template',  Section = 'Section',  InnerSection = 'InnerSection',  Column = 'Column',  Image = 'Image',  Paragraph = 'Paragraph',  Headline = 'Headline',  Button = 'Button',  Spacer = 'Spacer',  Divider = 'Divider',  List = 'List',  SocialLinks = 'SocialLinks',  Video = 'Video',}// Control types enum - all available style controlsexport enum ControlType {  Margin = 'margin',  Padding = 'padding',  Dimensions = 'dimensions',  Alignment = 'alignment',  LetterSpacing = 'letterSpacing',  FontSize = 'fontSize',  FontWeight = 'fontWeight',  LineHeight = 'lineHeight',  TextDecoration = 'textDecoration',  TextTransform = 'textTransform',  FontFamily = 'fontFamily',  TextColor = 'textColor',  BackgroundColor = 'backgroundColor',  BackgroundGradient = 'backgroundGradient',  Border = 'border',  BoxShadow = 'boxShadow',  // Container-specific controls (for block elements)  ContainerBackgroundColor = 'containerBackgroundColor',  ContainerPadding = 'containerPadding',  ContainerMargin = 'containerMargin',}// All controls array for convenienceconst ALL_CONTROLS = Object.values(ControlType);// Layout controls (common to most elements)const LAYOUT_CONTROLS = [ControlType.Margin, ControlType.Padding, ControlType.Dimensions];// Container controls (for Section, Column, InnerSection)const CONTAINER_CONTROLS = [  ...LAYOUT_CONTROLS,  ControlType.Alignment,  ControlType.BackgroundColor,  ControlType.BackgroundGradient,  ControlType.Border,  ControlType.BoxShadow,];// Block elements that have a container wrapper (shown in Container tab)const BLOCK_ELEMENTS = [  WidgetType.Paragraph,  WidgetType.Headline,  WidgetType.List,  WidgetType.Button,  WidgetType.Image,  WidgetType.Spacer,  WidgetType.Divider,  WidgetType.SocialLinks,  WidgetType.Video,];// Container-specific controls for block elementsconst BLOCK_CONTAINER_CONTROLS = [  ControlType.ContainerBackgroundColor,  ControlType.ContainerPadding,  ControlType.ContainerMargin,];/** * Mapping of each element type to its supported controls */export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {  // Text elements - all controls + container controls  [WidgetType.Paragraph]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],  [WidgetType.Headline]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],  [WidgetType.List]: [...ALL_CONTROLS, ...BLOCK_CONTAINER_CONTROLS],  // Button - all except LineHeight + container controls  [WidgetType.Button]: [    ...ALL_CONTROLS.filter(c => c !== ControlType.LineHeight),    ...BLOCK_CONTAINER_CONTROLS,  ],  // Image - layout + visual, no text controls + container controls  [WidgetType.Image]: [    ControlType.Margin,    ControlType.Padding,    ControlType.Dimensions,    ControlType.BackgroundColor,    ControlType.BackgroundGradient,    ControlType.Border,    ControlType.BoxShadow,    ...BLOCK_CONTAINER_CONTROLS,  ],  // Spacer - minimal controls (just margin and height) + container controls  [WidgetType.Spacer]: [ControlType.Margin, ControlType.Dimensions, ...BLOCK_CONTAINER_CONTROLS],  // Divider - layout + visual, no text + container controls  [WidgetType.Divider]: [    ControlType.Margin,    ControlType.Dimensions,    ControlType.BackgroundColor,    ControlType.BackgroundGradient,    ControlType.Border,    ControlType.BoxShadow,    ...BLOCK_CONTAINER_CONTROLS,  ],  // Container elements  [WidgetType.Section]: CONTAINER_CONTROLS,  [WidgetType.Column]: CONTAINER_CONTROLS,  [WidgetType.InnerSection]: CONTAINER_CONTROLS,  // Template - no direct style controls  [WidgetType.Template]: [],  // SocialLinks - layout + alignment + color controls  [WidgetType.SocialLinks]: [    ControlType.Margin,    ControlType.Padding,    ControlType.Alignment,    ControlType.TextColor,    ControlType.BackgroundColor,    ControlType.BackgroundGradient,    ControlType.BoxShadow,    ...BLOCK_CONTAINER_CONTROLS,  ],  // Video (YouTube) - layout + visual controls  [WidgetType.Video]: [    ControlType.Margin,    ControlType.Padding,    ControlType.Dimensions,    ControlType.Alignment,    ControlType.BackgroundColor,    ControlType.BackgroundGradient,    ControlType.Border,    ControlType.BoxShadow,    ...BLOCK_CONTAINER_CONTROLS,  ],};/** * Check if element type is a block element (has container wrapper) */export function isBlockElement(elementType: WidgetType | string | undefined): boolean {  if (!elementType) return false;  return BLOCK_ELEMENTS.includes(elementType as WidgetType);}/** * Check if an element type supports a specific control */export function hasControl(  elementType: WidgetType | string | undefined,  control: ControlType): boolean {  if (!elementType) return false;  const type = elementType as WidgetType;  return ELEMENT_CONTROLS[type]?.includes(control) ?? false;}/** * Get all controls for an element type */export function getControlsForElement(elementType: WidgetType | string | undefined): ControlType[] {  if (!elementType) return [];  const type = elementType as WidgetType;  return ELEMENT_CONTROLS[type] ?? [];}/** * Check if element type is a text element (has text-related controls) */export function isTextElement(elementType: WidgetType | string | undefined): boolean {  return hasControl(elementType, ControlType.TextColor);}/** * Check if element type is a container element */export function isContainerElement(elementType: WidgetType | string | undefined): boolean {  if (!elementType) return false;  return [WidgetType.Section, WidgetType.Column, WidgetType.InnerSection].includes(    elementType as WidgetType  );}

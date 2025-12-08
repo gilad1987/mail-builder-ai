@@ -1,1 +1,1 @@
-export { AssetsGrid } from './AssetsGrid'
+export { AssetsGrid } from './AssetsGrid';

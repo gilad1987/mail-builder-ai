@@ -1,2 +1,1 @@
-export { TemplateEntity } from './TemplateEntity.js'
-export { SavedWidgetEntity } from './SavedWidgetEntity.js'
+export { TemplateEntity } from './TemplateEntity.js';export { SavedWidgetEntity } from './SavedWidgetEntity.js';

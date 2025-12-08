@@ -1,171 +1,1 @@
-import { useRef } from 'react'
-import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
-import { RotateCcw } from 'lucide-react'
-import { editorStore } from '../../stores/EditorStore'
-import { ResponsiveIcon } from './ResponsiveIcon'
-import { tokens } from '../../styles/tokens'
-
-const Container = styled.div`
-  padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
-  border-bottom: 1px solid var(--border-color);
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .label {
-    display: flex;
-    align-items: center;
-    font-size: ${tokens.fontSize.sm};
-    font-weight: ${tokens.fontWeight.medium};
-    color: var(--text-primary);
-  }
-
-  .actions {
-    display: flex;
-    align-items: center;
-    gap: ${tokens.spacing[2]};
-  }
-
-  .color-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: ${tokens.spacing[2]};
-  }
-
-  .color-swatch {
-    width: 24px;
-    height: 24px;
-    border-radius: ${tokens.borderRadius.sm};
-    border: 1px solid var(--input-border);
-    cursor: pointer;
-    transition: all ${tokens.transition.fast};
-
-    &:hover {
-      border-color: var(--accent);
-    }
-  }
-
-  .color-input {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    opacity: 0;
-    cursor: pointer;
-  }
-
-  .hex-input {
-    width: 70px;
-    padding: ${tokens.spacing[1]};
-    font-size: ${tokens.fontSize.xs};
-    background-color: var(--input-bg);
-    border: 1px solid var(--input-border);
-    border-radius: ${tokens.borderRadius.md};
-    color: var(--input-text);
-    text-transform: uppercase;
-
-    &:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-  }
-
-  .btn-reset {
-    padding: 2px;
-    color: var(--text-secondary);
-    background: none;
-    border: none;
-    cursor: pointer;
-    border-radius: ${tokens.borderRadius.sm};
-    transition: all ${tokens.transition.fast};
-
-    &:hover {
-      color: var(--accent);
-      background: var(--bg-elevated);
-    }
-  }
-`
-
-interface ColorControlProps {
-  label: string
-  styleProperty: string
-  defaultValue?: string
-  responsive?: boolean
-}
-
-export const ColorControl = observer(
-  ({
-    label,
-    styleProperty,
-    defaultValue = 'transparent',
-    responsive = true,
-  }: ColorControlProps) => {
-    const colorInputRef = useRef<HTMLInputElement>(null)
-    const element = editorStore.selectedElement
-    const device = editorStore.activeDevice
-
-    // Get color value from model
-    const getValue = (): string => {
-      if (!element) return defaultValue
-      const style = element._style[device]
-      const value = style[styleProperty] ?? element._style.desktop[styleProperty] ?? defaultValue
-      return typeof value === 'string' ? value : defaultValue
-    }
-
-    // Update color in model
-    const handleChange = (value: string) => {
-      if (!element) return
-      element.update(styleProperty, value)
-    }
-
-    // Reset to default
-    const handleReset = () => {
-      if (!element) return
-      element.update(styleProperty, undefined)
-    }
-
-    const colorValue = getValue()
-
-    return (
-      <Container>
-        <div className="header">
-          <div className="label">
-            {label}
-            <ResponsiveIcon device={device} responsive={responsive} />
-          </div>
-          <div className="actions">
-            <button className="btn-reset" title="Reset to default" onClick={handleReset}>
-              <RotateCcw size={14} />
-            </button>
-            <div className="color-input-wrapper">
-              <input
-                type="text"
-                className="hex-input"
-                value={colorValue}
-                onChange={e => handleChange(e.target.value)}
-                disabled={!element}
-              />
-              <div
-                className="color-swatch"
-                style={{ backgroundColor: colorValue }}
-                onClick={() => colorInputRef.current?.click()}
-              />
-              <input
-                ref={colorInputRef}
-                type="color"
-                className="color-input"
-                value={colorValue}
-                onChange={e => handleChange(e.target.value)}
-                disabled={!element}
-              />
-            </div>
-          </div>
-        </div>
-      </Container>
-    )
-  }
-)
+import { useRef } from 'react';import { observer } from 'mobx-react-lite';import styled from 'styled-components';import { RotateCcw } from 'lucide-react';import { editorStore } from '../../stores/EditorStore';import { ResponsiveIcon } from './ResponsiveIcon';import { tokens } from '../../styles/tokens';const Container = styled.div`  padding: ${tokens.spacing[3]} ${tokens.spacing[4]};  border-bottom: 1px solid var(--border-color);  .header {    display: flex;    justify-content: space-between;    align-items: center;  }  .label {    display: flex;    align-items: center;    font-size: ${tokens.fontSize.sm};    font-weight: ${tokens.fontWeight.medium};    color: var(--text-primary);  }  .actions {    display: flex;    align-items: center;    gap: ${tokens.spacing[2]};  }  .color-input-wrapper {    position: relative;    display: flex;    align-items: center;    gap: ${tokens.spacing[2]};  }  .color-swatch {    width: 24px;    height: 24px;    border-radius: ${tokens.borderRadius.sm};    border: 1px solid var(--input-border);    cursor: pointer;    transition: all ${tokens.transition.fast};    &:hover {      border-color: var(--accent);    }  }  .color-input {    position: absolute;    width: 24px;    height: 24px;    opacity: 0;    cursor: pointer;  }  .hex-input {    width: 70px;    padding: ${tokens.spacing[1]};    font-size: ${tokens.fontSize.xs};    background-color: var(--input-bg);    border: 1px solid var(--input-border);    border-radius: ${tokens.borderRadius.md};    color: var(--input-text);    text-transform: uppercase;    &:focus {      outline: none;      border-color: var(--accent);    }  }  .btn-reset {    padding: 2px;    color: var(--text-secondary);    background: none;    border: none;    cursor: pointer;    border-radius: ${tokens.borderRadius.sm};    transition: all ${tokens.transition.fast};    &:hover {      color: var(--accent);      background: var(--bg-elevated);    }  }`;interface ColorControlProps {  label: string;  styleProperty: string;  defaultValue?: string;  responsive?: boolean;}export const ColorControl = observer(  ({    label,    styleProperty,    defaultValue = 'transparent',    responsive = true,  }: ColorControlProps) => {    const colorInputRef = useRef<HTMLInputElement>(null);    const element = editorStore.selectedElement;    const device = editorStore.activeDevice;    // Get color value from model    const getValue = (): string => {      if (!element) return defaultValue;      const style = element._style[device];      const value = style[styleProperty] ?? element._style.desktop[styleProperty] ?? defaultValue;      return typeof value === 'string' ? value : defaultValue;    };    // Update color in model    const handleChange = (value: string) => {      if (!element) return;      element.update(styleProperty, value);    };    // Reset to default    const handleReset = () => {      if (!element) return;      element.update(styleProperty, undefined);    };    const colorValue = getValue();    return (      <Container>        <div className="header">          <div className="label">            {label}            <ResponsiveIcon device={device} responsive={responsive} />          </div>          <div className="actions">            <button className="btn-reset" title="Reset to default" onClick={handleReset}>              <RotateCcw size={14} />            </button>            <div className="color-input-wrapper">              <input                type="text"                className="hex-input"                value={colorValue}                onChange={e => handleChange(e.target.value)}                disabled={!element}              />              <div                className="color-swatch"                style={{ backgroundColor: colorValue }}                onClick={() => colorInputRef.current?.click()}              />              <input                ref={colorInputRef}                type="color"                className="color-input"                value={colorValue}                onChange={e => handleChange(e.target.value)}                disabled={!element}              />            </div>          </div>        </div>      </Container>    );  });

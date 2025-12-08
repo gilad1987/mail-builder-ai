@@ -1,19 +1,1 @@
-import { Entity, Fields, IdEntity } from 'remult'
-
-@Entity('saved_widgets', { allowApiCrud: true })
-export class SavedWidgetEntity extends IdEntity {
-  @Fields.string()
-  name = ''
-
-  @Fields.string()
-  type = ''
-
-  @Fields.json()
-  data: object = {}
-
-  @Fields.createdAt()
-  createdAt = new Date()
-
-  @Fields.updatedAt()
-  updatedAt = new Date()
-}
+import { Entity, Fields, IdEntity } from 'remult';@Entity('saved_widgets', { allowApiCrud: true })export class SavedWidgetEntity extends IdEntity {  @Fields.string()  name = '';  @Fields.string()  type = '';  @Fields.json()  data: object = {};  @Fields.createdAt()  createdAt = new Date();  @Fields.updatedAt()  updatedAt = new Date();}

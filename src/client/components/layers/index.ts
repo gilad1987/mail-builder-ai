@@ -1,1 +1,1 @@
-export { LayersTree } from './LayersTree'
+export { LayersTree } from './LayersTree';

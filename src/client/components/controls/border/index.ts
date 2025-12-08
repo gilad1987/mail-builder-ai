@@ -1,1 +1,1 @@
-export { BorderController } from './BorderController'
+export { BorderController } from './BorderController';

@@ -1,40 +1,1 @@
-import { useDraggable } from '@dnd-kit/core'
-import type { DragData } from './types'
-
-interface DraggableProps {
-  id: string
-  data: DragData
-  children: React.ReactNode
-  className?: string
-  style?: React.CSSProperties
-}
-
-export const Draggable = ({ id, data, children, className, style }: DraggableProps) => {
-  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
-    id,
-    data,
-  })
-
-  // IMPORTANT: We use DragOverlay for the visual preview, so we explicitly
-  // set transform to 'none' to prevent the original element from moving.
-  // Only reduce opacity to indicate the element is being dragged.
-  const combinedStyle: React.CSSProperties = {
-    ...style,
-    transform: 'none', // Override any transform applied by dnd-kit
-    opacity: isDragging ? 0.3 : 1,
-    cursor: 'grab',
-    touchAction: 'none',
-  }
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={combinedStyle}
-      {...listeners}
-      {...attributes}
-      className={className}
-    >
-      {children}
-    </div>
-  )
-}
+import { useDraggable } from '@dnd-kit/core';import type { DragData } from './types';interface DraggableProps {  id: string;  data: DragData;  children: React.ReactNode;  className?: string;  style?: React.CSSProperties;}export const Draggable = ({ id, data, children, className, style }: DraggableProps) => {  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({    id,    data,  });  // IMPORTANT: We use DragOverlay for the visual preview, so we explicitly  // set transform to 'none' to prevent the original element from moving.  // Only reduce opacity to indicate the element is being dragged.  const combinedStyle: React.CSSProperties = {    ...style,    transform: 'none', // Override any transform applied by dnd-kit    opacity: isDragging ? 0.3 : 1,    cursor: 'grab',    touchAction: 'none',  };  return (    <div      ref={setNodeRef}      style={combinedStyle}      {...listeners}      {...attributes}      className={className}    >      {children}    </div>  );};

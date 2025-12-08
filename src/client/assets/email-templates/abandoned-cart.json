@@ -1,1177 +1,1 @@
-{
-  "name": "Abandoned Cart Recovery",
-  "description": "Warm and persuasive cart recovery email with product showcase and urgency elements",
-  "thumbnail": "abandoned-cart.png",
-  "_style": {
-    "desktop": {
-      "margin": "0 auto",
-      "backgroundColor": "#fff7ed"
-    },
-    "tablet": {},
-    "mobile": {}
-  },
-  "children": [
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-          "alignItems": "center",
-          "paddingTop-size": 24,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 24,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#ffffff"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "width": 50,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "row",
-              "justifyContent": "flex-start",
-              "alignItems": "center",
-              "columnGap-size": 8,
-              "columnGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "🛒"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 22,
-                  "fontSize-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Bloom & Co"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 20,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#9a3412",
-                  "fontFamily": "Nunito, system-ui, sans-serif",
-                  "letterSpacing-size": -0.5,
-                  "letterSpacing-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 50,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "row",
-              "justifyContent": "flex-end",
-              "alignItems": "center"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "View Cart"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 13,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#ea580c",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "center",
-          "paddingTop-size": 56,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 56,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 40,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 40,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#fff7ed"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "_style": {
-            "desktop": {
-              "flex": 1,
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 20,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "👋"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 56,
-                  "fontSize-unit": "px",
-                  "textAlign": "center"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "Forgot something?"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 38,
-                  "fontSize-unit": "px",
-                  "fontWeight": "800",
-                  "color": "#9a3412",
-                  "textAlign": "center",
-                  "lineHeight-size": 44,
-                  "lineHeight-unit": "px",
-                  "fontFamily": "Nunito, system-ui, sans-serif",
-                  "letterSpacing-size": -1,
-                  "letterSpacing-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Your cart is feeling a little lonely. These items are waiting for you, and they're going fast!"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 16,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#78716c",
-                  "textAlign": "center",
-                  "lineHeight-size": 26,
-                  "lineHeight-unit": "px",
-                  "fontFamily": "Nunito, system-ui, sans-serif",
-                  "maxWidth-size": 400,
-                  "maxWidth-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "stretch",
-          "paddingTop-size": 24,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 8,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#ffffff"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "_style": {
-            "desktop": {
-              "flex": 1,
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "flex-start",
-              "alignItems": "flex-start"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "YOUR CART (2 items)"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 11,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#ea580c",
-                  "letterSpacing-size": 1.5,
-                  "letterSpacing-unit": "px",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "flex-start",
-          "alignItems": "center",
-          "paddingTop-size": 20,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 20,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "columnGap-size": 20,
-          "columnGap-unit": "px",
-          "backgroundColor": "#ffffff",
-          "borderBottomWidth-size": 1,
-          "borderBottomWidth-unit": "px",
-          "borderBottomColor": "#fed7aa",
-          "borderBottomStyle": "solid"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "width": 25,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Image",
-              "data": {
-                "src": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop",
-                "alt": "Smart Watch"
-              },
-              "_style": {
-                "desktop": {
-                  "width-size": 100,
-                  "width-unit": "%",
-                  "borderRadius-size": 12,
-                  "borderRadius-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 50,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "flex-start",
-              "rowGap-size": 6,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "Premium Smart Watch"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 16,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#1c1917",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Rose Gold • Qty: 1"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 13,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#78716c",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "⚡ Only 3 left in stock"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#dc2626",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 25,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "flex-end"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "$299"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 18,
-                  "fontSize-unit": "px",
-                  "fontWeight": "800",
-                  "color": "#9a3412",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "flex-start",
-          "alignItems": "center",
-          "paddingTop-size": 20,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 20,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "columnGap-size": 20,
-          "columnGap-unit": "px",
-          "backgroundColor": "#ffffff"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "width": 25,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Image",
-              "data": {
-                "src": "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=200&h=200&fit=crop",
-                "alt": "Wireless Earbuds"
-              },
-              "_style": {
-                "desktop": {
-                  "width-size": 100,
-                  "width-unit": "%",
-                  "borderRadius-size": 12,
-                  "borderRadius-unit": "px"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 50,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "flex-start",
-              "rowGap-size": 6,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Headline",
-              "data": {
-                "content": "Wireless Earbuds Pro"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 16,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#1c1917",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Midnight Black • Qty: 1"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 13,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#78716c",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "✓ In stock"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#16a34a",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 25,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "flex-end"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "$149"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 18,
-                  "fontSize-unit": "px",
-                  "fontWeight": "800",
-                  "color": "#9a3412",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "center",
-          "paddingTop-size": 24,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 24,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#ffedd5"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "width": 50,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "flex-start"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Subtotal"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 14,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#78716c",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 50,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "flex-end"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "$448.00"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 22,
-                  "fontSize-unit": "px",
-                  "fontWeight": "800",
-                  "color": "#9a3412",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "center",
-          "paddingTop-size": 40,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 40,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#ffffff"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "_style": {
-            "desktop": {
-              "flex": 1,
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 16,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Button",
-              "data": {
-                "text": "Complete Your Purchase →",
-                "href": "#"
-              },
-              "_style": {
-                "desktop": {
-                  "backgroundColor": "#ea580c",
-                  "color": "#ffffff",
-                  "fontSize-size": 15,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "paddingTop-size": 18,
-                  "paddingTop-unit": "px",
-                  "paddingBottom-size": 18,
-                  "paddingBottom-unit": "px",
-                  "paddingLeft-size": 40,
-                  "paddingLeft-unit": "px",
-                  "paddingRight-size": 40,
-                  "paddingRight-unit": "px",
-                  "borderRadius-size": 50,
-                  "borderRadius-unit": "px",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "🎁 Use code COMEBACK15 for 15% off!"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 14,
-                  "fontSize-unit": "px",
-                  "fontWeight": "600",
-                  "color": "#16a34a",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "stretch",
-          "paddingTop-size": 32,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 32,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "columnGap-size": 16,
-          "columnGap-unit": "px",
-          "backgroundColor": "#fff7ed"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "width": 33,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 8,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "🚚"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 24,
-                  "fontSize-unit": "px",
-                  "textAlign": "center"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Free Shipping"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#9a3412",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "On orders $50+"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 11,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#78716c",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 33,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 8,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "🔒"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 24,
-                  "fontSize-unit": "px",
-                  "textAlign": "center"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Secure Checkout"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#9a3412",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "SSL encrypted"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 11,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#78716c",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        },
-        {
-          "name": "Column",
-          "width": 33,
-          "_style": {
-            "desktop": {
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 8,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "↩️"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 24,
-                  "fontSize-unit": "px",
-                  "textAlign": "center"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Easy Returns"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 12,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#9a3412",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "30-day guarantee"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 11,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#78716c",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Section",
-      "_style": {
-        "desktop": {
-          "flex": 1,
-          "width": "100%",
-          "maxWidth-size": 620,
-          "maxWidth-unit": "px",
-          "margin": "0 auto",
-          "display": "flex",
-          "flexDirection": "row",
-          "justifyContent": "center",
-          "alignItems": "center",
-          "paddingTop-size": 24,
-          "paddingTop-unit": "px",
-          "paddingBottom-size": 24,
-          "paddingBottom-unit": "px",
-          "paddingLeft-size": 32,
-          "paddingLeft-unit": "px",
-          "paddingRight-size": 32,
-          "paddingRight-unit": "px",
-          "backgroundColor": "#9a3412"
-        },
-        "tablet": {},
-        "mobile": {}
-      },
-      "children": [
-        {
-          "name": "Column",
-          "_style": {
-            "desktop": {
-              "flex": 1,
-              "display": "flex",
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "alignItems": "center",
-              "rowGap-size": 8,
-              "rowGap-unit": "px"
-            },
-            "tablet": {},
-            "mobile": {}
-          },
-          "children": [
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Bloom & Co"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 16,
-                  "fontSize-unit": "px",
-                  "fontWeight": "700",
-                  "color": "#ffffff",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            },
-            {
-              "name": "Block",
-              "type": "Paragraph",
-              "data": {
-                "content": "Unsubscribe • Privacy Policy • Help Center"
-              },
-              "_style": {
-                "desktop": {
-                  "fontSize-size": 11,
-                  "fontSize-unit": "px",
-                  "fontWeight": "500",
-                  "color": "#fed7aa",
-                  "textAlign": "center",
-                  "fontFamily": "Nunito, system-ui, sans-serif"
-                },
-                "tablet": {},
-                "mobile": {}
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+{  "name": "Abandoned Cart Recovery",  "description": "Warm and persuasive cart recovery email with product showcase and urgency elements",  "thumbnail": "abandoned-cart.png",  "_style": {    "desktop": {      "margin": "0 auto",      "backgroundColor": "#fff7ed"    },    "tablet": {},    "mobile": {}  },  "children": [    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "space-between",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-start",              "alignItems": "center",              "columnGap-size": 8,              "columnGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🛒"              },              "_style": {                "desktop": {                  "fontSize-size": 22,                  "fontSize-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Bloom & Co"              },              "_style": {                "desktop": {                  "fontSize-size": 20,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#9a3412",                  "fontFamily": "Nunito, system-ui, sans-serif",                  "letterSpacing-size": -0.5,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-end",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "View Cart"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#ea580c",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 56,          "paddingTop-unit": "px",          "paddingBottom-size": 56,          "paddingBottom-unit": "px",          "paddingLeft-size": 40,          "paddingLeft-unit": "px",          "paddingRight-size": 40,          "paddingRight-unit": "px",          "backgroundColor": "#fff7ed"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 20,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "👋"              },              "_style": {                "desktop": {                  "fontSize-size": 56,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Forgot something?"              },              "_style": {                "desktop": {                  "fontSize-size": 38,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#9a3412",                  "textAlign": "center",                  "lineHeight-size": 44,                  "lineHeight-unit": "px",                  "fontFamily": "Nunito, system-ui, sans-serif",                  "letterSpacing-size": -1,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Your cart is feeling a little lonely. These items are waiting for you, and they're going fast!"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#78716c",                  "textAlign": "center",                  "lineHeight-size": 26,                  "lineHeight-unit": "px",                  "fontFamily": "Nunito, system-ui, sans-serif",                  "maxWidth-size": 400,                  "maxWidth-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "stretch",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 8,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "flex-start"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "YOUR CART (2 items)"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ea580c",                  "letterSpacing-size": 1.5,                  "letterSpacing-unit": "px",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "flex-start",          "alignItems": "center",          "paddingTop-size": 20,          "paddingTop-unit": "px",          "paddingBottom-size": 20,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 20,          "columnGap-unit": "px",          "backgroundColor": "#ffffff",          "borderBottomWidth-size": 1,          "borderBottomWidth-unit": "px",          "borderBottomColor": "#fed7aa",          "borderBottomStyle": "solid"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Image",              "data": {                "src": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=200&fit=crop",                "alt": "Smart Watch"              },              "_style": {                "desktop": {                  "width-size": 100,                  "width-unit": "%",                  "borderRadius-size": 12,                  "borderRadius-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-start",              "rowGap-size": 6,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Premium Smart Watch"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#1c1917",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Rose Gold • Qty: 1"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#78716c",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "⚡ Only 3 left in stock"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#dc2626",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-end"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "$299"              },              "_style": {                "desktop": {                  "fontSize-size": 18,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#9a3412",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "flex-start",          "alignItems": "center",          "paddingTop-size": 20,          "paddingTop-unit": "px",          "paddingBottom-size": 20,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 20,          "columnGap-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Image",              "data": {                "src": "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=200&h=200&fit=crop",                "alt": "Wireless Earbuds"              },              "_style": {                "desktop": {                  "width-size": 100,                  "width-unit": "%",                  "borderRadius-size": 12,                  "borderRadius-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-start",              "rowGap-size": 6,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Wireless Earbuds Pro"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#1c1917",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Midnight Black • Qty: 1"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#78716c",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "✓ In stock"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#16a34a",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-end"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "$149"              },              "_style": {                "desktop": {                  "fontSize-size": 18,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#9a3412",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffedd5"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-start"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Subtotal"              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#78716c",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-end"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "$448.00"              },              "_style": {                "desktop": {                  "fontSize-size": 22,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#9a3412",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 40,          "paddingTop-unit": "px",          "paddingBottom-size": 40,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 16,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Button",              "data": {                "text": "Complete Your Purchase →",                "href": "#"              },              "_style": {                "desktop": {                  "backgroundColor": "#ea580c",                  "color": "#ffffff",                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "paddingTop-size": 18,                  "paddingTop-unit": "px",                  "paddingBottom-size": 18,                  "paddingBottom-unit": "px",                  "paddingLeft-size": 40,                  "paddingLeft-unit": "px",                  "paddingRight-size": 40,                  "paddingRight-unit": "px",                  "borderRadius-size": 50,                  "borderRadius-unit": "px",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🎁 Use code COMEBACK15 for 15% off!"              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#16a34a",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "stretch",          "paddingTop-size": 32,          "paddingTop-unit": "px",          "paddingBottom-size": 32,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 16,          "columnGap-unit": "px",          "backgroundColor": "#fff7ed"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🚚"              },              "_style": {                "desktop": {                  "fontSize-size": 24,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Free Shipping"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#9a3412",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "On orders $50+"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#78716c",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🔒"              },              "_style": {                "desktop": {                  "fontSize-size": 24,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Secure Checkout"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#9a3412",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "SSL encrypted"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#78716c",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "↩️"              },              "_style": {                "desktop": {                  "fontSize-size": 24,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Easy Returns"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#9a3412",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "30-day guarantee"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#78716c",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#9a3412"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Bloom & Co"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ffffff",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Unsubscribe • Privacy Policy • Help Center"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#fed7aa",                  "textAlign": "center",                  "fontFamily": "Nunito, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    }  ]}
