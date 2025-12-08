@@ -9,7 +9,6 @@ import {
   Megaphone,
   Paperclip,
   PartyPopper,
-  Pencil,
   Plus,
   Sparkles,
   Trash2,
@@ -248,7 +247,10 @@ export const TemplatesLibrary = () => {
 
         <section className="section">
           <div className="section-header">
-            <h2 className="section-title">Start a new email</h2>
+            <h2 className="section-title">Discover and remix templates</h2>
+            <button className="section-link" onClick={() => navigate('/start-templates')}>
+              Browse all templates <ArrowRight size={16} />
+            </button>
           </div>
           <div className="templates-grid">
             <div className="create-card-wrapper">
@@ -262,18 +264,20 @@ export const TemplatesLibrary = () => {
                 <div className="create-icon">
                   <Plus size={24} />
                 </div>
-                <span className="create-text">Blank</span>
+                <span className="create-text">Start from scratch</span>
               </div>
-              <div className="create-card-label" />
+              <div className="template-info">
+                <div className="template-name">Blank Template</div>
+                <div className="template-date">Create a custom email from scratch</div>
+              </div>
             </div>
             {builtInTemplates.map((t) => (
-              <div key={t.id}>
+              <div key={t.id} className="template-card-wrapper">
                 <div className="template-card" onClick={() => navigate(`/builder/${t.id}`)}>
                   <div className="template-preview" style={{ background: t.colors.bg }}>
-                    <span className="example-badge">Template</span>
                     <div className="preview-placeholder">
                       <div className="preview-icon" style={{ background: t.colors.icon }}>
-                        <Mail size={20} color="#fff" />
+                        <Mail size={22} color="#fff" />
                       </div>
                       <div className="preview-lines">
                         {t.colors.lines.map((c, i) => (
@@ -281,53 +285,51 @@ export const TemplatesLibrary = () => {
                         ))}
                       </div>
                     </div>
+                    <div className="template-overlay">
+                      <button className="open-btn">Use Template</button>
+                    </div>
                   </div>
                 </div>
                 <div className="template-info">
-                  <div className="template-meta">
-                    <div className="template-name">{t.name}</div>
-                    <div className="template-date">{t.description}</div>
-                  </div>
+                  <div className="template-name">{t.name}</div>
+                  <div className="template-date">{t.description}</div>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="section">
-          <div className="section-header">
-            <h2 className="section-title">Your saved templates</h2>
-            {savedTemplates.length > 0 && (
-              <span className="section-link">{savedTemplates.length} templates</span>
-            )}
-          </div>
-          {loading ? (
-            <div className="loading-state">
-              <Loader2 size={20} /> Loading...
+        {savedTemplates.length > 0 && (
+          <section className="section">
+            <div className="section-header">
+              <h2 className="section-title">Your saved templates</h2>
+              <button className="section-link" onClick={() => navigate('/start-templates')}>
+                View all ({savedTemplates.length}) <ArrowRight size={16} />
+              </button>
             </div>
-          ) : savedTemplates.length === 0 ? (
-            <div className="empty-state">No saved templates yet.</div>
-          ) : (
-            <div className="templates-grid">
-              {savedTemplates.map((t) => (
-                <div key={t.id}>
-                  <div className="template-card" onClick={() => openSaved(t)}>
-                    <div className="template-preview">
-                      <div className="preview-placeholder">
-                        <div className="preview-icon">
-                          <Mail size={20} />
+            {loading ? (
+              <div className="loading-state">
+                <Loader2 size={20} /> Loading...
+              </div>
+            ) : (
+              <div className="templates-grid">
+                {savedTemplates.slice(0, 4).map((t) => (
+                  <div key={t.id} className="template-card-wrapper">
+                    <div className="template-card" onClick={() => openSaved(t)}>
+                      <div className="template-preview">
+                        <div className="preview-placeholder">
+                          <div className="preview-icon">
+                            <Mail size={22} />
+                          </div>
+                          <div className="preview-lines">
+                            <div className="preview-line" />
+                            <div className="preview-line" />
+                            <div className="preview-line" />
+                          </div>
                         </div>
-                        <div className="preview-lines">
-                          <div className="preview-line" />
-                          <div className="preview-line" />
-                          <div className="preview-line" />
+                        <div className="template-overlay">
+                          <button className="open-btn">Open Template</button>
                         </div>
-                      </div>
-                    </div>
-                    <div className="template-info">
-                      <div className="template-meta">
-                        <div className="template-name">{t.name}</div>
-                        <div className="template-date">{formattedDates.get(t.id)}</div>
                       </div>
                       <div className="template-actions">
                         <button
@@ -335,40 +337,34 @@ export const TemplatesLibrary = () => {
                           title="Preview"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <Eye size={18} />
-                        </button>
-                        <button
-                          className="action-btn"
-                          title="Edit"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            openSaved(t)
-                          }}
-                        >
-                          <Pencil size={18} />
+                          <Eye size={16} />
                         </button>
                         <button
                           className="action-btn"
                           title="Duplicate"
                           onClick={(e) => handleDuplicate(e, t)}
                         >
-                          <Copy size={18} />
+                          <Copy size={16} />
                         </button>
                         <button
                           className="action-btn delete"
                           title="Delete"
                           onClick={(e) => handleDelete(e, t.id)}
                         >
-                          <Trash2 size={18} />
+                          <Trash2 size={16} />
                         </button>
                       </div>
                     </div>
+                    <div className="template-info">
+                      <div className="template-name">{t.name}</div>
+                      <div className="template-date">{formattedDates.get(t.id)}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
       </div>
 
       <footer className="footer">

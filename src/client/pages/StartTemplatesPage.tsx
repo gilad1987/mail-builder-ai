@@ -1,4 +1,4 @@
-import { ArrowLeft, Copy, Loader2, Mail, Pencil, Plus, Trash2 } from 'lucide-react'
+import { ArrowLeft, Copy, Loader2, Mail, Plus, Trash2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { remult } from 'remult'
@@ -78,65 +78,51 @@ export const StartTemplatesPage = () => {
         ) : templates.length > 0 ? (
           <div className="templates-grid">
             {templates.map((t) => (
-              <div
-                key={t.id}
-                className="template-card"
-                onClick={() => navigate(`/builder/${t.id}`)}
-              >
-                <div className="template-preview">
-                  <div className="preview-placeholder">
-                    <div className="preview-icon">
-                      <Mail size={24} />
+              <div key={t.id} className="template-card-wrapper">
+                <div className="template-card" onClick={() => navigate(`/builder/${t.id}`)}>
+                  <div className="template-preview">
+                    <div className="preview-placeholder">
+                      <div className="preview-icon">
+                        <Mail size={24} />
+                      </div>
+                      <div className="preview-lines">
+                        <div className="preview-line" />
+                        <div className="preview-line" />
+                        <div className="preview-line" />
+                      </div>
                     </div>
-                    <div className="preview-lines">
-                      <div className="preview-line" />
-                      <div className="preview-line" />
-                      <div className="preview-line" />
+                    <div className="template-overlay">
+                      <button
+                        className="open-btn"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          navigate(`/builder/${t.id}`)
+                        }}
+                      >
+                        Open Template
+                      </button>
                     </div>
-                  </div>
-                  <div className="template-overlay">
-                    <button
-                      className="open-btn"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        navigate(`/builder/${t.id}`)
-                      }}
-                    >
-                      Open Template
-                    </button>
-                  </div>
-                </div>
-                <div className="template-info">
-                  <div className="template-meta">
-                    <div className="template-name">{t.name}</div>
-                    <div className="template-date">{formatDate(t.updatedAt)}</div>
                   </div>
                   <div className="template-actions">
-                    <button
-                      className="action-btn"
-                      title="Edit"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        navigate(`/builder/${t.id}`)
-                      }}
-                    >
-                      <Pencil size={14} />
-                    </button>
                     <button
                       className="action-btn"
                       title="Duplicate"
                       onClick={(e) => handleDuplicate(e, t)}
                     >
-                      <Copy size={14} />
+                      <Copy size={16} />
                     </button>
                     <button
                       className="action-btn delete"
                       title="Delete"
                       onClick={(e) => handleDelete(e, t.id)}
                     >
-                      <Trash2 size={14} />
+                      <Trash2 size={16} />
                     </button>
                   </div>
+                </div>
+                <div className="template-info">
+                  <div className="template-name">{t.name}</div>
+                  <div className="template-date">{formatDate(t.updatedAt)}</div>
                 </div>
               </div>
             ))}
