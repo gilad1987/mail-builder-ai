@@ -1,1 +1,2100 @@
-@use 'variables' as *;@use 'mixins' as *;@use 'templates-library';@use 'start-templates';html {  overflow: hidden;}// =================================================================// GLOBAL RESET & BASE// =================================================================*,*::before,*::after {  box-sizing: border-box;  margin: 0;  padding: 0;}// Dark mode colors$dark-bg: #1f2124;$dark-bg-darker: #0c0d0e;// CSS Custom Properties for theming:root {  // Dark theme (default)  --bg-primary: #{$dark-bg};  --bg-secondary: #{$dark-bg-darker};  --bg-elevated: #{$gray-800};  --text-primary: #{$gray-300};  --text-secondary: #{$gray-500};  --text-muted: #{$gray-600};  --border-color: #{$dark-bg-darker};  --border-subtle: #{$gray-800};  --input-bg: #{$dark-bg-darker};  --input-border: #{$gray-700};  --input-text: #{$gray-200};  --accent: #{$blue-400};  --accent-hover: #{$blue-300};  // Scrollbar colors  --scrollbar-track: #{$dark-bg-darker};  --scrollbar-thumb: #{$gray-700};  --scrollbar-thumb-hover: #{$gray-600};}:root[data-theme='light'] {  --bg-primary: #{$gray-50};  --bg-secondary: white;  --bg-elevated: #{$gray-100};  --text-primary: #{$gray-800};  --text-secondary: #{$gray-600};  --text-muted: #{$gray-500};  --border-color: #{$gray-200};  --border-subtle: #{$gray-100};  --input-bg: #{$gray-50};  --input-border: #{$gray-300};  --input-text: #{$gray-700};  --accent: #{$blue-600};  --accent-hover: #{$blue-700};  // Scrollbar colors  --scrollbar-track: #{$gray-100};  --scrollbar-thumb: #{$gray-300};  --scrollbar-thumb-hover: #{$gray-400};}// Custom Scrollbar Styles* {  scrollbar-width: thin;  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);}*::-webkit-scrollbar {  width: 8px;  height: 8px;}*::-webkit-scrollbar-track {  background: var(--scrollbar-track);  border-radius: 4px;}*::-webkit-scrollbar-thumb {  background: var(--scrollbar-thumb);  border-radius: 4px;  border: 2px solid var(--scrollbar-track);  &:hover {    background: var(--scrollbar-thumb-hover);  }}body {  font-family: $font-family-base;  background-color: var(--bg-primary);  color: var(--text-primary);  line-height: 1.5;  -webkit-font-smoothing: antialiased;}button {  border: none;  background: none;  cursor: pointer;  font-family: inherit;}input,select {  @include input-base;}// Prevent selection during drag[draggable='true'] {  user-select: none;}// =================================================================// APP LAYOUT// =================================================================.app-layout {  display: flex;  flex-direction: column;  height: 100vh;  width: 100vw;  background-color: var(--bg-primary);  overflow: hidden;}.main-content {  display: flex;  flex-grow: 1;  overflow: hidden;}// =================================================================// HEADER BAR// =================================================================.header-bar {  height: 3rem;  background-color: var(--bg-secondary);  border-bottom: 1px solid var(--border-color);  padding: 0 $spacing-3;  box-shadow: $shadow-sm;  @include flex-between;  flex-shrink: 0;  z-index: $z-index-header;  &__left {    @include flex-start;    gap: $spacing-2;  }  &__center {    @include flex-center;    gap: 2px;    padding: 3px;    border: 1px solid var(--input-border);    border-radius: $border-radius-lg;    background-color: var(--bg-primary);  }  &__right {    @include flex-start;    gap: $spacing-2;  }  &__title {    font-size: $font-size-base;    font-weight: $font-weight-semibold;    color: var(--text-primary);    display: none;    @include sm {      display: block;    }  }}// Device View Buttons.btn-device {  padding: 6px;  border-radius: $border-radius-md;  transition: all $transition-fast;  color: var(--text-secondary);  svg {    width: 16px;    height: 16px;  }  &:hover {    background-color: var(--bg-elevated);    color: var(--text-primary);  }  &--active {    background-color: var(--bg-elevated);    color: var(--accent);  }}// Action Buttons.btn-primary {  @include btn-primary;  span {    display: none;    @include sm {      display: inline;    }  }}.btn-secondary {  @include btn-secondary;  span {    display: none;    @include sm {      display: inline;    }  }}.btn-ghost {  @include btn-ghost;}// Disabled button states.btn-ghost:disabled,.btn-secondary:disabled,.btn-primary:disabled {  opacity: 0.4;  cursor: not-allowed;  pointer-events: none;}// =================================================================// SIDEBAR PANELS// =================================================================.sidebar {  width: 20rem;  background-color: var(--bg-primary);  border-right: 1px solid var(--border-color);  display: flex;  flex-direction: column;  flex-shrink: 0;  box-shadow: 5px 0 10px -5px rgba(0, 0, 0, 0.3);  overflow-y: auto;  overflow-x: hidden;  &__header {    padding: $spacing-4;    border-bottom: 1px solid var(--border-color);    @include flex-between;  }  &__title {    font-size: $font-size-base;    font-weight: $font-weight-semibold;    color: var(--text-primary);  }  &__back {    @include flex-start;    cursor: pointer;    svg {      color: var(--text-secondary);      margin-right: $spacing-2;      transition: color $transition-fast;      &:hover {        color: var(--text-primary);      }    }  }  &__hint {    font-size: $font-size-xs;    color: var(--text-secondary);    margin-top: $spacing-1;  }  &__footer {    padding: $spacing-4;    border-top: 1px solid var(--border-color);    margin-top: auto;    p {      font-size: $font-size-xs;      color: var(--text-secondary);    }  }  &__section-header {    padding: $spacing-3 $spacing-4;    border-top: 1px solid var(--border-color);    margin-top: $spacing-2;  }  &__subtitle {    font-size: $font-size-sm;    font-weight: $font-weight-semibold;    color: var(--text-secondary);    text-transform: uppercase;    letter-spacing: 0.05em;  }}// Device Indicator.device-indicator {  @include flex-center;  padding: $spacing-2;  background-color: rgba($blue-500, 0.1);  border-bottom: 1px solid var(--border-color);  &__text {    font-size: $font-size-xs;    font-weight: $font-weight-medium;    color: var(--accent);    @include flex-center;  }  &__device {    margin-left: $spacing-1;    font-weight: $font-weight-semibold;    text-transform: capitalize;  }}// Tab Navigation.tabs {  display: flex;  border-bottom: 1px solid var(--border-color);  &__btn {    flex: 1;    padding: $spacing-3;    font-size: $font-size-sm;    font-weight: $font-weight-medium;    color: var(--text-secondary);    transition: color $transition-fast;    border-bottom: 2px solid transparent;    &:hover {      color: var(--text-primary);    }    &--active {      color: var(--accent);      border-bottom-color: var(--accent);    }  }}.tab-content {  flex-grow: 1;  overflow-y: auto;}// =================================================================// BLOCK SELECT PANEL// =================================================================.block-grid {  display: grid;  grid-template-columns: repeat(2, 1fr);  gap: $spacing-3;  padding: $spacing-4;}.block-card {  @include flex-center;  flex-direction: column;  padding: $spacing-4;  background-color: var(--bg-secondary);  border: 1px solid var(--border-subtle);  border-radius: $border-radius-lg;  box-shadow: $shadow-sm;  cursor: grab;  transition: all $transition-fast;  user-select: none;  &:hover {    background-color: var(--bg-elevated);    box-shadow: $shadow-md;  }  &:active {    cursor: grabbing;  }  &__icon {    margin-bottom: $spacing-2;    &--blue {      color: $blue-400;    }    &--gray {      color: $gray-400;    }    &--orange {      color: $orange-500;    }    &--green {      color: $green-500;    }    &--indigo {      color: $indigo-500;    }    &--teal {      color: $teal-500;    }    &--red {      color: $red-500;    }    &--yellow {      color: $yellow-500;    }    &--purple {      color: $purple-500;    }    &--pink {      color: $pink-500;    }  }  &__name {    font-size: $font-size-sm;    font-weight: $font-weight-medium;    color: var(--text-primary);    text-align: center;  }  &--saved {    position: relative;    border-color: rgba($purple-500, 0.3);    background: linear-gradient(135deg, rgba($purple-500, 0.05) 0%, transparent 100%);    &:hover {      border-color: rgba($purple-500, 0.5);      .block-card__delete {        opacity: 1;      }    }  }  &__delete {    position: absolute;    top: 4px;    right: 4px;    width: 20px;    height: 20px;    border-radius: $border-radius-sm;    background: rgba($red-500, 0.1);    color: $red-500;    opacity: 0;    transition: all $transition-fast;    @include flex-center;    &:hover {      background: $red-500;      color: white;    }  }  &--cyan {    color: $teal-500;  }}// =================================================================// STYLE CONTROLS// =================================================================.style-field {  padding: $spacing-2 $spacing-4;  border-bottom: 1px solid var(--border-color);  &__header {    @include flex-between;  }  &__label {    @include flex-start;    font-size: $font-size-sm;    font-weight: $font-weight-medium;    color: var(--text-primary);  }  &__actions {    @include flex-start;    gap: $spacing-2;  }  &__link {    font-size: $font-size-xs;    color: var(--accent);    cursor: pointer;    transition: color $transition-fast;    &:hover {      color: var(--accent-hover);    }  }}// Responsive Icon.responsive-icon {  margin-left: $spacing-2;  &--desktop {    color: $blue-500;  }  &--tablet {    color: $green-500;  }  &--mobile {    color: $red-500;  }}// Side Value Control (Margin/Padding).side-control {  @include flex-start;  padding: $spacing-1 0;  &__indicator {    font-size: $font-size-lg;    line-height: 1;    padding-right: $spacing-1;    color: var(--text-secondary);    width: 1.5rem;    text-align: center;    &--top {      transform: rotate(90deg);    }    &--bottom {      transform: rotate(-90deg);    }  }  &__slider {    flex-grow: 1;    height: 4px;    background: var(--input-border);    border-radius: 4px;    cursor: pointer;    margin-right: $spacing-2;    -webkit-appearance: none;    appearance: none;    &::-webkit-slider-thumb {      -webkit-appearance: none;      appearance: none;      width: 12px;      height: 12px;      background: var(--accent);      border-radius: 50%;      cursor: pointer;      margin-top: -4px;      box-shadow: 0 0 0 3px rgba($blue-500, 0.2);    }  }  &__input {    width: 3rem;    padding: $spacing-1;    text-align: center;    background-color: var(--input-bg);    color: var(--input-text);    border: 1px solid var(--input-border);    flex-shrink: 0;  }  &__unit {    font-size: $font-size-sm;    color: var(--text-secondary);    margin-left: $spacing-1;    flex-shrink: 0;  }}// Expand/Collapse Toggle.btn-toggle {  padding: $spacing-1;  color: var(--text-secondary);  border: none;  border-radius: $border-radius-sm;  background-color: transparent;  transition: all $transition-fast;  &:hover {    color: var(--text-primary);  }}// Dimension Controls.dimension-grid {  display: grid;  grid-template-columns: repeat(2, 1fr);  column-gap: $spacing-2;  row-gap: $spacing-4;}.dimension-input {  display: flex;  flex-direction: column;  text-align: center;  &__label {    font-size: $font-size-xs;    font-weight: $font-weight-medium;    color: var(--text-secondary);    margin-bottom: $spacing-1;  }  &__group {    @include flex-start;    gap: $spacing-1;    input {      width: 100%;      height: 25px;      padding: $spacing-1 $spacing-2;      background-color: var(--input-bg);      border: 1px solid var(--input-border);      border-radius: $border-radius-md;      color: var(--input-text);      font-size: $font-size-sm;    }  }  &__unit {    font-size: $font-size-sm;    color: var(--text-secondary);    padding-right: $spacing-1;    flex-shrink: 0;  }}// Unit Dropdown.unit-dropdown {  position: relative;  font-size: $font-size-sm;  select {    appearance: none;    background-color: var(--input-bg);    border: 1px solid var(--input-border);    border-radius: $border-radius-md;    padding: $spacing-1;    padding-right: $spacing-6;    color: var(--input-text);  }  &__icon {    position: absolute;    top: 0;    right: 0;    bottom: 0;    @include flex-center;    padding-right: $spacing-1;    pointer-events: none;    color: var(--text-secondary);  }}// Alignment Controls.align-group {  display: flex;  gap: $spacing-2;  padding: $spacing-1;  background-color: var(--bg-elevated);  border-radius: $border-radius-lg;  width: fit-content;}.align-btn {  padding: $spacing-2;  border-radius: $border-radius-md;  color: var(--text-primary);  transition:    background-color $transition-fast,    box-shadow $transition-fast;  &:hover {    background-color: var(--input-bg);  }  &--active {    background-color: var(--bg-secondary);    box-shadow: $shadow-md;  }}// Border Radius Controls.radius-controls {  @include flex-start;  gap: $spacing-3;}.btn-border-style {  padding: $spacing-1;  border: 1px solid var(--input-border);  border-radius: $border-radius-sm;  color: var(--text-primary);  background-color: var(--input-bg);  transition: all $transition-fast;  box-shadow: $shadow-sm;  &:hover {    background-color: var(--bg-elevated);  }}// Border Side Controls.borders-group {  display: flex;  gap: $spacing-4;}.borders-grid {  display: grid;  grid-template-columns: repeat(3, 1fr);  grid-template-rows: repeat(3, 1fr);  gap: $spacing-1;  padding: $spacing-1;  border: 1px solid var(--input-border);  border-radius: $border-radius-lg;  background-color: var(--input-bg);  height: fit-content;  width: fit-content;  &__cell {    &--top,    &--bottom {      grid-column: 1 / span 3;      @include flex-center;    }  }}.border-side-btn {  @include flex-center;  padding: $spacing-1;  border-radius: $border-radius-sm;  color: var(--text-secondary);  transition: all 100ms;  &:hover:not(.border-side-btn--active) {    background-color: var(--bg-elevated);  }  &--active {    color: $blue-500;    background-color: rgba($blue-100, 0.7);  }  &__box {    width: 1rem;    height: 1rem;    border: 2px solid var(--text-secondary);    border-radius: 2px;    @include flex-center;  }  &__inner {    width: 0.75rem;    height: 0.75rem;    border-radius: 2px;    border: 1px solid transparent;    background-color: transparent;    &--active {      border-color: $blue-500;      background-color: $blue-100;    }  }}.border-inputs {  flex-grow: 1;  display: flex;  flex-direction: column;  gap: $spacing-3;  &__label {    display: block;    font-size: $font-size-xs;    color: var(--text-secondary);    margin-bottom: $spacing-1;  }}.style-toggle {  display: flex;  gap: $spacing-1;  padding: $spacing-1;  background-color: var(--bg-elevated);  border-radius: $border-radius-lg;  border: 1px solid var(--input-border);  &__btn {    width: 33.333%;    padding: $spacing-1;    border-radius: $border-radius-md;    color: var(--text-primary);    transition: background-color $transition-fast;    @include flex-center;    &:hover {      background-color: var(--input-bg);    }    &--active {      background-color: var(--input-bg);      box-shadow: $shadow-sm;      border: 1px solid var(--input-border);    }  }}.input-with-unit {  @include flex-start;  input {    background-color: var(--input-bg);    border: 1px solid var(--input-border);    color: var(--input-text);  }}.color-picker-placeholder {  width: 100%;  height: 2rem;  background-color: var(--input-bg);  border: 1px solid var(--input-border);  border-radius: $border-radius-md;  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);  cursor: pointer;}.color-swatch {  width: 1.25rem;  height: 1.25rem;  border-radius: $border-radius-full;  border: 1px solid var(--input-border);  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);  cursor: pointer;}// Block Wrapper Preview (Content Tab).block-wrapper-preview {  padding: $spacing-3;  background-color: var(--bg-elevated);  border: 1px solid var(--input-border);  border-radius: $border-radius-md;  @include flex-between;  span {    font-size: $font-size-sm;    color: var(--text-primary);  }  svg {    color: var(--text-secondary);  }}// =================================================================// CANVAS AREA// =================================================================.canvas {  flex-grow: 1;  background-color: $gray-50;  display: flex;  flex-direction: column;  align-items: center;  padding: $spacing-4 $spacing-6;  overflow-y: auto;  &--desktop {    padding: 0;    .viewport--desktop {      height: 100%;      min-height: 100%;    }    .canvas__footer {      display: none;    }  }  &__footer {    margin-top: 2.5rem;    font-size: $font-size-sm;    color: $gray-500;    span {      font-weight: $font-weight-semibold;      text-transform: capitalize;    }  }}// Viewport Frame.viewport {  background-color: white;  box-shadow: $shadow-xl;  transition: all $transition-slow;  overflow-y: auto;  overflow-x: hidden;  padding: 0;  min-height: 600px;  position: relative;  display: flex;  flex-direction: column;  &--desktop {    width: 100%;    height: 100%;    border-radius: 0;    box-shadow: none;    align-items: center;    justify-content: flex-start;    .viewport__content {      max-width: 80rem;      width: 100%;    }  }  // iPad Pro style  &--tablet {    width: 834px;    max-width: calc(100% - 2rem);    min-height: 700px;    border-radius: 20px;    background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);    padding: 12px;    box-shadow:      0 0 0 1px rgba(255, 255, 255, 0.1),      0 0 0 2px #000,      0 50px 100px -20px rgba(0, 0, 0, 0.6),      0 30px 60px -30px rgba(0, 0, 0, 0.5);    overflow: visible;    // Front camera (centered for iPad)    &::before {      content: '';      position: absolute;      top: 50%;      left: 5px;      transform: translateY(-50%);      width: 6px;      height: 6px;      background: radial-gradient(circle, #1a1a1a 40%, #0a0a0a 100%);      border-radius: 50%;      box-shadow:        inset 0 0 2px rgba(0, 0, 0, 0.8),        0 0 0 1px rgba(255, 255, 255, 0.05);      z-index: 10;    }    .viewport__screen {      background-color: white;      border-radius: 10px;      overflow: hidden;      overflow-y: auto;      height: 100%;      min-height: 676px;      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);    }  }  // iPhone 15 Pro style  &--mobile {    width: 393px;    max-width: calc(100% - 2rem);    min-height: 700px;    border-radius: 54px;    background: linear-gradient(180deg, #1f1f1f 0%, #0f0f0f 100%);    padding: 12px;    box-shadow:      inset 0 0 0 1px rgba(255, 255, 255, 0.15),      0 0 0 2px #000,      0 0 0 4px #1a1a1a,      0 50px 100px -20px rgba(0, 0, 0, 0.7),      0 30px 60px -30px rgba(0, 0, 0, 0.5);    overflow: visible;    // Dynamic Island    &::before {      content: '';      position: absolute;      top: 22px;      left: 50%;      transform: translateX(-50%);      width: 126px;      height: 37px;      background: #000;      border-radius: 24px;      z-index: 20;      box-shadow:        inset 0 0 8px rgba(0, 0, 0, 0.5),        0 0 0 1px rgba(255, 255, 255, 0.05);    }    // Home indicator    &::after {      content: '';      position: absolute;      bottom: 10px;      left: 50%;      transform: translateX(-50%);      width: 140px;      height: 5px;      background: linear-gradient(90deg, #3a3a3c 0%, #48484a 50%, #3a3a3c 100%);      border-radius: 3px;      z-index: 20;    }    .viewport__screen {      background-color: white;      border-radius: 44px;      overflow: hidden;      overflow-y: auto;      height: 100%;      min-height: 676px;      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);      // Status bar area padding      &::before {        content: '';        display: block;        height: 50px;        width: 100%;        background: transparent;      }    }  }  &__screen {    height: 100%;    min-height: 600px;  }  &__content {    padding: $spacing-4;    display: flex;    flex-direction: column;    align-items: center;    width: 100%;    @include sm {      padding: $spacing-6;    }  }}// =================================================================// ROW CONTAINER// =================================================================.row {  position: relative;  padding: $spacing-6;  margin-bottom: $spacing-4;  width: 100%;  border-radius: $border-radius-xl;  transition: all $transition-normal;  min-height: 150px;  border: 2px dashed transparent;  &:hover {    border-color: $blue-300;    background-color: rgba($blue-50, 0.3);  }  &--selected {    border-color: $blue-500;    border-style: solid;    background-color: rgba($blue-50, 0.3);  }  &--dragover {    border-color: $blue-500;    border-style: solid;    background-color: rgba($blue-50, 0.5);  }  &__actions {    position: absolute;    top: 0;    right: 0;    padding: $spacing-1;    background-color: white;    border: 1px solid $gray-200;    border-top-left-radius: 0;    border-bottom-left-radius: $border-radius-lg;    border-bottom-right-radius: 0;    border-top-right-radius: 0;    box-shadow: $shadow-sm;    display: flex;    gap: $spacing-1;    z-index: $z-index-dropdown;    opacity: 0;    transition: opacity $transition-fast;    span {      font-size: $font-size-xs;      color: $gray-400;      padding: 0 $spacing-2;      @include flex-center;    }  }  &:hover &__actions {    opacity: 1;  }  &__empty {    height: 100%;    @include flex-center;    flex-direction: column;    color: $gray-400;    border: 2px dashed $gray-200;    border-radius: $border-radius-lg;    padding: $spacing-4;  }  &__blocks {    display: flex;    flex-direction: column;    align-items: flex-start;    justify-content: flex-start;    gap: $spacing-4;    height: 100%;    @include sm {      flex-direction: row;      gap: 0;      > * + * {        margin-left: $spacing-4;      }    }    @include md {      > * + * {        margin-left: $spacing-6;      }    }  }}// =================================================================// BLOCK CARD (Canvas Item)// =================================================================.block-item {  position: relative;  padding: $spacing-4;  background-color: white;  border: 1px solid $gray-200;  border-radius: $border-radius-lg;  box-shadow: $shadow-md;  width: 100%;  max-width: 20rem;  transition: all $transition-normal;  cursor: pointer;  min-height: 8rem;  &:hover {    box-shadow: $shadow-lg;    border-color: $blue-300;  }  &--selected {    border-color: $blue-500;    box-shadow: 0 0 0 2px $blue-500;  }  &__tools {    position: absolute;    top: -10px;    left: 50%;    transform: translateX(-50%);    display: flex;    gap: $spacing-1;    opacity: 0;    transition: opacity $transition-fast;    z-index: $z-index-floating;  }  &:hover &__tools {    opacity: 1;  }  &__tool-btn {    padding: $spacing-1;    background-color: white;    border: 1px solid $gray-300;    border-radius: $border-radius-md;    box-shadow: $shadow-md;    font-size: $font-size-xs;    &--edit {      color: $blue-500;    }    &--move {      color: $gray-500;      cursor: move;    }  }  &__type {    font-size: $font-size-xs;    font-weight: $font-weight-bold;    text-transform: uppercase;    color: $gray-300;    margin-bottom: $spacing-2;  }  &__content {    font-size: $font-size-base;    color: $gray-700;    line-height: 1.625;    margin-bottom: $spacing-4;    text-align: left;    pointer-events: none;  }  &__image {    margin-top: $spacing-2;    background-color: $gray-100;    @include flex-center;    border: 1px solid $gray-300;    border-radius: $border-radius-md;    height: 6rem;    pointer-events: none;    svg {      color: $gray-400;    }  }}// =================================================================// ADD ROW BUTTON// =================================================================.add-row-btn {  display: flex;  align-items: center;  justify-content: center;  gap: $spacing-2;  margin: $spacing-4 auto;  padding: $spacing-2 $spacing-5;  background: var(--bg-elevated);  border: 1px solid var(--border-color);  border-radius: $border-radius-full;  color: var(--text-secondary);  font-size: $font-size-sm;  font-weight: $font-weight-medium;  cursor: pointer;  transition: all $transition-normal;  box-shadow: $shadow-sm;  svg {    width: 16px;    height: 16px;    transition: transform $transition-fast;  }  &:hover {    background: $blue-500;    border-color: $blue-500;    color: white;    box-shadow: 0 4px 16px rgba($blue-500, 0.25);    transform: translateY(-1px);    svg {      transform: rotate(90deg);    }  }  &:active {    transform: translateY(0);    box-shadow: 0 2px 8px rgba($blue-500, 0.2);  }}// =================================================================// BORDER CONTROLLER// =================================================================.border-controller {  padding: $spacing-3 $spacing-4;  &__section {    display: flex;    flex-direction: column;    gap: $spacing-2;  }  &__row {    display: grid;    grid-template-columns: 44px 24px 24px 1fr 50px;    gap: $spacing-2;    align-items: center;    font-size: $font-size-xs;    &--corners {      grid-template-columns: 16px 50px 16px 50px;      justify-content: center;      gap: $spacing-3;      svg {        color: var(--text-secondary);      }    }  }  &__label {    font-size: $font-size-xs;    font-weight: $font-weight-medium;    color: var(--text-secondary);  }  &__icon-btn {    @include flex-center;    padding: $spacing-1;    border-radius: $border-radius-sm;    border: 1px solid transparent;    color: var(--text-secondary);    transition: all $transition-fast;    &:hover {      background-color: var(--bg-elevated);      border-color: var(--input-border);      color: var(--accent);    }    &.is-active {      background-color: var(--bg-elevated);      border-color: var(--input-border);      color: var(--accent);    }  }  &__slider {    width: 100%;    height: 4px;    background: var(--input-border);    border-radius: 4px;    cursor: pointer;    -webkit-appearance: none;    appearance: none;    border: none;    &::-webkit-slider-thumb {      -webkit-appearance: none;      width: 12px;      height: 12px;      background: var(--accent);      border-radius: 50%;      cursor: pointer;    }    &:disabled {      opacity: 0.5;      cursor: not-allowed;    }  }  &__input {    width: 100%;    padding: $spacing-1;    text-align: center;    font-size: $font-size-xs;    background-color: var(--input-bg);    border: 1px solid var(--input-border);    color: var(--input-text);    &:disabled {      opacity: 0.5;      cursor: not-allowed;    }  }  &__divider {    background: var(--border-color);    height: 1px;    border: none;    margin: $spacing-4 0;  }  &__borders-grid {    display: grid;    grid-template-columns: auto 1fr;    gap: $spacing-4;  }  &__sides {    display: grid;    grid-template-columns: repeat(3, 24px);    grid-template-rows: repeat(3, 24px);    gap: $spacing-1;    // Position buttons in cross pattern    button:nth-child(1) {      grid-column: 2;      grid-row: 1;    } // top    button:nth-child(2) {      grid-column: 3;      grid-row: 2;    } // right    button:nth-child(3) {      grid-column: 2;      grid-row: 3;    } // bottom    button:nth-child(4) {      grid-column: 1;      grid-row: 2;    } // left    button:nth-child(5) {      grid-column: 2;      grid-row: 2;    } // all  }  &__props {    display: grid;    grid-template-columns: auto 1fr;    gap: $spacing-2;    align-items: center;  }  &__prop-label {    font-size: $font-size-xs;    color: var(--text-secondary);    text-transform: capitalize;  }  &__style-toggle {    display: grid;    grid-template-columns: repeat(3, 1fr);    height: 28px;    border: 1px solid var(--input-border);    border-radius: $border-radius-md;    overflow: hidden;  }  &__style-btn {    @include flex-center;    color: var(--text-secondary);    transition: all $transition-fast;    border-right: 1px solid var(--input-border);    &:last-child {      border-right: none;    }    &:hover {      background-color: var(--bg-elevated);      color: var(--accent);    }    &.is-active {      background-color: var(--bg-elevated);      color: var(--accent);    }  }  &__width-input {    display: flex;    align-items: center;    gap: $spacing-1;    input {      width: 50px;      background-color: var(--input-bg);      border: 1px solid var(--input-border);      color: var(--input-text);    }  }  &__unit {    font-size: $font-size-xs;    color: var(--text-secondary);  }  &__color-picker {    width: 100%;    height: 28px;    background-color: var(--input-bg);    border: 1px solid var(--input-border);    border-radius: $border-radius-md;    cursor: pointer;    &:hover {      border-color: var(--text-secondary);    }  }}// =================================================================// SPACING CONTROL (Margin/Padding)// =================================================================.spacing-control {  &__merged {    display: flex;    align-items: center;    gap: $spacing-2;    margin-top: $spacing-2;  }  &__slider {    flex: 1;    height: 4px;    background: var(--input-border);    border-radius: 4px;    cursor: pointer;    -webkit-appearance: none;    appearance: none;    border: none;    &::-webkit-slider-thumb {      -webkit-appearance: none;      width: 12px;      height: 12px;      background: var(--accent);      border-radius: 50%;      cursor: pointer;    }  }  &__input-group {    display: flex;    align-items: center;    gap: $spacing-1;  }  &__input {    width: 50px;    padding: $spacing-1;    text-align: center;    font-size: $font-size-xs;    background-color: var(--input-bg);    border: 1px solid var(--input-border);    border-radius: $border-radius-md;    color: var(--input-text);  }  &__unit {    font-size: $font-size-xs;    color: var(--text-secondary);    min-width: 20px;  }  &__sides {    display: flex;    flex-direction: column;    gap: $spacing-2;    margin-top: $spacing-2;  }  &__side-row {    display: flex;    align-items: center;    gap: $spacing-2;  }  &__side-icon {    @include flex-center;    width: 20px;    color: var(--text-secondary);  }}// =================================================================// EXPORT DROPDOWN// =================================================================.export-dropdown {  position: relative;  &__menu {    position: absolute;    top: calc(100% + 4px);    right: 0;    min-width: 160px;    background-color: var(--bg-secondary);    border: 1px solid var(--border-color);    border-radius: $border-radius-lg;    box-shadow: $shadow-lg;    z-index: $z-index-dropdown;    overflow: hidden;    animation: dropdown-fade-in 150ms ease-out;  }  &__item {    display: flex;    align-items: center;    gap: $spacing-2;    width: 100%;    padding: $spacing-3 $spacing-4;    font-size: $font-size-sm;    color: var(--text-primary);    background: none;    border: none;    cursor: pointer;    transition: background-color $transition-fast;    &:hover {      background-color: var(--bg-elevated);    }    svg {      color: var(--text-secondary);    }  }}@keyframes dropdown-fade-in {  from {    opacity: 0;    transform: translateY(-4px);  }  to {    opacity: 1;    transform: translateY(0);  }}// =================================================================// EXPORT MODAL// =================================================================.export-modal-overlay {  position: fixed;  inset: 0;  background-color: rgba(0, 0, 0, 0.7);  backdrop-filter: blur(4px);  z-index: 100;  display: flex;  align-items: center;  justify-content: center;  padding: $spacing-4;  animation: modal-overlay-fade-in 200ms ease-out;}.export-modal {  background-color: #1e1e1e;  border-radius: $border-radius-lg;  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);  width: 100%;  max-width: 1000px;  max-height: 85vh;  display: flex;  flex-direction: column;  animation: modal-slide-in 200ms ease-out;  border: 1px solid #3c3c3c;  overflow: hidden;  &__header {    display: flex;    align-items: center;    justify-content: space-between;    padding: 0;    padding-right: $spacing-3;    background-color: #2d2d2d;    border-bottom: 1px solid #3c3c3c;    flex-shrink: 0;    height: 40px;  }  &__tabs {    display: flex;    height: 100%;  }  &__tab {    display: flex;    align-items: center;    gap: $spacing-1;    padding: 0 $spacing-4;    height: 100%;    background-color: transparent;    border: none;    border-right: 1px solid #3c3c3c;    font-size: $font-size-sm;    color: #858585;    cursor: pointer;    transition: all $transition-fast;    &:hover {      background-color: #3c3c3c;      color: #cccccc;    }    &.active {      background-color: #1e1e1e;      color: #cccccc;    }    svg {      width: 14px;      height: 14px;    }  }  &__info {    padding: $spacing-2 $spacing-4;    background-color: rgba(#4ec9b0, 0.1);    color: #4ec9b0;    font-size: $font-size-xs;    border-bottom: 1px solid #3c3c3c;    display: flex;    align-items: center;    gap: $spacing-2;    &--warning {      background-color: rgba(#d19a66, 0.1);      color: #d19a66;    }  }  &__file-tab {    display: flex;    align-items: center;    gap: $spacing-2;    padding: 0 $spacing-4;    height: 100%;    background-color: #1e1e1e;    border-right: 1px solid #3c3c3c;    font-size: $font-size-sm;    color: #cccccc;  }  &__file-icon {    color: #e06c75;    font-size: 12px;    font-weight: bold;  }  &__file-name {    color: #cccccc;  }  &__actions {    display: flex;    align-items: center;    gap: $spacing-2;  }  &__action-btn {    display: flex;    align-items: center;    gap: $spacing-1;    padding: 4px 10px;    background-color: transparent;    border: 1px solid #4d4d4d;    border-radius: $border-radius-sm;    font-size: $font-size-xs;    color: #cccccc;    cursor: pointer;    transition: all $transition-fast;    &:hover {      background-color: #3c3c3c;      border-color: #5a5a5a;    }    svg {      width: 14px;      height: 14px;      color: #858585;    }  }  &__close {    padding: $spacing-1;    color: #858585;    border-radius: $border-radius-sm;    transition: all $transition-fast;    &:hover {      background-color: #c42b1c;      color: white;    }  }  &__content {    flex: 1;    overflow: hidden;    background-color: #1e1e1e;  }  &__code {    width: 100%;    height: 100%;    min-height: 500px;    max-height: calc(85vh - 40px);    overflow: auto;    margin: 0;    padding: 0;    background-color: #1e1e1e;    font-family:      'JetBrains Mono', 'Fira Code', 'SF Mono', 'Monaco', 'Consolas', 'Ubuntu Mono', monospace;    font-size: 13px;    line-height: 1.5;    color: #d4d4d4;    // Line styling    .code-line {      display: flex;      min-height: 21px;      &:hover {        background-color: #2a2d2e;      }    }    .line-number {      display: inline-block;      min-width: 50px;      padding: 0 16px 0 16px;      text-align: right;      color: #858585;      background-color: #1e1e1e;      user-select: none;      border-right: 1px solid #3c3c3c;      flex-shrink: 0;    }    .line-content {      flex: 1;      padding-left: 16px;      white-space: pre;    }    .indent {      color: transparent;    }    // Syntax highlighting - WebStorm Darcula theme colors    .token-doctype {      color: #808080;    }    .token-comment {      color: #6a9955;      font-style: italic;    }    .token-bracket {      color: #808080;    }    .token-tag {      color: #e06c75;    }    .token-attr-name {      color: #d19a66;    }    .token-punctuation {      color: #abb2bf;    }    .token-attr-value {      color: #98c379;    }    .token-text {      color: #d4d4d4;    }    // CSS tokens    .token-css-bracket {      color: #d4d4d4;    }    .token-css-property {      color: #9cdcfe;    }    .token-css-value {      color: #ce9178;    }  }}@keyframes modal-overlay-fade-in {  from {    opacity: 0;  }  to {    opacity: 1;  }}@keyframes modal-slide-in {  from {    opacity: 0;    transform: scale(0.95) translateY(-10px);  }  to {    opacity: 1;    transform: scale(1) translateY(0);  }}// Send Test Modal.send-test-modal-overlay {  position: fixed;  inset: 0;  background-color: rgba(0, 0, 0, 0.7);  backdrop-filter: blur(4px);  z-index: 100;  display: flex;  align-items: center;  justify-content: center;  padding: $spacing-4;  animation: modal-overlay-fade-in 200ms ease-out;}.send-test-modal {  background-color: var(--bg-primary);  border-radius: $border-radius-lg;  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);  width: 100%;  max-width: 480px;  display: flex;  flex-direction: column;  animation: modal-slide-in 200ms ease-out;  border: 1px solid var(--border-color);  overflow: hidden;  &__header {    display: flex;    align-items: center;    justify-content: space-between;    padding: $spacing-4;    background-color: var(--bg-secondary);    border-bottom: 1px solid var(--border-color);  }  &__title {    display: flex;    align-items: center;    gap: $spacing-2;    font-size: $font-size-base;    font-weight: $font-weight-semibold;    color: var(--text-primary);    svg {      color: $blue-500;    }  }  &__close {    padding: $spacing-1;    color: var(--text-tertiary);    border-radius: $border-radius-sm;    transition: all $transition-fast;    &:hover {      background-color: #c42b1c;      color: white;    }  }  &__content {    padding: $spacing-5;    display: flex;    flex-direction: column;    gap: $spacing-4;  }  &__description {    font-size: $font-size-sm;    color: var(--text-secondary);    line-height: 1.5;    margin: 0;  }  &__field {    display: flex;    flex-direction: column;    gap: $spacing-2;    label {      font-size: $font-size-sm;      font-weight: $font-weight-medium;      color: var(--text-primary);    }    input {      padding: $spacing-3;      background-color: var(--bg-tertiary);      border: 1px solid var(--border-color);      border-radius: $border-radius-md;      font-size: $font-size-sm;      color: var(--text-primary);      transition: all $transition-fast;      &::placeholder {        color: var(--text-tertiary);      }      &:focus {        outline: none;        border-color: $blue-500;        box-shadow: 0 0 0 3px rgba($blue-500, 0.15);      }      &:disabled {        opacity: 0.6;        cursor: not-allowed;      }    }  }  &__hint {    font-size: $font-size-xs;    color: var(--text-tertiary);    a {      color: $blue-500;      text-decoration: none;      &:hover {        text-decoration: underline;      }    }  }  &__message {    display: flex;    align-items: center;    gap: $spacing-2;    padding: $spacing-3;    border-radius: $border-radius-md;    font-size: $font-size-sm;    &--error {      background-color: rgba($red-500, 0.1);      color: $red-500;      border: 1px solid rgba($red-500, 0.2);    }    &--success {      background-color: rgba($green-500, 0.1);      color: $green-500;      border: 1px solid rgba($green-500, 0.2);    }  }  &__footer {    display: flex;    justify-content: flex-end;    gap: $spacing-3;    padding: $spacing-4;    background-color: var(--bg-secondary);    border-top: 1px solid var(--border-color);  }}// Spin animation for loading state@keyframes spin {  from {    transform: rotate(0deg);  }  to {    transform: rotate(360deg);  }}.spin,.animate-spin {  animation: spin 1s linear infinite;}
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'templates-library';
+@use 'start-templates';
+
+html {
+  overflow: hidden;
+}
+// =================================================================
+// GLOBAL RESET & BASE
+// =================================================================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Dark mode colors
+$dark-bg: #1f2124;
+$dark-bg-darker: #0c0d0e;
+
+// CSS Custom Properties for theming
+:root {
+  // Dark theme (default)
+  --bg-primary: #{$dark-bg};
+  --bg-secondary: #{$dark-bg-darker};
+  --bg-elevated: #{$gray-800};
+  --text-primary: #{$gray-300};
+  --text-secondary: #{$gray-500};
+  --text-muted: #{$gray-600};
+  --border-color: #{$dark-bg-darker};
+  --border-subtle: #{$gray-800};
+  --input-bg: #{$dark-bg-darker};
+  --input-border: #{$gray-700};
+  --input-text: #{$gray-200};
+  --accent: #{$blue-400};
+  --accent-hover: #{$blue-300};
+  // Scrollbar colors
+  --scrollbar-track: #{$dark-bg-darker};
+  --scrollbar-thumb: #{$gray-700};
+  --scrollbar-thumb-hover: #{$gray-600};
+}
+
+:root[data-theme='light'] {
+  --bg-primary: #{$gray-50};
+  --bg-secondary: white;
+  --bg-elevated: #{$gray-100};
+  --text-primary: #{$gray-800};
+  --text-secondary: #{$gray-600};
+  --text-muted: #{$gray-500};
+  --border-color: #{$gray-200};
+  --border-subtle: #{$gray-100};
+  --input-bg: #{$gray-50};
+  --input-border: #{$gray-300};
+  --input-text: #{$gray-700};
+  --accent: #{$blue-600};
+  --accent-hover: #{$blue-700};
+  // Scrollbar colors
+  --scrollbar-track: #{$gray-100};
+  --scrollbar-thumb: #{$gray-300};
+  --scrollbar-thumb-hover: #{$gray-400};
+}
+
+// Custom Scrollbar Styles
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+  border: 2px solid var(--scrollbar-track);
+
+  &:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+body {
+  font-family: $font-family-base;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input,
+select {
+  @include input-base;
+}
+
+// Prevent selection during drag
+[draggable='true'] {
+  user-select: none;
+}
+
+// =================================================================
+// APP LAYOUT
+// =================================================================
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-primary);
+  overflow: hidden;
+}
+
+.main-content {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+// =================================================================
+// HEADER BAR
+// =================================================================
+
+.header-bar {
+  height: 3rem;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 $spacing-3;
+  box-shadow: $shadow-sm;
+  @include flex-between;
+  flex-shrink: 0;
+  z-index: $z-index-header;
+
+  &__left {
+    @include flex-start;
+    gap: $spacing-2;
+  }
+
+  &__center {
+    @include flex-center;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--input-border);
+    border-radius: $border-radius-lg;
+    background-color: var(--bg-primary);
+  }
+
+  &__right {
+    @include flex-start;
+    gap: $spacing-2;
+  }
+
+  &__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
+    display: none;
+
+    @include sm {
+      display: block;
+    }
+  }
+}
+
+// Device View Buttons
+.btn-device {
+  padding: 6px;
+  border-radius: $border-radius-md;
+  transition: all $transition-fast;
+  color: var(--text-secondary);
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+  }
+
+  &--active {
+    background-color: var(--bg-elevated);
+    color: var(--accent);
+  }
+}
+
+// Action Buttons
+.btn-primary {
+  @include btn-primary;
+
+  span {
+    display: none;
+
+    @include sm {
+      display: inline;
+    }
+  }
+}
+
+.btn-secondary {
+  @include btn-secondary;
+
+  span {
+    display: none;
+
+    @include sm {
+      display: inline;
+    }
+  }
+}
+
+.btn-ghost {
+  @include btn-ghost;
+}
+
+// Disabled button states
+.btn-ghost:disabled,
+.btn-secondary:disabled,
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+// =================================================================
+// SIDEBAR PANELS
+// =================================================================
+
+.sidebar {
+  width: 20rem;
+  background-color: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  box-shadow: 5px 0 10px -5px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &__header {
+    padding: $spacing-4;
+    border-bottom: 1px solid var(--border-color);
+    @include flex-between;
+  }
+
+  &__title {
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
+  }
+
+  &__back {
+    @include flex-start;
+    cursor: pointer;
+
+    svg {
+      color: var(--text-secondary);
+      margin-right: $spacing-2;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  &__hint {
+    font-size: $font-size-xs;
+    color: var(--text-secondary);
+    margin-top: $spacing-1;
+  }
+
+  &__footer {
+    padding: $spacing-4;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+
+    p {
+      font-size: $font-size-xs;
+      color: var(--text-secondary);
+    }
+  }
+
+  &__section-header {
+    padding: $spacing-3 $spacing-4;
+    border-top: 1px solid var(--border-color);
+    margin-top: $spacing-2;
+  }
+
+  &__subtitle {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// Device Indicator
+.device-indicator {
+  @include flex-center;
+  padding: $spacing-2;
+  background-color: rgba($blue-500, 0.1);
+  border-bottom: 1px solid var(--border-color);
+
+  &__text {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--accent);
+    @include flex-center;
+  }
+
+  &__device {
+    margin-left: $spacing-1;
+    font-weight: $font-weight-semibold;
+    text-transform: capitalize;
+  }
+}
+
+// Tab Navigation
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+
+  &__btn {
+    flex: 1;
+    padding: $spacing-3;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--text-secondary);
+    transition: color $transition-fast;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      color: var(--text-primary);
+    }
+
+    &--active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+  }
+}
+
+.tab-content {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+// =================================================================
+// BLOCK SELECT PANEL
+// =================================================================
+
+.block-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-3;
+  padding: $spacing-4;
+}
+
+.block-card {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-4;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-sm;
+  cursor: grab;
+  transition: all $transition-fast;
+  user-select: none;
+
+  &:hover {
+    background-color: var(--bg-elevated);
+    box-shadow: $shadow-md;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &__icon {
+    margin-bottom: $spacing-2;
+
+    &--blue {
+      color: $blue-400;
+    }
+    &--gray {
+      color: $gray-400;
+    }
+    &--orange {
+      color: $orange-500;
+    }
+    &--green {
+      color: $green-500;
+    }
+    &--indigo {
+      color: $indigo-500;
+    }
+    &--teal {
+      color: $teal-500;
+    }
+    &--red {
+      color: $red-500;
+    }
+    &--yellow {
+      color: $yellow-500;
+    }
+    &--purple {
+      color: $purple-500;
+    }
+    &--pink {
+      color: $pink-500;
+    }
+  }
+
+  &__name {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--text-primary);
+    text-align: center;
+  }
+
+  &--saved {
+    position: relative;
+    border-color: rgba($purple-500, 0.3);
+    background: linear-gradient(135deg, rgba($purple-500, 0.05) 0%, transparent 100%);
+
+    &:hover {
+      border-color: rgba($purple-500, 0.5);
+
+      .block-card__delete {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__delete {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: $border-radius-sm;
+    background: rgba($red-500, 0.1);
+    color: $red-500;
+    opacity: 0;
+    transition: all $transition-fast;
+    @include flex-center;
+
+    &:hover {
+      background: $red-500;
+      color: white;
+    }
+  }
+
+  &--cyan {
+    color: $teal-500;
+  }
+}
+
+// =================================================================
+// STYLE CONTROLS
+// =================================================================
+
+.style-field {
+  padding: $spacing-2 $spacing-4;
+  border-bottom: 1px solid var(--border-color);
+
+  &__header {
+    @include flex-between;
+  }
+
+  &__label {
+    @include flex-start;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: var(--text-primary);
+  }
+
+  &__actions {
+    @include flex-start;
+    gap: $spacing-2;
+  }
+
+  &__link {
+    font-size: $font-size-xs;
+    color: var(--accent);
+    cursor: pointer;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: var(--accent-hover);
+    }
+  }
+}
+
+// Responsive Icon
+.responsive-icon {
+  margin-left: $spacing-2;
+
+  &--desktop {
+    color: $blue-500;
+  }
+  &--tablet {
+    color: $green-500;
+  }
+  &--mobile {
+    color: $red-500;
+  }
+}
+
+// Side Value Control (Margin/Padding)
+.side-control {
+  @include flex-start;
+  padding: $spacing-1 0;
+
+  &__indicator {
+    font-size: $font-size-lg;
+    line-height: 1;
+    padding-right: $spacing-1;
+    color: var(--text-secondary);
+    width: 1.5rem;
+    text-align: center;
+
+    &--top {
+      transform: rotate(90deg);
+    }
+    &--bottom {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__slider {
+    flex-grow: 1;
+    height: 4px;
+    background: var(--input-border);
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: $spacing-2;
+    -webkit-appearance: none;
+    appearance: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+      margin-top: -4px;
+      box-shadow: 0 0 0 3px rgba($blue-500, 0.2);
+    }
+  }
+
+  &__input {
+    width: 3rem;
+    padding: $spacing-1;
+    text-align: center;
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
+    flex-shrink: 0;
+  }
+
+  &__unit {
+    font-size: $font-size-sm;
+    color: var(--text-secondary);
+    margin-left: $spacing-1;
+    flex-shrink: 0;
+  }
+}
+
+// Expand/Collapse Toggle
+.btn-toggle {
+  padding: $spacing-1;
+  color: var(--text-secondary);
+  border: none;
+  border-radius: $border-radius-sm;
+  background-color: transparent;
+  transition: all $transition-fast;
+
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+// Dimension Controls
+.dimension-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: $spacing-2;
+  row-gap: $spacing-4;
+}
+
+.dimension-input {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--text-secondary);
+    margin-bottom: $spacing-1;
+  }
+
+  &__group {
+    @include flex-start;
+    gap: $spacing-1;
+
+    input {
+      width: 100%;
+      height: 25px;
+      padding: $spacing-1 $spacing-2;
+      background-color: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: $border-radius-md;
+      color: var(--input-text);
+      font-size: $font-size-sm;
+    }
+  }
+
+  &__unit {
+    font-size: $font-size-sm;
+    color: var(--text-secondary);
+    padding-right: $spacing-1;
+    flex-shrink: 0;
+  }
+}
+
+// Unit Dropdown
+.unit-dropdown {
+  position: relative;
+  font-size: $font-size-sm;
+
+  select {
+    appearance: none;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: $border-radius-md;
+    padding: $spacing-1;
+    padding-right: $spacing-6;
+    color: var(--input-text);
+  }
+
+  &__icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    @include flex-center;
+    padding-right: $spacing-1;
+    pointer-events: none;
+    color: var(--text-secondary);
+  }
+}
+
+// Alignment Controls
+.align-group {
+  display: flex;
+  gap: $spacing-2;
+  padding: $spacing-1;
+  background-color: var(--bg-elevated);
+  border-radius: $border-radius-lg;
+  width: fit-content;
+}
+
+.align-btn {
+  padding: $spacing-2;
+  border-radius: $border-radius-md;
+  color: var(--text-primary);
+  transition:
+    background-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &:hover {
+    background-color: var(--input-bg);
+  }
+
+  &--active {
+    background-color: var(--bg-secondary);
+    box-shadow: $shadow-md;
+  }
+}
+
+// Border Radius Controls
+.radius-controls {
+  @include flex-start;
+  gap: $spacing-3;
+}
+
+.btn-border-style {
+  padding: $spacing-1;
+  border: 1px solid var(--input-border);
+  border-radius: $border-radius-sm;
+  color: var(--text-primary);
+  background-color: var(--input-bg);
+  transition: all $transition-fast;
+  box-shadow: $shadow-sm;
+
+  &:hover {
+    background-color: var(--bg-elevated);
+  }
+}
+
+// Border Side Controls
+.borders-group {
+  display: flex;
+  gap: $spacing-4;
+}
+
+.borders-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: $spacing-1;
+  padding: $spacing-1;
+  border: 1px solid var(--input-border);
+  border-radius: $border-radius-lg;
+  background-color: var(--input-bg);
+  height: fit-content;
+  width: fit-content;
+
+  &__cell {
+    &--top,
+    &--bottom {
+      grid-column: 1 / span 3;
+      @include flex-center;
+    }
+  }
+}
+
+.border-side-btn {
+  @include flex-center;
+  padding: $spacing-1;
+  border-radius: $border-radius-sm;
+  color: var(--text-secondary);
+  transition: all 100ms;
+
+  &:hover:not(.border-side-btn--active) {
+    background-color: var(--bg-elevated);
+  }
+
+  &--active {
+    color: $blue-500;
+    background-color: rgba($blue-100, 0.7);
+  }
+
+  &__box {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--text-secondary);
+    border-radius: 2px;
+    @include flex-center;
+  }
+
+  &__inner {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    background-color: transparent;
+
+    &--active {
+      border-color: $blue-500;
+      background-color: $blue-100;
+    }
+  }
+}
+
+.border-inputs {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3;
+
+  &__label {
+    display: block;
+    font-size: $font-size-xs;
+    color: var(--text-secondary);
+    margin-bottom: $spacing-1;
+  }
+}
+
+.style-toggle {
+  display: flex;
+  gap: $spacing-1;
+  padding: $spacing-1;
+  background-color: var(--bg-elevated);
+  border-radius: $border-radius-lg;
+  border: 1px solid var(--input-border);
+
+  &__btn {
+    width: 33.333%;
+    padding: $spacing-1;
+    border-radius: $border-radius-md;
+    color: var(--text-primary);
+    transition: background-color $transition-fast;
+    @include flex-center;
+
+    &:hover {
+      background-color: var(--input-bg);
+    }
+
+    &--active {
+      background-color: var(--input-bg);
+      box-shadow: $shadow-sm;
+      border: 1px solid var(--input-border);
+    }
+  }
+}
+
+.input-with-unit {
+  @include flex-start;
+
+  input {
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--input-text);
+  }
+}
+
+.color-picker-placeholder {
+  width: 100%;
+  height: 2rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: $border-radius-md;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.color-swatch {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: $border-radius-full;
+  border: 1px solid var(--input-border);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+// Block Wrapper Preview (Content Tab)
+.block-wrapper-preview {
+  padding: $spacing-3;
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--input-border);
+  border-radius: $border-radius-md;
+  @include flex-between;
+
+  span {
+    font-size: $font-size-sm;
+    color: var(--text-primary);
+  }
+
+  svg {
+    color: var(--text-secondary);
+  }
+}
+
+// =================================================================
+// CANVAS AREA
+// =================================================================
+
+.canvas {
+  flex-grow: 1;
+  background-color: $gray-50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-4 $spacing-6;
+  overflow-y: auto;
+
+  &--desktop {
+    padding: 0;
+
+    .viewport--desktop {
+      height: 100%;
+      min-height: 100%;
+    }
+
+    .canvas__footer {
+      display: none;
+    }
+  }
+
+  &__footer {
+    margin-top: 2.5rem;
+    font-size: $font-size-sm;
+    color: $gray-500;
+
+    span {
+      font-weight: $font-weight-semibold;
+      text-transform: capitalize;
+    }
+  }
+}
+
+// Viewport Frame
+.viewport {
+  background-color: white;
+  box-shadow: $shadow-xl;
+  transition: all $transition-slow;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  min-height: 600px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &--desktop {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    align-items: center;
+    justify-content: flex-start;
+
+    .viewport__content {
+      max-width: 80rem;
+      width: 100%;
+    }
+  }
+
+  // iPad Pro style
+  &--tablet {
+    width: 834px;
+    max-width: calc(100% - 2rem);
+    min-height: 700px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #2c2c2e 0%, #1c1c1e 100%);
+    padding: 12px;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.1),
+      0 0 0 2px #000,
+      0 50px 100px -20px rgba(0, 0, 0, 0.6),
+      0 30px 60px -30px rgba(0, 0, 0, 0.5);
+    overflow: visible;
+
+    // Front camera (centered for iPad)
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 5px;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #1a1a1a 40%, #0a0a0a 100%);
+      border-radius: 50%;
+      box-shadow:
+        inset 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+      z-index: 10;
+    }
+
+    .viewport__screen {
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      overflow-y: auto;
+      height: 100%;
+      min-height: 676px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // iPhone 15 Pro style
+  &--mobile {
+    width: 393px;
+    max-width: calc(100% - 2rem);
+    min-height: 700px;
+    border-radius: 54px;
+    background: linear-gradient(180deg, #1f1f1f 0%, #0f0f0f 100%);
+    padding: 12px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15),
+      0 0 0 2px #000,
+      0 0 0 4px #1a1a1a,
+      0 50px 100px -20px rgba(0, 0, 0, 0.7),
+      0 30px 60px -30px rgba(0, 0, 0, 0.5);
+    overflow: visible;
+
+    // Dynamic Island
+    &::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 37px;
+      background: #000;
+      border-radius: 24px;
+      z-index: 20;
+      box-shadow:
+        inset 0 0 8px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    // Home indicator
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 5px;
+      background: linear-gradient(90deg, #3a3a3c 0%, #48484a 50%, #3a3a3c 100%);
+      border-radius: 3px;
+      z-index: 20;
+    }
+
+    .viewport__screen {
+      background-color: white;
+      border-radius: 44px;
+      overflow: hidden;
+      overflow-y: auto;
+      height: 100%;
+      min-height: 676px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+
+      // Status bar area padding
+      &::before {
+        content: '';
+        display: block;
+        height: 50px;
+        width: 100%;
+        background: transparent;
+      }
+    }
+  }
+
+  &__screen {
+    height: 100%;
+    min-height: 600px;
+  }
+
+  &__content {
+    padding: $spacing-4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    @include sm {
+      padding: $spacing-6;
+    }
+  }
+}
+
+// =================================================================
+// ROW CONTAINER
+// =================================================================
+
+.row {
+  position: relative;
+  padding: $spacing-6;
+  margin-bottom: $spacing-4;
+  width: 100%;
+  border-radius: $border-radius-xl;
+  transition: all $transition-normal;
+  min-height: 150px;
+  border: 2px dashed transparent;
+
+  &:hover {
+    border-color: $blue-300;
+    background-color: rgba($blue-50, 0.3);
+  }
+
+  &--selected {
+    border-color: $blue-500;
+    border-style: solid;
+    background-color: rgba($blue-50, 0.3);
+  }
+
+  &--dragover {
+    border-color: $blue-500;
+    border-style: solid;
+    background-color: rgba($blue-50, 0.5);
+  }
+
+  &__actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $spacing-1;
+    background-color: white;
+    border: 1px solid $gray-200;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: $border-radius-lg;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: $shadow-sm;
+    display: flex;
+    gap: $spacing-1;
+    z-index: $z-index-dropdown;
+    opacity: 0;
+    transition: opacity $transition-fast;
+
+    span {
+      font-size: $font-size-xs;
+      color: $gray-400;
+      padding: 0 $spacing-2;
+      @include flex-center;
+    }
+  }
+
+  &:hover &__actions {
+    opacity: 1;
+  }
+
+  &__empty {
+    height: 100%;
+    @include flex-center;
+    flex-direction: column;
+    color: $gray-400;
+    border: 2px dashed $gray-200;
+    border-radius: $border-radius-lg;
+    padding: $spacing-4;
+  }
+
+  &__blocks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: $spacing-4;
+    height: 100%;
+
+    @include sm {
+      flex-direction: row;
+      gap: 0;
+
+      > * + * {
+        margin-left: $spacing-4;
+      }
+    }
+
+    @include md {
+      > * + * {
+        margin-left: $spacing-6;
+      }
+    }
+  }
+}
+
+// =================================================================
+// BLOCK CARD (Canvas Item)
+// =================================================================
+
+.block-item {
+  position: relative;
+  padding: $spacing-4;
+  background-color: white;
+  border: 1px solid $gray-200;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-md;
+  width: 100%;
+  max-width: 20rem;
+  transition: all $transition-normal;
+  cursor: pointer;
+  min-height: 8rem;
+
+  &:hover {
+    box-shadow: $shadow-lg;
+    border-color: $blue-300;
+  }
+
+  &--selected {
+    border-color: $blue-500;
+    box-shadow: 0 0 0 2px $blue-500;
+  }
+
+  &__tools {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: $spacing-1;
+    opacity: 0;
+    transition: opacity $transition-fast;
+    z-index: $z-index-floating;
+  }
+
+  &:hover &__tools {
+    opacity: 1;
+  }
+
+  &__tool-btn {
+    padding: $spacing-1;
+    background-color: white;
+    border: 1px solid $gray-300;
+    border-radius: $border-radius-md;
+    box-shadow: $shadow-md;
+    font-size: $font-size-xs;
+
+    &--edit {
+      color: $blue-500;
+    }
+
+    &--move {
+      color: $gray-500;
+      cursor: move;
+    }
+  }
+
+  &__type {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    color: $gray-300;
+    margin-bottom: $spacing-2;
+  }
+
+  &__content {
+    font-size: $font-size-base;
+    color: $gray-700;
+    line-height: 1.625;
+    margin-bottom: $spacing-4;
+    text-align: left;
+    pointer-events: none;
+  }
+
+  &__image {
+    margin-top: $spacing-2;
+    background-color: $gray-100;
+    @include flex-center;
+    border: 1px solid $gray-300;
+    border-radius: $border-radius-md;
+    height: 6rem;
+    pointer-events: none;
+
+    svg {
+      color: $gray-400;
+    }
+  }
+}
+
+// =================================================================
+// ADD ROW BUTTON
+// =================================================================
+
+.add-row-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  margin: $spacing-4 auto;
+  padding: $spacing-2 $spacing-5;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: $border-radius-full;
+  color: var(--text-secondary);
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-normal;
+  box-shadow: $shadow-sm;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    transition: transform $transition-fast;
+  }
+
+  &:hover {
+    background: $blue-500;
+    border-color: $blue-500;
+    color: white;
+    box-shadow: 0 4px 16px rgba($blue-500, 0.25);
+    transform: translateY(-1px);
+
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba($blue-500, 0.2);
+  }
+}
+
+// =================================================================
+// BORDER CONTROLLER
+// =================================================================
+
+.border-controller {
+  padding: $spacing-3 $spacing-4;
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 44px 24px 24px 1fr 50px;
+    gap: $spacing-2;
+    align-items: center;
+    font-size: $font-size-xs;
+
+    &--corners {
+      grid-template-columns: 16px 50px 16px 50px;
+      justify-content: center;
+      gap: $spacing-3;
+
+      svg {
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    color: var(--text-secondary);
+  }
+
+  &__icon-btn {
+    @include flex-center;
+    padding: $spacing-1;
+    border-radius: $border-radius-sm;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: var(--bg-elevated);
+      border-color: var(--input-border);
+      color: var(--accent);
+    }
+
+    &.is-active {
+      background-color: var(--bg-elevated);
+      border-color: var(--input-border);
+      color: var(--accent);
+    }
+  }
+
+  &__slider {
+    width: 100%;
+    height: 4px;
+    background: var(--input-border);
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: $spacing-1;
+    text-align: center;
+    font-size: $font-size-xs;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--input-text);
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__divider {
+    background: var(--border-color);
+    height: 1px;
+    border: none;
+    margin: $spacing-4 0;
+  }
+
+  &__borders-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: $spacing-4;
+  }
+
+  &__sides {
+    display: grid;
+    grid-template-columns: repeat(3, 24px);
+    grid-template-rows: repeat(3, 24px);
+    gap: $spacing-1;
+
+    // Position buttons in cross pattern
+    button:nth-child(1) {
+      grid-column: 2;
+      grid-row: 1;
+    } // top
+    button:nth-child(2) {
+      grid-column: 3;
+      grid-row: 2;
+    } // right
+    button:nth-child(3) {
+      grid-column: 2;
+      grid-row: 3;
+    } // bottom
+    button:nth-child(4) {
+      grid-column: 1;
+      grid-row: 2;
+    } // left
+    button:nth-child(5) {
+      grid-column: 2;
+      grid-row: 2;
+    } // all
+  }
+
+  &__props {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: $spacing-2;
+    align-items: center;
+  }
+
+  &__prop-label {
+    font-size: $font-size-xs;
+    color: var(--text-secondary);
+    text-transform: capitalize;
+  }
+
+  &__style-toggle {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 28px;
+    border: 1px solid var(--input-border);
+    border-radius: $border-radius-md;
+    overflow: hidden;
+  }
+
+  &__style-btn {
+    @include flex-center;
+    color: var(--text-secondary);
+    transition: all $transition-fast;
+    border-right: 1px solid var(--input-border);
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &:hover {
+      background-color: var(--bg-elevated);
+      color: var(--accent);
+    }
+
+    &.is-active {
+      background-color: var(--bg-elevated);
+      color: var(--accent);
+    }
+  }
+
+  &__width-input {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+
+    input {
+      width: 50px;
+      background-color: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--input-text);
+    }
+  }
+
+  &__unit {
+    font-size: $font-size-xs;
+    color: var(--text-secondary);
+  }
+
+  &__color-picker {
+    width: 100%;
+    height: 28px;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: $border-radius-md;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--text-secondary);
+    }
+  }
+}
+
+// =================================================================
+// SPACING CONTROL (Margin/Padding)
+// =================================================================
+
+.spacing-control {
+  &__merged {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    margin-top: $spacing-2;
+  }
+
+  &__slider {
+    flex: 1;
+    height: 4px;
+    background: var(--input-border);
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+
+  &__input-group {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+  }
+
+  &__input {
+    width: 50px;
+    padding: $spacing-1;
+    text-align: center;
+    font-size: $font-size-xs;
+    background-color: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: $border-radius-md;
+    color: var(--input-text);
+  }
+
+  &__unit {
+    font-size: $font-size-xs;
+    color: var(--text-secondary);
+    min-width: 20px;
+  }
+
+  &__sides {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+    margin-top: $spacing-2;
+  }
+
+  &__side-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__side-icon {
+    @include flex-center;
+    width: 20px;
+    color: var(--text-secondary);
+  }
+}
+
+// =================================================================
+// EXPORT DROPDOWN
+// =================================================================
+
+.export-dropdown {
+  position: relative;
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 160px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius-lg;
+    box-shadow: $shadow-lg;
+    z-index: $z-index-dropdown;
+    overflow: hidden;
+    animation: dropdown-fade-in 150ms ease-out;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    font-size: $font-size-sm;
+    color: var(--text-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color $transition-fast;
+
+    &:hover {
+      background-color: var(--bg-elevated);
+    }
+
+    svg {
+      color: var(--text-secondary);
+    }
+  }
+}
+
+@keyframes dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// =================================================================
+// EXPORT MODAL
+// =================================================================
+
+.export-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-4;
+  animation: modal-overlay-fade-in 200ms ease-out;
+}
+
+.export-modal {
+  background-color: #1e1e1e;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 1000px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  animation: modal-slide-in 200ms ease-out;
+  border: 1px solid #3c3c3c;
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    padding-right: $spacing-3;
+    background-color: #2d2d2d;
+    border-bottom: 1px solid #3c3c3c;
+    flex-shrink: 0;
+    height: 40px;
+  }
+
+  &__tabs {
+    display: flex;
+    height: 100%;
+  }
+
+  &__tab {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+    padding: 0 $spacing-4;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    border-right: 1px solid #3c3c3c;
+    font-size: $font-size-sm;
+    color: #858585;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: #3c3c3c;
+      color: #cccccc;
+    }
+
+    &.active {
+      background-color: #1e1e1e;
+      color: #cccccc;
+    }
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
+  &__info {
+    padding: $spacing-2 $spacing-4;
+    background-color: rgba(#4ec9b0, 0.1);
+    color: #4ec9b0;
+    font-size: $font-size-xs;
+    border-bottom: 1px solid #3c3c3c;
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+
+    &--warning {
+      background-color: rgba(#d19a66, 0.1);
+      color: #d19a66;
+    }
+  }
+
+  &__file-tab {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    padding: 0 $spacing-4;
+    height: 100%;
+    background-color: #1e1e1e;
+    border-right: 1px solid #3c3c3c;
+    font-size: $font-size-sm;
+    color: #cccccc;
+  }
+
+  &__file-icon {
+    color: #e06c75;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  &__file-name {
+    color: #cccccc;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+  }
+
+  &__action-btn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-1;
+    padding: 4px 10px;
+    background-color: transparent;
+    border: 1px solid #4d4d4d;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    color: #cccccc;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: #3c3c3c;
+      border-color: #5a5a5a;
+    }
+
+    svg {
+      width: 14px;
+      height: 14px;
+      color: #858585;
+    }
+  }
+
+  &__close {
+    padding: $spacing-1;
+    color: #858585;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: #c42b1c;
+      color: white;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow: hidden;
+    background-color: #1e1e1e;
+  }
+
+  &__code {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    max-height: calc(85vh - 40px);
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+    font-family:
+      'JetBrains Mono', 'Fira Code', 'SF Mono', 'Monaco', 'Consolas', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #d4d4d4;
+
+    // Line styling
+    .code-line {
+      display: flex;
+      min-height: 21px;
+
+      &:hover {
+        background-color: #2a2d2e;
+      }
+    }
+
+    .line-number {
+      display: inline-block;
+      min-width: 50px;
+      padding: 0 16px 0 16px;
+      text-align: right;
+      color: #858585;
+      background-color: #1e1e1e;
+      user-select: none;
+      border-right: 1px solid #3c3c3c;
+      flex-shrink: 0;
+    }
+
+    .line-content {
+      flex: 1;
+      padding-left: 16px;
+      white-space: pre;
+    }
+
+    .indent {
+      color: transparent;
+    }
+
+    // Syntax highlighting - WebStorm Darcula theme colors
+    .token-doctype {
+      color: #808080;
+    }
+
+    .token-comment {
+      color: #6a9955;
+      font-style: italic;
+    }
+
+    .token-bracket {
+      color: #808080;
+    }
+
+    .token-tag {
+      color: #e06c75;
+    }
+
+    .token-attr-name {
+      color: #d19a66;
+    }
+
+    .token-punctuation {
+      color: #abb2bf;
+    }
+
+    .token-attr-value {
+      color: #98c379;
+    }
+
+    .token-text {
+      color: #d4d4d4;
+    }
+
+    // CSS tokens
+    .token-css-bracket {
+      color: #d4d4d4;
+    }
+
+    .token-css-property {
+      color: #9cdcfe;
+    }
+
+    .token-css-value {
+      color: #ce9178;
+    }
+  }
+}
+
+@keyframes modal-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-slide-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+// Send Test Modal
+.send-test-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-4;
+  animation: modal-overlay-fade-in 200ms ease-out;
+}
+
+.send-test-modal {
+  background-color: var(--bg-primary);
+  border-radius: $border-radius-lg;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  animation: modal-slide-in 200ms ease-out;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-4;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    font-size: $font-size-base;
+    font-weight: $font-weight-semibold;
+    color: var(--text-primary);
+
+    svg {
+      color: $blue-500;
+    }
+  }
+
+  &__close {
+    padding: $spacing-1;
+    color: var(--text-tertiary);
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: #c42b1c;
+      color: white;
+    }
+  }
+
+  &__content {
+    padding: $spacing-5;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-4;
+  }
+
+  &__description {
+    font-size: $font-size-sm;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    label {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: var(--text-primary);
+    }
+
+    input {
+      padding: $spacing-3;
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: $border-radius-md;
+      font-size: $font-size-sm;
+      color: var(--text-primary);
+      transition: all $transition-fast;
+
+      &::placeholder {
+        color: var(--text-tertiary);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $blue-500;
+        box-shadow: 0 0 0 3px rgba($blue-500, 0.15);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &__hint {
+    font-size: $font-size-xs;
+    color: var(--text-tertiary);
+
+    a {
+      color: $blue-500;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__message {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    padding: $spacing-3;
+    border-radius: $border-radius-md;
+    font-size: $font-size-sm;
+
+    &--error {
+      background-color: rgba($red-500, 0.1);
+      color: $red-500;
+      border: 1px solid rgba($red-500, 0.2);
+    }
+
+    &--success {
+      background-color: rgba($green-500, 0.1);
+      color: $green-500;
+      border: 1px solid rgba($green-500, 0.2);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-3;
+    padding: $spacing-4;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+  }
+}
+
+// Spin animation for loading state
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin,
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

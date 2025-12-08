@@ -1,1 +1,525 @@
-import { observer } from 'mobx-react-lite';import { useState } from 'react';import styled from 'styled-components';import { ChevronLeft, Clock, History, Plus, RotateCcw, Save, Trash2 } from 'lucide-react';import { editorStore, type HistoryEntry, type Revision } from '../stores/EditorStore';import { tokens } from '../styles/tokens';interface HistoryPanelProps {  onClose: () => void;}const Container = styled.div`  width: 20rem;  height: 100%;  background: var(--bg-primary);  border-right: 1px solid var(--border-color);  display: flex;  flex-direction: column;  overflow: hidden;  .panel-header {    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};    border-bottom: 1px solid var(--border-color);    display: flex;    align-items: center;    gap: ${tokens.spacing[2]};    .back-btn {      color: var(--text-secondary);      padding: ${tokens.spacing[1]};      border-radius: ${tokens.borderRadius.sm};      transition: all ${tokens.transition.fast};      &:hover {        background: var(--bg-elevated);        color: var(--text-primary);      }    }    h2 {      font-size: ${tokens.fontSize.base};      font-weight: ${tokens.fontWeight.semibold};      color: var(--text-primary);      flex: 1;    }  }  .tabs {    display: flex;    border-bottom: 1px solid var(--border-color);    button {      flex: 1;      padding: ${tokens.spacing[3]};      font-size: ${tokens.fontSize.sm};      font-weight: ${tokens.fontWeight.medium};      color: var(--text-secondary);      border-bottom: 2px solid transparent;      transition: all ${tokens.transition.fast};      &:hover {        color: var(--text-primary);      }      &.active {        color: var(--accent);        border-bottom-color: var(--accent);      }    }  }  .content {    flex: 1;    overflow-y: auto;    padding: ${tokens.spacing[2]};  }  .empty-state {    display: flex;    flex-direction: column;    align-items: center;    justify-content: center;    padding: ${tokens.spacing[8]} ${tokens.spacing[4]};    color: var(--text-secondary);    text-align: center;    svg {      margin-bottom: ${tokens.spacing[3]};      opacity: 0.5;    }    p {      font-size: ${tokens.fontSize.sm};    }  }  .history-list {    display: flex;    flex-direction: column;    gap: ${tokens.spacing[1]};  }  .history-item {    display: flex;    align-items: center;    gap: ${tokens.spacing[2]};    padding: ${tokens.spacing[2]} ${tokens.spacing[3]};    border-radius: ${tokens.borderRadius.md};    cursor: pointer;    transition: all ${tokens.transition.fast};    &:hover {      background: var(--bg-elevated);    }    &.is-current {      background: rgba(59, 130, 246, 0.1);      border: 1px solid rgba(59, 130, 246, 0.3);    }    &.is-future {      opacity: 0.5;    }    .icon {      width: 28px;      height: 28px;      display: flex;      align-items: center;      justify-content: center;      border-radius: ${tokens.borderRadius.md};      background: var(--bg-elevated);      color: var(--text-secondary);      flex-shrink: 0;    }    .info {      flex: 1;      min-width: 0;      .action {        font-size: ${tokens.fontSize.sm};        font-weight: ${tokens.fontWeight.medium};        color: var(--text-primary);        white-space: nowrap;        overflow: hidden;        text-overflow: ellipsis;      }      .time {        font-size: ${tokens.fontSize.xs};        color: var(--text-secondary);      }    }  }  .revision-list {    display: flex;    flex-direction: column;    gap: ${tokens.spacing[2]};  }  .revision-item {    display: flex;    align-items: center;    gap: ${tokens.spacing[2]};    padding: ${tokens.spacing[3]};    background: var(--bg-secondary);    border: 1px solid var(--border-color);    border-radius: ${tokens.borderRadius.lg};    transition: all ${tokens.transition.fast};    &:hover {      border-color: var(--accent);      .actions {        opacity: 1;      }    }    .icon {      width: 36px;      height: 36px;      display: flex;      align-items: center;      justify-content: center;      border-radius: ${tokens.borderRadius.md};      background: linear-gradient(135deg, ${tokens.colors.blue[500]}, ${tokens.colors.indigo[500]});      color: white;      flex-shrink: 0;    }    .info {      flex: 1;      min-width: 0;      .name {        font-size: ${tokens.fontSize.sm};        font-weight: ${tokens.fontWeight.medium};        color: var(--text-primary);        white-space: nowrap;        overflow: hidden;        text-overflow: ellipsis;      }      .date {        font-size: ${tokens.fontSize.xs};        color: var(--text-secondary);      }    }    .actions {      display: flex;      gap: ${tokens.spacing[1]};      opacity: 0;      transition: opacity ${tokens.transition.fast};      button {        padding: ${tokens.spacing[1]};        border-radius: ${tokens.borderRadius.sm};        color: var(--text-secondary);        transition: all ${tokens.transition.fast};        &:hover {          background: var(--bg-elevated);          color: var(--text-primary);        }        &.delete:hover {          background: rgba(239, 68, 68, 0.1);          color: ${tokens.colors.red[500]};        }      }    }  }  .save-revision-btn {    display: flex;    align-items: center;    justify-content: center;    gap: ${tokens.spacing[2]};    width: 100%;    padding: ${tokens.spacing[3]};    margin-bottom: ${tokens.spacing[3]};    background: var(--bg-secondary);    border: 1px dashed var(--border-color);    border-radius: ${tokens.borderRadius.lg};    font-size: ${tokens.fontSize.sm};    font-weight: ${tokens.fontWeight.medium};    color: var(--text-secondary);    transition: all ${tokens.transition.fast};    &:hover {      border-color: var(--accent);      color: var(--accent);      background: rgba(59, 130, 246, 0.05);    }  }  .save-modal-overlay {    position: fixed;    inset: 0;    background: rgba(0, 0, 0, 0.5);    display: flex;    align-items: center;    justify-content: center;    z-index: 1000;  }  .save-modal {    background: var(--bg-primary);    border: 1px solid var(--border-color);    border-radius: ${tokens.borderRadius.lg};    padding: ${tokens.spacing[5]};    width: 320px;    box-shadow: ${tokens.shadow.xl};    h3 {      font-size: ${tokens.fontSize.base};      font-weight: ${tokens.fontWeight.semibold};      color: var(--text-primary);      margin-bottom: ${tokens.spacing[4]};    }    input {      width: 100%;      padding: ${tokens.spacing[2]} ${tokens.spacing[3]};      background: var(--bg-secondary);      border: 1px solid var(--border-color);      border-radius: ${tokens.borderRadius.md};      font-size: ${tokens.fontSize.sm};      color: var(--text-primary);      margin-bottom: ${tokens.spacing[4]};      &:focus {        outline: none;        border-color: var(--accent);      }    }    .modal-actions {      display: flex;      gap: ${tokens.spacing[2]};      justify-content: flex-end;      button {        padding: ${tokens.spacing[2]} ${tokens.spacing[4]};        border-radius: ${tokens.borderRadius.md};        font-size: ${tokens.fontSize.sm};        font-weight: ${tokens.fontWeight.medium};        transition: all ${tokens.transition.fast};        &.cancel {          color: var(--text-secondary);          &:hover {            background: var(--bg-elevated);          }        }        &.save {          background: var(--accent);          color: white;          &:hover {            opacity: 0.9;          }          &:disabled {            opacity: 0.5;            cursor: not-allowed;          }        }      }    }  }`;const formatTime = (timestamp: number): string => {  const now = Date.now();  const diff = now - timestamp;  const seconds = Math.floor(diff / 1000);  const minutes = Math.floor(seconds / 60);  const hours = Math.floor(minutes / 60);  if (seconds < 60) return 'Just now';  if (minutes < 60) return `${minutes}m ago`;  if (hours < 24) return `${hours}h ago`;  return new Date(timestamp).toLocaleDateString('en-US', {    month: 'short',    day: 'numeric',    hour: '2-digit',    minute: '2-digit',  });};const formatDate = (timestamp: number): string => {  return new Date(timestamp).toLocaleDateString('en-US', {    month: 'short',    day: 'numeric',    year: 'numeric',    hour: '2-digit',    minute: '2-digit',  });};export const HistoryPanel = observer(({ onClose }: HistoryPanelProps) => {  const [activeTab, setActiveTab] = useState<'history' | 'revisions'>('history');  const [showSaveModal, setShowSaveModal] = useState(false);  const [revisionName, setRevisionName] = useState('');  const handleSaveRevision = () => {    if (revisionName.trim()) {      editorStore.saveRevision(revisionName.trim());      setRevisionName('');      setShowSaveModal(false);    }  };  const handleLoadRevision = (revisionId: string) => {    editorStore.loadRevision(revisionId);  };  const handleDeleteRevision = (revisionId: string, e: React.MouseEvent) => {    e.stopPropagation();    editorStore.deleteRevision(revisionId);  };  const renderHistoryTab = () => {    const entries = editorStore.historyEntries;    const currentIndex = editorStore.currentHistoryIndex;    if (entries.length === 0) {      return (        <div className="empty-state">          <Clock size={48} />          <p>No history yet. Start editing to see your changes here.</p>        </div>      );    }    return (      <div className="history-list">        {entries.map((entry: HistoryEntry, index: number) => (          <div            key={entry.id}            className={`history-item ${index === currentIndex ? 'is-current' : ''} ${index < currentIndex ? 'is-future' : ''}`}            onClick={() => editorStore.jumpToHistory(entry.id)}          >            <div className="icon">              <History size={14} />            </div>            <div className="info">              <div className="action">{entry.action}</div>              <div className="time">{formatTime(entry.timestamp)}</div>            </div>          </div>        ))}      </div>    );  };  const renderRevisionsTab = () => {    return (      <>        <button className="save-revision-btn" onClick={() => setShowSaveModal(true)}>          <Plus size={16} />          Save Current State as Revision        </button>        {editorStore.revisions.length === 0 ? (          <div className="empty-state">            <Save size={48} />            <p>No revisions saved yet. Save your work to create restore points.</p>          </div>        ) : (          <div className="revision-list">            {editorStore.revisions.map((revision: Revision) => (              <div                key={revision.id}                className="revision-item"                onClick={() => handleLoadRevision(revision.id)}              >                <div className="icon">                  <Save size={18} />                </div>                <div className="info">                  <div className="name">{revision.name}</div>                  <div className="date">{formatDate(revision.timestamp)}</div>                </div>                <div className="actions">                  <button title="Restore" onClick={() => handleLoadRevision(revision.id)}>                    <RotateCcw size={14} />                  </button>                  <button                    className="delete"                    title="Delete"                    onClick={e => handleDeleteRevision(revision.id, e)}                  >                    <Trash2 size={14} />                  </button>                </div>              </div>            ))}          </div>        )}      </>    );  };  return (    <Container>      <div className="panel-header">        <button className="back-btn" onClick={onClose}>          <ChevronLeft size={20} />        </button>        <h2>History</h2>      </div>      <div className="tabs">        <button          className={activeTab === 'history' ? 'active' : ''}          onClick={() => setActiveTab('history')}        >          History        </button>        <button          className={activeTab === 'revisions' ? 'active' : ''}          onClick={() => setActiveTab('revisions')}        >          Revisions        </button>      </div>      <div className="content">        {activeTab === 'history' ? renderHistoryTab() : renderRevisionsTab()}      </div>      {showSaveModal && (        <div className="save-modal-overlay" onClick={() => setShowSaveModal(false)}>          <div className="save-modal" onClick={e => e.stopPropagation()}>            <h3>Save Revision</h3>            <input              type="text"              placeholder="Enter revision name..."              value={revisionName}              onChange={e => setRevisionName(e.target.value)}              onKeyDown={e => e.key === 'Enter' && handleSaveRevision()}              autoFocus            />            <div className="modal-actions">              <button className="cancel" onClick={() => setShowSaveModal(false)}>                Cancel              </button>              <button className="save" onClick={handleSaveRevision} disabled={!revisionName.trim()}>                Save              </button>            </div>          </div>        </div>      )}    </Container>  );});
+import { ChevronLeft, Clock, History, Plus, RotateCcw, Save, Trash2 } from 'lucide-react'
+import { observer } from 'mobx-react-lite'
+import { useState } from 'react'
+import styled from 'styled-components'
+import { editorStore, type HistoryEntry, type Revision } from '../stores/EditorStore'
+import { tokens } from '../styles/tokens'
+
+interface HistoryPanelProps {
+  onClose: () => void
+}
+
+const Container = styled.div`
+  width: 20rem;
+  height: 100%;
+  background: var(--bg-primary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .panel-header {
+    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: ${tokens.spacing[2]};
+
+    .back-btn {
+      color: var(--text-secondary);
+      padding: ${tokens.spacing[1]};
+      border-radius: ${tokens.borderRadius.sm};
+      transition: all ${tokens.transition.fast};
+
+      &:hover {
+        background: var(--bg-elevated);
+        color: var(--text-primary);
+      }
+    }
+
+    h2 {
+      font-size: ${tokens.fontSize.base};
+      font-weight: ${tokens.fontWeight.semibold};
+      color: var(--text-primary);
+      flex: 1;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+
+    button {
+      flex: 1;
+      padding: ${tokens.spacing[3]};
+      font-size: ${tokens.fontSize.sm};
+      font-weight: ${tokens.fontWeight.medium};
+      color: var(--text-secondary);
+      border-bottom: 2px solid transparent;
+      transition: all ${tokens.transition.fast};
+
+      &:hover {
+        color: var(--text-primary);
+      }
+
+      &.active {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+    }
+  }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: ${tokens.spacing[2]};
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: ${tokens.spacing[8]} ${tokens.spacing[4]};
+    color: var(--text-secondary);
+    text-align: center;
+
+    svg {
+      margin-bottom: ${tokens.spacing[3]};
+      opacity: 0.5;
+    }
+
+    p {
+      font-size: ${tokens.fontSize.sm};
+    }
+  }
+
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: ${tokens.spacing[1]};
+  }
+
+  .history-item {
+    display: flex;
+    align-items: center;
+    gap: ${tokens.spacing[2]};
+    padding: ${tokens.spacing[2]} ${tokens.spacing[3]};
+    border-radius: ${tokens.borderRadius.md};
+    cursor: pointer;
+    transition: all ${tokens.transition.fast};
+
+    &:hover {
+      background: var(--bg-elevated);
+    }
+
+    &.is-current {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    &.is-future {
+      opacity: 0.5;
+    }
+
+    .icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: ${tokens.borderRadius.md};
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      flex-shrink: 0;
+    }
+
+    .info {
+      flex: 1;
+      min-width: 0;
+
+      .action {
+        font-size: ${tokens.fontSize.sm};
+        font-weight: ${tokens.fontWeight.medium};
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .time {
+        font-size: ${tokens.fontSize.xs};
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  .revision-list {
+    display: flex;
+    flex-direction: column;
+    gap: ${tokens.spacing[2]};
+  }
+
+  .revision-item {
+    display: flex;
+    align-items: center;
+    gap: ${tokens.spacing[2]};
+    padding: ${tokens.spacing[3]};
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: ${tokens.borderRadius.lg};
+    transition: all ${tokens.transition.fast};
+
+    &:hover {
+      border-color: var(--accent);
+
+      .actions {
+        opacity: 1;
+      }
+    }
+
+    .icon {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: ${tokens.borderRadius.md};
+      background: linear-gradient(135deg, ${tokens.colors.blue[500]}, ${tokens.colors.indigo[500]});
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .info {
+      flex: 1;
+      min-width: 0;
+
+      .name {
+        font-size: ${tokens.fontSize.sm};
+        font-weight: ${tokens.fontWeight.medium};
+        color: var(--text-primary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .date {
+        font-size: ${tokens.fontSize.xs};
+        color: var(--text-secondary);
+      }
+    }
+
+    .actions {
+      display: flex;
+      gap: ${tokens.spacing[1]};
+      opacity: 0;
+      transition: opacity ${tokens.transition.fast};
+
+      button {
+        padding: ${tokens.spacing[1]};
+        border-radius: ${tokens.borderRadius.sm};
+        color: var(--text-secondary);
+        transition: all ${tokens.transition.fast};
+
+        &:hover {
+          background: var(--bg-elevated);
+          color: var(--text-primary);
+        }
+
+        &.delete:hover {
+          background: rgba(239, 68, 68, 0.1);
+          color: ${tokens.colors.red[500]};
+        }
+      }
+    }
+  }
+
+  .save-revision-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${tokens.spacing[2]};
+    width: 100%;
+    padding: ${tokens.spacing[3]};
+    margin-bottom: ${tokens.spacing[3]};
+    background: var(--bg-secondary);
+    border: 1px dashed var(--border-color);
+    border-radius: ${tokens.borderRadius.lg};
+    font-size: ${tokens.fontSize.sm};
+    font-weight: ${tokens.fontWeight.medium};
+    color: var(--text-secondary);
+    transition: all ${tokens.transition.fast};
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(59, 130, 246, 0.05);
+    }
+  }
+
+  .save-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .save-modal {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: ${tokens.borderRadius.lg};
+    padding: ${tokens.spacing[5]};
+    width: 320px;
+    box-shadow: ${tokens.shadow.xl};
+
+    h3 {
+      font-size: ${tokens.fontSize.base};
+      font-weight: ${tokens.fontWeight.semibold};
+      color: var(--text-primary);
+      margin-bottom: ${tokens.spacing[4]};
+    }
+
+    input {
+      width: 100%;
+      padding: ${tokens.spacing[2]} ${tokens.spacing[3]};
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: ${tokens.borderRadius.md};
+      font-size: ${tokens.fontSize.sm};
+      color: var(--text-primary);
+      margin-bottom: ${tokens.spacing[4]};
+
+      &:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: ${tokens.spacing[2]};
+      justify-content: flex-end;
+
+      button {
+        padding: ${tokens.spacing[2]} ${tokens.spacing[4]};
+        border-radius: ${tokens.borderRadius.md};
+        font-size: ${tokens.fontSize.sm};
+        font-weight: ${tokens.fontWeight.medium};
+        transition: all ${tokens.transition.fast};
+
+        &.cancel {
+          color: var(--text-secondary);
+
+          &:hover {
+            background: var(--bg-elevated);
+          }
+        }
+
+        &.save {
+          background: var(--accent);
+          color: white;
+
+          &:hover {
+            opacity: 0.9;
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+`
+
+const formatTime = (timestamp: number): string => {
+  const now = Date.now()
+  const diff = now - timestamp
+  const seconds = Math.floor(diff / 1000)
+  const minutes = Math.floor(seconds / 60)
+  const hours = Math.floor(minutes / 60)
+
+  if (seconds < 60) return 'Just now'
+  if (minutes < 60) return `${minutes}m ago`
+  if (hours < 24) return `${hours}h ago`
+
+  return new Date(timestamp).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
+const formatDate = (timestamp: number): string => {
+  return new Date(timestamp).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
+export const HistoryPanel = observer(({ onClose }: HistoryPanelProps) => {
+  const [activeTab, setActiveTab] = useState<'history' | 'revisions'>('history')
+  const [showSaveModal, setShowSaveModal] = useState(false)
+  const [revisionName, setRevisionName] = useState('')
+
+  const handleSaveRevision = () => {
+    if (revisionName.trim()) {
+      editorStore.saveRevision(revisionName.trim())
+      setRevisionName('')
+      setShowSaveModal(false)
+    }
+  }
+
+  const handleLoadRevision = (revisionId: string) => {
+    editorStore.loadRevision(revisionId)
+  }
+
+  const handleDeleteRevision = (revisionId: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    editorStore.deleteRevision(revisionId)
+  }
+
+  const renderHistoryTab = () => {
+    const entries = editorStore.historyEntries
+    const currentIndex = editorStore.currentHistoryIndex
+
+    if (entries.length === 0) {
+      return (
+        <div className="empty-state">
+          <Clock size={48} />
+          <p>No history yet. Start editing to see your changes here.</p>
+        </div>
+      )
+    }
+
+    return (
+      <div className="history-list">
+        {entries.map((entry: HistoryEntry, index: number) => (
+          <div
+            key={entry.id}
+            className={`history-item ${index === currentIndex ? 'is-current' : ''} ${index < currentIndex ? 'is-future' : ''}`}
+            onClick={() => editorStore.jumpToHistory(entry.id)}
+          >
+            <div className="icon">
+              <History size={14} />
+            </div>
+            <div className="info">
+              <div className="action">{entry.action}</div>
+              <div className="time">{formatTime(entry.timestamp)}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  const renderRevisionsTab = () => {
+    return (
+      <>
+        <button className="save-revision-btn" onClick={() => setShowSaveModal(true)}>
+          <Plus size={16} />
+          Save Current State as Revision
+        </button>
+
+        {editorStore.revisions.length === 0 ? (
+          <div className="empty-state">
+            <Save size={48} />
+            <p>No revisions saved yet. Save your work to create restore points.</p>
+          </div>
+        ) : (
+          <div className="revision-list">
+            {editorStore.revisions.map((revision: Revision) => (
+              <div
+                key={revision.id}
+                className="revision-item"
+                onClick={() => handleLoadRevision(revision.id)}
+              >
+                <div className="icon">
+                  <Save size={18} />
+                </div>
+                <div className="info">
+                  <div className="name">{revision.name}</div>
+                  <div className="date">{formatDate(revision.timestamp)}</div>
+                </div>
+                <div className="actions">
+                  <button title="Restore" onClick={() => handleLoadRevision(revision.id)}>
+                    <RotateCcw size={14} />
+                  </button>
+                  <button
+                    className="delete"
+                    title="Delete"
+                    onClick={(e) => handleDeleteRevision(revision.id, e)}
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </>
+    )
+  }
+
+  return (
+    <Container>
+      <div className="panel-header">
+        <button className="back-btn" onClick={onClose}>
+          <ChevronLeft size={20} />
+        </button>
+        <h2>History</h2>
+      </div>
+
+      <div className="tabs">
+        <button
+          className={activeTab === 'history' ? 'active' : ''}
+          onClick={() => setActiveTab('history')}
+        >
+          History
+        </button>
+        <button
+          className={activeTab === 'revisions' ? 'active' : ''}
+          onClick={() => setActiveTab('revisions')}
+        >
+          Revisions
+        </button>
+      </div>
+
+      <div className="content">
+        {activeTab === 'history' ? renderHistoryTab() : renderRevisionsTab()}
+      </div>
+
+      {showSaveModal && (
+        <div className="save-modal-overlay" onClick={() => setShowSaveModal(false)}>
+          <div className="save-modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Save Revision</h3>
+            <input
+              type="text"
+              placeholder="Enter revision name..."
+              value={revisionName}
+              onChange={(e) => setRevisionName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSaveRevision()}
+              autoFocus
+            />
+            <div className="modal-actions">
+              <button className="cancel" onClick={() => setShowSaveModal(false)}>
+                Cancel
+              </button>
+              <button className="save" onClick={handleSaveRevision} disabled={!revisionName.trim()}>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </Container>
+  )
+})

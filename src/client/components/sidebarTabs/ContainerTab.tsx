@@ -1,1 +1,10 @@
-import { observer } from 'mobx-react-lite';import { ContainerControl } from '../controls';import { FlexChildSection } from '../controls/container';export const ContainerTab = observer(() => (  <div>    <ContainerControl />    <FlexChildSection />  </div>));
+import { observer } from 'mobx-react-lite'
+import { ContainerControl } from '../controls'
+import { FlexChildSection } from '../controls/container'
+
+export const ContainerTab = observer(() => (
+  <div>
+    <ContainerControl />
+    <FlexChildSection />
+  </div>
+))

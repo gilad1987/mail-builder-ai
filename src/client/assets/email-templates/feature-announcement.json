@@ -1,1 +1,961 @@
-{  "name": "Feature Announcement",  "description": "Vibrant and exciting new feature announcement with dynamic gradients and modern design",  "thumbnail": "feature-announcement.png",  "_style": {    "desktop": {      "margin": "0 auto",      "backgroundColor": "#fdf4ff"    },    "tablet": {},    "mobile": {}  },  "children": [    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "space-between",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-start",              "alignItems": "center",              "columnGap-size": 8,              "columnGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "▲"              },              "_style": {                "desktop": {                  "fontSize-size": 24,                  "fontSize-unit": "px",                  "color": "#d946ef"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Prism"              },              "_style": {                "desktop": {                  "fontSize-size": 22,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#1e1b4b",                  "fontFamily": "Manrope, system-ui, sans-serif",                  "letterSpacing-size": -1,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-end",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🎉 NEW"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#d946ef",                  "fontFamily": "Manrope, system-ui, sans-serif",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 72,          "paddingTop-unit": "px",          "paddingBottom-size": 72,          "paddingBottom-unit": "px",          "paddingLeft-size": 40,          "paddingLeft-unit": "px",          "paddingRight-size": 40,          "paddingRight-unit": "px",          "backgroundColor": "#a855f7"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 24,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🚀 INTRODUCING"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#f5d0fe",                  "textAlign": "center",                  "letterSpacing-size": 3,                  "letterSpacing-unit": "px",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Smart Workflows"              },              "_style": {                "desktop": {                  "fontSize-size": 48,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#ffffff",                  "textAlign": "center",                  "lineHeight-size": 52,                  "lineHeight-unit": "px",                  "fontFamily": "Manrope, system-ui, sans-serif",                  "letterSpacing-size": -2,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Automate your entire workflow with AI-powered suggestions, smart triggers, and seamless integrations."              },              "_style": {                "desktop": {                  "fontSize-size": 17,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#f3e8ff",                  "textAlign": "center",                  "lineHeight-size": 28,                  "lineHeight-unit": "px",                  "fontFamily": "Manrope, system-ui, sans-serif",                  "maxWidth-size": 440,                  "maxWidth-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Button",              "data": {                "text": "Try It Now — It's Free",                "href": "#"              },              "_style": {                "desktop": {                  "backgroundColor": "#ffffff",                  "color": "#a855f7",                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "paddingTop-size": 16,                  "paddingTop-unit": "px",                  "paddingBottom-size": 16,                  "paddingBottom-unit": "px",                  "paddingLeft-size": 32,                  "paddingLeft-unit": "px",                  "paddingRight-size": 32,                  "paddingRight-unit": "px",                  "borderRadius-size": 100,                  "borderRadius-unit": "px",                  "textAlign": "center",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 48,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "✨ KEY FEATURES"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#a855f7",                  "textAlign": "center",                  "letterSpacing-size": 2,                  "letterSpacing-unit": "px",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "What makes it special"              },              "_style": {                "desktop": {                  "fontSize-size": 28,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#1e1b4b",                  "textAlign": "center",                  "fontFamily": "Manrope, system-ui, sans-serif",                  "letterSpacing-size": -0.5,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "stretch",          "paddingTop-size": 16,          "paddingTop-unit": "px",          "paddingBottom-size": 16,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 16,          "columnGap-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "flex-start",              "backgroundColor": "#faf5ff",              "borderRadius-size": 20,              "borderRadius-unit": "px",              "paddingTop-size": 28,              "paddingTop-unit": "px",              "paddingBottom-size": 28,              "paddingBottom-unit": "px",              "paddingLeft-size": 24,              "paddingLeft-unit": "px",              "paddingRight-size": 24,              "paddingRight-unit": "px",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🧠"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "AI-Powered"              },              "_style": {                "desktop": {                  "fontSize-size": 18,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#1e1b4b",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Smart suggestions that learn from your patterns and optimize over time."              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#6b7280",                  "lineHeight-size": 22,                  "lineHeight-unit": "px",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "flex-start",              "backgroundColor": "#fdf4ff",              "borderRadius-size": 20,              "borderRadius-unit": "px",              "paddingTop-size": 28,              "paddingTop-unit": "px",              "paddingBottom-size": 28,              "paddingBottom-unit": "px",              "paddingLeft-size": 24,              "paddingLeft-unit": "px",              "paddingRight-size": 24,              "paddingRight-unit": "px",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "⚡"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Instant Setup"              },              "_style": {                "desktop": {                  "fontSize-size": 18,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#1e1b4b",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Get started in seconds with pre-built templates and one-click activation."              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#6b7280",                  "lineHeight-size": 22,                  "lineHeight-unit": "px",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "stretch",          "paddingTop-size": 0,          "paddingTop-unit": "px",          "paddingBottom-size": 32,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 16,          "columnGap-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "flex-start",              "backgroundColor": "#f0fdf4",              "borderRadius-size": 20,              "borderRadius-unit": "px",              "paddingTop-size": 28,              "paddingTop-unit": "px",              "paddingBottom-size": 28,              "paddingBottom-unit": "px",              "paddingLeft-size": 24,              "paddingLeft-unit": "px",              "paddingRight-size": 24,              "paddingRight-unit": "px",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🔗"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "200+ Integrations"              },              "_style": {                "desktop": {                  "fontSize-size": 18,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#1e1b4b",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Connect with all your favorite tools and services effortlessly."              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#6b7280",                  "lineHeight-size": 22,                  "lineHeight-unit": "px",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "flex-start",              "backgroundColor": "#fff7ed",              "borderRadius-size": 20,              "borderRadius-unit": "px",              "paddingTop-size": 28,              "paddingTop-unit": "px",              "paddingBottom-size": 28,              "paddingBottom-unit": "px",              "paddingLeft-size": 24,              "paddingLeft-unit": "px",              "paddingRight-size": 24,              "paddingRight-unit": "px",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "📊"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Real-time Analytics"              },              "_style": {                "desktop": {                  "fontSize-size": 18,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#1e1b4b",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Track performance and optimize with detailed insights and reports."              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#6b7280",                  "lineHeight-size": 22,                  "lineHeight-unit": "px",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 48,          "paddingTop-unit": "px",          "paddingBottom-size": 48,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#1e1b4b"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 20,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Ready to supercharge your workflow?"              },              "_style": {                "desktop": {                  "fontSize-size": 26,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ffffff",                  "textAlign": "center",                  "fontFamily": "Manrope, system-ui, sans-serif",                  "letterSpacing-size": -0.5,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Join 50,000+ teams already using Smart Workflows"              },              "_style": {                "desktop": {                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#a5b4fc",                  "textAlign": "center",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Button",              "data": {                "text": "Get Started Free →",                "href": "#"              },              "_style": {                "desktop": {                  "backgroundColor": "#a855f7",                  "color": "#ffffff",                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "paddingTop-size": 16,                  "paddingTop-unit": "px",                  "paddingBottom-size": 16,                  "paddingBottom-unit": "px",                  "paddingLeft-size": 36,                  "paddingLeft-unit": "px",                  "paddingRight-size": 36,                  "paddingRight-unit": "px",                  "borderRadius-size": 12,                  "borderRadius-unit": "px",                  "textAlign": "center",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#fdf4ff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Prism Inc. • San Francisco, CA"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#6b7280",                  "textAlign": "center",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Unsubscribe • Privacy Policy • Help"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#a855f7",                  "textAlign": "center",                  "fontFamily": "Manrope, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    }  ]}
+{
+  "name": "Feature Announcement",
+  "description": "Vibrant and exciting new feature announcement with dynamic gradients and modern design",
+  "thumbnail": "feature-announcement.png",
+  "_style": {
+    "desktop": {
+      "margin": "0 auto",
+      "backgroundColor": "#fdf4ff"
+    },
+    "tablet": {},
+    "mobile": {}
+  },
+  "children": [
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "alignItems": "center",
+          "paddingTop-size": 24,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 24,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "alignItems": "center",
+              "columnGap-size": 8,
+              "columnGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "▲"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 24,
+                  "fontSize-unit": "px",
+                  "color": "#d946ef"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Prism"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 22,
+                  "fontSize-unit": "px",
+                  "fontWeight": "800",
+                  "color": "#1e1b4b",
+                  "fontFamily": "Manrope, system-ui, sans-serif",
+                  "letterSpacing-size": -1,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "flex-end",
+              "alignItems": "center"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "🎉 NEW"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 11,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#d946ef",
+                  "fontFamily": "Manrope, system-ui, sans-serif",
+                  "letterSpacing-size": 1,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 72,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 72,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 40,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 40,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#a855f7"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 24,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "🚀 INTRODUCING"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 12,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#f5d0fe",
+                  "textAlign": "center",
+                  "letterSpacing-size": 3,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Smart Workflows"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 48,
+                  "fontSize-unit": "px",
+                  "fontWeight": "800",
+                  "color": "#ffffff",
+                  "textAlign": "center",
+                  "lineHeight-size": 52,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Manrope, system-ui, sans-serif",
+                  "letterSpacing-size": -2,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Automate your entire workflow with AI-powered suggestions, smart triggers, and seamless integrations."
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 17,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#f3e8ff",
+                  "textAlign": "center",
+                  "lineHeight-size": 28,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Manrope, system-ui, sans-serif",
+                  "maxWidth-size": 440,
+                  "maxWidth-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Button",
+              "data": {
+                "text": "Try It Now — It's Free",
+                "href": "#"
+              },
+              "_style": {
+                "desktop": {
+                  "backgroundColor": "#ffffff",
+                  "color": "#a855f7",
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "paddingTop-size": 16,
+                  "paddingTop-unit": "px",
+                  "paddingBottom-size": 16,
+                  "paddingBottom-unit": "px",
+                  "paddingLeft-size": 32,
+                  "paddingLeft-unit": "px",
+                  "paddingRight-size": 32,
+                  "paddingRight-unit": "px",
+                  "borderRadius-size": 100,
+                  "borderRadius-unit": "px",
+                  "textAlign": "center",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 48,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 24,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 8,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "✨ KEY FEATURES"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 11,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#a855f7",
+                  "textAlign": "center",
+                  "letterSpacing-size": 2,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "What makes it special"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 28,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#1e1b4b",
+                  "textAlign": "center",
+                  "fontFamily": "Manrope, system-ui, sans-serif",
+                  "letterSpacing-size": -0.5,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "stretch",
+          "paddingTop-size": 16,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 16,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "columnGap-size": 16,
+          "columnGap-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "alignItems": "flex-start",
+              "backgroundColor": "#faf5ff",
+              "borderRadius-size": 20,
+              "borderRadius-unit": "px",
+              "paddingTop-size": 28,
+              "paddingTop-unit": "px",
+              "paddingBottom-size": 28,
+              "paddingBottom-unit": "px",
+              "paddingLeft-size": 24,
+              "paddingLeft-unit": "px",
+              "paddingRight-size": 24,
+              "paddingRight-unit": "px",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "🧠"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 36,
+                  "fontSize-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "AI-Powered"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 18,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#1e1b4b",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Smart suggestions that learn from your patterns and optimize over time."
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#6b7280",
+                  "lineHeight-size": 22,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "alignItems": "flex-start",
+              "backgroundColor": "#fdf4ff",
+              "borderRadius-size": 20,
+              "borderRadius-unit": "px",
+              "paddingTop-size": 28,
+              "paddingTop-unit": "px",
+              "paddingBottom-size": 28,
+              "paddingBottom-unit": "px",
+              "paddingLeft-size": 24,
+              "paddingLeft-unit": "px",
+              "paddingRight-size": 24,
+              "paddingRight-unit": "px",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "⚡"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 36,
+                  "fontSize-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Instant Setup"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 18,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#1e1b4b",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Get started in seconds with pre-built templates and one-click activation."
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#6b7280",
+                  "lineHeight-size": 22,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "stretch",
+          "paddingTop-size": 0,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 32,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "columnGap-size": 16,
+          "columnGap-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "alignItems": "flex-start",
+              "backgroundColor": "#f0fdf4",
+              "borderRadius-size": 20,
+              "borderRadius-unit": "px",
+              "paddingTop-size": 28,
+              "paddingTop-unit": "px",
+              "paddingBottom-size": 28,
+              "paddingBottom-unit": "px",
+              "paddingLeft-size": 24,
+              "paddingLeft-unit": "px",
+              "paddingRight-size": 24,
+              "paddingRight-unit": "px",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "🔗"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 36,
+                  "fontSize-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "200+ Integrations"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 18,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#1e1b4b",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Connect with all your favorite tools and services effortlessly."
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#6b7280",
+                  "lineHeight-size": 22,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "alignItems": "flex-start",
+              "backgroundColor": "#fff7ed",
+              "borderRadius-size": 20,
+              "borderRadius-unit": "px",
+              "paddingTop-size": 28,
+              "paddingTop-unit": "px",
+              "paddingBottom-size": 28,
+              "paddingBottom-unit": "px",
+              "paddingLeft-size": 24,
+              "paddingLeft-unit": "px",
+              "paddingRight-size": 24,
+              "paddingRight-unit": "px",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "📊"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 36,
+                  "fontSize-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Real-time Analytics"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 18,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#1e1b4b",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Track performance and optimize with detailed insights and reports."
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#6b7280",
+                  "lineHeight-size": 22,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 48,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 48,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#1e1b4b"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 20,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Ready to supercharge your workflow?"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 26,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#ffffff",
+                  "textAlign": "center",
+                  "fontFamily": "Manrope, system-ui, sans-serif",
+                  "letterSpacing-size": -0.5,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Join 50,000+ teams already using Smart Workflows"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#a5b4fc",
+                  "textAlign": "center",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Button",
+              "data": {
+                "text": "Get Started Free →",
+                "href": "#"
+              },
+              "_style": {
+                "desktop": {
+                  "backgroundColor": "#a855f7",
+                  "color": "#ffffff",
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "paddingTop-size": 16,
+                  "paddingTop-unit": "px",
+                  "paddingBottom-size": 16,
+                  "paddingBottom-unit": "px",
+                  "paddingLeft-size": 36,
+                  "paddingLeft-unit": "px",
+                  "paddingRight-size": 36,
+                  "paddingRight-unit": "px",
+                  "borderRadius-size": 12,
+                  "borderRadius-unit": "px",
+                  "textAlign": "center",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 24,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 24,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#fdf4ff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 8,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Prism Inc. • San Francisco, CA"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 12,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#6b7280",
+                  "textAlign": "center",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Unsubscribe • Privacy Policy • Help"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 11,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "color": "#a855f7",
+                  "textAlign": "center",
+                  "fontFamily": "Manrope, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

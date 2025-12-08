@@ -1,1 +1,184 @@
-import { useEffect, useState } from 'react';import { useParams } from 'react-router-dom';import { observer } from 'mobx-react-lite';import { remult } from 'remult';import { TemplateEntity } from '../../server/entities/TemplateEntity';import { editorStore } from '../stores/EditorStore';import { TopBar } from '../components/TopBar';import { BlockSelectPanel } from '../components/BlockSelectPanel';import { Sidebar } from '../components/Sidebar';import { Canvas } from '../components/canvas';import { IconSidebar } from '../components/IconSidebar';import { GlobalStylesPanel } from '../components/GlobalStylesPanel';import { HistoryPanel } from '../components/HistoryPanel';import { LayersPanel } from '../components/LayersPanel';import { AssetsPanel } from '../components/AssetsPanel';import { AIAssistantPanel } from '../components/aiAssistant';import { DndProvider } from '../components/dnd';import type { BoxJSON, GlobalStyles } from '../models';const templateRepo = remult.repo(TemplateEntity);// Built-in template IDsconst BUILTIN_TEMPLATES = [  'welcome-onboarding',  'product-newsletter',  'promotional-sale',  'black-friday-sale',  'trial-ending',  'event-invitation',  'abandoned-cart',  'weekly-digest',  'feature-announcement',  'order-confirmation',  'referral-program',  'feedback-request',  'win-back',];export const MailBuilder = observer(() => {  const { templateId } = useParams<{ templateId: string }>();  const [activePanel, setActivePanel] = useState<string | null>('elements');  const [layersPanelOpen, setLayersPanelOpen] = useState(false);  const [loading, setLoading] = useState(false);  useEffect(() => {    document.documentElement.setAttribute('data-theme', editorStore.theme);  }, []);  // Load template from URL param  useEffect(() => {    const loadTemplate = async () => {      if (!templateId) return;      setLoading(true);      try {        // Check if it's a built-in template        if (BUILTIN_TEMPLATES.includes(templateId)) {          let templateData;          switch (templateId) {            case 'welcome-onboarding':              templateData = (await import('../assets/email-templates/welcome-onboarding.json'))                .default;              break;            case 'product-newsletter':              templateData = (await import('../assets/email-templates/product-newsletter.json'))                .default;              break;            case 'promotional-sale':              templateData = (await import('../assets/email-templates/promotional-sale.json'))                .default;              break;            case 'black-friday-sale':              templateData = (await import('../assets/email-templates/black-friday-sale.json'))                .default;              break;            case 'trial-ending':              templateData = (await import('../assets/email-templates/trial-ending.json')).default;              break;            case 'event-invitation':              templateData = (await import('../assets/email-templates/event-invitation.json'))                .default;              break;            case 'abandoned-cart':              templateData = (await import('../assets/email-templates/abandoned-cart.json'))                .default;              break;            case 'weekly-digest':              templateData = (await import('../assets/email-templates/weekly-digest.json')).default;              break;            case 'feature-announcement':              templateData = (await import('../assets/email-templates/feature-announcement.json'))                .default;              break;            case 'order-confirmation':              templateData = (await import('../assets/email-templates/order-confirmation.json'))                .default;              break;            case 'referral-program':              templateData = (await import('../assets/email-templates/referral-program.json'))                .default;              break;            case 'feedback-request':              templateData = (await import('../assets/email-templates/feedback-request.json'))                .default;              break;            case 'win-back':              templateData = (await import('../assets/email-templates/win-back.json')).default;              break;          }          if (templateData) {            editorStore.importFromJSON(templateData as BoxJSON & { globalStyles?: GlobalStyles });          }        } else {          // Load from server          const template = await templateRepo.findId(templateId);          if (template) {            editorStore.importFromJSON(template.data as BoxJSON & { globalStyles?: GlobalStyles });          }        }      } catch (error) {        console.error('Failed to load template:', error);      } finally {        setLoading(false);      }    };    loadTemplate();  }, [templateId]);  const renderPanel = () => {    if (activePanel === 'styles') {      return <GlobalStylesPanel onClose={() => setActivePanel(null)} />;    }    if (activePanel === 'history') {      return <HistoryPanel onClose={() => setActivePanel(null)} />;    }    if (activePanel === 'assets') {      return <AssetsPanel onClose={() => setActivePanel(null)} />;    }    if (activePanel === 'ai') {      return <AIAssistantPanel onClose={() => setActivePanel(null)} />;    }    if (activePanel === 'elements') {      return editorStore.hasSelectedBlock ? <Sidebar /> : <BlockSelectPanel />;    }    return null;  };  if (loading) {    return (      <div className="app-layout">        <TopBar />        <div          className="main-content"          style={{            display: 'flex',            alignItems: 'center',            justifyContent: 'center',            color: '#71717a',          }}        >          Loading template...        </div>      </div>    );  }  return (    <DndProvider>      <div className="app-layout">        <TopBar />        <div className="main-content">          <IconSidebar activePanel={activePanel} onPanelChange={setActivePanel} />          {renderPanel()}          <Canvas />          <LayersPanel            isOpen={layersPanelOpen}            onToggle={() => setLayersPanelOpen(!layersPanelOpen)}          />        </div>      </div>    </DndProvider>  );});
+import { observer } from 'mobx-react-lite'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { remult } from 'remult'
+import { TemplateEntity } from '../../server/entities/TemplateEntity'
+import { AssetsPanel } from '../components/AssetsPanel'
+import { BlockSelectPanel } from '../components/BlockSelectPanel'
+import { GlobalStylesPanel } from '../components/GlobalStylesPanel'
+import { HistoryPanel } from '../components/HistoryPanel'
+import { IconSidebar } from '../components/IconSidebar'
+import { LayersPanel } from '../components/LayersPanel'
+import { Sidebar } from '../components/Sidebar'
+import { TopBar } from '../components/TopBar'
+import { AIAssistantPanel } from '../components/aiAssistant'
+import { Canvas } from '../components/canvas'
+import { DndProvider } from '../components/dnd'
+import type { BoxJSON, GlobalStyles } from '../models'
+import { editorStore } from '../stores/EditorStore'
+
+const templateRepo = remult.repo(TemplateEntity)
+
+// Built-in template IDs
+const BUILTIN_TEMPLATES = [
+  'welcome-onboarding',
+  'product-newsletter',
+  'promotional-sale',
+  'black-friday-sale',
+  'trial-ending',
+  'event-invitation',
+  'abandoned-cart',
+  'weekly-digest',
+  'feature-announcement',
+  'order-confirmation',
+  'referral-program',
+  'feedback-request',
+  'win-back',
+]
+
+export const MailBuilder = observer(() => {
+  const { templateId } = useParams<{ templateId: string }>()
+  const [activePanel, setActivePanel] = useState<string | null>('elements')
+  const [layersPanelOpen, setLayersPanelOpen] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', editorStore.theme)
+  }, [])
+
+  // Load template from URL param
+  useEffect(() => {
+    const loadTemplate = async () => {
+      if (!templateId) return
+
+      setLoading(true)
+
+      try {
+        // Check if it's a built-in template
+        if (BUILTIN_TEMPLATES.includes(templateId)) {
+          let templateData
+          switch (templateId) {
+            case 'welcome-onboarding':
+              templateData = (await import('../assets/email-templates/welcome-onboarding.json'))
+                .default
+              break
+            case 'product-newsletter':
+              templateData = (await import('../assets/email-templates/product-newsletter.json'))
+                .default
+              break
+            case 'promotional-sale':
+              templateData = (await import('../assets/email-templates/promotional-sale.json'))
+                .default
+              break
+            case 'black-friday-sale':
+              templateData = (await import('../assets/email-templates/black-friday-sale.json'))
+                .default
+              break
+            case 'trial-ending':
+              templateData = (await import('../assets/email-templates/trial-ending.json')).default
+              break
+            case 'event-invitation':
+              templateData = (await import('../assets/email-templates/event-invitation.json'))
+                .default
+              break
+            case 'abandoned-cart':
+              templateData = (await import('../assets/email-templates/abandoned-cart.json')).default
+              break
+            case 'weekly-digest':
+              templateData = (await import('../assets/email-templates/weekly-digest.json')).default
+              break
+            case 'feature-announcement':
+              templateData = (await import('../assets/email-templates/feature-announcement.json'))
+                .default
+              break
+            case 'order-confirmation':
+              templateData = (await import('../assets/email-templates/order-confirmation.json'))
+                .default
+              break
+            case 'referral-program':
+              templateData = (await import('../assets/email-templates/referral-program.json'))
+                .default
+              break
+            case 'feedback-request':
+              templateData = (await import('../assets/email-templates/feedback-request.json'))
+                .default
+              break
+            case 'win-back':
+              templateData = (await import('../assets/email-templates/win-back.json')).default
+              break
+          }
+          if (templateData) {
+            editorStore.importFromJSON(templateData as BoxJSON & { globalStyles?: GlobalStyles })
+          }
+        } else {
+          // Load from server
+          const template = await templateRepo.findId(templateId)
+          if (template) {
+            editorStore.importFromJSON(template.data as BoxJSON & { globalStyles?: GlobalStyles })
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load template:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadTemplate()
+  }, [templateId])
+
+  const renderPanel = () => {
+    if (activePanel === 'styles') {
+      return <GlobalStylesPanel onClose={() => setActivePanel(null)} />
+    }
+    if (activePanel === 'history') {
+      return <HistoryPanel onClose={() => setActivePanel(null)} />
+    }
+    if (activePanel === 'assets') {
+      return <AssetsPanel onClose={() => setActivePanel(null)} />
+    }
+    if (activePanel === 'ai') {
+      return <AIAssistantPanel onClose={() => setActivePanel(null)} />
+    }
+    if (activePanel === 'elements') {
+      return editorStore.hasSelectedBlock ? <Sidebar /> : <BlockSelectPanel />
+    }
+    return null
+  }
+
+  if (loading) {
+    return (
+      <div className="app-layout">
+        <TopBar />
+        <div
+          className="main-content"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#71717a',
+          }}
+        >
+          Loading template...
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <DndProvider>
+      <div className="app-layout">
+        <TopBar />
+        <div className="main-content">
+          <IconSidebar activePanel={activePanel} onPanelChange={setActivePanel} />
+          {renderPanel()}
+          <Canvas />
+          <LayersPanel
+            isOpen={layersPanelOpen}
+            onToggle={() => setLayersPanelOpen(!layersPanelOpen)}
+          />
+        </div>
+      </div>
+    </DndProvider>
+  )
+})

@@ -1,1 +1,110 @@
-import { useState } from 'react';import styled from 'styled-components';import { Trash2 } from 'lucide-react';import { tokens } from '../../styles/tokens';const demoImages = [  'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=200&h=150&fit=crop',  'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=150&fit=crop',];interface AssetsGridProps {  search: string;}const Container = styled.div`  flex: 1;  overflow-y: auto;  padding: ${tokens.spacing[3]} ${tokens.spacing[4]};  display: grid;  grid-template-columns: repeat(2, 1fr);  gap: ${tokens.spacing[3]};  align-content: start;  .asset-card {    background: var(--bg-secondary);    border: 1px solid var(--border-subtle);    border-radius: ${tokens.borderRadius.md};    overflow: hidden;    cursor: grab;    &:active {      cursor: grabbing;    }  }  .asset-image {    width: 100%;    height: 80px;    object-fit: cover;    display: block;  }  .asset-footer {    display: flex;    align-items: center;    justify-content: space-between;    padding: ${tokens.spacing[2]};  }  .asset-name {    font-size: ${tokens.fontSize.xs};    color: var(--text-primary);    overflow: hidden;    text-overflow: ellipsis;    white-space: nowrap;    flex: 1;  }  .delete-btn {    color: var(--text-secondary);    padding: ${tokens.spacing[1]};    &:hover {      color: ${tokens.colors.red[500]};    }  }`;export const AssetsGrid = ({ search }: AssetsGridProps) => {  const [assets, setAssets] = useState(    demoImages.map((url, i) => ({ id: i, url, name: `Demo image ${i + 1}` }))  );  const filtered = assets.filter(a => a.name.toLowerCase().includes(search.toLowerCase()));  const deleteAsset = (id: number) => setAssets(prev => prev.filter(a => a.id !== id));  const handleDragStart = (e: React.DragEvent, url: string) => {    e.dataTransfer.setData('application/react-dnd-type', 'ASSET_IMAGE');    e.dataTransfer.setData('imageUrl', url);    e.dataTransfer.effectAllowed = 'copy';  };  return (    <Container>      {filtered.map(asset => (        <div          key={asset.id}          className="asset-card"          draggable          onDragStart={e => handleDragStart(e, asset.url)}        >          <img src={asset.url} alt={asset.name} className="asset-image" />          <div className="asset-footer">            <span className="asset-name">{asset.name}</span>            <button className="delete-btn" onClick={() => deleteAsset(asset.id)}>              <Trash2 size={14} />            </button>          </div>        </div>      ))}    </Container>  );};
+import { Trash2 } from 'lucide-react'
+import { useState } from 'react'
+import styled from 'styled-components'
+import { tokens } from '../../styles/tokens'
+
+const demoImages = [
+  'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=200&h=150&fit=crop',
+  'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=200&h=150&fit=crop',
+]
+
+interface AssetsGridProps {
+  search: string
+}
+
+const Container = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: ${tokens.spacing[3]};
+  align-content: start;
+
+  .asset-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: ${tokens.borderRadius.md};
+    overflow: hidden;
+    cursor: grab;
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .asset-image {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .asset-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: ${tokens.spacing[2]};
+  }
+
+  .asset-name {
+    font-size: ${tokens.fontSize.xs};
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+
+  .delete-btn {
+    color: var(--text-secondary);
+    padding: ${tokens.spacing[1]};
+    &:hover {
+      color: ${tokens.colors.red[500]};
+    }
+  }
+`
+
+export const AssetsGrid = ({ search }: AssetsGridProps) => {
+  const [assets, setAssets] = useState(
+    demoImages.map((url, i) => ({ id: i, url, name: `Demo image ${i + 1}` }))
+  )
+
+  const filtered = assets.filter((a) => a.name.toLowerCase().includes(search.toLowerCase()))
+
+  const deleteAsset = (id: number) => setAssets((prev) => prev.filter((a) => a.id !== id))
+
+  const handleDragStart = (e: React.DragEvent, url: string) => {
+    e.dataTransfer.setData('application/react-dnd-type', 'ASSET_IMAGE')
+    e.dataTransfer.setData('imageUrl', url)
+    e.dataTransfer.effectAllowed = 'copy'
+  }
+
+  return (
+    <Container>
+      {filtered.map((asset) => (
+        <div
+          key={asset.id}
+          className="asset-card"
+          draggable
+          onDragStart={(e) => handleDragStart(e, asset.url)}
+        >
+          <img src={asset.url} alt={asset.name} className="asset-image" />
+          <div className="asset-footer">
+            <span className="asset-name">{asset.name}</span>
+            <button className="delete-btn" onClick={() => deleteAsset(asset.id)}>
+              <Trash2 size={14} />
+            </button>
+          </div>
+        </div>
+      ))}
+    </Container>
+  )
+}

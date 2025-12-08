@@ -1,1 +1,21 @@
-{  "compilerOptions": {    "target": "ESNext",    "lib": ["ESNext"],    "experimentalDecorators": true,    "skipLibCheck": true,    "esModuleInterop": true,    "allowSyntheticDefaultImports": true,    "strict": false,    "forceConsistentCasingInFileNames": true,    "module": "ESNext",    "moduleResolution": "bundler",    "resolveJsonModule": true,    "isolatedModules": true,    "jsx": "react-jsx",    "outDir": "dist",    "rootDir": "src"  },  "include": ["src/server/**/*.ts"],  "exclude": ["src/client/**/*"]}
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext"],
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/server/**/*.ts"],
+  "exclude": ["src/client/**/*"]
+}

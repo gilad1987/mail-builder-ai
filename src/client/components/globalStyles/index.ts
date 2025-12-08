@@ -1,1 +1,2 @@
-export { ColorsSection } from './ColorsSection';export { TypographySection } from './TypographySection';
+export { ColorsSection } from './ColorsSection'
+export { TypographySection } from './TypographySection'

@@ -1,1 +1,945 @@
-{  "name": "Referral Program",  "description": "Playful and rewarding referral invitation with gamified elements and clear benefits",  "thumbnail": "referral-program.png",  "_style": {    "desktop": {      "margin": "0 auto",      "backgroundColor": "#fef7ec"    },    "tablet": {},    "mobile": {}  },  "children": [    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "space-between",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-start",              "alignItems": "center",              "columnGap-size": 8,              "columnGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "★"              },              "_style": {                "desktop": {                  "fontSize-size": 24,                  "fontSize-unit": "px",                  "color": "#f59e0b"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Spark"              },              "_style": {                "desktop": {                  "fontSize-size": 22,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#78350f",                  "fontFamily": "Quicksand, system-ui, sans-serif",                  "letterSpacing-size": -0.5,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-end",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🎁 Rewards Program"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#f59e0b",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 64,          "paddingTop-unit": "px",          "paddingBottom-size": 64,          "paddingBottom-unit": "px",          "paddingLeft-size": 40,          "paddingLeft-unit": "px",          "paddingRight-size": 40,          "paddingRight-unit": "px",          "backgroundColor": "#f59e0b"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 20,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🎉"              },              "_style": {                "desktop": {                  "fontSize-size": 56,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Give $20, Get $20"              },              "_style": {                "desktop": {                  "fontSize-size": 42,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#ffffff",                  "textAlign": "center",                  "lineHeight-size": 48,                  "lineHeight-unit": "px",                  "fontFamily": "Quicksand, system-ui, sans-serif",                  "letterSpacing-size": -1,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Share the love! When your friends sign up, you both get rewarded. It's a win-win!"              },              "_style": {                "desktop": {                  "fontSize-size": 17,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#fef3c7",                  "textAlign": "center",                  "lineHeight-size": 26,                  "lineHeight-unit": "px",                  "fontFamily": "Quicksand, system-ui, sans-serif",                  "maxWidth-size": 400,                  "maxWidth-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 48,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "✨ HOW IT WORKS"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#f59e0b",                  "textAlign": "center",                  "letterSpacing-size": 2,                  "letterSpacing-unit": "px",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "3 simple steps to free rewards"              },              "_style": {                "desktop": {                  "fontSize-size": 26,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#78350f",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "stretch",          "paddingTop-size": 16,          "paddingTop-unit": "px",          "paddingBottom-size": 32,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 16,          "columnGap-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "center",              "backgroundColor": "#fef7ec",              "borderRadius-size": 20,              "borderRadius-unit": "px",              "paddingTop-size": 28,              "paddingTop-unit": "px",              "paddingBottom-size": 28,              "paddingBottom-unit": "px",              "paddingLeft-size": 16,              "paddingLeft-unit": "px",              "paddingRight-size": 16,              "paddingRight-unit": "px",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "1️⃣"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Share Your Link"              },              "_style": {                "desktop": {                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#78350f",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Send your unique referral link to friends"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#92400e",                  "textAlign": "center",                  "lineHeight-size": 20,                  "lineHeight-unit": "px",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "center",              "backgroundColor": "#fef3c7",              "borderRadius-size": 20,              "borderRadius-unit": "px",              "paddingTop-size": 28,              "paddingTop-unit": "px",              "paddingBottom-size": 28,              "paddingBottom-unit": "px",              "paddingLeft-size": 16,              "paddingLeft-unit": "px",              "paddingRight-size": 16,              "paddingRight-unit": "px",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "2️⃣"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Friends Sign Up"              },              "_style": {                "desktop": {                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#78350f",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "They get $20 off their first order"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#92400e",                  "textAlign": "center",                  "lineHeight-size": 20,                  "lineHeight-unit": "px",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "center",              "backgroundColor": "#fde68a",              "borderRadius-size": 20,              "borderRadius-unit": "px",              "paddingTop-size": 28,              "paddingTop-unit": "px",              "paddingBottom-size": 28,              "paddingBottom-unit": "px",              "paddingLeft-size": 16,              "paddingLeft-unit": "px",              "paddingRight-size": 16,              "paddingRight-unit": "px",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "3️⃣"              },              "_style": {                "desktop": {                  "fontSize-size": 36,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "You Get Paid!"              },              "_style": {                "desktop": {                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#78350f",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Earn $20 credit for each friend"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#92400e",                  "textAlign": "center",                  "lineHeight-size": 20,                  "lineHeight-unit": "px",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 40,          "paddingTop-unit": "px",          "paddingBottom-size": 40,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#78350f"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 20,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "YOUR UNIQUE REFERRAL LINK"              },              "_style": {                "desktop": {                  "fontSize-size": 10,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#fbbf24",                  "textAlign": "center",                  "letterSpacing-size": 2,                  "letterSpacing-unit": "px",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "spark.app/refer/FRIEND20"              },              "_style": {                "desktop": {                  "fontSize-size": 20,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ffffff",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif",                  "backgroundColor": "#92400e",                  "paddingTop-size": 16,                  "paddingTop-unit": "px",                  "paddingBottom-size": 16,                  "paddingBottom-unit": "px",                  "paddingLeft-size": 32,                  "paddingLeft-unit": "px",                  "paddingRight-size": 32,                  "paddingRight-unit": "px",                  "borderRadius-size": 12,                  "borderRadius-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Button",              "data": {                "text": "Copy Link & Share 🔗",                "href": "#"              },              "_style": {                "desktop": {                  "backgroundColor": "#f59e0b",                  "color": "#78350f",                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "paddingTop-size": 16,                  "paddingTop-unit": "px",                  "paddingBottom-size": 16,                  "paddingBottom-unit": "px",                  "paddingLeft-size": 36,                  "paddingLeft-unit": "px",                  "paddingRight-size": 36,                  "paddingRight-unit": "px",                  "borderRadius-size": 100,                  "borderRadius-unit": "px",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 40,          "paddingTop-unit": "px",          "paddingBottom-size": 40,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "backgroundColor": "#fef7ec",              "borderRadius-size": 20,              "borderRadius-unit": "px",              "paddingTop-size": 32,              "paddingTop-unit": "px",              "paddingBottom-size": 32,              "paddingBottom-unit": "px",              "paddingLeft-size": 24,              "paddingLeft-unit": "px",              "paddingRight-size": 24,              "paddingRight-unit": "px",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🏆 YOUR REWARDS STATUS"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#f59e0b",                  "textAlign": "center",                  "letterSpacing-size": 1.5,                  "letterSpacing-unit": "px",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "$60 Credit Earned"              },              "_style": {                "desktop": {                  "fontSize-size": 32,                  "fontSize-unit": "px",                  "fontWeight": "800",                  "color": "#78350f",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "3 friends referred • Keep going!"              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#92400e",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#fef7ec"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Spark Inc. • Made with ❤️ in Austin, TX"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#92400e",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Unsubscribe • Terms • Privacy"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#f59e0b",                  "textAlign": "center",                  "fontFamily": "Quicksand, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    }  ]}
+{
+  "name": "Referral Program",
+  "description": "Playful and rewarding referral invitation with gamified elements and clear benefits",
+  "thumbnail": "referral-program.png",
+  "_style": {
+    "desktop": {
+      "margin": "0 auto",
+      "backgroundColor": "#fef7ec"
+    },
+    "tablet": {},
+    "mobile": {}
+  },
+  "children": [
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "alignItems": "center",
+          "paddingTop-size": 24,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 24,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "alignItems": "center",
+              "columnGap-size": 8,
+              "columnGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "★"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 24,
+                  "fontSize-unit": "px",
+                  "color": "#f59e0b"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Spark"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 22,
+                  "fontSize-unit": "px",
+                  "fontWeight": "800",
+                  "color": "#78350f",
+                  "fontFamily": "Quicksand, system-ui, sans-serif",
+                  "letterSpacing-size": -0.5,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "flex-end",
+              "alignItems": "center"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "🎁 Rewards Program"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 12,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#f59e0b",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 64,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 64,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 40,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 40,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#f59e0b"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 20,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "🎉"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 56,
+                  "fontSize-unit": "px",
+                  "textAlign": "center"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Give $20, Get $20"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 42,
+                  "fontSize-unit": "px",
+                  "fontWeight": "800",
+                  "color": "#ffffff",
+                  "textAlign": "center",
+                  "lineHeight-size": 48,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Quicksand, system-ui, sans-serif",
+                  "letterSpacing-size": -1,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Share the love! When your friends sign up, you both get rewarded. It's a win-win!"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 17,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#fef3c7",
+                  "textAlign": "center",
+                  "lineHeight-size": 26,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Quicksand, system-ui, sans-serif",
+                  "maxWidth-size": 400,
+                  "maxWidth-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 48,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 24,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 8,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "✨ HOW IT WORKS"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 11,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#f59e0b",
+                  "textAlign": "center",
+                  "letterSpacing-size": 2,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "3 simple steps to free rewards"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 26,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#78350f",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "stretch",
+          "paddingTop-size": 16,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 32,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "columnGap-size": 16,
+          "columnGap-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 33,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "alignItems": "center",
+              "backgroundColor": "#fef7ec",
+              "borderRadius-size": 20,
+              "borderRadius-unit": "px",
+              "paddingTop-size": 28,
+              "paddingTop-unit": "px",
+              "paddingBottom-size": 28,
+              "paddingBottom-unit": "px",
+              "paddingLeft-size": 16,
+              "paddingLeft-unit": "px",
+              "paddingRight-size": 16,
+              "paddingRight-unit": "px",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "1️⃣"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 36,
+                  "fontSize-unit": "px",
+                  "textAlign": "center"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Share Your Link"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#78350f",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Send your unique referral link to friends"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 13,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#92400e",
+                  "textAlign": "center",
+                  "lineHeight-size": 20,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 33,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "alignItems": "center",
+              "backgroundColor": "#fef3c7",
+              "borderRadius-size": 20,
+              "borderRadius-unit": "px",
+              "paddingTop-size": 28,
+              "paddingTop-unit": "px",
+              "paddingBottom-size": 28,
+              "paddingBottom-unit": "px",
+              "paddingLeft-size": 16,
+              "paddingLeft-unit": "px",
+              "paddingRight-size": 16,
+              "paddingRight-unit": "px",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "2️⃣"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 36,
+                  "fontSize-unit": "px",
+                  "textAlign": "center"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Friends Sign Up"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#78350f",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "They get $20 off their first order"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 13,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#92400e",
+                  "textAlign": "center",
+                  "lineHeight-size": 20,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 33,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "alignItems": "center",
+              "backgroundColor": "#fde68a",
+              "borderRadius-size": 20,
+              "borderRadius-unit": "px",
+              "paddingTop-size": 28,
+              "paddingTop-unit": "px",
+              "paddingBottom-size": 28,
+              "paddingBottom-unit": "px",
+              "paddingLeft-size": 16,
+              "paddingLeft-unit": "px",
+              "paddingRight-size": 16,
+              "paddingRight-unit": "px",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "3️⃣"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 36,
+                  "fontSize-unit": "px",
+                  "textAlign": "center"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "You Get Paid!"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#78350f",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Earn $20 credit for each friend"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 13,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#92400e",
+                  "textAlign": "center",
+                  "lineHeight-size": 20,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 40,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 40,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#78350f"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 20,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "YOUR UNIQUE REFERRAL LINK"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 10,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#fbbf24",
+                  "textAlign": "center",
+                  "letterSpacing-size": 2,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "spark.app/refer/FRIEND20"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 20,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#ffffff",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif",
+                  "backgroundColor": "#92400e",
+                  "paddingTop-size": 16,
+                  "paddingTop-unit": "px",
+                  "paddingBottom-size": 16,
+                  "paddingBottom-unit": "px",
+                  "paddingLeft-size": 32,
+                  "paddingLeft-unit": "px",
+                  "paddingRight-size": 32,
+                  "paddingRight-unit": "px",
+                  "borderRadius-size": 12,
+                  "borderRadius-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Button",
+              "data": {
+                "text": "Copy Link & Share 🔗",
+                "href": "#"
+              },
+              "_style": {
+                "desktop": {
+                  "backgroundColor": "#f59e0b",
+                  "color": "#78350f",
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "paddingTop-size": 16,
+                  "paddingTop-unit": "px",
+                  "paddingBottom-size": 16,
+                  "paddingBottom-unit": "px",
+                  "paddingLeft-size": 36,
+                  "paddingLeft-unit": "px",
+                  "paddingRight-size": 36,
+                  "paddingRight-unit": "px",
+                  "borderRadius-size": 100,
+                  "borderRadius-unit": "px",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 40,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 40,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "backgroundColor": "#fef7ec",
+              "borderRadius-size": 20,
+              "borderRadius-unit": "px",
+              "paddingTop-size": 32,
+              "paddingTop-unit": "px",
+              "paddingBottom-size": 32,
+              "paddingBottom-unit": "px",
+              "paddingLeft-size": 24,
+              "paddingLeft-unit": "px",
+              "paddingRight-size": 24,
+              "paddingRight-unit": "px",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "🏆 YOUR REWARDS STATUS"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 11,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#f59e0b",
+                  "textAlign": "center",
+                  "letterSpacing-size": 1.5,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "$60 Credit Earned"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 32,
+                  "fontSize-unit": "px",
+                  "fontWeight": "800",
+                  "color": "#78350f",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "3 friends referred • Keep going!"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "color": "#92400e",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 24,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 24,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#fef7ec"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 8,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Spark Inc. • Made with ❤️ in Austin, TX"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 12,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#92400e",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Unsubscribe • Terms • Privacy"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 11,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "color": "#f59e0b",
+                  "textAlign": "center",
+                  "fontFamily": "Quicksand, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

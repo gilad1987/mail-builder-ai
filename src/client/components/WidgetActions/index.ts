@@ -1,1 +1,6 @@
-export { WidgetActions } from './WidgetActions';export { SectionActions } from './SectionActions';export { ColumnActions } from './ColumnActions';export { BlockActions } from './BlockActions';export { AddColumnButton } from './AddColumnButton';export { ElementLabel } from './ElementLabel';
+export { AddColumnButton } from './AddColumnButton'
+export { BlockActions } from './BlockActions'
+export { ColumnActions } from './ColumnActions'
+export { ElementLabel } from './ElementLabel'
+export { SectionActions } from './SectionActions'
+export { WidgetActions } from './WidgetActions'

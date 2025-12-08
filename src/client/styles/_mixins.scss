@@ -1,1 +1,132 @@
-@use 'variables' as *;// =================================================================// FLEXBOX MIXINS// =================================================================@mixin flex-center {  display: flex;  align-items: center;  justify-content: center;}@mixin flex-between {  display: flex;  align-items: center;  justify-content: space-between;}@mixin flex-start {  display: flex;  align-items: center;  justify-content: flex-start;}// =================================================================// BUTTON MIXINS// =================================================================@mixin btn-base {  display: flex;  align-items: center;  gap: 4px;  padding: 6px 10px;  border-radius: $border-radius-md;  font-size: $font-size-xs;  font-weight: $font-weight-medium;  transition: all $transition-fast;  cursor: pointer;  border: none;  background: none;  svg {    width: 14px;    height: 14px;  }}@mixin btn-primary {  @include btn-base;  background-color: $blue-600;  color: white;  box-shadow: $shadow-md;  &:hover {    background-color: $blue-700;  }}@mixin btn-secondary {  @include btn-base;  background-color: white;  border: 1px solid $gray-300;  color: $gray-700;  &:hover {    background-color: $gray-50;  }}@mixin btn-ghost {  padding: 6px;  color: $gray-500;  border-radius: $border-radius-md;  transition: all $transition-fast;  cursor: pointer;  border: none;  background: none;  svg {    width: 16px;    height: 16px;  }  &:hover {    color: $gray-800;    background-color: $gray-100;  }}// =================================================================// INPUT MIXINS// =================================================================@mixin input-base {  //padding: $spacing-1 $spacing-2;  border: 1px solid $gray-300;  border-radius: $border-radius-md;  font-size: $font-size-sm;  color: $gray-800;  background-color: white;  transition:    border-color $transition-fast,    box-shadow $transition-fast;  &:focus {    border-color: $blue-500;    outline: none;    box-shadow: 0 0 0 1px $blue-500;  }}// =================================================================// RESPONSIVE BREAKPOINTS// =================================================================@mixin sm {  @media (min-width: 640px) {    @content;  }}@mixin md {  @media (min-width: 768px) {    @content;  }}@mixin lg {  @media (min-width: 1024px) {    @content;  }}
+@use 'variables' as *;
+
+// =================================================================
+// FLEXBOX MIXINS
+// =================================================================
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+// =================================================================
+// BUTTON MIXINS
+// =================================================================
+
+@mixin btn-base {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: $border-radius-md;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  transition: all $transition-fast;
+  cursor: pointer;
+  border: none;
+  background: none;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@mixin btn-primary {
+  @include btn-base;
+  background-color: $blue-600;
+  color: white;
+  box-shadow: $shadow-md;
+
+  &:hover {
+    background-color: $blue-700;
+  }
+}
+
+@mixin btn-secondary {
+  @include btn-base;
+  background-color: white;
+  border: 1px solid $gray-300;
+  color: $gray-700;
+
+  &:hover {
+    background-color: $gray-50;
+  }
+}
+
+@mixin btn-ghost {
+  padding: 6px;
+  color: $gray-500;
+  border-radius: $border-radius-md;
+  transition: all $transition-fast;
+  cursor: pointer;
+  border: none;
+  background: none;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    color: $gray-800;
+    background-color: $gray-100;
+  }
+}
+
+// =================================================================
+// INPUT MIXINS
+// =================================================================
+
+@mixin input-base {
+  //padding: $spacing-1 $spacing-2;
+  border: 1px solid $gray-300;
+  border-radius: $border-radius-md;
+  font-size: $font-size-sm;
+  color: $gray-800;
+  background-color: white;
+  transition:
+    border-color $transition-fast,
+    box-shadow $transition-fast;
+
+  &:focus {
+    border-color: $blue-500;
+    outline: none;
+    box-shadow: 0 0 0 1px $blue-500;
+  }
+}
+
+// =================================================================
+// RESPONSIVE BREAKPOINTS
+// =================================================================
+
+@mixin sm {
+  @media (min-width: 640px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}

@@ -1,1 +1,1 @@
-export { BackgroundGradientController } from './BackgroundGradientController';
+export { BackgroundGradientController } from './BackgroundGradientController'

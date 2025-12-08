@@ -1,1 +1,1247 @@
-{  "name": "Order Confirmation",  "description": "Clean and reassuring order confirmation with order details and tracking information",  "thumbnail": "order-confirmation.png",  "_style": {    "desktop": {      "margin": "0 auto",      "backgroundColor": "#f9fafb"    },    "tablet": {},    "mobile": {}  },  "children": [    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "space-between",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-start",              "alignItems": "center",              "columnGap-size": 8,              "columnGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "◼"              },              "_style": {                "desktop": {                  "fontSize-size": 20,                  "fontSize-unit": "px",                  "color": "#0d9488"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Evergreen"              },              "_style": {                "desktop": {                  "fontSize-size": 20,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#134e4a",                  "fontFamily": "Figtree, system-ui, sans-serif",                  "letterSpacing-size": -0.5,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 50,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "flex-end",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Order #EG-2024-8847"              },              "_style": {                "desktop": {                  "fontSize-size": 12,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#6b7280",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 56,          "paddingTop-unit": "px",          "paddingBottom-size": 56,          "paddingBottom-unit": "px",          "paddingLeft-size": 40,          "paddingLeft-unit": "px",          "paddingRight-size": 40,          "paddingRight-unit": "px",          "backgroundColor": "#0d9488"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 16,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "✓"              },              "_style": {                "desktop": {                  "fontSize-size": 48,                  "fontSize-unit": "px",                  "fontWeight": "300",                  "color": "#99f6e4",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Thank you for your order!"              },              "_style": {                "desktop": {                  "fontSize-size": 32,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#ffffff",                  "textAlign": "center",                  "lineHeight-size": 40,                  "lineHeight-unit": "px",                  "fontFamily": "Figtree, system-ui, sans-serif",                  "letterSpacing-size": -0.5,                  "letterSpacing-unit": "px"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "We're preparing your items and will notify you when they ship."              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#ccfbf1",                  "textAlign": "center",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "stretch",          "paddingTop-size": 32,          "paddingTop-unit": "px",          "paddingBottom-size": 32,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 0,          "columnGap-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px",              "borderRightWidth-size": 1,              "borderRightWidth-unit": "px",              "borderRightColor": "#e5e7eb",              "borderRightStyle": "solid"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "📦"              },              "_style": {                "desktop": {                  "fontSize-size": 24,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "ESTIMATED DELIVERY"              },              "_style": {                "desktop": {                  "fontSize-size": 9,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#9ca3af",                  "textAlign": "center",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Dec 12-14"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#134e4a",                  "textAlign": "center",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px",              "borderRightWidth-size": 1,              "borderRightWidth-unit": "px",              "borderRightColor": "#e5e7eb",              "borderRightStyle": "solid"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "🚚"              },              "_style": {                "desktop": {                  "fontSize-size": 24,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "SHIPPING METHOD"              },              "_style": {                "desktop": {                  "fontSize-size": 9,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#9ca3af",                  "textAlign": "center",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Express"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#134e4a",                  "textAlign": "center",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 33,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "💳"              },              "_style": {                "desktop": {                  "fontSize-size": 24,                  "fontSize-unit": "px",                  "textAlign": "center"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "PAYMENT"              },              "_style": {                "desktop": {                  "fontSize-size": 9,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#9ca3af",                  "textAlign": "center",                  "letterSpacing-size": 1,                  "letterSpacing-unit": "px",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Visa •••• 4242"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#134e4a",                  "textAlign": "center",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "stretch",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 8,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#f9fafb"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "flex-start",              "alignItems": "flex-start"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "ORDER SUMMARY"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#0d9488",                  "letterSpacing-size": 1.5,                  "letterSpacing-unit": "px",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "flex-start",          "alignItems": "center",          "paddingTop-size": 16,          "paddingTop-unit": "px",          "paddingBottom-size": 16,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 16,          "columnGap-unit": "px",          "backgroundColor": "#ffffff",          "borderBottomWidth-size": 1,          "borderBottomWidth-unit": "px",          "borderBottomColor": "#e5e7eb",          "borderBottomStyle": "solid"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 20,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Image",              "data": {                "src": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=150&h=150&fit=crop",                "alt": "Skincare Set"              },              "_style": {                "desktop": {                  "width-size": 100,                  "width-unit": "%",                  "borderRadius-size": 8,                  "borderRadius-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 55,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-start",              "rowGap-size": 4,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Hydrating Skincare Set"              },              "_style": {                "desktop": {                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#111827",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Qty: 1 • Full Size"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#6b7280",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-end"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "$89.00"              },              "_style": {                "desktop": {                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#111827",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "flex-start",          "alignItems": "center",          "paddingTop-size": 16,          "paddingTop-unit": "px",          "paddingBottom-size": 16,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "columnGap-size": 16,          "columnGap-unit": "px",          "backgroundColor": "#ffffff"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "width": 20,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Image",              "data": {                "src": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=150&h=150&fit=crop",                "alt": "Lip Balm"              },              "_style": {                "desktop": {                  "width-size": 100,                  "width-unit": "%",                  "borderRadius-size": 8,                  "borderRadius-unit": "px"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 55,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-start",              "rowGap-size": 4,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Headline",              "data": {                "content": "Organic Lip Balm Set"              },              "_style": {                "desktop": {                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#111827",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Qty: 2 • Assorted Flavors"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#6b7280",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "width": 25,          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "flex-end"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "$24.00"              },              "_style": {                "desktop": {                  "fontSize-size": 15,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#111827",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "column",          "justifyContent": "flex-start",          "alignItems": "stretch",          "paddingTop-size": 20,          "paddingTop-unit": "px",          "paddingBottom-size": 20,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "rowGap-size": 8,          "rowGap-unit": "px",          "backgroundColor": "#f0fdfa"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "space-between",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Subtotal"              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#6b7280",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "$113.00"              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "500",                  "color": "#374151",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "space-between",              "alignItems": "center"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Shipping"              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#6b7280",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "FREE"              },              "_style": {                "desktop": {                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#0d9488",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        },        {          "name": "Column",          "_style": {            "desktop": {              "display": "flex",              "flexDirection": "row",              "justifyContent": "space-between",              "alignItems": "center",              "paddingTop-size": 12,              "paddingTop-unit": "px",              "borderTopWidth-size": 1,              "borderTopWidth-unit": "px",              "borderTopColor": "#99f6e4",              "borderTopStyle": "solid"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Total"              },              "_style": {                "desktop": {                  "fontSize-size": 16,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#134e4a",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "$113.00"              },              "_style": {                "desktop": {                  "fontSize-size": 20,                  "fontSize-unit": "px",                  "fontWeight": "700",                  "color": "#134e4a",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 32,          "paddingTop-unit": "px",          "paddingBottom-size": 32,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#f9fafb"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 12,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Button",              "data": {                "text": "Track Your Order",                "href": "#"              },              "_style": {                "desktop": {                  "backgroundColor": "#0d9488",                  "color": "#ffffff",                  "fontSize-size": 14,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "paddingTop-size": 14,                  "paddingTop-unit": "px",                  "paddingBottom-size": 14,                  "paddingBottom-unit": "px",                  "paddingLeft-size": 32,                  "paddingLeft-unit": "px",                  "paddingRight-size": 32,                  "paddingRight-unit": "px",                  "borderRadius-size": 8,                  "borderRadius-unit": "px",                  "textAlign": "center",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "View Order Details →"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "600",                  "color": "#0d9488",                  "textAlign": "center",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    },    {      "name": "Section",      "_style": {        "desktop": {          "flex": 1,          "width": "100%",          "maxWidth-size": 620,          "maxWidth-unit": "px",          "margin": "0 auto",          "display": "flex",          "flexDirection": "row",          "justifyContent": "center",          "alignItems": "center",          "paddingTop-size": 24,          "paddingTop-unit": "px",          "paddingBottom-size": 24,          "paddingBottom-unit": "px",          "paddingLeft-size": 32,          "paddingLeft-unit": "px",          "paddingRight-size": 32,          "paddingRight-unit": "px",          "backgroundColor": "#134e4a"        },        "tablet": {},        "mobile": {}      },      "children": [        {          "name": "Column",          "_style": {            "desktop": {              "flex": 1,              "display": "flex",              "flexDirection": "column",              "justifyContent": "center",              "alignItems": "center",              "rowGap-size": 8,              "rowGap-unit": "px"            },            "tablet": {},            "mobile": {}          },          "children": [            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "Questions? Contact us at support@evergreen.com"              },              "_style": {                "desktop": {                  "fontSize-size": 13,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#99f6e4",                  "textAlign": "center",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            },            {              "name": "Block",              "type": "Paragraph",              "data": {                "content": "© 2024 Evergreen • Privacy • Terms"              },              "_style": {                "desktop": {                  "fontSize-size": 11,                  "fontSize-unit": "px",                  "fontWeight": "400",                  "color": "#5eead4",                  "textAlign": "center",                  "fontFamily": "Figtree, system-ui, sans-serif"                },                "tablet": {},                "mobile": {}              }            }          ]        }      ]    }  ]}
+{
+  "name": "Order Confirmation",
+  "description": "Clean and reassuring order confirmation with order details and tracking information",
+  "thumbnail": "order-confirmation.png",
+  "_style": {
+    "desktop": {
+      "margin": "0 auto",
+      "backgroundColor": "#f9fafb"
+    },
+    "tablet": {},
+    "mobile": {}
+  },
+  "children": [
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "alignItems": "center",
+          "paddingTop-size": 24,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 24,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "alignItems": "center",
+              "columnGap-size": 8,
+              "columnGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "◼"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 20,
+                  "fontSize-unit": "px",
+                  "color": "#0d9488"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Evergreen"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 20,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#134e4a",
+                  "fontFamily": "Figtree, system-ui, sans-serif",
+                  "letterSpacing-size": -0.5,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 50,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "flex-end",
+              "alignItems": "center"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Order #EG-2024-8847"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 12,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "color": "#6b7280",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 56,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 56,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 40,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 40,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#0d9488"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 16,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "✓"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 48,
+                  "fontSize-unit": "px",
+                  "fontWeight": "300",
+                  "color": "#99f6e4",
+                  "textAlign": "center"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Thank you for your order!"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 32,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#ffffff",
+                  "textAlign": "center",
+                  "lineHeight-size": 40,
+                  "lineHeight-unit": "px",
+                  "fontFamily": "Figtree, system-ui, sans-serif",
+                  "letterSpacing-size": -0.5,
+                  "letterSpacing-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "We're preparing your items and will notify you when they ship."
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 16,
+                  "fontSize-unit": "px",
+                  "fontWeight": "400",
+                  "color": "#ccfbf1",
+                  "textAlign": "center",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "stretch",
+          "paddingTop-size": 32,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 32,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "columnGap-size": 0,
+          "columnGap-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 33,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 8,
+              "rowGap-unit": "px",
+              "borderRightWidth-size": 1,
+              "borderRightWidth-unit": "px",
+              "borderRightColor": "#e5e7eb",
+              "borderRightStyle": "solid"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "📦"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 24,
+                  "fontSize-unit": "px",
+                  "textAlign": "center"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "ESTIMATED DELIVERY"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 9,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#9ca3af",
+                  "textAlign": "center",
+                  "letterSpacing-size": 1,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Dec 12-14"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 16,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#134e4a",
+                  "textAlign": "center",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 33,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 8,
+              "rowGap-unit": "px",
+              "borderRightWidth-size": 1,
+              "borderRightWidth-unit": "px",
+              "borderRightColor": "#e5e7eb",
+              "borderRightStyle": "solid"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "🚚"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 24,
+                  "fontSize-unit": "px",
+                  "textAlign": "center"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "SHIPPING METHOD"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 9,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#9ca3af",
+                  "textAlign": "center",
+                  "letterSpacing-size": 1,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Express"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 16,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#134e4a",
+                  "textAlign": "center",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 33,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 8,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "💳"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 24,
+                  "fontSize-unit": "px",
+                  "textAlign": "center"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "PAYMENT"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 9,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#9ca3af",
+                  "textAlign": "center",
+                  "letterSpacing-size": 1,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Visa •••• 4242"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 16,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#134e4a",
+                  "textAlign": "center",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "stretch",
+          "paddingTop-size": 24,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 8,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#f9fafb"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "alignItems": "flex-start"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "ORDER SUMMARY"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 11,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#0d9488",
+                  "letterSpacing-size": 1.5,
+                  "letterSpacing-unit": "px",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+          "alignItems": "center",
+          "paddingTop-size": 16,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 16,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "columnGap-size": 16,
+          "columnGap-unit": "px",
+          "backgroundColor": "#ffffff",
+          "borderBottomWidth-size": 1,
+          "borderBottomWidth-unit": "px",
+          "borderBottomColor": "#e5e7eb",
+          "borderBottomStyle": "solid"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 20,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Image",
+              "data": {
+                "src": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=150&h=150&fit=crop",
+                "alt": "Skincare Set"
+              },
+              "_style": {
+                "desktop": {
+                  "width-size": 100,
+                  "width-unit": "%",
+                  "borderRadius-size": 8,
+                  "borderRadius-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 55,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "flex-start",
+              "rowGap-size": 4,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Hydrating Skincare Set"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "color": "#111827",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Qty: 1 • Full Size"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 13,
+                  "fontSize-unit": "px",
+                  "fontWeight": "400",
+                  "color": "#6b7280",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 25,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "flex-end"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "$89.00"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#111827",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+          "alignItems": "center",
+          "paddingTop-size": 16,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 16,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "columnGap-size": 16,
+          "columnGap-unit": "px",
+          "backgroundColor": "#ffffff"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "width": 20,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Image",
+              "data": {
+                "src": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=150&h=150&fit=crop",
+                "alt": "Lip Balm"
+              },
+              "_style": {
+                "desktop": {
+                  "width-size": 100,
+                  "width-unit": "%",
+                  "borderRadius-size": 8,
+                  "borderRadius-unit": "px"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 55,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "flex-start",
+              "rowGap-size": 4,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Headline",
+              "data": {
+                "content": "Organic Lip Balm Set"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "color": "#111827",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Qty: 2 • Assorted Flavors"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 13,
+                  "fontSize-unit": "px",
+                  "fontWeight": "400",
+                  "color": "#6b7280",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "width": 25,
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "flex-end"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "$24.00"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 15,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#111827",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "column",
+          "justifyContent": "flex-start",
+          "alignItems": "stretch",
+          "paddingTop-size": 20,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 20,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "rowGap-size": 8,
+          "rowGap-unit": "px",
+          "backgroundColor": "#f0fdfa"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "alignItems": "center"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Subtotal"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "400",
+                  "color": "#6b7280",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "$113.00"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "500",
+                  "color": "#374151",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "alignItems": "center"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Shipping"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "400",
+                  "color": "#6b7280",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "FREE"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "color": "#0d9488",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+              "alignItems": "center",
+              "paddingTop-size": 12,
+              "paddingTop-unit": "px",
+              "borderTopWidth-size": 1,
+              "borderTopWidth-unit": "px",
+              "borderTopColor": "#99f6e4",
+              "borderTopStyle": "solid"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Total"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 16,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#134e4a",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "$113.00"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 20,
+                  "fontSize-unit": "px",
+                  "fontWeight": "700",
+                  "color": "#134e4a",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 32,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 32,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#f9fafb"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 12,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Button",
+              "data": {
+                "text": "Track Your Order",
+                "href": "#"
+              },
+              "_style": {
+                "desktop": {
+                  "backgroundColor": "#0d9488",
+                  "color": "#ffffff",
+                  "fontSize-size": 14,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "paddingTop-size": 14,
+                  "paddingTop-unit": "px",
+                  "paddingBottom-size": 14,
+                  "paddingBottom-unit": "px",
+                  "paddingLeft-size": 32,
+                  "paddingLeft-unit": "px",
+                  "paddingRight-size": 32,
+                  "paddingRight-unit": "px",
+                  "borderRadius-size": 8,
+                  "borderRadius-unit": "px",
+                  "textAlign": "center",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "View Order Details →"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 13,
+                  "fontSize-unit": "px",
+                  "fontWeight": "600",
+                  "color": "#0d9488",
+                  "textAlign": "center",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Section",
+      "_style": {
+        "desktop": {
+          "flex": 1,
+          "width": "100%",
+          "maxWidth-size": 620,
+          "maxWidth-unit": "px",
+          "margin": "0 auto",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "alignItems": "center",
+          "paddingTop-size": 24,
+          "paddingTop-unit": "px",
+          "paddingBottom-size": 24,
+          "paddingBottom-unit": "px",
+          "paddingLeft-size": 32,
+          "paddingLeft-unit": "px",
+          "paddingRight-size": 32,
+          "paddingRight-unit": "px",
+          "backgroundColor": "#134e4a"
+        },
+        "tablet": {},
+        "mobile": {}
+      },
+      "children": [
+        {
+          "name": "Column",
+          "_style": {
+            "desktop": {
+              "flex": 1,
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "rowGap-size": 8,
+              "rowGap-unit": "px"
+            },
+            "tablet": {},
+            "mobile": {}
+          },
+          "children": [
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "Questions? Contact us at support@evergreen.com"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 13,
+                  "fontSize-unit": "px",
+                  "fontWeight": "400",
+                  "color": "#99f6e4",
+                  "textAlign": "center",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            },
+            {
+              "name": "Block",
+              "type": "Paragraph",
+              "data": {
+                "content": "© 2024 Evergreen • Privacy • Terms"
+              },
+              "_style": {
+                "desktop": {
+                  "fontSize-size": 11,
+                  "fontSize-unit": "px",
+                  "fontWeight": "400",
+                  "color": "#5eead4",
+                  "textAlign": "center",
+                  "fontFamily": "Figtree, system-ui, sans-serif"
+                },
+                "tablet": {},
+                "mobile": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

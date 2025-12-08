@@ -1,1 +1,58 @@
-import { defineConfig } from 'vite';import react from '@vitejs/plugin-react';import express from 'vite3-plugin-express';export default defineConfig({  plugins: [    react({      babel: {        plugins: [          ['@babel/plugin-proposal-decorators', { legacy: true }],          ['@babel/plugin-transform-class-properties', { loose: true }],          'babel-plugin-styled-components',        ],      },    }),    express('src/server'),  ],  esbuild: {    tsconfigRaw: {      compilerOptions: {        experimentalDecorators: true,      },    },  },  optimizeDeps: {    exclude: [      'google-auth-library', // Exclude server-only packages from client bundle      'bcryptjs',      'node-fetch',    ],  },  ssr: {    noExternal: false,    external: ['google-auth-library', 'bcryptjs', 'node-fetch'],  },  build: {    rollupOptions: {      external: id => {        // Exclude all server code from client bundle        // if (id.includes('/server/')) return true;        // Exclude Node.js built-ins        // if (id.startsWith('node:')) return true;        // Exclude specific server-only packages        if (['google-auth-library', 'bcryptjs', 'node-fetch'].some(pkg => id.includes(pkg)))          return true;        return false;      },    },  },  // server: {  //   proxy: {  //     '/api': {  //       target: 'http://localhost:3002',  //       changeOrigin: true,  //     },  //   },  // },});
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
+import express from 'vite3-plugin-express'
+
+export default defineConfig({
+  plugins: [
+    react({
+      babel: {
+        plugins: [
+          ['@babel/plugin-proposal-decorators', { legacy: true }],
+          ['@babel/plugin-transform-class-properties', { loose: true }],
+          'babel-plugin-styled-components',
+        ],
+      },
+    }),
+    express('src/server'),
+  ],
+  esbuild: {
+    tsconfigRaw: {
+      compilerOptions: {
+        experimentalDecorators: true,
+      },
+    },
+  },
+  optimizeDeps: {
+    exclude: [
+      'google-auth-library', // Exclude server-only packages from client bundle
+      'bcryptjs',
+      'node-fetch',
+    ],
+  },
+  ssr: {
+    noExternal: false,
+    external: ['google-auth-library', 'bcryptjs', 'node-fetch'],
+  },
+  build: {
+    rollupOptions: {
+      external: (id) => {
+        // Exclude all server code from client bundle
+        // if (id.includes('/server/')) return true;
+        // Exclude Node.js built-ins
+        // if (id.startsWith('node:')) return true;
+        // Exclude specific server-only packages
+        if (['google-auth-library', 'bcryptjs', 'node-fetch'].some((pkg) => id.includes(pkg)))
+          return true
+        return false
+      },
+    },
+  },
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://localhost:3002',
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
+})

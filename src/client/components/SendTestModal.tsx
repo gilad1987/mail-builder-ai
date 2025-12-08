@@ -1,1 +1,220 @@
-import { observer } from 'mobx-react-lite';import { AlertCircle, CheckCircle, Loader2, Mail, Send, X } from 'lucide-react';import { useState } from 'react';import { editorStore } from '../stores/EditorStore';interface SendTestModalProps {  isOpen: boolean;  onClose: () => void;}type SendStatus = 'idle' | 'sending' | 'success' | 'error';export const SendTestModal = observer(({ isOpen, onClose }: SendTestModalProps) => {  const [email, setEmail] = useState('');  const [fromEmail, setFromEmail] = useState('');  const [subject, setSubject] = useState('Test Email from Mail Builder');  const [apiKey, setApiKey] = useState('');  const [status, setStatus] = useState<SendStatus>('idle');  const [errorMessage, setErrorMessage] = useState('');  const handleSendTest = async () => {    if (!email || !apiKey || !fromEmail) {      setErrorMessage('Please fill in all required fields');      setStatus('error');      return;    }    // Basic email validation    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;    if (!emailRegex.test(email)) {      setErrorMessage('Please enter a valid recipient email address');      setStatus('error');      return;    }    if (!emailRegex.test(fromEmail)) {      setErrorMessage('Please enter a valid sender email address');      setStatus('error');      return;    }    setStatus('sending');    setErrorMessage('');    try {      const html = editorStore.exportAsHTML();      // Mailchimp Transactional (Mandrill) API      const response = await fetch('https://mandrillapp.com/api/1.0/messages/send.json', {        method: 'POST',        headers: {          'Content-Type': 'application/json',        },        body: JSON.stringify({          key: apiKey,          message: {            html: html,            subject: subject,            from_email: fromEmail,            from_name: 'Mail Builder Test',            to: [              {                email: email,                type: 'to',              },            ],          },        }),      });      const result = await response.json();      if (result[0]?.status === 'sent' || result[0]?.status === 'queued') {        setStatus('success');        setTimeout(() => {          onClose();          setStatus('idle');          setEmail('');        }, 2000);      } else {        throw new Error(result[0]?.reject_reason || result.message || 'Failed to send email');      }    } catch (error) {      setStatus('error');      setErrorMessage(error instanceof Error ? error.message : 'Failed to send test email');    }  };  const handleClose = () => {    setStatus('idle');    setErrorMessage('');    onClose();  };  if (!isOpen) return null;  return (    <div className="send-test-modal-overlay" onClick={handleClose}>      <div className="send-test-modal" onClick={e => e.stopPropagation()}>        <div className="send-test-modal__header">          <div className="send-test-modal__title">            <Mail size={20} />            <span>Send Test Email</span>          </div>          <button className="send-test-modal__close" onClick={handleClose} title="Close">            <X size={20} />          </button>        </div>        <div className="send-test-modal__content">          <p className="send-test-modal__description">            Send a test email to preview how your template looks in real email clients. Uses            Mailchimp Transactional (Mandrill) API.          </p>          <div className="send-test-modal__field">            <label htmlFor="from-email">From Email (verified domain) *</label>            <input              id="from-email"              type="email"              value={fromEmail}              onChange={e => setFromEmail(e.target.value)}              placeholder="you@yourverifieddomain.com"              disabled={status === 'sending'}            />            <span className="send-test-modal__hint">              Must be from a{' '}              <a                href="https://mandrillapp.com/settings/sending-domains"                target="_blank"                rel="noopener noreferrer"              >                verified domain              </a>{' '}              in Mandrill            </span>          </div>          <div className="send-test-modal__field">            <label htmlFor="test-email">Recipient Email *</label>            <input              id="test-email"              type="email"              value={email}              onChange={e => setEmail(e.target.value)}              placeholder="recipient@email.com"              disabled={status === 'sending'}            />          </div>          <div className="send-test-modal__field">            <label htmlFor="test-subject">Subject Line</label>            <input              id="test-subject"              type="text"              value={subject}              onChange={e => setSubject(e.target.value)}              placeholder="Test Email from Mail Builder"              disabled={status === 'sending'}            />          </div>          <div className="send-test-modal__field">            <label htmlFor="api-key">Mailchimp Transactional API Key *</label>            <input              id="api-key"              type="password"              value={apiKey}              onChange={e => setApiKey(e.target.value)}              placeholder="Enter your Mandrill API key"              disabled={status === 'sending'}            />            <span className="send-test-modal__hint">              Get your API key from{' '}              <a href="https://mandrillapp.com/settings" target="_blank" rel="noopener noreferrer">                Mandrill Settings              </a>            </span>          </div>          {status === 'error' && (            <div className="send-test-modal__message send-test-modal__message--error">              <AlertCircle size={16} />              <span>{errorMessage}</span>            </div>          )}          {status === 'success' && (            <div className="send-test-modal__message send-test-modal__message--success">              <CheckCircle size={16} />              <span>Test email sent successfully!</span>            </div>          )}        </div>        <div className="send-test-modal__footer">          <button className="btn-secondary" onClick={handleClose} disabled={status === 'sending'}>            Cancel          </button>          <button            className="btn-primary"            onClick={handleSendTest}            disabled={status === 'sending' || !email || !apiKey || !fromEmail}          >            {status === 'sending' ? (              <>                <Loader2 size={16} className="spin" />                <span>Sending...</span>              </>            ) : (              <>                <Send size={16} />                <span>Send Test</span>              </>            )}          </button>        </div>      </div>    </div>  );});
+import { AlertCircle, CheckCircle, Loader2, Mail, Send, X } from 'lucide-react'
+import { observer } from 'mobx-react-lite'
+import { useState } from 'react'
+import { editorStore } from '../stores/EditorStore'
+
+interface SendTestModalProps {
+  isOpen: boolean
+  onClose: () => void
+}
+
+type SendStatus = 'idle' | 'sending' | 'success' | 'error'
+
+export const SendTestModal = observer(({ isOpen, onClose }: SendTestModalProps) => {
+  const [email, setEmail] = useState('')
+  const [fromEmail, setFromEmail] = useState('')
+  const [subject, setSubject] = useState('Test Email from Mail Builder')
+  const [apiKey, setApiKey] = useState('')
+  const [status, setStatus] = useState<SendStatus>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleSendTest = async () => {
+    if (!email || !apiKey || !fromEmail) {
+      setErrorMessage('Please fill in all required fields')
+      setStatus('error')
+      return
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setErrorMessage('Please enter a valid recipient email address')
+      setStatus('error')
+      return
+    }
+    if (!emailRegex.test(fromEmail)) {
+      setErrorMessage('Please enter a valid sender email address')
+      setStatus('error')
+      return
+    }
+
+    setStatus('sending')
+    setErrorMessage('')
+
+    try {
+      const html = editorStore.exportAsHTML()
+
+      // Mailchimp Transactional (Mandrill) API
+      const response = await fetch('https://mandrillapp.com/api/1.0/messages/send.json', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          key: apiKey,
+          message: {
+            html: html,
+            subject: subject,
+            from_email: fromEmail,
+            from_name: 'Mail Builder Test',
+            to: [
+              {
+                email: email,
+                type: 'to',
+              },
+            ],
+          },
+        }),
+      })
+
+      const result = await response.json()
+
+      if (result[0]?.status === 'sent' || result[0]?.status === 'queued') {
+        setStatus('success')
+        setTimeout(() => {
+          onClose()
+          setStatus('idle')
+          setEmail('')
+        }, 2000)
+      } else {
+        throw new Error(result[0]?.reject_reason || result.message || 'Failed to send email')
+      }
+    } catch (error) {
+      setStatus('error')
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to send test email')
+    }
+  }
+
+  const handleClose = () => {
+    setStatus('idle')
+    setErrorMessage('')
+    onClose()
+  }
+
+  if (!isOpen) return null
+
+  return (
+    <div className="send-test-modal-overlay" onClick={handleClose}>
+      <div className="send-test-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="send-test-modal__header">
+          <div className="send-test-modal__title">
+            <Mail size={20} />
+            <span>Send Test Email</span>
+          </div>
+          <button className="send-test-modal__close" onClick={handleClose} title="Close">
+            <X size={20} />
+          </button>
+        </div>
+
+        <div className="send-test-modal__content">
+          <p className="send-test-modal__description">
+            Send a test email to preview how your template looks in real email clients. Uses
+            Mailchimp Transactional (Mandrill) API.
+          </p>
+
+          <div className="send-test-modal__field">
+            <label htmlFor="from-email">From Email (verified domain) *</label>
+            <input
+              id="from-email"
+              type="email"
+              value={fromEmail}
+              onChange={(e) => setFromEmail(e.target.value)}
+              placeholder="you@yourverifieddomain.com"
+              disabled={status === 'sending'}
+            />
+            <span className="send-test-modal__hint">
+              Must be from a{' '}
+              <a
+                href="https://mandrillapp.com/settings/sending-domains"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                verified domain
+              </a>{' '}
+              in Mandrill
+            </span>
+          </div>
+
+          <div className="send-test-modal__field">
+            <label htmlFor="test-email">Recipient Email *</label>
+            <input
+              id="test-email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="recipient@email.com"
+              disabled={status === 'sending'}
+            />
+          </div>
+
+          <div className="send-test-modal__field">
+            <label htmlFor="test-subject">Subject Line</label>
+            <input
+              id="test-subject"
+              type="text"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              placeholder="Test Email from Mail Builder"
+              disabled={status === 'sending'}
+            />
+          </div>
+
+          <div className="send-test-modal__field">
+            <label htmlFor="api-key">Mailchimp Transactional API Key *</label>
+            <input
+              id="api-key"
+              type="password"
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="Enter your Mandrill API key"
+              disabled={status === 'sending'}
+            />
+            <span className="send-test-modal__hint">
+              Get your API key from{' '}
+              <a href="https://mandrillapp.com/settings" target="_blank" rel="noopener noreferrer">
+                Mandrill Settings
+              </a>
+            </span>
+          </div>
+
+          {status === 'error' && (
+            <div className="send-test-modal__message send-test-modal__message--error">
+              <AlertCircle size={16} />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+
+          {status === 'success' && (
+            <div className="send-test-modal__message send-test-modal__message--success">
+              <CheckCircle size={16} />
+              <span>Test email sent successfully!</span>
+            </div>
+          )}
+        </div>
+
+        <div className="send-test-modal__footer">
+          <button className="btn-secondary" onClick={handleClose} disabled={status === 'sending'}>
+            Cancel
+          </button>
+          <button
+            className="btn-primary"
+            onClick={handleSendTest}
+            disabled={status === 'sending' || !email || !apiKey || !fromEmail}
+          >
+            {status === 'sending' ? (
+              <>
+                <Loader2 size={16} className="spin" />
+                <span>Sending...</span>
+              </>
+            ) : (
+              <>
+                <Send size={16} />
+                <span>Send Test</span>
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+})

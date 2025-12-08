@@ -1,1 +1,154 @@
-import { useState } from 'react';import { observer } from 'mobx-react-lite';import { editorStore } from '../../../stores/EditorStore';import {  CornerBottomLeftIcon,  CornerBottomRightIcon,  CornerTopLeftIcon,  CornerTopRightIcon,  RadiusMultipleIcon,  RadiusSingleIcon,} from './BorderIcons';type Corner = 'TopLeft' | 'TopRight' | 'BottomLeft' | 'BottomRight';const corners: { key: Corner; Icon: React.FC }[] = [  { key: 'TopLeft', Icon: CornerTopLeftIcon },  { key: 'TopRight', Icon: CornerTopRightIcon },  { key: 'BottomLeft', Icon: CornerBottomLeftIcon },  { key: 'BottomRight', Icon: CornerBottomRightIcon },];export const BorderRadiusSection = observer(() => {  const [individualMode, setIndividualMode] = useState(false);  const element = editorStore.selectedElement;  const device = editorStore.activeDevice;  // Get radius value for all corners (unified)  const getAllRadiusValue = (): number => {    if (!element) return 0;    const style = element._style[device];    const value = style['borderRadius-size'] ?? element._style.desktop['borderRadius-size'] ?? 0;    return typeof value === 'number' ? value : 0;  };  // Get radius value for a specific corner (falls back to unified radius)  const getCornerValue = (corner: Corner): number => {    if (!element) return 0;    const key = `border${corner}Radius-size`;    const style = element._style[device];    // Try individual corner first, then fall back to unified radius    const value =      style[key] ??      element._style.desktop[key] ??      style['borderRadius-size'] ??      element._style.desktop['borderRadius-size'] ??      0;    return typeof value === 'number' ? value : 0;  };  // Update all corners at once  const handleAllRadiusChange = (value: number) => {    if (!element) return;    element.update('borderRadius-size', value);    element.update('borderRadius-unit', 'px');    // Also set all individual corners to the same value    corners.forEach(({ key }) => {      element.update(`border${key}Radius-size`, value);      element.update(`border${key}Radius-unit`, 'px');    });  };  // Update a specific corner  const handleCornerChange = (corner: Corner, value: number) => {    if (!element) return;    element.update(`border${corner}Radius-size`, value);    element.update(`border${corner}Radius-unit`, 'px');  };  const radiusValue = getAllRadiusValue();  return (    <div className="border-controller__section">      <div className="border-controller__row">        <span className="border-controller__label">Radius</span>        <button          className={`border-controller__icon-btn ${!individualMode ? 'is-active' : ''}`}          onClick={() => setIndividualMode(false)}          title="All corners"        >          <RadiusSingleIcon />        </button>        <button          className={`border-controller__icon-btn ${individualMode ? 'is-active' : ''}`}          onClick={() => setIndividualMode(true)}          title="Individual corners"        >          <RadiusMultipleIcon />        </button>        <input          type="range"          min={0}          max={100}          value={radiusValue}          disabled={individualMode || !element}          onChange={e => handleAllRadiusChange(Number(e.target.value))}          className="border-controller__slider"        />        <input          type="number"          min={0}          value={radiusValue}          disabled={individualMode || !element}          onChange={e => handleAllRadiusChange(Number(e.target.value))}          className="border-controller__input"        />      </div>      {individualMode && (        <>          <div className="border-controller__row border-controller__row--corners">            <CornerTopLeftIcon />            <input              type="number"              min={0}              value={getCornerValue('TopLeft')}              onChange={e => handleCornerChange('TopLeft', Number(e.target.value))}              className="border-controller__input"              disabled={!element}            />            <CornerTopRightIcon />            <input              type="number"              min={0}              value={getCornerValue('TopRight')}              onChange={e => handleCornerChange('TopRight', Number(e.target.value))}              className="border-controller__input"              disabled={!element}            />          </div>          <div className="border-controller__row border-controller__row--corners">            <CornerBottomLeftIcon />            <input              type="number"              min={0}              value={getCornerValue('BottomLeft')}              onChange={e => handleCornerChange('BottomLeft', Number(e.target.value))}              className="border-controller__input"              disabled={!element}            />            <CornerBottomRightIcon />            <input              type="number"              min={0}              value={getCornerValue('BottomRight')}              onChange={e => handleCornerChange('BottomRight', Number(e.target.value))}              className="border-controller__input"              disabled={!element}            />          </div>        </>      )}    </div>  );});
+import { observer } from 'mobx-react-lite'
+import { useState } from 'react'
+import { editorStore } from '../../../stores/EditorStore'
+import {
+  CornerBottomLeftIcon,
+  CornerBottomRightIcon,
+  CornerTopLeftIcon,
+  CornerTopRightIcon,
+  RadiusMultipleIcon,
+  RadiusSingleIcon,
+} from './BorderIcons'
+
+type Corner = 'TopLeft' | 'TopRight' | 'BottomLeft' | 'BottomRight'
+
+const corners: { key: Corner; Icon: React.FC }[] = [
+  { key: 'TopLeft', Icon: CornerTopLeftIcon },
+  { key: 'TopRight', Icon: CornerTopRightIcon },
+  { key: 'BottomLeft', Icon: CornerBottomLeftIcon },
+  { key: 'BottomRight', Icon: CornerBottomRightIcon },
+]
+
+export const BorderRadiusSection = observer(() => {
+  const [individualMode, setIndividualMode] = useState(false)
+  const element = editorStore.selectedElement
+  const device = editorStore.activeDevice
+
+  // Get radius value for all corners (unified)
+  const getAllRadiusValue = (): number => {
+    if (!element) return 0
+    const style = element._style[device]
+    const value = style['borderRadius-size'] ?? element._style.desktop['borderRadius-size'] ?? 0
+    return typeof value === 'number' ? value : 0
+  }
+
+  // Get radius value for a specific corner (falls back to unified radius)
+  const getCornerValue = (corner: Corner): number => {
+    if (!element) return 0
+    const key = `border${corner}Radius-size`
+    const style = element._style[device]
+    // Try individual corner first, then fall back to unified radius
+    const value =
+      style[key] ??
+      element._style.desktop[key] ??
+      style['borderRadius-size'] ??
+      element._style.desktop['borderRadius-size'] ??
+      0
+    return typeof value === 'number' ? value : 0
+  }
+
+  // Update all corners at once
+  const handleAllRadiusChange = (value: number) => {
+    if (!element) return
+    element.update('borderRadius-size', value)
+    element.update('borderRadius-unit', 'px')
+    // Also set all individual corners to the same value
+    corners.forEach(({ key }) => {
+      element.update(`border${key}Radius-size`, value)
+      element.update(`border${key}Radius-unit`, 'px')
+    })
+  }
+
+  // Update a specific corner
+  const handleCornerChange = (corner: Corner, value: number) => {
+    if (!element) return
+    element.update(`border${corner}Radius-size`, value)
+    element.update(`border${corner}Radius-unit`, 'px')
+  }
+
+  const radiusValue = getAllRadiusValue()
+
+  return (
+    <div className="border-controller__section">
+      <div className="border-controller__row">
+        <span className="border-controller__label">Radius</span>
+        <button
+          className={`border-controller__icon-btn ${!individualMode ? 'is-active' : ''}`}
+          onClick={() => setIndividualMode(false)}
+          title="All corners"
+        >
+          <RadiusSingleIcon />
+        </button>
+        <button
+          className={`border-controller__icon-btn ${individualMode ? 'is-active' : ''}`}
+          onClick={() => setIndividualMode(true)}
+          title="Individual corners"
+        >
+          <RadiusMultipleIcon />
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={100}
+          value={radiusValue}
+          disabled={individualMode || !element}
+          onChange={(e) => handleAllRadiusChange(Number(e.target.value))}
+          className="border-controller__slider"
+        />
+        <input
+          type="number"
+          min={0}
+          value={radiusValue}
+          disabled={individualMode || !element}
+          onChange={(e) => handleAllRadiusChange(Number(e.target.value))}
+          className="border-controller__input"
+        />
+      </div>
+
+      {individualMode && (
+        <>
+          <div className="border-controller__row border-controller__row--corners">
+            <CornerTopLeftIcon />
+            <input
+              type="number"
+              min={0}
+              value={getCornerValue('TopLeft')}
+              onChange={(e) => handleCornerChange('TopLeft', Number(e.target.value))}
+              className="border-controller__input"
+              disabled={!element}
+            />
+            <CornerTopRightIcon />
+            <input
+              type="number"
+              min={0}
+              value={getCornerValue('TopRight')}
+              onChange={(e) => handleCornerChange('TopRight', Number(e.target.value))}
+              className="border-controller__input"
+              disabled={!element}
+            />
+          </div>
+          <div className="border-controller__row border-controller__row--corners">
+            <CornerBottomLeftIcon />
+            <input
+              type="number"
+              min={0}
+              value={getCornerValue('BottomLeft')}
+              onChange={(e) => handleCornerChange('BottomLeft', Number(e.target.value))}
+              className="border-controller__input"
+              disabled={!element}
+            />
+            <CornerBottomRightIcon />
+            <input
+              type="number"
+              min={0}
+              value={getCornerValue('BottomRight')}
+              onChange={(e) => handleCornerChange('BottomRight', Number(e.target.value))}
+              className="border-controller__input"
+              disabled={!element}
+            />
+          </div>
+        </>
+      )}
+    </div>
+  )
+})

@@ -1,1 +1,3 @@
-export { Canvas } from './Canvas';export { EmptyCanvas } from './EmptyCanvas';export { StructureSelector } from './StructureSelector';
+export { Canvas } from './Canvas'
+export { EmptyCanvas } from './EmptyCanvas'
+export { StructureSelector } from './StructureSelector'

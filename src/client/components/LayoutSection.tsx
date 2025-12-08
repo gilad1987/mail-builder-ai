@@ -1,1 +1,128 @@
-import { useState } from 'react';import styled from 'styled-components';import { ChevronDown, ChevronUp } from 'lucide-react';import { tokens } from '../styles/tokens';import { Draggable } from './dnd';const layoutOptions = [  { name: '1 Column', columns: [100] },  { name: '2 Columns 50/50', columns: [50, 50] },  { name: '2 Columns 25/75', columns: [25, 75] },  { name: '2 Columns 75/25', columns: [75, 25] },  { name: '3 Columns', columns: [33.33, 33.33, 33.33] },  { name: '3 Columns 50/25/25', columns: [50, 25, 25] },  { name: '3 Columns 25/50/25', columns: [25, 50, 25] },  { name: '3 Columns 25/25/50', columns: [25, 25, 50] },  { name: '4 Columns', columns: [25, 25, 25, 25] },  { name: '5 Columns', columns: [20, 20, 20, 20, 20] },];const Container = styled.div`  border-top: 1px solid var(--border-color);  .header {    display: flex;    align-items: center;    justify-content: space-between;    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};    cursor: pointer;    user-select: none;    &:hover {      background: var(--bg-elevated);    }  }  .title {    font-size: ${tokens.fontSize.sm};    font-weight: ${tokens.fontWeight.medium};    color: var(--text-primary);  }  .icon {    color: var(--text-secondary);  }  .grid {    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};    display: flex;    flex-direction: column;    gap: ${tokens.spacing[3]};  }  .option {    padding: ${tokens.spacing[3]};    background: var(--bg-secondary);    border: 1px solid var(--border-subtle);    border-radius: ${tokens.borderRadius.md};    cursor: grab;    transition: all ${tokens.transition.fast};    &:hover {      background: var(--bg-elevated);      border-color: var(--text-secondary);    }    &:active {      cursor: grabbing;    }  }  .preview {    display: flex;    gap: 6px;    margin-bottom: ${tokens.spacing[2]};  }  .column {    height: 32px;    background: transparent;    border: 2px solid var(--text-secondary);    border-radius: 4px;  }  .name {    font-size: ${tokens.fontSize.xs};    color: var(--text-secondary);    text-align: center;  }`;export const LayoutSection = () => {  const [expanded, setExpanded] = useState(true);  return (    <Container>      <div className="header" onClick={() => setExpanded(!expanded)}>        <span className="title">Layout</span>        {expanded ? (          <ChevronUp size={18} className="icon" />        ) : (          <ChevronDown size={18} className="icon" />        )}      </div>      {expanded && (        <div className="grid">          {layoutOptions.map((layout, i) => (            <Draggable              key={i}              id={`sidebar-layout-${i}`}              data={{                source: 'sidebar',                type: 'layout',                columns: layout.columns,                name: layout.name,              }}            >              <div className="option">                <div className="preview">                  {layout.columns.map((w, j) => (                    <div key={j} className="column" style={{ flex: w }} />                  ))}                </div>                <div className="name">{layout.name}</div>              </div>            </Draggable>          ))}        </div>      )}    </Container>  );};
+import { ChevronDown, ChevronUp } from 'lucide-react'
+import { useState } from 'react'
+import styled from 'styled-components'
+import { tokens } from '../styles/tokens'
+import { Draggable } from './dnd'
+
+const layoutOptions = [
+  { name: '1 Column', columns: [100] },
+  { name: '2 Columns 50/50', columns: [50, 50] },
+  { name: '2 Columns 25/75', columns: [25, 75] },
+  { name: '2 Columns 75/25', columns: [75, 25] },
+  { name: '3 Columns', columns: [33.33, 33.33, 33.33] },
+  { name: '3 Columns 50/25/25', columns: [50, 25, 25] },
+  { name: '3 Columns 25/50/25', columns: [25, 50, 25] },
+  { name: '3 Columns 25/25/50', columns: [25, 25, 50] },
+  { name: '4 Columns', columns: [25, 25, 25, 25] },
+  { name: '5 Columns', columns: [20, 20, 20, 20, 20] },
+]
+
+const Container = styled.div`
+  border-top: 1px solid var(--border-color);
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
+    cursor: pointer;
+    user-select: none;
+    &:hover {
+      background: var(--bg-elevated);
+    }
+  }
+
+  .title {
+    font-size: ${tokens.fontSize.sm};
+    font-weight: ${tokens.fontWeight.medium};
+    color: var(--text-primary);
+  }
+
+  .icon {
+    color: var(--text-secondary);
+  }
+
+  .grid {
+    padding: ${tokens.spacing[3]} ${tokens.spacing[4]};
+    display: flex;
+    flex-direction: column;
+    gap: ${tokens.spacing[3]};
+  }
+
+  .option {
+    padding: ${tokens.spacing[3]};
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: ${tokens.borderRadius.md};
+    cursor: grab;
+    transition: all ${tokens.transition.fast};
+    &:hover {
+      background: var(--bg-elevated);
+      border-color: var(--text-secondary);
+    }
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .preview {
+    display: flex;
+    gap: 6px;
+    margin-bottom: ${tokens.spacing[2]};
+  }
+
+  .column {
+    height: 32px;
+    background: transparent;
+    border: 2px solid var(--text-secondary);
+    border-radius: 4px;
+  }
+
+  .name {
+    font-size: ${tokens.fontSize.xs};
+    color: var(--text-secondary);
+    text-align: center;
+  }
+`
+
+export const LayoutSection = () => {
+  const [expanded, setExpanded] = useState(true)
+
+  return (
+    <Container>
+      <div className="header" onClick={() => setExpanded(!expanded)}>
+        <span className="title">Layout</span>
+        {expanded ? (
+          <ChevronUp size={18} className="icon" />
+        ) : (
+          <ChevronDown size={18} className="icon" />
+        )}
+      </div>
+      {expanded && (
+        <div className="grid">
+          {layoutOptions.map((layout, i) => (
+            <Draggable
+              key={i}
+              id={`sidebar-layout-${i}`}
+              data={{
+                source: 'sidebar',
+                type: 'layout',
+                columns: layout.columns,
+                name: layout.name,
+              }}
+            >
+              <div className="option">
+                <div className="preview">
+                  {layout.columns.map((w, j) => (
+                    <div key={j} className="column" style={{ flex: w }} />
+                  ))}
+                </div>
+                <div className="name">{layout.name}</div>
+              </div>
+            </Draggable>
+          ))}
+        </div>
+      )}
+    </Container>
+  )
+}
