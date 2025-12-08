@@ -1,16 +1,21 @@
 import {
+  ArrowRight,
   Copy,
   Eye,
   FolderOpen,
+  Gift,
   Loader2,
   Mail,
+  Megaphone,
+  Paperclip,
+  PartyPopper,
   Pencil,
   Plus,
-  Send,
   Sparkles,
   Trash2,
+  Wand2,
 } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { remult } from 'remult'
 import { TemplateEntity } from '../../server/entities/TemplateEntity'
@@ -110,11 +115,20 @@ const formatDateRelative = (date: Date | null, now: number) => {
   return `Edited ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
 }
 
+const suggestionItems = [
+  { label: 'Welcome email', icon: PartyPopper },
+  { label: 'Newsletter', icon: Mail },
+  { label: 'Product launch', icon: Megaphone },
+  { label: 'Special offer', icon: Gift },
+]
+
 export const TemplatesLibrary = () => {
   const navigate = useNavigate()
   const [savedTemplates, setSavedTemplates] = useState<TemplateEntity[]>([])
   const [loading, setLoading] = useState(true)
   const [now, setNow] = useState(() => Date.now())
+  const [aiPrompt, setAiPrompt] = useState('')
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     templateRepo
@@ -177,30 +191,58 @@ export const TemplatesLibrary = () => {
         </div>
 
         <section className="ai-section">
-          <div className="ai-header">
-            <div className="ai-icon">
-              <Sparkles size={20} />
+          <div className="ai-composer">
+            <div className="ai-textarea-wrapper">
+              <textarea
+                ref={textareaRef}
+                className="ai-textarea"
+                placeholder="Describe the email you want to create..."
+                value={aiPrompt}
+                onChange={(e) => setAiPrompt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && aiPrompt.trim()) {
+                    // Handle submit
+                  }
+                }}
+                rows={3}
+              />
             </div>
-            <h2 className="ai-title">Create with AI</h2>
-          </div>
-          <p className="ai-subtitle">Describe the email you want and let AI generate it.</p>
-          <div className="ai-input-wrapper">
-            <input
-              className="ai-input"
-              placeholder="E.g., A welcome email for new subscribers..."
-            />
-            <button className="ai-submit">
-              <Send size={18} /> Generate
-            </button>
+            <div className="ai-composer-footer">
+              <div className="ai-footer-left">
+                <button className="ai-action-btn" title="Attach reference">
+                  <Paperclip size={18} />
+                </button>
+                <button className="ai-action-btn" title="Magic suggestions">
+                  <Wand2 size={18} />
+                </button>
+              </div>
+              <div className="ai-footer-right">
+                <span className="ai-char-count">{aiPrompt.length}/500</span>
+                <button className="ai-submit-btn" disabled={!aiPrompt.trim()}>
+                  <Sparkles size={16} />
+                  Generate
+                  <ArrowRight size={16} className="submit-icon" />
+                </button>
+              </div>
+            </div>
           </div>
           <div className="ai-suggestions">
-            {['Welcome email', 'Newsletter', 'Product launch', 'Event invitation', 'Thank you'].map(
-              (s) => (
-                <button key={s} className="ai-suggestion">
-                  {s}
-                </button>
-              )
-            )}
+            {suggestionItems.map((s) => (
+              <button
+                key={s.label}
+                className="ai-suggestion"
+                onClick={() => {
+                  setAiPrompt(`Create a ${s.label.toLowerCase()} for my business`)
+                  textareaRef.current?.focus()
+                }}
+              >
+                <s.icon size={14} className="suggestion-icon" />
+                {s.label}
+              </button>
+            ))}
+          </div>
+          <div className="ai-keyboard-hint">
+            <kbd>⌘</kbd> + <kbd>Enter</kbd> to generate
           </div>
         </section>
 

@@ -345,103 +345,166 @@
   }
 
   .ai-section {
-    max-width: 70%;
-    margin: 0px auto 80px;
-    background: linear-gradient(
-      135deg,
-      rgba(0, 191, 255, 0.1) 0%,
-      rgba(0, 168, 230, 0.1) 50%,
-      rgba(0, 140, 200, 0.05) 100%
-    );
-    border-radius: 16px;
-    padding: 32px;
-    border: 1px solid rgba(0, 191, 255, 0.2);
+    max-width: 680px;
+    margin: 0 auto 80px;
+    position: relative;
   }
 
-  .ai-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
+  .ai-composer {
+    background: #18181b;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.03),
+      0 8px 40px rgba(0, 0, 0, 0.4);
+
+    &:focus-within {
+      border-color: rgba(0, 191, 255, 0.4);
+      box-shadow:
+        0 0 0 1px rgba(0, 191, 255, 0.15),
+        0 0 60px rgba(0, 191, 255, 0.1),
+        0 12px 50px rgba(0, 0, 0, 0.5);
+    }
   }
 
-  .ai-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 4px 16px rgba(0, 191, 255, 0.4);
+  .ai-textarea-wrapper {
+    position: relative;
+    padding: 20px 20px 16px;
   }
 
-  .ai-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #fafafa;
-  }
-
-  .ai-subtitle {
-    font-size: 14px;
-    color: #a1a1aa;
-    margin-bottom: 20px;
-    max-width: 500px;
-  }
-
-  .ai-input-wrapper {
-    display: flex;
-    gap: 12px;
-    align-items: stretch;
-  }
-
-  .ai-input {
-    flex: 1;
-    padding: 14px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+  .ai-textarea {
+    width: 100%;
+    min-height: 80px;
+    max-height: 200px;
+    padding: 0;
+    border: none;
+    background: transparent;
     font-size: 15px;
     font-family: inherit;
-    background: #18181b;
     color: #fafafa;
+    resize: none;
     outline: none;
-    transition: all 0.2s ease;
+    line-height: 1.6;
 
     &::placeholder {
       color: #52525b;
     }
-
-    &:focus {
-      border-color: #00bfff;
-      box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.2);
-    }
   }
 
-  .ai-submit {
+  .ai-placeholder-hint {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    pointer-events: none;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 14px 24px;
-    background: linear-gradient(135deg, #00bfff 0%, #00a8e6 100%);
+    color: #52525b;
+    font-size: 15px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+
+    &.visible {
+      opacity: 1;
+    }
+
+    .hint-icon {
+      color: #00bfff;
+      opacity: 0.6;
+    }
+  }
+
+  .ai-composer-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .ai-footer-left {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ai-action-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: #52525b;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #a1a1aa;
+    }
+
+    &.active {
+      background: rgba(0, 191, 255, 0.1);
+      color: #00bfff;
+    }
+  }
+
+  .ai-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .ai-char-count {
+    font-size: 12px;
+    color: #3f3f46;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ai-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #00bfff 0%, #0099dd 100%);
     color: white;
     border: none;
     border-radius: 12px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     font-family: inherit;
     cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
-    &:hover {
-      background: linear-gradient(135deg, #00a8e6 0%, #008cc8 100%);
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #00d4ff 0%, #00bfff 100%);
       transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(0, 191, 255, 0.4);
+      box-shadow: 0 6px 20px rgba(0, 191, 255, 0.35);
     }
 
-    &:active {
+    &:active:not(:disabled) {
       transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .submit-icon {
+      transition: transform 0.2s ease;
+    }
+
+    &:hover:not(:disabled) .submit-icon {
+      transform: translateX(2px);
     }
   }
 
@@ -450,23 +513,58 @@
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 16px;
+    justify-content: center;
   }
 
   .ai-suggestion {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     padding: 8px 14px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 100px;
     font-size: 13px;
-    color: #a1a1aa;
+    color: #71717a;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.2s ease;
     font-family: inherit;
 
+    .suggestion-icon {
+      opacity: 0.5;
+    }
+
     &:hover {
-      border-color: #00bfff;
-      color: #7dd3fc;
-      background: rgba(0, 191, 255, 0.1);
+      background: rgba(0, 191, 255, 0.08);
+      border-color: rgba(0, 191, 255, 0.2);
+      color: #a1a1aa;
+
+      .suggestion-icon {
+        opacity: 0.8;
+        color: #00bfff;
+      }
+    }
+  }
+
+  .ai-keyboard-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #3f3f46;
+
+    kbd {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 11px;
+      color: #52525b;
     }
   }
 
