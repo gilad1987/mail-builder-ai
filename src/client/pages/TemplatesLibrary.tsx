@@ -14,11 +14,31 @@ import {
   Trash2,
   Wand2,
 } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { remult } from 'remult'
 import { TemplateEntity } from '../../server/entities/TemplateEntity'
 import { editorStore } from '../stores/EditorStore'
+
+const DotPattern = () => {
+  const patternId = useId()
+  return (
+    <svg className="templates-library__background">
+      <pattern
+        id={patternId}
+        x="23"
+        y="23"
+        width="24"
+        height="24"
+        patternUnits="userSpaceOnUse"
+        patternTransform="translate(-0.5,-0.5)"
+      >
+        <circle cx="0.5" cy="0.5" r="0.5" fill="#71717a" />
+      </pattern>
+      <rect x="0" y="0" width="100%" height="100%" fill={`url(#${patternId})`} />
+    </svg>
+  )
+}
 
 // Built-in template data
 const builtInTemplates = [
@@ -167,6 +187,7 @@ export const TemplatesLibrary = () => {
 
   return (
     <div className="templates-library">
+      <DotPattern />
       <header className="header">
         <div className="header-left">
           <div className="logo">
@@ -182,68 +203,70 @@ export const TemplatesLibrary = () => {
       </header>
 
       <div className="content">
-        <div className="hero">
-          <h1 className="hero-title">Design emails effortlessly</h1>
-          <p className="hero-subtitle">
-            Focus on your message. We'll make it beautiful. No code, no complexity — just results.
-          </p>
-        </div>
+        <div className="hero-ai-section">
+          <div className="hero">
+            <h1 className="hero-title">Design emails effortlessly</h1>
+            <p className="hero-subtitle">
+              Focus on your message. We'll make it beautiful. No code, no complexity — just results.
+            </p>
+          </div>
 
-        <section className="ai-section">
-          <div className="ai-composer">
-            <div className="ai-textarea-wrapper">
-              <textarea
-                ref={textareaRef}
-                className="ai-textarea"
-                placeholder="Describe the email you want to create..."
-                value={aiPrompt}
-                onChange={(e) => setAiPrompt(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && aiPrompt.trim()) {
-                    // Handle submit
-                  }
-                }}
-                rows={3}
-              />
-            </div>
-            <div className="ai-composer-footer">
-              <div className="ai-footer-left">
-                <button className="ai-action-btn" title="Attach reference">
-                  <Paperclip size={18} />
-                </button>
-                <button className="ai-action-btn" title="Magic suggestions">
-                  <Wand2 size={18} />
-                </button>
+          <section className="ai-section">
+            <div className="ai-composer">
+              <div className="ai-textarea-wrapper">
+                <textarea
+                  ref={textareaRef}
+                  className="ai-textarea"
+                  placeholder="Describe the email you want to create..."
+                  value={aiPrompt}
+                  onChange={(e) => setAiPrompt(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey) && aiPrompt.trim()) {
+                      // Handle submit
+                    }
+                  }}
+                  rows={3}
+                />
               </div>
-              <div className="ai-footer-right">
-                <span className="ai-char-count">{aiPrompt.length}/500</span>
-                <button className="ai-submit-btn" disabled={!aiPrompt.trim()}>
-                  <Sparkles size={16} />
-                  Generate
-                  <ArrowRight size={16} className="submit-icon" />
-                </button>
+              <div className="ai-composer-footer">
+                <div className="ai-footer-left">
+                  <button className="ai-action-btn" title="Attach reference">
+                    <Paperclip size={18} />
+                  </button>
+                  <button className="ai-action-btn" title="Magic suggestions">
+                    <Wand2 size={18} />
+                  </button>
+                </div>
+                <div className="ai-footer-right">
+                  <span className="ai-char-count">{aiPrompt.length}/500</span>
+                  <button className="ai-submit-btn" disabled={!aiPrompt.trim()}>
+                    <Sparkles size={16} />
+                    Generate
+                    <ArrowRight size={16} className="submit-icon" />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="ai-suggestions">
-            {suggestionItems.map((s) => (
-              <button
-                key={s.label}
-                className="ai-suggestion"
-                onClick={() => {
-                  setAiPrompt(`Create a ${s.label.toLowerCase()} for my business`)
-                  textareaRef.current?.focus()
-                }}
-              >
-                <s.icon size={14} className="suggestion-icon" />
-                {s.label}
-              </button>
-            ))}
-          </div>
-          <div className="ai-keyboard-hint">
-            <kbd>⌘</kbd> + <kbd>Enter</kbd> to generate
-          </div>
-        </section>
+            <div className="ai-suggestions">
+              {suggestionItems.map((s) => (
+                <button
+                  key={s.label}
+                  className="ai-suggestion"
+                  onClick={() => {
+                    setAiPrompt(`Create a ${s.label.toLowerCase()} for my business`)
+                    textareaRef.current?.focus()
+                  }}
+                >
+                  <s.icon size={14} className="suggestion-icon" />
+                  {s.label}
+                </button>
+              ))}
+            </div>
+            <div className="ai-keyboard-hint">
+              <kbd>⌘</kbd> + <kbd>Enter</kbd> to generate
+            </div>
+          </section>
+        </div>
 
         <section className="section">
           <div className="section-header">
