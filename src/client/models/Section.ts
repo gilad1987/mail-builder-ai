@@ -69,8 +69,13 @@ export class Section extends Box {
   // MJML Export
   toMJML(): string {
     const attrs = this.getMJMLAttributes()
+    const style = this._style.desktop
+
+    // Get gap values to pass to columns
+    const columnGap = (style['columnGap-size'] || 0) as number
+
     return `<mj-section${attrs}>
-      ${this.children.map((col) => col.toMJML()).join('\n      ')}
+      ${this.children.map((col, index) => col.toMJML(columnGap, index, this.children.length)).join('\n      ')}
     </mj-section>`
   }
 
@@ -84,14 +89,21 @@ export class Section extends Box {
       attrs.push(`background-color="${bgColor}"`)
     }
 
-    // Padding
+    // Padding - account for row gap
+    const rowGap = (style['rowGap-size'] || 0) as number
     const paddingTop = (style['paddingTop-size'] || style['padding-size'] || 0) as number
     const paddingRight = (style['paddingRight-size'] || style['padding-size'] || 0) as number
     const paddingBottom = (style['paddingBottom-size'] || style['padding-size'] || 0) as number
     const paddingLeft = (style['paddingLeft-size'] || style['padding-size'] || 0) as number
 
-    if (paddingTop || paddingRight || paddingBottom || paddingLeft) {
-      attrs.push(`padding="${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px"`)
+    // Add row gap to top/bottom padding
+    const finalPaddingTop = paddingTop + rowGap / 2
+    const finalPaddingBottom = paddingBottom + rowGap / 2
+
+    if (finalPaddingTop || paddingRight || finalPaddingBottom || paddingLeft) {
+      attrs.push(
+        `padding="${finalPaddingTop}px ${paddingRight}px ${finalPaddingBottom}px ${paddingLeft}px"`
+      )
     }
 
     // Full width

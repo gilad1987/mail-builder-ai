@@ -128,8 +128,40 @@ export class Column extends Box {
   }
 
   // MJML Export
-  toMJML(): string {
+  toMJML(columnGap: number = 0, index: number = 0, totalColumns: number = 1): string {
+    const style = this._style.desktop
+    const bgColor = style.backgroundColor as string | undefined
+    const hasBgColor = bgColor && bgColor !== 'transparent'
+
+    // Calculate gap - use transparent border to create space between columns
+    let gapLeft = 0
+    let gapRight = 0
+    if (totalColumns > 1 && columnGap > 0) {
+      const halfGap = Math.round(columnGap / 2)
+      if (index === 0) {
+        gapRight = halfGap
+      } else if (index === totalColumns - 1) {
+        gapLeft = halfGap
+      } else {
+        gapLeft = halfGap
+        gapRight = halfGap
+      }
+    }
+
     const attrs = this.getMJMLAttributes()
+
+    // If column has background color AND gaps, we need to use inner-border to create visual separation
+    if (hasBgColor && (gapLeft > 0 || gapRight > 0)) {
+      // Use transparent border to create gap, background stays on column
+      const borderLeft = gapLeft > 0 ? `border-left="${gapLeft}px solid transparent"` : ''
+      const borderRight = gapRight > 0 ? `border-right="${gapRight}px solid transparent"` : ''
+      const borderAttrs = [borderLeft, borderRight].filter(Boolean).join(' ')
+
+      return `<mj-column${attrs} ${borderAttrs}>
+        ${this.children.map((block) => block.toMJML()).join('\n        ')}
+      </mj-column>`
+    }
+
     return `<mj-column${attrs}>
         ${this.children.map((block) => block.toMJML()).join('\n        ')}
       </mj-column>`
@@ -150,25 +182,45 @@ export class Column extends Box {
       attrs.push(`background-color="${bgColor}"`)
     }
 
-    // Padding
-    const paddingTop = (style['paddingTop-size'] || style['padding-size'] || 0) as number
-    const paddingRight = (style['paddingRight-size'] || style['padding-size'] || 0) as number
-    const paddingBottom = (style['paddingBottom-size'] || style['padding-size'] || 0) as number
-    const paddingLeft = (style['paddingLeft-size'] || style['padding-size'] || 0) as number
+    // Column's own padding (inside the background)
+    const basePaddingTop = (style['paddingTop-size'] || style['padding-size'] || 0) as number
+    const basePaddingRight = (style['paddingRight-size'] || style['padding-size'] || 0) as number
+    const basePaddingBottom = (style['paddingBottom-size'] || style['padding-size'] || 0) as number
+    const basePaddingLeft = (style['paddingLeft-size'] || style['padding-size'] || 0) as number
 
-    if (paddingTop || paddingRight || paddingBottom || paddingLeft) {
-      attrs.push(`padding="${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px"`)
+    if (basePaddingTop || basePaddingRight || basePaddingBottom || basePaddingLeft) {
+      attrs.push(
+        `padding="${basePaddingTop}px ${basePaddingRight}px ${basePaddingBottom}px ${basePaddingLeft}px"`
+      )
+    }
+
+    // Border radius
+    const borderRadius = style['borderRadius-size'] as number | undefined
+    if (borderRadius) {
+      attrs.push(`border-radius="${borderRadius}px"`)
     }
 
     // Vertical alignment
     const alignItems = style.alignItems as string | undefined
+    const justifyContent = style.justifyContent as string | undefined
+
     if (alignItems) {
       const alignMap: Record<string, string> = {
         'flex-start': 'top',
         center: 'middle',
         'flex-end': 'bottom',
+        stretch: 'top',
       }
       attrs.push(`vertical-align="${alignMap[alignItems] || 'top'}"`)
+    } else if (justifyContent) {
+      const justifyMap: Record<string, string> = {
+        'flex-start': 'top',
+        center: 'middle',
+        'flex-end': 'bottom',
+      }
+      if (justifyMap[justifyContent]) {
+        attrs.push(`vertical-align="${justifyMap[justifyContent]}"`)
+      }
     }
 
     return attrs.length ? ' ' + attrs.join(' ') : ''

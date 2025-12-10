@@ -70,8 +70,13 @@ export class InnerSection extends Box {
   // MJML Export - Inner sections become a group in MJML
   toMJML(): string {
     const attrs = this.getMJMLAttributes()
+    const style = this._style.desktop
+
+    // Get gap values to pass to columns
+    const columnGap = (style['columnGap-size'] || 0) as number
+
     return `<mj-group${attrs}>
-        ${this.children.map((col) => col.toMJML()).join('\n        ')}
+        ${this.children.map((col, index) => col.toMJML(columnGap, index, this.children.length)).join('\n        ')}
       </mj-group>`
   }
 

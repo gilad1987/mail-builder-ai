@@ -51,14 +51,13 @@ const Container = styled.div`
 
   .option {
     padding: ${tokens.spacing[3]};
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid #3f444b;
     border-radius: ${tokens.borderRadius.md};
     cursor: grab;
     transition: all ${tokens.transition.fast};
     &:hover {
-      background: var(--bg-elevated);
-      border-color: var(--text-secondary);
+      border-color: #3f444b;
+      background: #2b2c31;
     }
     &:active {
       cursor: grabbing;

@@ -47,29 +47,29 @@
 
 @mixin btn-primary {
   @include btn-base;
-  background-color: $blue-600;
+  background-color: var(--accent);
   color: white;
   box-shadow: $shadow-md;
 
   &:hover {
-    background-color: $blue-700;
+    background-color: var(--accent-hover);
   }
 }
 
 @mixin btn-secondary {
   @include btn-base;
-  background-color: white;
-  border: 1px solid $gray-300;
-  color: $gray-700;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
 
   &:hover {
-    background-color: $gray-50;
+    background-color: var(--bg-elevated);
   }
 }
 
 @mixin btn-ghost {
   padding: 6px;
-  color: $gray-500;
+  color: var(--text-secondary);
   border-radius: $border-radius-md;
   transition: all $transition-fast;
   cursor: pointer;
@@ -82,8 +82,8 @@
   }
 
   &:hover {
-    color: $gray-800;
-    background-color: $gray-100;
+    color: var(--text-primary);
+    background-color: var(--bg-elevated);
   }
 }
 

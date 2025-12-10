@@ -50,6 +50,7 @@ class EditorStore {
   activeTab: TabType = 'Style'
   theme: ThemeType = 'dark'
   templateVersion: number = 0 // Used to trigger re-renders when template is replaced
+  projectName: string = 'Untitled Project'
 
   // Undo/Redo history
   private history: HistoryEntry[] = []
@@ -487,7 +488,13 @@ class EditorStore {
       console.warn('MJML compilation warnings:', errors)
     }
 
-    return html
+    // Ensure doctype is present (some mjml versions may not include it)
+    let result = html
+    if (!result.trim().toLowerCase().startsWith('<!doctype')) {
+      result = '<!doctype html>\n' + result
+    }
+
+    return result
   }
 
   // Export raw MJML markup (for debugging or external processing)
@@ -502,13 +509,32 @@ class EditorStore {
     }
   }
 
+  // Generate filename with project name and current date/time
+  private generateExportFilename(extension: string = 'html'): string {
+    const now = new Date()
+    const month = String(now.getMonth() + 1).padStart(2, '0')
+    const day = String(now.getDate()).padStart(2, '0')
+    const year = now.getFullYear()
+    const hours = String(now.getHours()).padStart(2, '0')
+    const minutes = String(now.getMinutes()).padStart(2, '0')
+
+    // Sanitize project name for filename (remove special characters)
+    const sanitizedName = this.projectName.replace(/[^a-zA-Z0-9\s-]/g, '').replace(/\s+/g, '-')
+
+    return `${sanitizedName}_${month}-${day}-${year}_${hours}-${minutes}.${extension}`
+  }
+
+  setProjectName(name: string) {
+    this.projectName = name
+  }
+
   downloadHTML() {
     const html = this.exportAsHTML()
     const blob = new Blob([html], { type: 'text/html' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'email-template.html'
+    a.download = this.generateExportFilename('html')
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -522,7 +548,7 @@ class EditorStore {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'email-template.html'
+    a.download = this.generateExportFilename('html')
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)
@@ -535,7 +561,7 @@ class EditorStore {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'email-template.json'
+    a.download = this.generateExportFilename('json')
     document.body.appendChild(a)
     a.click()
     document.body.removeChild(a)

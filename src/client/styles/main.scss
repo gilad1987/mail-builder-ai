@@ -379,18 +379,16 @@ select {
 .block-card {
   @include flex-center;
   flex-direction: column;
-  padding: $spacing-4;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-subtle);
-  border-radius: $border-radius-lg;
-  box-shadow: $shadow-sm;
+  padding: $spacing-3;
+  border: 1px solid #3f444b;
+  border-radius: $border-radius-md;
   cursor: grab;
   transition: all $transition-fast;
   user-select: none;
 
   &:hover {
-    background-color: var(--bg-elevated);
-    box-shadow: $shadow-md;
+    border-color: #3f444b;
+    background-color: #2b2c31;
   }
 
   &:active {

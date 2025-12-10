@@ -1,4 +1,3 @@
-import { Sparkles } from 'lucide-react'
 import styled from 'styled-components'
 import { tokens } from '../../styles/tokens'
 import { StructureSelector } from './StructureSelector'
@@ -12,7 +11,7 @@ const Container = styled.div`
   height: 100%;
   padding: ${tokens.spacing[6]};
   text-align: center;
-
+  width: 100%;
   .empty-icon {
     width: 80px;
     height: 80px;
@@ -61,14 +60,14 @@ const Container = styled.div`
 export const EmptyCanvas = () => {
   return (
     <Container>
-      <div className="empty-icon">
-        <Sparkles size={36} color="white" />
-      </div>
+      {/*<div className="empty-icon">*/}
+      {/*  <Sparkles size={36} color="white" />*/}
+      {/*</div>*/}
 
-      <h2 className="empty-title">Start Building Your Email</h2>
-      <p className="empty-subtitle">
-        Choose a layout type and structure to begin creating your email template.
-      </p>
+      {/*<h2 className="empty-title">Start Building Your Email</h2>*/}
+      {/*<p className="empty-subtitle">*/}
+      {/*  Choose a layout type and structure to begin creating your email template.*/}
+      {/*</p>*/}
 
       <div className="selector-wrapper">
         <StructureSelector />

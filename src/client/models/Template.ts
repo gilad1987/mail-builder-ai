@@ -106,7 +106,7 @@ ${this.renderChildrenHTML()}
     const bgColor = this._style.desktop.backgroundColor as string | undefined
     const bodyAttrs = bgColor && bgColor !== 'transparent' ? ` background-color="${bgColor}"` : ''
 
-    return `<mjml>
+    return `<mjml lang="en">
   <mj-head>
     <mj-attributes>
       <mj-all font-family="Arial, sans-serif" />
@@ -114,7 +114,18 @@ ${this.renderChildrenHTML()}
       <mj-section padding="0" />
     </mj-attributes>
     <mj-style>
-      .container { max-width: 650px; }
+      [owa] .mj-column-per-100 { width: 100% !important; max-width: 100%; }
+      [owa] .mj-column-per-50 { width: 50% !important; max-width: 50%; }
+      [owa] .mj-column-per-33 { width: 33% !important; max-width: 33%; }
+    </mj-style>
+    <mj-style>
+      @media only screen and (max-width:479px) {
+        table.mj-full-width-mobile { width: 100% !important; }
+        td.mj-full-width-mobile { width: auto !important; }
+      }
+    </mj-style>
+    <mj-style>
+      a { color: inherit; }
     </mj-style>
   </mj-head>
   <mj-body${bodyAttrs}>

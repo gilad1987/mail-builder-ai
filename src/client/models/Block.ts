@@ -264,8 +264,8 @@ export class Block extends Box {
       attrs.push(`width="${widthSize}${unit}"`)
     }
 
-    // Padding
-    const padding = this.getMJMLPadding()
+    // Padding - use container padding if set, otherwise element padding
+    const padding = this.getMJMLContainerPadding() || this.getMJMLPadding()
     if (padding) attrs.push(`padding="${padding}"`)
 
     // Alignment
@@ -278,6 +278,12 @@ export class Block extends Box {
     const borderRadiusAttr = this.getMJMLBorderRadius()
     if (borderRadiusAttr) {
       attrs.push(`border-radius="${borderRadiusAttr}"`)
+    }
+
+    // Container background color
+    const containerBgColor = this.getMJMLContainerBackgroundColor()
+    if (containerBgColor) {
+      attrs.push(`container-background-color="${containerBgColor}"`)
     }
 
     return `<mj-image ${attrs.join(' ')} />`
@@ -310,9 +316,15 @@ export class Block extends Box {
       attrs.push(`font-weight="${fontWeight}"`)
     }
 
-    // Padding
+    // Inner padding (button content padding)
     const padding = this.getMJMLPadding()
     attrs.push(`inner-padding="${padding || d.padding}"`)
+
+    // Outer padding (container padding)
+    const containerPadding = this.getMJMLContainerPadding()
+    if (containerPadding) {
+      attrs.push(`padding="${containerPadding}"`)
+    }
 
     // Border radius
     const borderRadius = style['borderRadius-size'] as number | undefined
@@ -322,6 +334,12 @@ export class Block extends Box {
     const textAlign = style.textAlign as string | undefined
     if (textAlign) {
       attrs.push(`align="${textAlign}"`)
+    }
+
+    // Container background color
+    const containerBgColor = this.getMJMLContainerBackgroundColor()
+    if (containerBgColor) {
+      attrs.push(`container-background-color="${containerBgColor}"`)
     }
 
     return `<mj-button ${attrs.join(' ')}>${(this.data.text as string) || d.defaultText}</mj-button>`
@@ -370,16 +388,31 @@ export class Block extends Box {
       attrs.push(`border-width="${borderWidth}px"`)
     }
 
-    // Padding
-    const padding = this.getMJMLPadding()
+    // Padding - use container padding if set, otherwise element padding
+    const padding = this.getMJMLContainerPadding() || this.getMJMLPadding()
     if (padding) attrs.push(`padding="${padding}"`)
+
+    // Container background color
+    const containerBgColor = this.getMJMLContainerBackgroundColor()
+    if (containerBgColor) {
+      attrs.push(`container-background-color="${containerBgColor}"`)
+    }
 
     return `<mj-divider ${attrs.join(' ')} />`
   }
 
   private spacerToMJML(): string {
+    const attrs: string[] = []
     const height = (this.data.height as string) || '20px'
-    return `<mj-spacer height="${height}" />`
+    attrs.push(`height="${height}"`)
+
+    // Container background color
+    const containerBgColor = this.getMJMLContainerBackgroundColor()
+    if (containerBgColor) {
+      attrs.push(`container-background-color="${containerBgColor}"`)
+    }
+
+    return `<mj-spacer ${attrs.join(' ')} />`
   }
 
   private socialLinksToMJML(): string {
@@ -394,9 +427,14 @@ export class Block extends Box {
 
     const style = this._style.desktop
     const align = (style.textAlign as string) || 'center'
-    const padding = this.getMJMLPadding()
+    const padding = this.getMJMLContainerPadding() || this.getMJMLPadding()
+    const containerBgColor = this.getMJMLContainerBackgroundColor()
 
-    return `<mj-social align="${align}"${padding ? ` padding="${padding}"` : ''} mode="horizontal">\n${socialElements}\n</mj-social>`
+    let attrs = `align="${align}"`
+    if (padding) attrs += ` padding="${padding}"`
+    if (containerBgColor) attrs += ` container-background-color="${containerBgColor}"`
+
+    return `<mj-social ${attrs} mode="horizontal">\n${socialElements}\n</mj-social>`
   }
 
   private videoToMJML(): string {
@@ -417,14 +455,19 @@ export class Block extends Box {
 
     const style = this._style.desktop
     const align = (style.textAlign as string) || 'center'
-    const padding = this.getMJMLPadding()
+    const padding = this.getMJMLContainerPadding() || this.getMJMLPadding()
+    const containerBgColor = this.getMJMLContainerBackgroundColor()
+
+    let attrs = `align="${align}"`
+    if (padding) attrs += ` padding="${padding}"`
+    if (containerBgColor) attrs += ` container-background-color="${containerBgColor}"`
 
     if (displayThumbnail && videoId) {
       // Use mj-image with href for clickable thumbnail
-      return `<mj-image src="${displayThumbnail}" alt="Play video" href="${videoLink}" align="${align}"${padding ? ` padding="${padding}"` : ''} />`
+      return `<mj-image src="${displayThumbnail}" alt="Play video" href="${videoLink}" ${attrs} />`
     }
 
-    return `<mj-text align="${align}"${padding ? ` padding="${padding}"` : ''}>Add a YouTube video URL</mj-text>`
+    return `<mj-text ${attrs}>Add a YouTube video URL</mj-text>`
   }
 
   private getTextMJMLAttributes(): string[] {
@@ -456,9 +499,15 @@ export class Block extends Box {
       attrs.push(`align="${textAlign}"`)
     }
 
-    // Padding
-    const padding = this.getMJMLPadding()
+    // Padding - use container padding if set, otherwise element padding
+    const padding = this.getMJMLContainerPadding() || this.getMJMLPadding()
     if (padding) attrs.push(`padding="${padding}"`)
+
+    // Container background color
+    const containerBgColor = style.containerBackgroundColor as string | undefined
+    if (containerBgColor && containerBgColor !== 'transparent') {
+      attrs.push(`container-background-color="${containerBgColor}"`)
+    }
 
     return attrs
   }
@@ -473,6 +522,29 @@ export class Block extends Box {
 
     if (top || right || bottom || left) {
       return `${top}px ${right}px ${bottom}px ${left}px`
+    }
+    return null
+  }
+
+  private getMJMLContainerPadding(): string | null {
+    const style = this._style.desktop
+
+    const top = (style['containerPaddingTop-size'] || 0) as number
+    const right = (style['containerPaddingRight-size'] || 0) as number
+    const bottom = (style['containerPaddingBottom-size'] || 0) as number
+    const left = (style['containerPaddingLeft-size'] || 0) as number
+
+    if (top || right || bottom || left) {
+      return `${top}px ${right}px ${bottom}px ${left}px`
+    }
+    return null
+  }
+
+  private getMJMLContainerBackgroundColor(): string | null {
+    const style = this._style.desktop
+    const containerBgColor = style.containerBackgroundColor as string | undefined
+    if (containerBgColor && containerBgColor !== 'transparent') {
+      return containerBgColor
     }
     return null
   }

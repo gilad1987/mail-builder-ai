@@ -135,7 +135,7 @@ const gridStructures: StructureOption[] = [
 ]
 
 const Container = styled.div`
-  width: 80%;
+  width: 100%;
   max-width: 900px;
   margin: ${tokens.spacing[4]} auto;
   padding: ${tokens.spacing[6]};
