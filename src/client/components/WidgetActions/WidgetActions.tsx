@@ -1,4 +1,4 @@
-import { Copy, Edit, Trash2 } from 'lucide-react'
+import { Copy, Trash2 } from 'lucide-react'
 import styled from 'styled-components'
 import { tokens } from '../../styles/tokens'
 
@@ -76,7 +76,7 @@ const Container = styled.div`
   }
 `
 
-export const WidgetActions = ({ onEdit, onCopy, onDelete }: WidgetActionsProps) => {
+export const WidgetActions = ({ onCopy, onDelete }: WidgetActionsProps) => {
   const handleClick = (e: React.MouseEvent, action: () => void) => {
     e.stopPropagation()
     action()
@@ -84,9 +84,9 @@ export const WidgetActions = ({ onEdit, onCopy, onDelete }: WidgetActionsProps) 
 
   return (
     <Container className="widget-actions">
-      <button onClick={(e) => handleClick(e, onEdit)} title="Edit Block">
-        <Edit size={12} />
-      </button>
+      {/*<button onClick={(e) => handleClick(e, onEdit)} title="Edit Block">*/}
+      {/*  <Edit size={12} />*/}
+      {/*</button>*/}
       <button onClick={(e) => handleClick(e, onCopy)} title="Duplicate Block">
         <Copy size={12} />
       </button>

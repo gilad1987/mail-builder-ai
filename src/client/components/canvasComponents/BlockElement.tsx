@@ -1,3 +1,4 @@
+import { useDroppable } from '@dnd-kit/core'
 import { Facebook, Globe, Image, Instagram, Linkedin, Mail, Twitter, Youtube } from 'lucide-react'
 import { observer } from 'mobx-react-lite'
 import { useState } from 'react'
@@ -7,7 +8,7 @@ import { Block, Box, getWidgetDefaults, InnerSection } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { savedWidgetsStore } from '../../stores/SavedWidgetsStore'
 import { tokens } from '../../styles/tokens'
-import { Draggable } from '../dnd'
+import { useDndState } from '../dnd'
 import { SaveWidgetModal } from '../SaveWidgetModal'
 import { BlockActions, ElementLabel } from '../WidgetActions'
 import { ColumnBox } from './ColumnBox'
@@ -15,6 +16,7 @@ import { ColumnBox } from './ColumnBox'
 interface BlockElementProps {
   block: Box
   columnId: string
+  index: number
 }
 
 const Container = styled.div`
@@ -68,10 +70,46 @@ const Container = styled.div`
   }
 `
 
-export const BlockElement = observer(({ block, columnId }: BlockElementProps) => {
+const ElementDropZone = styled.div<{ $isOver: boolean; $isDraggingElement: boolean }>`
+  height: ${({ $isDraggingElement }) => ($isDraggingElement ? '8px' : '0')};
+  margin: ${({ $isDraggingElement }) => ($isDraggingElement ? '2px 0' : '0')};
+  transition: all ${tokens.transition.fast};
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  border-radius: ${tokens.borderRadius.sm};
+
+  ${({ $isDraggingElement }) =>
+    $isDraggingElement &&
+    `
+    background: rgba(55, 71, 79, 0.05);
+    border: 2px dashed rgba(55, 71, 79, 0.2);
+  `}
+
+  ${({ $isOver }) =>
+    $isOver &&
+    `
+    height: 40px !important;
+    margin: 8px 0 !important;
+    background: rgba(55, 71, 79, 0.15) !important;
+    border: 2px dashed #37474f !important;
+  `}
+`
+
+export const BlockElement = observer(({ block, columnId, index }: BlockElementProps) => {
   const [showSaveModal, setShowSaveModal] = useState(false)
   const isSelected = editorStore.selectedElementId === block.id
   const isHovered = editorStore.hoveredElementId === block.id
+  const { activeData } = useDndState()
+
+  // Check if dragging an element
+  const isDraggingElement = activeData?.source === 'canvas' && activeData?.type === 'element'
+
+  // Drop zone above this element for reordering
+  const { isOver: isOverDropZone, setNodeRef: setDropZoneRef } = useDroppable({
+    id: `element-drop-${block.id}`,
+    data: { type: 'element', elementId: block.id, columnId, index },
+  })
 
   const handleMouseOver = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -120,54 +158,69 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
       .join(' ')
 
     return (
-      <Container
-        className={classNames}
-        style={{ ...block.style, flex: 1, width: '100%' }}
-        onClick={handleClick}
-        onMouseOver={handleMouseOver}
-        onMouseLeave={handleMouseLeave}
-      >
-        <ElementLabel label="Inner Section" color="#607d8b" />
-        <BlockActions
-          isVisible={isSelected}
-          onEdit={handleEdit}
-          onCopy={handleCopy}
-          onSave={() => setShowSaveModal(true)}
-          onDelete={handleDelete}
+      <>
+        {/* Drop zone above inner section for reordering */}
+        <ElementDropZone
+          ref={setDropZoneRef}
+          $isOver={isOverDropZone}
+          $isDraggingElement={isDraggingElement}
         />
-        {showSaveModal && (
-          <SaveWidgetModal
-            defaultName="My Inner Section"
-            onSave={handleSaveInnerSection}
-            onClose={() => setShowSaveModal(false)}
-          />
-        )}
-        <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
-          {block.children.length === 0 ? (
-            <div
-              style={{
-                flex: 1,
-                padding: '16px',
-                background: '#f5f5f5',
-                textAlign: 'center',
-                color: '#999',
-              }}
-            >
-              Empty Inner Section
-            </div>
-          ) : (
-            block.children.map((col, index) => (
-              <ColumnBox
-                key={col.key}
-                column={col}
-                sectionId={block.id}
-                isLast={index === block.children.length - 1}
-                isOnlyColumn={block.children.length === 1}
+        <div style={{ flex: 1, width: '100%' }} data-inner-section-id={block.id}>
+          <Container
+            className={classNames}
+            style={{ ...block.style }}
+            onClick={handleClick}
+            onMouseOver={handleMouseOver}
+            onMouseLeave={handleMouseLeave}
+          >
+            <ElementLabel label="Inner Section" color="#607d8b" />
+            <BlockActions
+              isVisible={isSelected}
+              elementId={block.id}
+              columnId={columnId}
+              elementIndex={index}
+              blockType="InnerSection"
+              onEdit={handleEdit}
+              onCopy={handleCopy}
+              onSave={() => setShowSaveModal(true)}
+              onDelete={handleDelete}
+            />
+            {showSaveModal && (
+              <SaveWidgetModal
+                defaultName="My Inner Section"
+                onSave={handleSaveInnerSection}
+                onClose={() => setShowSaveModal(false)}
               />
-            ))
-          )}
+            )}
+            <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+              {block.children.length === 0 ? (
+                <div
+                  style={{
+                    flex: 1,
+                    padding: '16px',
+                    background: '#f5f5f5',
+                    textAlign: 'center',
+                    color: '#999',
+                  }}
+                >
+                  Empty Inner Section
+                </div>
+              ) : (
+                block.children.map((col, colIdx) => (
+                  <ColumnBox
+                    key={col.key}
+                    column={col}
+                    sectionId={block.id}
+                    index={colIdx}
+                    isLast={colIdx === block.children.length - 1}
+                    isOnlyColumn={block.children.length === 1}
+                  />
+                ))
+              )}
+            </div>
+          </Container>
         </div>
-      </Container>
+      </>
     )
   }
 
@@ -234,33 +287,36 @@ export const BlockElement = observer(({ block, columnId }: BlockElementProps) =>
     }
 
     return (
-      <Draggable
-        id={`canvas-block-${block.id}`}
-        data={{
-          source: 'canvas',
-          blockId: block.id,
-          blockType: block.type,
-          parentId: columnId,
-        }}
-        style={flexChildStyle}
-      >
-        <Container
-          className={classNames}
-          style={containerStyle}
-          onClick={handleClick}
-          onMouseOver={handleMouseOver}
-          onMouseLeave={handleMouseLeave}
-        >
-          <ElementLabel label={block.type} color="#37474f" />
-          <BlockActions
-            isVisible={isSelected}
-            onEdit={handleEdit}
-            onCopy={handleCopy}
-            onDelete={handleDelete}
-          />
-          {renderBlockContent(block, elementStyle)}
-        </Container>
-      </Draggable>
+      <>
+        {/* Drop zone above element for reordering */}
+        <ElementDropZone
+          ref={setDropZoneRef}
+          $isOver={isOverDropZone}
+          $isDraggingElement={isDraggingElement}
+        />
+        <div style={flexChildStyle} data-element-id={block.id}>
+          <Container
+            className={classNames}
+            style={containerStyle}
+            onClick={handleClick}
+            onMouseOver={handleMouseOver}
+            onMouseLeave={handleMouseLeave}
+          >
+            <ElementLabel label={block.type} color="#37474f" />
+            <BlockActions
+              isVisible={isSelected}
+              elementId={block.id}
+              columnId={columnId}
+              elementIndex={index}
+              blockType={block.type}
+              onEdit={handleEdit}
+              onCopy={handleCopy}
+              onDelete={handleDelete}
+            />
+            {renderBlockContent(block, elementStyle)}
+          </Container>
+        </div>
+      </>
     )
   }
 

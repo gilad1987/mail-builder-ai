@@ -1,4 +1,15 @@
-import { AlignLeft, Anchor, Image, Layout, Menu, Minus, Package } from 'lucide-react'
+import {
+  AlignLeft,
+  Anchor,
+  Columns,
+  GripVertical,
+  Image,
+  Layout,
+  Menu,
+  Minus,
+  Package,
+  Rows,
+} from 'lucide-react'
 import styled from 'styled-components'
 import { tokens } from '../../styles/tokens'
 import type { DragData } from './types'
@@ -21,11 +32,26 @@ const Container = styled.div`
     font-size: ${tokens.fontSize.sm};
     font-weight: ${tokens.fontWeight.medium};
     pointer-events: none;
-    opacity: 0.9;
+    opacity: 0.95;
 
     svg {
       flex-shrink: 0;
     }
+  }
+
+  .preview--section {
+    background: #26c6da;
+    min-width: 120px;
+  }
+
+  .preview--column {
+    background: #1e88e5;
+    min-width: 100px;
+  }
+
+  .preview--element {
+    background: #37474f;
+    min-width: 100px;
   }
 
   .layout-preview {
@@ -65,6 +91,7 @@ const blockIcons: Record<string, React.FC<{ size?: number }>> = {
 }
 
 export const DragPreview = ({ type, data }: DragPreviewProps) => {
+  // Sidebar - Layout preview
   if (type === 'sidebar' && data.type === 'layout' && data.columns) {
     return (
       <Container>
@@ -80,6 +107,7 @@ export const DragPreview = ({ type, data }: DragPreviewProps) => {
     )
   }
 
+  // Sidebar - Column preview
   if (type === 'sidebar' && data.type === 'column') {
     return (
       <Container>
@@ -93,6 +121,7 @@ export const DragPreview = ({ type, data }: DragPreviewProps) => {
     )
   }
 
+  // Sidebar - Block preview
   if (type === 'sidebar' && data.type === 'block' && data.blockType) {
     const Icon = blockIcons[data.blockType] || AlignLeft
     return (
@@ -105,6 +134,7 @@ export const DragPreview = ({ type, data }: DragPreviewProps) => {
     )
   }
 
+  // Sidebar - Saved widget preview
   if (type === 'sidebar' && data.type === 'saved-widget') {
     return (
       <Container>
@@ -116,10 +146,52 @@ export const DragPreview = ({ type, data }: DragPreviewProps) => {
     )
   }
 
+  // Canvas - Section drag preview
+  if (type === 'canvas' && data.type === 'section') {
+    return (
+      <Container>
+        <div className="preview preview--section">
+          <Rows size={18} />
+          <span>Section</span>
+          <GripVertical size={14} style={{ opacity: 0.7 }} />
+        </div>
+      </Container>
+    )
+  }
+
+  // Canvas - Column drag preview
+  if (type === 'canvas' && data.type === 'column') {
+    return (
+      <Container>
+        <div className="preview preview--column">
+          <Columns size={18} />
+          <span>Column</span>
+          <GripVertical size={14} style={{ opacity: 0.7 }} />
+        </div>
+      </Container>
+    )
+  }
+
+  // Canvas - Element drag preview
+  if (type === 'canvas' && data.type === 'element') {
+    const Icon = blockIcons[data.blockType || ''] || AlignLeft
+    return (
+      <Container>
+        <div className="preview preview--element">
+          <Icon size={18} />
+          <span>{data.blockType || 'Element'}</span>
+          <GripVertical size={14} style={{ opacity: 0.7 }} />
+        </div>
+      </Container>
+    )
+  }
+
+  // Canvas - Generic (legacy)
   if (type === 'canvas') {
     return (
       <Container>
         <div className="preview">
+          <GripVertical size={16} />
           <span>Moving {data.blockType || 'element'}</span>
         </div>
       </Container>

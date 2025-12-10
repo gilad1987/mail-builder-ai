@@ -424,18 +424,87 @@ class EditorStore {
     }
   }
 
-  moveBlockToColumn(blockId: string, targetColumnId: string) {
+  moveBlockToColumn(blockId: string, targetColumnId: string, targetIndex?: number) {
     const block = this.template.findById(blockId)
     const targetColumn = this.template.findById(targetColumnId) as Column | null
 
     if (block && targetColumn && targetColumn instanceof Column) {
       // Remove from current parent
       block.remove()
-      // Add to new column
-      targetColumn.addChild(block)
+      // Add to new column at specified index
+      targetColumn.addChild(block, targetIndex)
       this.selectedElementId = block.id
       this.saveToHistory('Move element')
     }
+  }
+
+  // Reorder element within same parent
+  reorderElement(elementId: string, newIndex: number) {
+    const element = this.template.findById(elementId)
+    if (!element || !element.parent) return
+
+    const parent = element.parent
+    const currentIndex = parent.children.findIndex((c) => c.id === elementId)
+    if (currentIndex === -1 || currentIndex === newIndex) return
+
+    // Remove from current position
+    parent.children.splice(currentIndex, 1)
+    // Insert at new position
+    parent.children.splice(newIndex, 0, element)
+    this.saveToHistory('Reorder element')
+  }
+
+  // Move section to new position
+  moveSectionToIndex(sectionId: string, newIndex: number) {
+    const section = this.template.findById(sectionId) as Section | null
+    if (!section) return
+
+    const currentIndex = this.template.children.findIndex((c) => c.id === sectionId)
+    if (currentIndex === -1 || currentIndex === newIndex) return
+
+    // Remove and reinsert
+    this.template.children.splice(currentIndex, 1)
+    this.template.children.splice(newIndex, 0, section)
+    this.saveToHistory('Reorder section')
+  }
+
+  // Reorder sections by providing new order
+  reorderSections(reorderedSections: Section[]) {
+    this.template.children = reorderedSections
+    this.saveToHistory('Reorder sections')
+  }
+
+  // Reorder columns within a section
+  reorderColumns(sectionId: string, reorderedColumns: Column[]) {
+    const section = this.template.findById(sectionId) as Section | null
+    if (section) {
+      section.children = reorderedColumns
+      this.saveToHistory('Reorder columns')
+    }
+  }
+
+  // Reorder elements within a column
+  reorderElements(columnId: string, reorderedElements: Box[]) {
+    const column = this.template.findById(columnId) as Column | null
+    if (column) {
+      column.children = reorderedElements
+      this.saveToHistory('Reorder elements')
+    }
+  }
+
+  // Move column to new section or new position within same section
+  moveColumnToSection(columnId: string, targetSectionId: string, targetIndex?: number) {
+    const column = this.template.findById(columnId) as Column | null
+    const targetSection = this.template.findById(targetSectionId) as Section | null
+
+    if (!column || !targetSection) return
+
+    // Remove from current parent
+    column.remove()
+    // Add to target section at specified index
+    targetSection.addChild(column, targetIndex)
+    this.selectedElementId = column.id
+    this.saveToHistory('Move column')
   }
 
   copyElement(elementId: string) {

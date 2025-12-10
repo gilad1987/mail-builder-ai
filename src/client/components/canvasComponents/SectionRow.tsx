@@ -6,12 +6,14 @@ import { Section } from '../../models'
 import { editorStore } from '../../stores/EditorStore'
 import { savedWidgetsStore } from '../../stores/SavedWidgetsStore'
 import { tokens } from '../../styles/tokens'
+import { useDndState } from '../dnd'
 import { SaveWidgetModal } from '../SaveWidgetModal'
 import { ElementLabel, SectionActions } from '../WidgetActions'
 import { ColumnBox } from './ColumnBox'
 
 interface SectionRowProps {
   section: Section
+  index: number
 }
 
 const Container = styled.div`
@@ -34,6 +36,11 @@ const Container = styled.div`
   &.is-selected {
     border-color: #26c6da;
     box-shadow: 0 0 0 2px rgba(38, 198, 218, 0.2);
+  }
+
+  &.is-dragging {
+    opacity: 0.4;
+    border-style: dashed;
   }
 
   .section-content {
@@ -60,10 +67,67 @@ const Container = styled.div`
   }
 `
 
-export const SectionRow = observer(({ section }: SectionRowProps) => {
+const SectionDropZone = styled.div<{ $isOver: boolean; $isDraggingSection: boolean }>`
+  height: ${({ $isDraggingSection }) => ($isDraggingSection ? '8px' : '0')};
+  margin: ${({ $isDraggingSection }) => ($isDraggingSection ? '-4px 0' : '0')};
+  transition: all ${tokens.transition.fast};
+  position: relative;
+  z-index: 5;
+
+  ${({ $isOver }) =>
+    $isOver &&
+    `
+    height: 40px !important;
+    margin: 8px 0 !important;
+    background: rgba(38, 198, 218, 0.15);
+    border: 2px dashed #26c6da;
+    border-radius: ${tokens.borderRadius.md};
+  `}
+`
+
+const TrailingColumnDropZone = styled.div<{ $isOver: boolean; $isDraggingColumn: boolean }>`
+  width: ${({ $isDraggingColumn }) => ($isDraggingColumn ? '8px' : '0')};
+  margin: ${({ $isDraggingColumn }) => ($isDraggingColumn ? '0 -4px' : '0')};
+  transition: all ${tokens.transition.fast};
+  align-self: stretch;
+  min-height: 80px;
+  position: relative;
+  z-index: 5;
+
+  ${({ $isOver }) =>
+    $isOver &&
+    `
+    width: 40px !important;
+    margin: 0 8px !important;
+    background: rgba(30, 136, 229, 0.15);
+    border: 2px dashed #1e88e5;
+    border-radius: ${tokens.borderRadius.md};
+  `}
+`
+
+export const SectionRow = observer(({ section, index }: SectionRowProps) => {
   const [showSaveModal, setShowSaveModal] = useState(false)
   const isSelected = editorStore.selectedElementId === section.id
   const isHovered = editorStore.hoveredElementId === section.id
+  const { activeData } = useDndState()
+
+  // Check if dragging a section or column
+  const isDraggingSection = activeData?.source === 'canvas' && activeData?.type === 'section'
+  const isDraggingColumn =
+    (activeData?.source === 'sidebar' && activeData?.type === 'column') ||
+    (activeData?.source === 'canvas' && activeData?.type === 'column')
+
+  // Drop zone above this section for section reordering
+  const { isOver: isOverDropZone, setNodeRef: setDropZoneRef } = useDroppable({
+    id: `section-drop-${section.id}`,
+    data: { type: 'section', sectionId: section.id, index },
+  })
+
+  // Trailing drop zone for columns (at end of section)
+  const { isOver: isOverTrailingColumn, setNodeRef: setTrailingColumnRef } = useDroppable({
+    id: `column-drop-trailing-${section.id}`,
+    data: { type: 'column', sectionId: section.id, index: section.children.length },
+  })
 
   // Make section droppable for layouts and columns
   const { isOver, setNodeRef } = useDroppable({
@@ -134,81 +198,99 @@ export const SectionRow = observer(({ section }: SectionRowProps) => {
   )
 
   return (
-    <Container
-      className={classNames}
-      style={containerStyle}
-      onClick={handleClick}
-      onMouseOver={handleMouseOver}
-      onMouseLeave={handleMouseLeave}
-    >
-      <ElementLabel label="Section" color="#26c6da" />
-      <SectionActions
-        isVisible={isSelected}
-        onCopy={handleCopy}
-        onSave={() => setShowSaveModal(true)}
-        onDelete={handleDelete}
+    <>
+      {/* Drop zone above section for reordering */}
+      <SectionDropZone
+        ref={setDropZoneRef}
+        $isOver={isOverDropZone}
+        $isDraggingSection={isDraggingSection}
       />
-      {showSaveModal && (
-        <SaveWidgetModal
-          defaultName="My Section"
-          onSave={handleSave}
-          onClose={() => setShowSaveModal(false)}
+      <Container
+        className={classNames}
+        style={containerStyle}
+        onClick={handleClick}
+        onMouseOver={handleMouseOver}
+        onMouseLeave={handleMouseLeave}
+        data-section-id={section.id}
+      >
+        <ElementLabel label="Section" color="#26c6da" />
+        <SectionActions
+          isVisible={isSelected}
+          sectionId={section.id}
+          sectionIndex={index}
+          onCopy={handleCopy}
+          onSave={() => setShowSaveModal(true)}
+          onDelete={handleDelete}
         />
-      )}
-      {section.children.length === 0 ? (
-        <div
-          ref={setNodeRef}
-          className="section-empty"
-          style={{
-            background: isOver ? 'rgba(38, 198, 218, 0.1)' : undefined,
-            borderColor: isOver ? '#26c6da' : undefined,
-          }}
-        >
-          Drop columns or layout here
-        </div>
-      ) : (
-        <div
-          ref={setContentRef}
-          className="section-content"
-          style={{
-            display: (section.style.display as React.CSSProperties['display']) || 'flex',
-            // Flex properties
-            ...(section.style.display !== 'grid' && {
-              flexDirection: section.style.flexDirection as React.CSSProperties['flexDirection'],
-              flexWrap: section.style.flexWrap as React.CSSProperties['flexWrap'],
-            }),
-            // Grid properties
-            ...(section.style.display === 'grid' && {
-              gridTemplateColumns: section.style.gridTemplateColumns as string,
-              gridTemplateRows: section.style.gridTemplateRows as string,
-              gridAutoFlow: section.style.gridAutoFlow as React.CSSProperties['gridAutoFlow'],
-              justifyItems: section.style.justifyItems as React.CSSProperties['justifyItems'],
-            }),
-            // Common properties
-            justifyContent: section.style.justifyContent as React.CSSProperties['justifyContent'],
-            alignItems: section.style.alignItems as React.CSSProperties['alignItems'],
-            gap:
-              section.style.columnGap || section.style.rowGap
-                ? `${section.style.rowGap || '0px'} ${section.style.columnGap || '0px'}`
-                : tokens.spacing[2],
-            // Visual feedback when dragging over
-            ...(isOverContent && {
-              outline: '2px dashed #26c6da',
-              outlineOffset: '-2px',
-            }),
-          }}
-        >
-          {section.children.map((column, index) => (
-            <ColumnBox
-              key={column.key}
-              column={column}
-              sectionId={section.id}
-              isLast={index === section.children.length - 1}
-              isOnlyColumn={section.children.length === 1}
+        {showSaveModal && (
+          <SaveWidgetModal
+            defaultName="My Section"
+            onSave={handleSave}
+            onClose={() => setShowSaveModal(false)}
+          />
+        )}
+        {section.children.length === 0 ? (
+          <div
+            ref={setNodeRef}
+            className="section-empty"
+            style={{
+              background: isOver ? 'rgba(38, 198, 218, 0.1)' : undefined,
+              borderColor: isOver ? '#26c6da' : undefined,
+            }}
+          >
+            Drop columns or layout here
+          </div>
+        ) : (
+          <div
+            ref={setContentRef}
+            className="section-content"
+            style={{
+              display: (section.style.display as React.CSSProperties['display']) || 'flex',
+              // Flex properties
+              ...(section.style.display !== 'grid' && {
+                flexDirection: section.style.flexDirection as React.CSSProperties['flexDirection'],
+                flexWrap: section.style.flexWrap as React.CSSProperties['flexWrap'],
+              }),
+              // Grid properties
+              ...(section.style.display === 'grid' && {
+                gridTemplateColumns: section.style.gridTemplateColumns as string,
+                gridTemplateRows: section.style.gridTemplateRows as string,
+                gridAutoFlow: section.style.gridAutoFlow as React.CSSProperties['gridAutoFlow'],
+                justifyItems: section.style.justifyItems as React.CSSProperties['justifyItems'],
+              }),
+              // Common properties
+              justifyContent: section.style.justifyContent as React.CSSProperties['justifyContent'],
+              alignItems: section.style.alignItems as React.CSSProperties['alignItems'],
+              gap:
+                section.style.columnGap || section.style.rowGap
+                  ? `${section.style.rowGap || '0px'} ${section.style.columnGap || '0px'}`
+                  : tokens.spacing[2],
+              // Visual feedback when dragging over
+              ...(isOverContent && {
+                outline: '2px dashed #26c6da',
+                outlineOffset: '-2px',
+              }),
+            }}
+          >
+            {section.children.map((column, colIndex) => (
+              <ColumnBox
+                key={column.key}
+                column={column}
+                sectionId={section.id}
+                index={colIndex}
+                isLast={colIndex === section.children.length - 1}
+                isOnlyColumn={section.children.length === 1}
+              />
+            ))}
+            {/* Trailing drop zone for columns */}
+            <TrailingColumnDropZone
+              ref={setTrailingColumnRef}
+              $isOver={isOverTrailingColumn}
+              $isDraggingColumn={isDraggingColumn}
             />
-          ))}
-        </div>
-      )}
-    </Container>
+          </div>
+        )}
+      </Container>
+    </>
   )
 })
