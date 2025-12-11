@@ -380,15 +380,14 @@ select {
   @include flex-center;
   flex-direction: column;
   padding: $spacing-3;
-  border: 1px solid #3f444b;
+  border: 1px solid var(--border-color);
   border-radius: $border-radius-md;
   cursor: grab;
   transition: all $transition-fast;
   user-select: none;
 
   &:hover {
-    border-color: #3f444b;
-    background-color: #2b2c31;
+    background-color: var(--bg-elevated);
   }
 
   &:active {
@@ -1516,15 +1515,26 @@ select {
   }
 
   &__color-picker {
+    position: relative;
     width: 100%;
     height: 28px;
     background-color: var(--input-bg);
     border: 1px solid var(--input-border);
     border-radius: $border-radius-md;
     cursor: pointer;
+    overflow: hidden;
 
     &:hover {
       border-color: var(--text-secondary);
+    }
+
+    input {
+      opacity: 0;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
     }
   }
 }
