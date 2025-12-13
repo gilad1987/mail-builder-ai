@@ -109,8 +109,13 @@ export const ELEMENT_CONTROLS: Record<WidgetType, ControlType[]> = {
     ...BLOCK_CONTAINER_CONTROLS,
   ],
 
-  // Spacer - minimal controls (just margin and height) + container controls
-  [WidgetType.Spacer]: [ControlType.Margin, ControlType.Dimensions, ...BLOCK_CONTAINER_CONTROLS],
+  // Spacer - minimal controls (margin, height, background) + container padding
+  [WidgetType.Spacer]: [
+    ControlType.Margin,
+    ControlType.Dimensions,
+    ControlType.BackgroundColor,
+    ControlType.ContainerPadding,
+  ],
 
   // Divider - layout + visual, no text + container controls
   [WidgetType.Divider]: [

@@ -37,6 +37,7 @@ export interface ElementDefaults {
   fontSize?: number
   fontWeight?: string
   lineHeight?: number
+  height?: number
   color?: string
   backgroundColor?: string
   fontFamily?: string
@@ -91,7 +92,10 @@ export const WIDGET_DEFAULTS: Record<WidgetType, ElementDefaults> = {
     defaultText: 'Click Me',
   },
   [WidgetType.Image]: {},
-  [WidgetType.Spacer]: {},
+  [WidgetType.Spacer]: {
+    height: 20,
+    backgroundColor: '#f0f0f0',
+  },
   [WidgetType.Divider]: {
     backgroundColor: '#e5e7eb',
   },

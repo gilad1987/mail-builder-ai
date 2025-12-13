@@ -47,7 +47,12 @@ export const StyleTab = observer(() => {
           <div className="dimension-grid">
             <DimensionInput label="Width" styleProperty="width" defaultUnit="%" />
             <DimensionInput label="Max Width" styleProperty="maxWidth" defaultUnit="px" />
-            <DimensionInput label="Height" styleProperty="height" defaultUnit="px" />
+            <DimensionInput
+              label="Height"
+              styleProperty="height"
+              defaultUnit="px"
+              defaultValue={defaults.height}
+            />
             <DimensionInput label="Max Height" styleProperty="maxHeight" defaultUnit="px" />
           </div>
         </div>
@@ -147,6 +152,16 @@ export const StyleTab = observer(() => {
           label="Text color"
           styleProperty="color"
           defaultValue={defaults.color ?? '#000000'}
+          responsive={true}
+        />
+      )}
+
+      {/* Background Color - for simple elements like Spacer */}
+      {showControl(ControlType.BackgroundColor) && !showControl(ControlType.BackgroundGradient) && (
+        <ColorControl
+          label="Background color"
+          styleProperty="backgroundColor"
+          defaultValue={defaults.backgroundColor ?? '#f0f0f0'}
           responsive={true}
         />
       )}
